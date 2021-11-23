@@ -1,0 +1,11 @@
+wheel
+python-language-server[all]
+pyls-mypy
+pyls-isort
+pyls-black
+pycodestyle
+pydocstyle
+mccabe
+flake8
+rope
+ipdb

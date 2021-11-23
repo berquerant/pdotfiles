@@ -1,0 +1,32 @@
+set main-view = id date author:email-user commit-title:graph=yes,refs=yes
+set blame-view  = date:default author:email-user id:yes,color line-number:yes,interval=1 text
+set pager-view  = line-number:yes,interval=1 text
+set stage-view  = line-number:yes,interval=1 text
+set log-view    = line-number:yes,interval=1 text
+set blob-view   = line-number:yes,interval=1 text
+set diff-view   = line-number:yes,interval=1 text:yes,commit-title-overflow=no
+
+set blob-view-line-number = yes
+set blame-view-line-number = yes
+set editor-line-number = yes
+set line-graphics = utf-8
+set ignore-case = true
+set id-width = 8
+set blame-options = -C -C -C
+set show-notes = yes
+set show-changes = yes
+set diff-options = -m --first-parent
+set status-show-untracked-dirs = yes
+set tab-size = 2
+set diff-context = 3
+set wrap-lines = yes
+set focus-child = yes
+set mouse = true
+
+set refresh-mode = auto
+
+bind generic <Ctrl-v> scroll-page-down
+bind generic <Esc>v scroll-page-up
+bind generic <Ctrl-f> scroll-right
+bind generic <Ctrl-b> scroll-left
+bind generic <Ctrl-g> refresh

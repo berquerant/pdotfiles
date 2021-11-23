@@ -1,0 +1,56 @@
+run:
+  concurrency: 4
+  timeout: 10s
+  skip-dirs:
+    - tmp/
+  skip-dirs-use-default: true
+  skip-files:
+    - ".*generated.*"
+    - ".*\\.pb\\.go$"
+
+linter-settings:
+  govet:
+    check-shadowing: true
+  godox:
+    keywords:
+      - TODO
+      - FIXME
+      - BUG
+      - DEPRECATED
+      - Deprecated
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - errcheck
+    - funlen
+    - gochecknoinits
+    - gochecknoglobals
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godox
+    - golint
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - interfacer
+    - lll
+    - nakedret
+    - scopelint
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - varcheck
+    - whitespace
