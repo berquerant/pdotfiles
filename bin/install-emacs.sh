@@ -8,6 +8,7 @@ cecho green "This takes a long time..."
 mkdir -p ${PROJECT}/tmp
 cd ${PROJECT}/tmp
 git clone git://git.sv.gnu.org/emacs.git
+LIBRARY_PATH="/usr/local/opt/libgccjit/lib/gcc/11"
 cd ./emacs
 ./autogen.sh &&\
     ./configure --with-native-compilation --with-xwidgets &&\

@@ -14,7 +14,6 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "mafredri/zsh-async"
 zplug "sindresorhus/pure"
 zplug "b4b4r07/enhancd", use:init.sh
-zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-autosuggestions"
 zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
@@ -86,8 +85,3 @@ zstyle ':prompt:pure:path' color white
 export ENHANCD_FILTER=peco
 ## autosuggestions
 bindkey '^ ' autosuggest-accept
-## zsh-syntax-highlighting
-### blue to none
-ZSH_HIGHLIGHT_STYLES[globbing]='none'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='none'
-ZSH_HIGHLIGHT_STYLES[bracket-level-1]='none'

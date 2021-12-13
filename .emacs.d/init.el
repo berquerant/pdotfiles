@@ -907,15 +907,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("\\.jsx$" . web-mode)))
 
 (use-package typescript-mode
+  :ensure t
   :hook
   (typescript-mode . (lambda ()
                        (setq typescript-indent-level 2)
                        (setq flycheck-check-syntax-automatically '(save mode-enabled))))
   :mode
-  (("\\.ts\\'" . typescript-mode)
-   ("\\.tsx$" . (lambda ()
-                  (web-mode)
-                  (lsp)))))
+  ("\\.ts\\'" . typescript-mode)
+  :init
+  (define-derived-mode typescript-tsx-mode typescript-mode "TSX")
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-tsx-mode)))
 
 (use-package python
   :mode ("\\.py\\'" . python-mode)
@@ -1110,9 +1111,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
       (flycheck-pos-tip-mode)
     (flycheck-popup-tip-mode)))
 
+;; syntax highlighting
+(use-package tree-sitter-langs)
+(use-package tree-sitter
+  :diminish  (tree-sitter-mode . "")
+  :after tree-sitter-langs
+  :demand t
+  :config
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+  (tree-sitter-require 'tsx)
+  (add-to-list 'tree-sitter-major-mode-language-alist
+               '(typescript-tsx-mode . tsx)))
+
 (use-package eglot
   :hook
   ((python-mode
+    go-mode
     c-mode
     c++-mode) . eglot-ensure)
   :init
@@ -1145,14 +1160,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (eglot-connect-timeout 5)
   (eglot-send-changes-idle-time 5))
 
-;;
-;; lsp-mode
-;;
-
 (use-package lsp-mode
   :hook
-  (((go-mode
-     typescript-mode
+  (((typescript-mode
+     typescript-tsx-mode
      rust-mode
      css-mode
      html-mode) . lsp-deferred)

@@ -13,8 +13,8 @@ go: ## install go
 	git clone https://github.com/syndbg/goenv.git $(GOENV_ROOT)
 
 go-packages: ## install golang utilities
-	GO111MODULE=on go get golang.org/x/tools/gopls@latest
-	go get -u golang.org/x/tools/cmd/goimports
+	GO111MODULE=on go install golang.org/x/tools/gopls@latest
+	go install -u golang.org/x/tools/cmd/goimports
 	go install github.com/x-motemen/gore/cmd/gore@latest
 	go install github.com/go-delve/delve/cmd/dlv@latest
 	go install github.com/google/gops@latest
