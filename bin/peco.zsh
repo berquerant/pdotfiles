@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 peco-history-selection() {
-    BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco`
+    BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco | cut -b22-`
     CURSOR=$#BUFFER
     zle reset-prompt
 }

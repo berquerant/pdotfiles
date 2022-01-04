@@ -683,14 +683,9 @@
   :config
   (global-anzu-mode +1))
 
-;; easy regex
-(use-package visual-regexp-steroids
+(use-package ez-query-replace
   :bind
-  (("C-x v q" . vr/select-query-replace)
-   ("C-x v r" . vr/select-replace)
-   ("C-x v m" . vr/select-mc-mark)
-   ("C-M-s" . vr/isearch-forward)
-   ("C-M-r" . vr/isearch-backward)))
+  ("M-%" . ez-query-replace))
 
 (use-package smartparens
   :diminish (smartparens-mode . "")
@@ -1100,11 +1095,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (my-macro-thyristor flycheck-mode)
   (smartrep-define-key global-map "C-c f"
-    '(("f" . helm-flycheck)
+    '(("f" . flycheck-list-errors)
       ("." . flycheck-display-error-at-point)
       ("n" . flycheck-next-error)
       ("p" . flycheck-previous-error)
-      ("l" . flycheck-list-errors)
       ("e" . flycheck-buffer)
       ("w" . flycheck-copy-errors-as-kill)))
   (if (display-graphic-p)
@@ -1126,10 +1120,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package eglot
   :hook
-  ((python-mode
+  (((python-mode
     go-mode
     c-mode
     c++-mode) . eglot-ensure)
+   (eglot-managed-mode . (lambda () (flymake-mode 0))))
   :init
   (defmacro def-start-language-server (pairs)
     `(progn

@@ -14,7 +14,7 @@ go: ## install go
 
 go-packages: ## install golang utilities
 	GO111MODULE=on go install golang.org/x/tools/gopls@latest
-	go install -u golang.org/x/tools/cmd/goimports
+	go install golang.org/x/tools/cmd/goimports@latest
 	go install github.com/x-motemen/gore/cmd/gore@latest
 	go install github.com/go-delve/delve/cmd/dlv@latest
 	go install github.com/google/gops@latest
