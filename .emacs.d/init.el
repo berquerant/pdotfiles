@@ -195,7 +195,7 @@
 ;; search with romaji
 (use-package migemo
   :custom
-  (migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
+  (migemo-dictionary (my-getenv "MIGEMO_DICT"))
   (migemo-command "cmigemo")
   (migemo-options '("-q" "--emacs"))
   (migemo-user-dictionary nil)
@@ -446,7 +446,7 @@
   :after (deadgrep projectile)
   :bind
   ("M-g f" . xref-find-references)
-  ("M-g b" . xref-pop-marker-stack)
+  ("M-g b" . xref-go-back)
   ("M-g h" . xref-find-apropos)
   :config
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -881,6 +881,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package flycheck-golangci-lint
   :demand t
   :after (go-mode flycheck)
+  :hook (go-mode . flycheck-golangci-lint-setup)
   :custom
   (flycheck-golangci-lint-config "~/golangci.yml"))
 
@@ -927,6 +928,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (setq py-python-command (format "%s/shims/python" (my-getenv "PYENV_ROOT"))))
 
+(use-package ruby-mode
+  :mode ("\\.rb\\'" . ruby-mode)
+  :interpreter ("ruby" . ruby-mode)
+  :custom
+  (ruby-deep-indent-paren-style nil)
+  (ruby-indent-tabs-mode nil))
+
+(use-package rubocop
+  :hook (ruby-mode . rubocop-mode))
+
 (use-package php-mode
   :hook
   (php-mode . (lambda ()
@@ -952,20 +963,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package scala-mode
   :mode "^\w+\\.s\\(cala\\|bt\\)$")
-
-(use-package sbt-mode
-  :after projectile
-  :commands (sbt-start
-             sbt-command)
-  :config
-  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-  ;; allows using SPACE when in the minibuffer
-  (substitute-key-definition
-   'minibuffer-complete-word
-   'self-insert-command
-   minibuffer-local-completion-map)
-  ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-  (setq sbt:program-options '("-Dsbt.supershell=false")))
 
 (use-package ascii
   :bind
@@ -1081,6 +1078,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     emacs-lisp-mode
     haskell-mode
     rust-mode
+    ruby-mode
     php-mode
     js2-mode) . flycheck-mode-thyristor-2n)
   :bind
@@ -1106,8 +1104,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     (flycheck-popup-tip-mode)))
 
 ;; syntax highlighting
-(use-package tree-sitter-langs)
+(use-package tree-sitter-langs
+  :disabled t)
 (use-package tree-sitter
+  :disabled t
   :diminish  (tree-sitter-mode . "")
   :after tree-sitter-langs
   :demand t
@@ -1121,9 +1121,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package eglot
   :hook
   (((python-mode
-    go-mode
-    c-mode
-    c++-mode) . eglot-ensure)
+     go-mode
+     ruby-mode
+     c-mode
+     c++-mode) . eglot-ensure)
    (eglot-managed-mode . (lambda () (flymake-mode 0))))
   :init
   (defmacro def-start-language-server (pairs)
@@ -1162,10 +1163,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
      rust-mode
      css-mode
      html-mode) . lsp-deferred)
-   (lsp-mode . lsp-lens-mode)
-   ;; it works but get error at launching emacs
-   ;; File mode specification error: (error lsp is not a valid syntax checker)
-   (flycheck-mode . (lambda () (flycheck-add-next-checker 'lsp 'golangci-lint))))
+   (lsp-mode . lsp-lens-mode))
   :bind
   (("M-s M-s M-l" . lsp)
    :map lsp-mode-map
@@ -1199,7 +1197,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-response-timeout 5)
   (lsp-pyls-server-command (format "%s/versions/%s/bin/pyls" (my-getenv "PYENV_ROOT") (my-getenv "PY_VERSION")))
   :config
-  (flycheck-golangci-lint-setup)
   (setq read-process-output-max (* 1024 1024)))
 
 (use-package lsp-ui

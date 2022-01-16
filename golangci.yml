@@ -13,6 +13,7 @@ linter-settings:
     check-shadowing: true
   godox:
     keywords:
+      - NOTE
       - TODO
       - FIXME
       - BUG
@@ -20,37 +21,14 @@ linter-settings:
       - Deprecated
 
 linters:
-  disable-all: true
-  enable:
-    - bodyclose
-    - deadcode
-    - depguard
-    - dogsled
-    - dupl
-    - errcheck
-    - funlen
-    - gochecknoinits
-    - gochecknoglobals
-    - gocognit
-    - goconst
-    - gocritic
-    - gocyclo
-    - godox
-    - golint
-    - gosec
-    - gosimple
-    - govet
-    - ineffassign
+  enable-all: true
+  disable:
     - interfacer
-    - lll
-    - nakedret
     - scopelint
-    - staticcheck
-    - structcheck
-    - stylecheck
-    - typecheck
-    - unconvert
-    - unparam
-    - unused
-    - varcheck
-    - whitespace
+    - golint
+    - maligned
+    - wsl
+    - nlreturn
+    - gomnd
+    - gofumpt
+    - ireturn

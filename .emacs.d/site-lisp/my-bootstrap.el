@@ -36,7 +36,6 @@
 (global-display-line-numbers-mode t)
 (load-theme 'manoj-dark t)
 (set-cursor-color "green")
-(set-frame-font "-*-Source Han Code JP-normal-normal-normal-*-*-*-*-*-p-0-iso10646-1") ; https://github.com/adobe-fonts/source-han-code-jp
 (set-face-attribute 'default nil :height 100) ; initial font size
 (setq-default major-mode 'text-mode       ; use text-mode instead of fundamental-mode
               bidi-display-reordering nil ; ignore the writing direction: right to left

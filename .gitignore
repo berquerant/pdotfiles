@@ -2,7 +2,5 @@
 tmp/
 .metals/
 __pycache__/
-watch_later/
-etc/mpv/mpv.conf
 dist-newstyle/
 .mypy_cache/

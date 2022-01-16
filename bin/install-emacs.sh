@@ -5,18 +5,19 @@ source $DOTFILES_ROOT/bin/common.sh
 cecho green "Install GCC Emacs."
 cecho green "This takes a long time..."
 
-mkdir -p ${PROJECT}/tmp
-cd ${PROJECT}/tmp
-git clone git://git.sv.gnu.org/emacs.git
-LIBRARY_PATH="/usr/local/opt/libgccjit/lib/gcc/11"
-cd ./emacs
-./autogen.sh &&\
-    ./configure --with-native-compilation --with-xwidgets &&\
-    make &&\
-    make install &&\
-    mv nextstep/Emacs.app /Applications/ &&\
-    cecho green "GCC Emacs Installed!"
+brew install --cask xquartz
+brew install --build-from-source libgccjit
+brew install cmigemo
 
-cecho green "Install font..."
-cd ~/Library/Fonts && wget https://github.com/adobe-fonts/source-han-code-jp/releases/download/2.012R/SourceHanCodeJP.ttc
+mkdir -p ${PROJECT}/tmp
+cd ${PROJECT}/tmp || exit 1
+git clone git://git.sv.gnu.org/emacs.git
+cd ./emacs || exit 1
+find . -name "*.pdmp" -type f -exec rm -f {} \;
+export CC=clang
+./autogen.sh &&
+  ./configure --with-native-compilation --with-xwidgets &&\
+  make -j4 && make install &&\
+  mv nextstep/Emacs.app /Applications/ || exit 1
+cecho green "GCC Emacs Installed!"
 cecho green "Done!"

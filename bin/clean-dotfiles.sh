@@ -1,6 +1,6 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0)/..; pwd)
+d=$(cd $(dirname $0); pwd)
 . $d/common.sh
 
 message() {

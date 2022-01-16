@@ -28,7 +28,7 @@ clean-go: ## uninstall go
 
 get-python: py-env-manager pyenv-global ## install python and make it available
 
-py-env-manager: ## install
+py-env-manager: ## install python env
 	brew install pyenv
 	brew install pipenv
 
@@ -49,23 +49,34 @@ clean-pyenv: ## uninstall python
 	brew uninstall pyenv
 	rm -rf $(PYENV_ROOT)
 
+get-ruby: ruby ## install ruby and make it available
+
+rbenv-global: ## install ruby
+	brew install ruby
+	gem install solargraph rubocop
+
+clean-rbenv: ## uninstall ruby
+	brew uninstall ruby
+
 get-typescript: node typescript ## install typescript and make it available
 
-node: $(NVM_DIR)/nvm.sh ## install node
+node: ## install node
+	mkdir -p $(NVM_DIR)
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM_VERSION)/install.sh | bash
+	. $(NVM_DIR)/nvm.sh
 	nvm install --lts
-	npm install -g eslint csslint
+	npm i -g eslint csslint
 
 typescript: ## install typescript
-	npm i -g typescript typescript-formatter tslint typescript-language-server ts-node typescript
+	npm i -g typescript typescript-formatter typescript-eslint typescript-language-server ts-node
 
 clean-node: ## uninstall node
-	rm -rf $(NVM_ROOT) $(NPM_ROOT)
+	rm -rf $(NVM_DIR) $(NPM_ROOT)
 
-get-rust: rust rust-components rust-crates ## install rust and make it available
+get-rust: rust rust-components rust-crates rust-analyzer ## install rust and make it available
 
 rust: ## install rust
-	curl https://sh.rustup.rs -sSf | sh
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 rust-update: ## update rust
 	rustup install stable
@@ -83,7 +94,7 @@ rust-components: ## install rust components
 	rustup component add llvm-tools-preview
 
 rust-crates: ## install rust tools
-	cargo +nightly install racer
+	rustup toolchain add nightly-2021-06-07 && cargo +nightly-2021-06-07 install racer # https://gitmemory.cn/repo/racer-rust/racer/issues/1173
 	cargo install cargo-watch
 	cargo install cargo-edit
 	cargo install cargo-update
@@ -102,27 +113,10 @@ rust-analyzer:
 	cd $(GHQ_ROOT) && \
 	git clone https://github.com/rust-analyzer/rust-analyzer.git && \
 	cd rust-analyzer && \
-	cargo xtask install
+	cargo xtask install --server
 
 clean-rust: ## uninstall rust
 	rustup self uninstall
-
-get-scala: scala java scala-tools ## install scala and make it available
-
-scala: ## install scala
-	brew install scala
-	brew install sbt
-
-java: ## install java
-	brew tap AdoptOpenJDK/openjdk
-	brew cask install adoptopenjdk/openjdk/adoptopenjdk8
-	java -version # remove some jdk from /Library/Java/JavaVirtualMachines/ if you see other java version
-	brew install jadx
-
-clean-scala: ## uninstall scala
-	brew uninstall sbt
-	brew uninstall scala
-	brew cask uninstall adoptopenjdk/openjdk/adoptopenjdk8
 
 get-lisp: lisp ## install lisp and make it available
 
@@ -161,7 +155,7 @@ clean-clang-tools: ## uninstall c utils
 	brew uninstall clang-format
 	brew uninstall ccls
 
-markdown: ## install markdown utilities
+markdown: ruby ## install markdown utilities
 	gem install github-markup commonmarker
 
 clean-markdown: ## uninstall markdown utilities

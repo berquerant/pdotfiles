@@ -1,6 +1,6 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0)/..; pwd)
+d=$(cd $(dirname $0); pwd)
 . $d/common.sh
 
 message() {
@@ -14,14 +14,14 @@ xcode-select --install
 if ! which brew > /dev/null
 then
     message "Install Homebrew"
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
     message "Homebrew found"
 fi
 
 brew doctor
 brew update
-brew upgrade --all
+brew upgrade
 
 message "Install tools"
 
@@ -29,7 +29,6 @@ formulas=(
     bash
     git
     direnv
-    cmigemo
     readline
     gettext
     peco
@@ -50,13 +49,12 @@ formulas=(
     unar
     nmap
     telnet
-    gdb
     git-secrets
     shellcheck
     cpulimit
-    libgccjit
     autoconf
     automake
+    gcc
 )
 
 for formula in "${formulas[@]}"
