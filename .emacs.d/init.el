@@ -6,7 +6,10 @@
 
 ;;; Code:
 
-(add-hook 'after-init-hook (lambda () (message "init time: %s" (emacs-init-time)))) ; get the elapsed time to initialize
+(defun display-emacs-init-time()
+  "Display the elapsed time to initialize."
+  (message "init time: %s" (emacs-init-time)))
+(add-hook 'after-init-hook 'display-emacs-init-time)
 ;; install and initialize package manager
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -239,6 +242,7 @@
   (helm-delete-minibuffer-contents-from-point t) ; kill by C-k
   (helm-display-function #'display-buffer)
   (helm-recentf-fuzzy-match nil)
+  (helm-split-window-inside-p t)
   (helm-mini-default-sources '(helm-source-buffers-list
                                helm-source-buffer-not-found))
   (helm-for-files-preferred-list '(helm-source-buffers-list
@@ -310,7 +314,8 @@
   :demand t
   :diminish (selected-minor-mode . "")
   :commands (shell-command-on-region-and-insert
-             shell-command-on-region-and-replace)
+             shell-command-on-region-and-replace
+             my-sql-format-on-region)
   :bind
   (:map selected-keymap
         ("@" . rectangle-mark-mode)
@@ -321,7 +326,8 @@
         ("i" . indent-rigidly)
         ("b" . shell-command-on-region)
         ("C-b" . shell-command-on-region-and-insert)
-        ("B" . shell-command-on-region-and-replace))
+        ("B" . shell-command-on-region-and-replace)
+        ("l" . my-sql-format-on-region))
   :config
   (defun shell-command-on-region-and-insert (command)
     "Execute COMMAND with specified region and insert result into current buffer."
@@ -334,7 +340,12 @@
     (when (use-region-p)
       (shell-command-on-region (region-beginning) (region-end) command t t)))
   (setq selected-minor-mode-override t)
-  (selected-global-mode 1))
+  (selected-global-mode 1)
+  (defun my-sql-format-on-region ()
+    "Format sql on region, sql-formatter required.
+https://github.com/zeroturnaround/sql-formatter"
+    (interactive)
+    (shell-command-on-region-and-insert "sql-formatter -u")))
 
 (use-package my-trans
   :demand t
@@ -495,9 +506,10 @@
   (add-hook 'after-save-hook 'bm-buffer-save)
   (add-hook 'after-revert-hook 'bm-buffer-restore)
   (add-hook 'vc-before-checkin-hook 'bm-buffer-save)
-  (add-hook 'kill-emacs-hook '(lambda ()
-                                (bm-buffer-save-all)
-                                (bm-repository-save)))
+  (defun save-bm-before-kill-emacs ()
+    (bm-buffer-save-all)
+    (bm-repository-save))
+  (add-hook 'kill-emacs-hook 'save-bm-before-kill-emacs)
   (setq bookmark-save-flag 1)
   (setq bookmark-use-annotations t)
   (setq bookmark-automatically-show-annotations t)
@@ -734,6 +746,10 @@
   (:map gfm-mode-map
         ("C-c m >" . markdown-follow-thing-at-point))
   :config
+  (defun markdown-mode-before-save-hook ()
+    "Disable `delete-trailing-whitespace' if `major-mode' is `markdown-mode' or `gfm-mode'."
+    (delete-trailing-whitespace-thyristor-set (not (memq major-mode '(markdown-mode gfm-mode)))))
+  (add-hook 'before-save-hook 'markdown-mode-before-save-hook)
   (my-macro-state-hook markdown-preview browse-url-browser-function browse-url-default-browser)
   (markdown-preview-state-hook-generator xwidget-webkit-browse-url)
   (bind-key "C-c C-c C-p" 'markdown-preview-state-hook-xwidget-webkit-browse-url gfm-mode-map)
@@ -956,7 +972,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :after php-mode
   :init
   (my-macro-thyristor php-cs-fixer-before-save)
-  (add-hook 'php-mode (lambda () (add-hook 'before-save-hook 'php-cs-fixer-before-save-thyristor nil t))))
+  (defun add-php-before-save-local-hook ()
+    (add-hook 'before-save-hook 'php-cs-fixer-before-save-thyristor nil t))
+  (add-hook 'php-mode 'add-php-before-save-local-hook))
 
 (use-package flycheck-phpstan
   :after (php-mode flycheck))

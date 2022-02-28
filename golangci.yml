@@ -7,6 +7,7 @@ run:
   skip-files:
     - ".*generated.*"
     - ".*\\.pb\\.go$"
+  allow-parallel-runners: true
 
 linter-settings:
   govet:

@@ -71,6 +71,7 @@
       line-number-display-limit 100000
       line-number-display-limit-width 50
       cursor-type 'box
+      split-height-threshold 120
       eval-expression-print-length nil
       eval-expression-print-level nil)
 

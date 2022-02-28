@@ -128,13 +128,17 @@
 
 (use-package dired
   :straight (dired :type built-in)
-  :init
-  (add-hook 'dired-load-hook (lambda () (load "dired-x")))
   :config
   (setq insert-directory-program "/usr/local/bin/gls") ; use coreutils ls to use ls --dired
   (setq dired-dwim-target t)
   (setq dired-recursive-copies 'always)
   (setq dired-isearch-filenames t))
+
+(use-package dired-x
+  :after dired
+  :straight (dired-x :type built-in)
+  :bind
+  ("C-x j d" . dired-jump))
 
 (provide 'my-load-built-in)
 ;;; my-load-built-in.el ends here
