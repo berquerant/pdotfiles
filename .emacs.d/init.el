@@ -456,7 +456,7 @@ https://github.com/zeroturnaround/sql-formatter"
   :demand t
   :after (deadgrep projectile)
   :bind
-  ("M-g f" . xref-find-references)
+  ("M-g ?" . xref-find-references)
   ("M-g b" . xref-go-back)
   ("M-g h" . xref-find-apropos)
   :config
@@ -1145,18 +1145,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
      c++-mode) . eglot-ensure)
    (eglot-managed-mode . (lambda () (flymake-mode 0))))
   :init
-  (defmacro def-start-language-server (pairs)
-    `(progn
-       ,@(cl-loop for (key . val) in pairs
-               collect
-               `(defun ,(read (format "start-%s-language-server" key))
-                    ()
-                  (interactive)
-                  (async-shell-command ,val)))))
-  (defconst my-python-language-server-executable
-    (format "%s/versions/%s/bin/pyls" (my-getenv "PYENV_ROOT") (my-getenv "PY_VERSION")))
-  (def-start-language-server (("python" . (format "%s -v --tcp --host localhost --port 49998" my-python-language-server-executable))
-                              ("go" . "gopls")))
   :bind
   (("M-s M-s M-e" . eglot)
    :map eglot-mode-map
@@ -1166,9 +1154,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("C-x p r" . eglot-rename)
    ("M-s M-s M-e" . eglot-shutdown))
   :config
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "clangd"))
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
-  (add-to-list 'eglot-server-programs `(python-mode . (,my-python-language-server-executable "-v" "--tcp" "--host" "localhost" "--port" :autoport)))
+  (add-to-list 'eglot-server-programs '(python-mode . ("pylsp" "-v" "--tcp" "--host" "127.0.0.1" "--port" :autoport)))
   :custom
   (eglot-autoreconnect nil)
   (eglot-connect-timeout 5)
@@ -1213,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-diagnostic-package nil)
   (lsp-document-sync-method lsp--sync-incremental)
   (lsp-response-timeout 5)
-  (lsp-pyls-server-command (format "%s/versions/%s/bin/pyls" (my-getenv "PYENV_ROOT") (my-getenv "PY_VERSION")))
+  (lsp-pyls-server-command "pylsp")
   :config
   (setq read-process-output-max (* 1024 1024)))
 

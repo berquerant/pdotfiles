@@ -73,7 +73,8 @@
       cursor-type 'box
       split-height-threshold 120
       eval-expression-print-length nil
-      eval-expression-print-level nil)
+      eval-expression-print-level nil
+      package-native-compile t)
 
 (defun other-window-back ()
   "Reverse `other-window'."

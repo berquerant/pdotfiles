@@ -1,11 +1,11 @@
 wheel
-python-language-server[all]
-pyls-mypy
+pylsp-mypy
 pyls-isort
-pyls-black
+python-lsp-black
+pylsp-rope
 pycodestyle
 pydocstyle
 mccabe
-flake8
-rope
-ipdb
+pyls-flake8
+pyls-memestra
+python-lsp-server[all]

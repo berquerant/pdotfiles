@@ -25,5 +25,5 @@ gitconfig: ## generate .gitconfig
 	@bin/gen-gitconfig.sh
 	@echo Please cp tmp/.gitconfig ~/ to install.
 
-emacs: ## install emacs
+emacs: ## install or update emacs
 	@bin/install-emacs.sh
