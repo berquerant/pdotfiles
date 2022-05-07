@@ -55,6 +55,9 @@ formulas=(
     autoconf
     automake
     gcc
+    cmake
+    libvterm
+    libtool
 )
 
 for formula in "${formulas[@]}"

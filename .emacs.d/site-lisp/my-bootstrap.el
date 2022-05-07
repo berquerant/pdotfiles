@@ -74,7 +74,10 @@
       split-height-threshold 120
       eval-expression-print-length nil
       eval-expression-print-level nil
-      package-native-compile t)
+      package-native-compile t
+      read-process-output-max (* 1024 1024)
+      max-lisp-eval-depth 1500
+      max-specpdl-size 3000)
 
 (defun other-window-back ()
   "Reverse `other-window'."
@@ -94,7 +97,6 @@
            ("C-x w w" . overwrite-mode)
            ("M-SPC" . cycle-spacing)       ; space conversions
            ("M-s e" . shell-command)
-           ("M-s s" . shell)
            ("C-h o" . describe-symbol)
            ("M-s x" . repeat)
            ("M-s y" . repeat-complex-command)

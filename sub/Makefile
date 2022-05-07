@@ -10,12 +10,11 @@ git-global: ## modify global git settings
 get-go: go go-packages golangci-lint ## install go and make it available
 
 go: ## install go
-	git clone https://github.com/syndbg/goenv.git $(GOENV_ROOT)
+	brew install go
 
 go-packages: ## install golang utilities
-	GO111MODULE=on go install golang.org/x/tools/gopls@latest
+	go install golang.org/x/tools/gopls@latest
 	go install golang.org/x/tools/cmd/goimports@latest
-	go install github.com/x-motemen/gore/cmd/gore@latest
 	go install github.com/go-delve/delve/cmd/dlv@latest
 	go install github.com/google/gops@latest
 
@@ -24,7 +23,7 @@ golangci-lint: ## install linter
 	brew upgrade golangci/tap/golangci-lint
 
 clean-go: ## uninstall go
-	rm -rf `goenv root`
+	brew uninstall go golangci/tap/golangci-lint
 
 get-python: py-env-manager pyenv-global ## install python and make it available
 
@@ -94,7 +93,6 @@ rust-components: ## install rust components
 	rustup component add llvm-tools-preview
 
 rust-crates: ## install rust tools
-	rustup toolchain add nightly-2021-06-07 && cargo +nightly-2021-06-07 install racer # https://gitmemory.cn/repo/racer-rust/racer/issues/1173
 	cargo install cargo-watch
 	cargo install cargo-edit
 	cargo install cargo-update
@@ -110,10 +108,16 @@ rust-crates: ## install rust tools
 	brew install fd
 
 rust-analyzer:
-	cd $(GHQ_ROOT) && \
-	git clone https://github.com/rust-analyzer/rust-analyzer.git && \
-	cd rust-analyzer && \
-	cargo xtask install --server
+	brew install rust-analyzer
+
+lldb-mi:
+	ghq get lldb-tools/lldb-mi
+	export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+	export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+	export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+	cmake .
+	cmake --build .
+	ln -s $(PWD)/src/lldb-mi /usr/local/bin/
 
 clean-rust: ## uninstall rust
 	rustup self uninstall
@@ -160,3 +164,12 @@ markdown: ruby ## install markdown utilities
 
 clean-markdown: ## uninstall markdown utilities
 	gem uninstall github-markup commonmarker
+
+get-flutter: ## install flutter
+	mkdir -p $(FLUTTER_ROOT)
+	cd $(FLUTTER_ROOT)
+	wget https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.10.3-stable.zip
+	unzip flutter_macos_2.10.3-stable.zip
+
+clean-flutter: ## uninstall flutter
+	rm -rf $(FLUTTER_ROOT)

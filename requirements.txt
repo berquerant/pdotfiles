@@ -9,3 +9,4 @@ mccabe
 pyls-flake8
 pyls-memestra
 python-lsp-server[all]
+debugpy

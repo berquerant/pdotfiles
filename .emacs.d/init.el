@@ -39,9 +39,7 @@
       use-package-compute-statistics t       ; see use-package-report
       straight-use-package-by-default t
       byte-compile-warnings '(cl-functions)  ; ignore package cl is deprecated
-      warning-suppress-types '((comp))       ; do not display comp warnings immediately
-      max-specpdl-size 3000
-      max-lisp-eval-depth 1500)
+      warning-suppress-types '((comp)))      ; do not display comp warnings immediately
 
 (package-initialize)
 (package-refresh-contents)
@@ -59,7 +57,9 @@
 
 (defun my-getenv (&optional arg)
   "Get environment variable ARG or $HOME."
-  (or (getenv (or arg "HOME")) (getenv "HOME")))
+  (or (getenv (or arg "HOME"))
+      (progn (message (format "[my-getenv] not found %s" arg))
+             nil)))
 
 ;; for prefix
 (unbind-key "M-s w")
@@ -78,6 +78,14 @@
 
 (use-package my-load-built-in
   :straight (my-load-built-in :type built-in))
+
+(use-package vterm ; libvterm libtool
+  :bind
+  ("M-s s" . vterm)
+  :custom
+  (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-l" "M-x" "C-v" "M-v" "C-y" "M-y" "M-s" "C-t" "M-j"))
+  (vterm-max-scrollback 10000)
+  (vterm-always-compile-module t))
 
 (use-package mwim
   :bind
@@ -888,11 +896,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'css-csslint 'web-mode))
 
-(use-package go-mode
-  :hook
-  (before-save . gofmt-before-save)
-  :custom
-  (gofmt-command "goimports"))
+(use-package go-mode)
 
 (use-package flycheck-golangci-lint
   :demand t
@@ -900,6 +904,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook (go-mode . flycheck-golangci-lint-setup)
   :custom
   (flycheck-golangci-lint-config "~/golangci.yml"))
+
+(use-package go-playground
+  :custom
+  (go-playground-basedir (format "%s/github.com/%s/go-playground/"
+                                 (my-getenv "GHQ_ROOT")
+                                 (my-getenv "GIT_USER")))
+  (go-playground-init-command "go mod init"))
 
 (use-package tern
   :custom
@@ -1035,23 +1046,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (unbind-key "C-j" emmet-mode-keymap)
   (bind-key "C-c :" 'emmet-expand-line emmet-mode-keymap))
 
-(use-package rustic
-  :commands rustic-mode
+(use-package rust-mode
   :hook
-  ((rust-mode . rustic-mode)
-   (flycheck-mode . (lambda () (push 'rustic-clippy flycheck-checkers))))
-  :mode
-  ("\\.rs$" . rustic-mode)
-  :config
-  (add-to-list 'exec-path (format "%s/bin/" (my-getenv "CARGO_HOME")))
+  (rust-mode . (lambda () (setq indent-tabs-mode nil)))
   :custom
-  (rustic-lsp-server 'rls)
-  (rustic-format-on-save t))
+  (rust-format-on-save t))
 
-(use-package flycheck-rust
-  :after (flycheck rustic-mode)
-  :hook
-  (rust-mode . flycheck-rust-setup))
+(use-package rust-playground
+  :custom
+  (rust-playground-basedir (format "%s/github.com/%s/rust-playground"
+                                   (my-getenv "GHQ_ROOT")
+                                   (my-getenv "GIT_USER"))))
+
+(use-package dart-mode
+  :after projectile
+  :init
+  (defun dart-mode-before-save-local-hook ()
+    (add-hook 'before-save-hook 'dart-format-buffer nil t))
+  (add-hook 'dart-mode-hook 'dart-mode-before-save-local-hook)
+  :config
+  (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
+  (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
 
 (use-package flycheck-haskell
   :after (haskell-mode flycheck)
@@ -1087,16 +1102,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (("\\.proto\\'" . flycheck-mode-thyristor-2n))
   :hook
   ((go-mode
+    dart-mode
     cperl-mode
     scala-mode
-    typescript-mode
     python-mode
     c-mode
     sh-mode
     emacs-lisp-mode
     haskell-mode
-    rust-mode
-    ruby-mode
     php-mode
     js2-mode) . flycheck-mode-thyristor-2n)
   :bind
@@ -1122,10 +1135,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     (flycheck-popup-tip-mode)))
 
 ;; syntax highlighting
-(use-package tree-sitter-langs
-  :disabled t)
+(use-package tree-sitter-langs)
 (use-package tree-sitter
-  :disabled t
   :diminish  (tree-sitter-mode . "")
   :after tree-sitter-langs
   :demand t
@@ -1143,8 +1154,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
      ruby-mode
      c-mode
      c++-mode) . eglot-ensure)
-   (eglot-managed-mode . (lambda () (flymake-mode 0))))
-  :init
+   (eglot-managed-mode . (lambda () (flymake-mode 0)))
+   (eglot-managed-mode . my-eglot-before-save-hook))
   :bind
   (("M-s M-s M-e" . eglot)
    :map eglot-mode-map
@@ -1154,13 +1165,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("C-x p r" . eglot-rename)
    ("M-s M-s M-e" . eglot-shutdown))
   :config
+  (defun my-eglot-format-buffer ()
+    (call-interactively 'eglot-format-buffer))
+  (defun my-eglot-code-action-organize-imports ()
+    (call-interactively 'eglot-code-action-organize-imports))
+  (defun my-eglot-format-and-imports ()
+    (my-eglot-format-buffer)
+    (my-eglot-code-action-organize-imports))
+  (my-macro-thyristor my-eglot-format-and-imports)
+  (defun my-eglot-before-save-hook()
+    (add-hook 'before-save-hook #'my-eglot-format-and-imports-thyristor))
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp" "-v" "--tcp" "--host" "127.0.0.1" "--port" :autoport)))
   :custom
   (eglot-autoreconnect nil)
   (eglot-connect-timeout 5)
-  (eglot-send-changes-idle-time 5))
+  (eglot-send-changes-idle-time 5)
+  (eglot-confirm-server-initiated-edits nil))
 
 (use-package lsp-mode
   :hook
@@ -1178,10 +1200,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("M-s M-s l" . lsp-workspace-restart)
    ("C-c p C-w" . lsp-workspace-shutdown)
    ("C-c p m d" . lsp-describe-session)
+   ("C-c p ." . lsp-describe-thing-at-point)
+   ("C-c p a" . lsp-execute-code-action)
    ("C-c p r" . lsp-rename))
   :custom
   (lsp-auto-guess-root t)
-  (lsp-rust-server 'rls)
   (lsp-prefer-capf t)
   (lsp-prefer-flymake nil)
   (lsp-signature-auto-activate t)
@@ -1189,7 +1212,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-log-io t)
   (lsp-trace nil)
   (lsp-restart 'ignore)
-  (lsp-idle-delay 1)
+  (lsp-idle-delay 0.6)
   (lsp-file-watch-threshold 50)
   (lsp-enable-snippet t)
   (lsp-enable-xref t)
@@ -1198,12 +1221,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-enable-on-type-formatting t)
   (lsp-enable-text-document-color t)
   (lsp-enable-file-watchers t)
+  (lsp-eldoc-enable-hover t)
+  (lsp-eldoc-render-all t)
   (lsp-diagnostic-package nil)
   (lsp-document-sync-method lsp--sync-incremental)
   (lsp-response-timeout 5)
-  (lsp-pyls-server-command "pylsp")
-  :config
-  (setq read-process-output-max (* 1024 1024)))
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-enable t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t)
+  (lsp-rust-analyzer-display-parameter-hints t)
+  (lsp-rust-analyzer-display-reborrow-hints t))
+
+(use-package lsp-dart
+  :hook
+  (dart-mode . lsp)
+  :custom
+  (lsp-dart-flutter-sdk-dir (format "%s/flutter" (my-getenv "FLUTTER_ROOT")))
+  (lsp-dart-sdk-dir (format "%s/flutter/bin/cache/dart-sdk" (my-getenv "FLUTTER_ROOT"))))
 
 (use-package lsp-ui
   :commands (ladicle/toggle-lsp-ui-doc)
@@ -1213,7 +1250,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         ("C-c p >" . lsp-ui-peek-find-definitions)
         ("C-c p i" . lsp-ui-peek-find-implementation)
         ("C-c p s" . lsp-ui-sideline-mode)
-        ("C-c p ." . ladicle/toggle-lsp-ui-doc))
+        ("C-c p d" . ladicle/toggle-lsp-ui-doc))
   :custom
   (lsp-ui-doc-enable t)
   (lsp-ui-doc-header t)
@@ -1245,10 +1282,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
           (lsp-ui-doc--hide-frame))
          (lsp-ui-doc-mode 1))))
 
-(use-package dap-mode
-  :hook
-  (lsp-mode . dap-mode)
-  (lsp-mode . dap-ui-mode))
+(use-package command-log
+  :straight (command-log :host github
+                         :repo "berquerant/emacs-command-log")
+  :custom
+  (command-log-histfile (my-getenv "EMACS_HISTFILE"))
+  :config
+  (command-log-setup))
 
 (use-package recentf-ext
   :custom

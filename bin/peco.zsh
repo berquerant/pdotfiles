@@ -14,5 +14,3 @@ peco-compgen-selection() {
     CURSOR=$#BUFFER
     zle reset-prompt
 }
-zle -N peco-compgen-selection
-bindkey '^j' peco-compgen-selection

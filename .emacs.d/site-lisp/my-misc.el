@@ -34,18 +34,6 @@
 (add-hook 'pre-command-hook 'my-misc--command-repeated-hook)
 
 ;;;###autoload
-(defun my-misc-backward-delete-char-untabify ()
-  "Do `w/kill-whole-line' if current line contain spaces only before `backward-delete-char-untabify'."
-  (interactive)
-  (if (my-misc--matches-only-spaces
-       (buffer-substring-no-properties (point-at-bol) (point-at-eol)))
-      (progn
-        (kill-whole-line)
-        (previous-line)
-        (end-of-line))
-    (backward-delete-char-untabify 1)))
-
-;;;###autoload
 (defun my-misc-eval-last-sexp-and-insert ()
     "Insert the preceding sexp with its value."
     (interactive)

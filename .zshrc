@@ -25,20 +25,11 @@ source $DOTFILES_ROOT/bin/tmux.zsh
 source $DOTFILES_ROOT/bin/emacs.zsh
 source $DOTFILES_ROOT/bin/git.zsh
 source $DOTFILES_ROOT/bin/peco.zsh
-# additional settings
-use_util() { source $DOTFILES_ROOT/bin/util.zsh }
+source $DOTFILES_ROOT/bin/util.zsh
 
 # go
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-alias igo='gore'
-goenv() { # lazy
-    unset -f goenv
-    source <(goenv init -)
-    goenv "$@"
-}
 # python
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -73,9 +64,11 @@ export PATH="$ROS_ROOT/bin:$PATH"
 # haskell
 export GHCUP_ROOT="$HOME/.ghcup"
 export PATH="$GHCUP_ROOT/bin:$PATH"
+# flutter
+export FLUTTER_ROOT="$HOME/.flutter"
+export PATH="$FLUTTER_ROOT/flutter/bin:$PATH"
 # activate lazy envs
 load_envs() {
-    goenv --version
     pyenv --version
     nvm --version
 }

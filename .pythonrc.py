@@ -1,6 +1,8 @@
 import readline
 import atexit
 import os
+from typing import Callable, TypeVar, Optional
+from dataclasses import dataclass
 from functools import wraps
 from pyclbr import readmodule_ex
 from inspect import (
@@ -26,14 +28,17 @@ except IOError:
 atexit.register(readline.write_history_file, histfile)
 
 
+T = TypeVar("T")
+
+
 class devutil:
     """Utilities for dev."""
 
     @staticmethod
-    def ignore_exception(f):
+    def ignore_exception(f: Callable[..., T]) -> Callable[..., Optional[T]]:
         """Ignore any exceptions raised by f."""
         @wraps(f)
-        def inner(*args, **kwargs):
+        def inner(*args: list, **kwargs: dict) -> Optional[T]:
             try:
                 return f(*args, **kwargs)
             except Exception as e:
@@ -44,9 +49,9 @@ class devutil:
     @staticmethod
     def describe_function_or_method(x):
         """Describe x's methods or functions."""
-        for _, f in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
-            print("{}{}".format(f.__name__, signature(f)))
-            print("  " + f.__doc__)
+        for _, member in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
+            print(f"{member.__name__}{signature(member)}")
+            print("  " + member.__doc__)
 
 
 class dev:
@@ -82,15 +87,19 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def f(x):
-        """Less source of x."""
-        os.system("less " + getfile(x))
+    def f(x, n=False):
+        """Less source of x. Display line number if n is True."""
+        cmd = ["less"]
+        if n:
+            cmd.append("-N")
+        cmd.append(getfile(x))
+        os.system(" ".join(cmd))
 
     @classmethod
     @devutil.ignore_exception
     def g(cls, x):
         """Get members using inspect. Help is available by property h."""
-        return cls.InspectMembers(x)
+        return cls.InspectMembers.new(x)
 
     @staticmethod
     @devutil.ignore_exception
@@ -110,27 +119,32 @@ class dev:
         """Get class tree."""
         return getclasstree([type(x)])
 
+    @dataclass
     class InspectMembers:
-        def __init__(self, x):
-            self.__members = dict(getmembers(x))
+        members: dict
+
+        @staticmethod
+        def new(x):
+            return dev.InspectMembers(members=dict(getmembers(x)))
 
         @property
         def h(self):
+            """Print help."""
             devutil.describe_function_or_method(self)
 
         @property
         def all(self) -> dict:
             """Get all members."""
-            return self.__members
+            return self.members
 
         @property
         def keys(self) -> list:
             """Get keys of members."""
-            return list(self.__members.keys())
+            return list(self.members.keys())
 
         def get(self, key: str):
             """Get a member by key."""
-            return self.__members.get(key)
+            return self.members.get(key)
 
 
 del histfile, atexit, readline
