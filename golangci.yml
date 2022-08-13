@@ -1,4 +1,5 @@
 run:
+  go: "1.18"
   concurrency: 4
   timeout: 10s
   skip-dirs:
@@ -8,6 +9,7 @@ run:
     - ".*generated.*"
     - ".*\\.pb\\.go$"
   allow-parallel-runners: true
+  tests: false
 
 linter-settings:
   govet:
@@ -33,3 +35,4 @@ linters:
     - gomnd
     - gofumpt
     - ireturn
+    - exhaustivestruct

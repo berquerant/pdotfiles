@@ -27,3 +27,5 @@ gitconfig: ## generate .gitconfig
 
 emacs: ## install or update emacs
 	@bin/install-emacs.sh
+
+update: brew-update pyenv-update node-update rust-update ## update except emacs

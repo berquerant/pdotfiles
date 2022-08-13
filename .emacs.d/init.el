@@ -25,15 +25,6 @@
   (load bootstrap-file nil 'nomessage))
 (straight-use-package 'use-package) ; use-package integration
 
-(defun my-advice-straight-vc (orig-func &rest args)
-  "Ignore `built-in' packages to avoid VC backend `built-in' does not implement method `get-commit'."
-  (if (eq (cadr args) 'built-in)
-      (progn (message "[my-advice-straight-vc] Ignore %s due to built-in package." (car args))
-             (princ args)
-             nil)
-    (apply orig-func args)))
-(advice-add 'straight-vc :around 'my-advice-straight-vc)
-
 (setq use-package-verbose t                  ; enable logs in *Message* buffer
       use-package-minimum-reported-time 0.2
       use-package-compute-statistics t       ; see use-package-report
@@ -309,11 +300,9 @@
   :custom
   (helm-projectile-fuzzy-match nil)
   :config
-  (my-macro-fallback-interactively my-project-p helm-projectile helm-ghq)
   (my-macro-fallback-interactively my-project-p helm-projectile-find-file helm-ghq)
   (my-macro-fallback-interactively my-project-p helm-projectile-recentf helm-ghq)
   (bind-keys :map projectile-mode-map
-             ("C-x g f" . helm-projectile-fallback-to-helm-ghq)
              ("C-x g f" . helm-projectile-find-file-fallback-to-helm-ghq)
              ("C-x g h" . helm-projectile-recentf-fallback-to-helm-ghq)))
 
@@ -476,12 +465,6 @@ https://github.com/zeroturnaround/sql-formatter"
   (dumb-jump-selector 'helm)
   (dumb-jump-force-searcher 'rg))
 
-(use-package goto-chg
-  :config
-  (smartrep-define-key global-map "C-x j"
-    '(("n" . goto-last-change)
-      ("p" . goto-last-change-reverse))))
-
 (use-package git-gutter
   :demand t
   :after (projectile goto-chg)
@@ -619,19 +602,6 @@ https://github.com/zeroturnaround/sql-formatter"
   (save-abbrevs t)
   :config
   (quietly-read-abbrev-file))
-
-;; undo + redo
-(use-package undo-tree
-  :demand t
-  :diminish (undo-tree-mode . "")
-  :bind
-  (("M-s M-s M-u" . undo-tree-visualize)
-   ("C-/" . undo-tree-undo)
-   ("M-/" . undo-tree-redo))
-  :custom
-  (undo-tree-mode-lighter "")
-  :config
-  (global-undo-tree-mode t))
 
 ;; jump by char
 (use-package avy
@@ -781,6 +751,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (:map flyspell-mode-map
    ("M-s a b" . flyspell-buffer))
   :config
+  ; for backward-forward
+  (unbind-key "C-," flyspell-mode-map)
+  (unbind-key "C-." flyspell-mode-map)
   (my-macro-thyristor flyspell-mode)
   (defun flyspell-prog-mode-switch-thyristor ()
     (flyspell-mode-off)
@@ -1230,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-rust-analyzer-display-chaining-hints t)
   (lsp-rust-analyzer-display-closure-return-type-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-enable t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t)
   (lsp-rust-analyzer-display-parameter-hints t)
   (lsp-rust-analyzer-display-reborrow-hints t))
@@ -1280,7 +1253,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
         (progn
           (lsp-ui-doc-mode -1)
           (lsp-ui-doc--hide-frame))
-         (lsp-ui-doc-mode 1))))
+        (lsp-ui-doc-mode 1))))
+
+(use-package goto-chg
+  :demand t
+  :bind
+  ("M-," . goto-last-change-reverse)
+  ("M-." . goto-last-change))
+
+(use-package backward-forward
+  :demand t
+  :bind
+  ("C-," . backward-forward-previous-location)
+  ("C-." . backward-forward-next-location)
+  :config
+  (loop for x in '(helm-bookmarks
+                   helm-for-files
+                   helm-find-files
+                   helm-all-mark-rings
+                   helm-ghq
+                   helm-projectile-find-file
+                   helm-projectile-recentf
+                   helm-swoop
+                   helm-occur
+                   helm-git-grep-at-point
+                   deadgrep
+                   xref-find-references
+                   xref-find-definitions)
+        do (advice-add x :before #'backward-forward-push-mark-wrapper))
+  (backward-forward-mode t))
 
 (use-package command-log
   :straight (command-log :host github

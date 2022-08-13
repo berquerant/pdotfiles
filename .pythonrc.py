@@ -1,21 +1,14 @@
-import readline
 import atexit
 import os
-from typing import Callable, TypeVar, Optional
+import readline
 from dataclasses import dataclass
+from enum import Enum
 from functools import wraps
-from pyclbr import readmodule_ex
-from inspect import (
-    getmembers,
-    getsource,
-    getdoc,
-    getfile,
-    getclasstree,
-    isfunction,
-    ismethod,
-    signature,
-)
+from inspect import (getclasstree, getdoc, getfile, getmembers, getsource,
+                     isfunction, ismethod, signature)
 from pprint import pprint
+from pyclbr import readmodule_ex
+from typing import Any, Callable, Optional, TypeVar
 
 
 readline.parse_and_bind("tab: complete")
@@ -34,23 +27,34 @@ T = TypeVar("T")
 class devutil:
     """Utilities for dev."""
 
-    @staticmethod
-    def ignore_exception(f: Callable[..., T]) -> Callable[..., Optional[T]]:
+    class color(Enum):
+        end = "\033[0m"
+        red = "\033[31m"
+        green = "\033[32m"
+
+        def add(self, s: str) -> str:
+            """Add color to the string."""
+            return f"{self.value}{s}{self.end.value}"
+
+    @classmethod
+    def ignore_exception(cls, f: Callable[..., T]) -> Callable[..., Optional[T]]:
         """Ignore any exceptions raised by f."""
+
         @wraps(f)
         def inner(*args: list, **kwargs: dict) -> Optional[T]:
             try:
                 return f(*args, **kwargs)
             except Exception as e:
-                print("{}({}, {}) caused {}".format(f.__name__, args, kwargs, e))
+                print(cls.color.red.add(f"{f.__name__}({args}, {kwargs}) caused {e}"))
                 return None
+
         return inner
 
-    @staticmethod
-    def describe_function_or_method(x):
+    @classmethod
+    def describe_function_or_method(cls, x: Any):
         """Describe x's methods or functions."""
         for _, member in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
-            print(f"{member.__name__}{signature(member)}")
+            print(cls.color.green.add(f"{member.__name__}{signature(member)}"))
             print("  " + member.__doc__)
 
 
@@ -68,7 +72,7 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def c(x):
+    def c(x: Any):
         """Print source of x."""
         print(getsource(x))
 
@@ -81,13 +85,13 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def d(x):
+    def d(x: Any):
         """Print docstring of x."""
         print(getdoc(x))
 
     @staticmethod
     @devutil.ignore_exception
-    def f(x, n=False):
+    def f(x, n: bool = False):
         """Less source of x. Display line number if n is True."""
         cmd = ["less"]
         if n:
@@ -97,25 +101,25 @@ class dev:
 
     @classmethod
     @devutil.ignore_exception
-    def g(cls, x):
+    def g(cls, x: Any):
         """Get members using inspect. Help is available by property h."""
         return cls.InspectMembers.new(x)
 
     @staticmethod
     @devutil.ignore_exception
-    def pp(x):
+    def pp(x: Any):
         """Pretty print."""
         pprint(x, width=120, depth=None)
 
     @staticmethod
     @devutil.ignore_exception
-    def s(x):
+    def s(x: Any):
         """Print signature of x."""
-        print(signature(x))
+        print(devutil.color.green.add(f"{x.__name__}{signature(x)}"))
 
     @staticmethod
     @devutil.ignore_exception
-    def t(x):
+    def t(x: Any):
         """Get class tree."""
         return getclasstree([type(x)])
 
@@ -124,7 +128,7 @@ class dev:
         members: dict
 
         @staticmethod
-        def new(x):
+        def new(x: Any):
             return dev.InspectMembers(members=dict(getmembers(x)))
 
         @property
@@ -148,4 +152,4 @@ class dev:
 
 
 del histfile, atexit, readline
-print(dev.__doc__)
+print(devutil.color.green.add(dev.__doc__))

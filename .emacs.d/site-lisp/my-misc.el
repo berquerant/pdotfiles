@@ -51,5 +51,11 @@
            (line-number-at-pos)
            (file-name-nondirectory buffer-file-name))))
 
+;;;###autoload
+(defun my-misc-exchange-point-and-mark ()
+  (interactive)
+  (exchange-point-and-mark)
+  (deactivate-mark))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here

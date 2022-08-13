@@ -13,6 +13,46 @@
 
 ;;; Code:
 
+(use-package my-macro
+  :demand t
+  :straight (my-macro :type built-in)
+  :config
+  (my-macro-defun-toggle debug-on-error)
+  (my-macro-defun-toggle debug-on-quit)
+  (defconst my-init-el (format "%s/init.el" (my-getenv "EMACSD"))
+    "init.el location.")
+  (defconst my-zshrc (format "%s/.zshrc" (my-getenv "HOME"))
+    ".zshrc location.")
+  (my-macro-handle-file find-file my-init-el)
+  (my-macro-handle-file load-file my-init-el)
+  (my-macro-handle-file find-file my-zshrc)
+  (bind-key "M-s 0" 'find-file-initel)
+  (bind-key "M-s 9" 'find-file-zshrc))
+
+(use-package modus-themes
+  :ensure
+  :init
+  (setq modus-themes-bold-constructs t
+        modus-themes-italic-constructs t
+        modus-themes-subtle-line-numbers t
+        modus-themes-hl-line  '(accented)
+        modus-themes-paren-match '(bold)
+        modus-themes-region '(bg-only no-extend accented))
+  (modus-themes-load-themes)
+  :config
+  (my-macro-ring-hook "my-themes" '(manoj-dark modus-vivendi))
+  (defun my-theme--init-basic-appearance ()
+    (set-cursor-color "green")
+    (setq cursor-type 'box))
+  (defun my-theme--rotate (current-theme next-theme)
+    (disable-theme current-theme)
+    (disable-theme next-theme)
+    (load-theme next-theme t)
+    (my-theme--init-basic-appearance))
+  (add-to-list 'my-themes-ring-hook 'my-theme--rotate)
+  (my-themes-ring-hook-rotate)
+  (bind-key "M-s 1" 'my-themes-ring-hook-rotate))
+
 (menu-bar-mode 0) ; no menu bar
 (tool-bar-mode 0) ; no tool bar
 (toggle-scroll-bar nil) ; no scroll bar
@@ -34,8 +74,6 @@
 (line-number-mode t)
 (column-number-mode t)
 (global-display-line-numbers-mode t)
-(load-theme 'manoj-dark t)
-(set-cursor-color "green")
 (set-face-attribute 'default nil :height 100) ; initial font size
 (setq-default major-mode 'text-mode       ; use text-mode instead of fundamental-mode
               bidi-display-reordering nil ; ignore the writing direction: right to left
@@ -70,10 +108,10 @@
       locale-coding-system 'utf-8
       line-number-display-limit 100000
       line-number-display-limit-width 50
-      cursor-type 'box
       split-height-threshold 120
       eval-expression-print-length nil
       eval-expression-print-level nil
+      eval-expression-print-maximum-character nil
       package-native-compile t
       read-process-output-max (* 1024 1024)
       max-lisp-eval-depth 1500
@@ -89,7 +127,6 @@
            ([?\C-¥] . [?\C-\\])
            ([?\M-¥] . [?\M-\\])
            ([?\C-\M-¥] . [?\C-\M-\\])
-           ("C-x C-x" . exchange-point-and-mark)
            ("C-t" . other-window)
            ("C-T" . other-window-back)
            ("C-x C-t" . toggle-truncate-lines)
@@ -131,27 +168,12 @@
 
 (bind-key "M-s p p" 'my-get-current-path)
 
-(use-package my-macro
-  :demand t
-  :straight (my-macro :type built-in)
-  :config
-  (my-macro-defun-toggle debug-on-error)
-  (my-macro-defun-toggle debug-on-quit)
-  (defconst my-init-el (format "%s/init.el" (my-getenv "EMACSD"))
-    "init.el location.")
-  (defconst my-zshrc (format "%s/.zshrc" (my-getenv "HOME"))
-    ".zshrc location.")
-  (my-macro-handle-file find-file my-init-el)
-  (my-macro-handle-file load-file my-init-el)
-  (my-macro-handle-file find-file my-zshrc)
-  (bind-key "M-s 0" 'find-file-initel)
-  (bind-key "M-s 9" 'find-file-zshrc))
-
 (use-package my-misc
   :straight (my-misc :type built-in)
   :bind
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
-  ("C-x g t" . my-misc-tig-blame-current-buffer))
+  ("C-x g t" . my-misc-tig-blame-current-buffer)
+  ("C-x C-x" . my-misc-exchange-point-and-mark))
 
 (use-package my-scroll
   :straight (my-scroll :type built-in)

@@ -44,13 +44,18 @@ on_failed() {
     exit 1
 }
 
+on_success() {
+    mv nextstep/Emacs.app /Applications/
+    make clean
+    cecho green "GCC Emacs Installed!"
+    cecho green "Now emacs is ${NEXT_HASH}"
+    cecho green "Done!"
+}
+
 find . -name "*.pdmp" -type f -delete
 rm -rf ${EMACSD}/eln-cache
 export CC=clang
 ./autogen.sh &&\
-  ./configure --with-native-compilation --with-xwidgets &&\
+  ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" CFLAGS="-O3" --with-native-compilation --with-xwidgets --without-webp --without-sound &&\
   make -j4 && make install &&\
-  mv nextstep/Emacs.app /Applications/ || on_failed
-cecho green "GCC Emacs Installed!"
-cecho green "Now emacs is ${NEXT_HASH}"
-cecho green "Done!"
+  on_success || on_failed

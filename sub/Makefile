@@ -7,6 +7,11 @@ git-global: ## modify global git settings
 	git config --global log.abbrevCommit true
 	git config --global core.ignorecase false
 
+brew-update:
+	brew update
+	brew upgrade
+	brew cleanup
+
 get-go: go go-packages golangci-lint ## install go and make it available
 
 go: ## install go
@@ -42,6 +47,8 @@ pyenv-install-requirements: ## upgrade python requirements
 	pip freeze > $(PROJECT)/tmp/requirements_backup.txt
 	pip install --upgrade -r requirements.txt
 
+pyenv-update: pyenv-install-requirements
+
 clean-pyenv: ## uninstall python
 	pyenv uninstall $(PY_VERSION)
 	brew uninstall pipenv
@@ -68,6 +75,10 @@ node: ## install node
 
 typescript: ## install typescript
 	npm i -g typescript typescript-formatter typescript-eslint typescript-language-server ts-node
+
+node-update:
+	npm update -g npm
+	npm update --location=global
 
 clean-node: ## uninstall node
 	rm -rf $(NVM_DIR) $(NPM_ROOT)
