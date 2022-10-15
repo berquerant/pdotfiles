@@ -9,7 +9,9 @@
 ;;;###autoload
 (define-minor-mode my-sticky-buffer-mode
   "Make the current window always display this buffer."
-  nil " sticky" nil
+  :init-value nil
+  :lighter " sticky"
+  :key-map nil
   (set-window-dedicated-p (selected-window) my-sticky-buffer-mode))
 
 (defun my-sticky-buffer-mode--delete-other-windows (window)

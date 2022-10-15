@@ -57,5 +57,17 @@
   (exchange-point-and-mark)
   (deactivate-mark))
 
+;;;###autoload
+(defun my-misc-pp-macroexpand-1-last-sexp ()
+  "Read sexp before point, output `macroexpand-1`-ed result in pretty format."
+  (interactive)
+  (pp (macroexpand-1 (elisp--preceding-sexp))))
+
+;;;###autoload
+(defun my-misc-pp-macroexpand-all-last-sexp ()
+  "Read sexp before point, output `macroexpand-all`-ed result in pretty format."
+  (interactive)
+  (pp (macroexpand-all (elisp--preceding-sexp))))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here

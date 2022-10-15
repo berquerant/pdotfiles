@@ -50,7 +50,6 @@ pyenv-install-requirements: ## upgrade python requirements
 pyenv-update: pyenv-install-requirements
 
 clean-pyenv: ## uninstall python
-	pyenv uninstall $(PY_VERSION)
 	brew uninstall pipenv
 	brew uninstall pyenv
 	rm -rf $(PYENV_ROOT)
@@ -121,43 +120,19 @@ rust-crates: ## install rust tools
 rust-analyzer:
 	brew install rust-analyzer
 
+LLVM_PATH = $(shell brew --prefix llvm)
+
 lldb-mi:
 	ghq get lldb-tools/lldb-mi
-	export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-	export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
-	export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+	export LDFLAGS="-L$(LLVM_PATH)/lib"
+	export CPPFLAGS="-I$(LLVM_PATH)/include"
+	export PATH="$(LLVM_PATH)/bin:$PATH"
 	cmake .
 	cmake --build .
 	ln -s $(PWD)/src/lldb-mi /usr/local/bin/
 
 clean-rust: ## uninstall rust
 	rustup self uninstall
-
-get-lisp: lisp ## install lisp and make it available
-
-lisp: ## install lisp
-	brew install roswell
-	ros setup
-	ros install $(CL_COMPILER)/$(CL_COMPILER_VERSION)
-
-clean-lisp: ## uninstall lisp
-	ros list installed 2>/dev/null | xargs -I X ros delete X
-	brew uninstall roswell
-	rm -rf $(ROS_ROOT)
-
-get-haskell: haskell haskell-packages ## install haskell and make it available
-
-haskell: ## install haskell
-	curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-	curl -sSL https://get.haskellstack.org/ | sh
-
-haskell-packages: ## install haskell utilities
-	stack install hlint
-	stack install implicit-hie
-
-clean-haskell: ## uninstall haskell
-	rm -rf ~/.stack
-	rm -f /usr/local/bin/stack
 
 get-clang: clang-tools ## install c
 
@@ -184,3 +159,9 @@ get-flutter: ## install flutter
 
 clean-flutter: ## uninstall flutter
 	rm -rf $(FLUTTER_ROOT)
+
+closure: ## install clojure
+	brew install clojure/tools/clojure leiningen clojure-lsp/brew/clojure-lsp-native
+
+clean-clojure: ## uninstall clojure
+	brew uninstall clojure/tools/clojure leiningen clojure-lsp/brew/clojure-lsp-native

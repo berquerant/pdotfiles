@@ -5,11 +5,11 @@ from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
 from inspect import (getclasstree, getdoc, getfile, getmembers, getsource,
-                     isfunction, ismethod, signature)
+                     getsourcelines, isfunction, ismethod, signature)
 from pprint import pprint
 from pyclbr import readmodule_ex
-from typing import Any, Callable, Optional, TypeVar
-
+from typing import Any, Callable, Hashable, Optional, TypeVar
+from uuid import uuid4
 
 readline.parse_and_bind("tab: complete")
 histfile = os.path.join(os.environ["PYTHONHISTORY"])
@@ -22,6 +22,7 @@ atexit.register(readline.write_history_file, histfile)
 
 
 T = TypeVar("T")
+D = TypeVar("D", bound=Callable)
 
 
 class devutil:
@@ -91,7 +92,16 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def f(x, n: bool = False):
+    def l(x: Any):
+        """Print the location in which x was defined in."""
+        srcfile = getfile(x)
+        lines, start_linum = getsourcelines(x)
+        end_linum = start_linum + len(lines) - 1
+        print(f"file {srcfile} line {start_linum} to {end_linum}")
+
+    @staticmethod
+    @devutil.ignore_exception
+    def f(x: Any, n: bool = False):
         """Less source of x. Display line number if n is True."""
         cmd = ["less"]
         if n:
@@ -149,6 +159,35 @@ class dev:
         def get(self, key: str):
             """Get a member by key."""
             return self.members.get(key)
+
+    @classmethod
+    def hashable(cls, x: Any) -> Hashable:
+        """Get hashable."""
+        if isinstance(x, list | tuple | set | frozenset):
+            return tuple(cls.hashable(z) for z in x)
+        if isinstance(x, dict):
+            return tuple((k, cls.hashable(x[k])) for k in sorted(x))
+        if isinstance(x, bytearray):
+            return bytes(x)
+        return x
+
+    @staticmethod
+    def w(f: D) -> D:
+        """Watch the arguments and the return value."""
+
+        @wraps(f)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            rid = uuid4()
+            s = signature(f)
+            bindings = ",".join(
+                f"{k}={v}" for k, v in s.bind(*args, **kwargs).arguments.items()
+            )
+            print(f"[{rid}] Call {f.__name__}{bindings}")
+            r = f(*args, **kwargs)
+            print(f"[{rid}] Returned {r}")
+            return r
+
+        return wrapper  # type: ignore
 
 
 del histfile, atexit, readline

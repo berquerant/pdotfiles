@@ -28,8 +28,8 @@ message "Install tools"
 formulas=(
     bash
     git
-    direnv
-    readline
+    direnv # .envrc
+    readline # .pythonrc
     gettext
     peco
     zsh
@@ -48,10 +48,7 @@ formulas=(
     aspell
     unar
     nmap
-    telnet
-    git-secrets
-    shellcheck
-    cpulimit
+    shellcheck # flymake
     autoconf
     automake
     gcc

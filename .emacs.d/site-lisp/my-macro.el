@@ -6,6 +6,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 's)
 
 (defmacro my-macro-do-once (f)
@@ -179,16 +180,16 @@ Generated function is TARGET-FUNC-region-or-point."
   "Generate a hook variable that calls hooked functions with a state in rotation.
 The hook variable is NAME-ring-hook.
 A hooked function takes 2 arguments, the current state and the next state,
-RING is the list of states.
-You can run the hook by calling NAME-ring-hook-rotate, that calls hooked functions
+the list of the states is NAME-ring-hook-states, initialized by RING.
+Run the hook by calling NAME-ring-hook-rotate, that calls hooked functions
 with the states and sets the next state to current.
 
 For example,
 
   (my-macro-ring-hook \"test\" '(1 2 4))
 
-generates a hook variable `test-ring-hook' and an interactive function
-`test-ring-hook-rotate'.
+generates a hook variable `test-ring-hook', an interactive function
+`test-ring-hook-rotate' and a variable `test-ring-hook-states'
 Add a function to the variable:
 
   (add-to-list 'test-ring-hook FUNCTION)
@@ -197,6 +198,7 @@ Run the hook by (test-ring-hook-rotate), then calls (HOOKED-FUNCTION 1 2).
 Next (test-ring-hook-rotate) then calls (HOOKED-FUNCTION 2 4),
 (HOOKED-FUNCTION 4 1), (HOOKED-FUNCTION 1 2), ..."
   (let ((hook-name (format "%s-ring-hook" name))
+        (ring-name (format "%s-ring-hook-states" name))
         (state-index (format "%s-ring-hook-state-index" name))
         (rotate-func (format "%s-ring-hook-rotate" name))
         (get-func (format "%s-ring-hook-get-state" name))
@@ -206,18 +208,21 @@ Next (test-ring-hook-rotate) then calls (HOOKED-FUNCTION 2 4),
        (defvar ,(read hook-name)
          nil
          ,doc-string)
+       (defvar ,(read ring-name)
+         ,ring
+         ,doc-string)
        (defvar ,(read state-index)
          0
          ,doc-string)
        (defun ,(read get-func)
            ()
          ,doc-string
-         (nth ,(read state-index) ,ring))
+         (nth ,(read state-index) ,(read ring-name)))
        (defun ,(read incr-func)
            ()
          ,doc-string
          (setq ,(read state-index)
-               (mod (+ 1 ,(read state-index)) (length ,ring))))
+               (mod (+ 1 ,(read state-index)) (length ,(read ring-name)))))
        (defun ,(read rotate-func)
            ()
          ,doc-string

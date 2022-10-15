@@ -14,11 +14,11 @@
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+      (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
          'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
@@ -28,12 +28,9 @@
 (setq use-package-verbose t                  ; enable logs in *Message* buffer
       use-package-minimum-reported-time 0.2
       use-package-compute-statistics t       ; see use-package-report
-      straight-use-package-by-default t
+      straight-use-package-by-default t      ; use-package integration
       byte-compile-warnings '(cl-functions)  ; ignore package cl is deprecated
       warning-suppress-types '((comp)))      ; do not display comp warnings immediately
-
-(package-initialize)
-(package-refresh-contents)
 
 (use-package bind-key) ; easy key bindings
 (use-package diminish) ; diminished mode-line
@@ -694,6 +691,8 @@ https://github.com/zeroturnaround/sql-formatter"
       ("j" . sp-join-sexp)))
   (ad-disable-advice 'delete-backward-char 'before 'sp-delete-pair-advice)
   (ad-activate 'delete-backward-char)
+  (sp-local-pair '(emacs-lisp-mode) "'" "'" :actions nil) ; disable right ' completion
+  (sp-local-pair '(emacs-lisp-mode) "`" "`" :actions nil) ; disable right ` completion
   (smartparens-global-mode t))
 
 (use-package highlight-symbol
@@ -764,15 +763,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (add-hook 'markdown-mode-hook 'flyspell-mode-thyristor-2n)
   (add-hook 'generic-mode-hook 'flyspell-mode-thyristor-2n))
 
-(use-package flyspell-correct
-  :after flyspell
-  :bind
-  (:map flyspell-mode-map
-        ("M-s a a" . flyspell-correct-wrapper)))
-
-(use-package flyspell-correct-popup
-  :after flyspell-correct)
-
 (use-package cc-mode
   :mode
   ("\\.h\\'" . c++-mode)
@@ -781,49 +771,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                      (setq c-default-style "k&r")
                      (setq indent-tabs-mode nil)
                      (setq c-basic-offset 2))))
-
-(use-package lisp-mode
-  :straight (lisp-mode :type built-in)
-  :after slime
-  :bind
-  (:map lisp-mode-map
-        ("M-s M-s M-e" . slime)
-        ("C-x p ." . slime-describe-symbol)
-        ("C-x p >" . slime-edit-definition)
-        ("C-x p <" . slime-pop-find-definition-stack)
-        ("C-x p h" . slime-hyperspec-lookup)
-        ("C-x p m" . slimce-expand-1)
-        ("C-x p M" . slime-macroexpand-all)))
-
-(use-package slime-company
-  :after (slime company))
-
-(diminish 'eldoc-mode)
-(use-package slime
-  :demand t
-  :bind
-  (:map slime-mode-map
-        ("C-c C-q" . slime-restart-inferior-lisp))
-  :custom
-  (slime-contribs '(slime-repl
-                    slime-fancy
-                    slime-banner
-                    slime-indentation))
-  :config
-  (setq inferior-lisp-program (format "%s/impls/x86-64/darwin/%s/%s/bin/%s"
-                                      (my-getenv "ROS_ROOT")
-                                      (my-getenv "CL_COMPILER")
-                                      (my-getenv "CL_COMPILER_VERSION")
-                                      (my-getenv "CL_COMPILER")))
-  (push '("*slime-apropos*") popwin:special-display-config)
-  (push '("*slime-macroexpansion*") popwin:special-display-config)
-  (push '("*slime-description*") popwin:special-display-config)
-  (push '("*slime-compilation*" :noselect t) popwin:special-display-config)
-  (push '("*slime-xref*") popwin:special-display-config) ; cross-reference
-  (push '(sldb-mode :stick t) popwin:special-display-config)
-  (push '(slime-repl-mode) popwin:special-display-config)
-  (push '(slime-connection-list-mode) popwin:special-display-config)
-  (slime-setup '(slime-fancy slime-company)))
 
 (use-package add-node-modules-path
   :hook
@@ -869,7 +816,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'css-csslint 'web-mode))
 
-(use-package go-mode)
+(use-package go-mode
+  :custom
+  (gofmt-command "goimports")
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package flycheck-golangci-lint
   :demand t
@@ -884,6 +835,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                  (my-getenv "GHQ_ROOT")
                                  (my-getenv "GIT_USER")))
   (go-playground-init-command "go mod init"))
+
 
 (use-package tern
   :custom
@@ -971,9 +923,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (("M-s M-s M-a" . ascii-on)
    ("M-s M-s a" . ascii-off)))
 
-(use-package csv-mode
-  :mode ("\\.csv\\'" . csv-mode))
-
 (use-package json-mode
   :mode ("\\.json\\'" . json-mode)
   :bind
@@ -986,7 +935,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package yaml-mode
   :mode
   (("\\.yaml\\'" . yaml-mode)
-   ("\\.yml\\'" . yaml-mode))
+   ("\\.yml\\'" . yaml-mode)
+   ("\\.dig\\'" . yaml-mode))
   :bind
   (:map yaml-mode-map
         ("C-m" . newline-and-indent)))
@@ -1054,6 +1004,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :mode "\\.nix\\'")
 
 (defalias 'perl-mode 'cperl-mode)
+
+(use-package clojure-mode)
+
+(use-package cider)
 
 ;; syntax checkers
 (use-package flymake-diagnostic-at-point
@@ -1138,16 +1092,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("C-x p r" . eglot-rename)
    ("M-s M-s M-e" . eglot-shutdown))
   :config
+  (my-macro-ring-hook "my-eglot" '(my-eglot-imports-and-format
+                                   my-eglot-noop
+                                   my-eglot-format
+                                   my-eglot-imports))
+  (defun my-eglot-ring-echo (cur next)
+    (message "[my-eglot] change before save hook to %s" next))
+  (add-to-list 'my-eglot-ring-hook 'my-eglot-ring-echo)
   (defun my-eglot-format-buffer ()
-    (call-interactively 'eglot-format-buffer))
+    (when (or (eq (my-eglot-ring-hook-get-state) 'my-eglot-format)
+              (eq (my-eglot-ring-hook-get-state) 'my-eglot-imports-and-format))
+      (call-interactively 'eglot-format-buffer)))
   (defun my-eglot-code-action-organize-imports ()
-    (call-interactively 'eglot-code-action-organize-imports))
+    (when (or (eq (my-eglot-ring-hook-get-state) 'my-eglot-imports)
+              (eq (my-eglot-ring-hook-get-state) 'my-eglot-imports-and-format))
+      (call-interactively 'eglot-code-action-organize-imports)))
   (defun my-eglot-format-and-imports ()
-    (my-eglot-format-buffer)
-    (my-eglot-code-action-organize-imports))
-  (my-macro-thyristor my-eglot-format-and-imports)
-  (defun my-eglot-before-save-hook()
-    (add-hook 'before-save-hook #'my-eglot-format-and-imports-thyristor))
+    (unless (eq major-mode 'go-mode) ; use gofmt-before-save
+      (my-eglot-code-action-organize-imports)
+      (my-eglot-format-buffer)))
+  (defun my-eglot-before-save-hook ()
+    (add-hook 'before-save-hook #'my-eglot-format-and-imports))
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp" "-v" "--tcp" "--host" "127.0.0.1" "--port" :autoport)))
@@ -1267,20 +1232,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
   ("C-," . backward-forward-previous-location)
   ("C-." . backward-forward-next-location)
   :config
-  (loop for x in '(helm-bookmarks
-                   helm-for-files
-                   helm-find-files
-                   helm-all-mark-rings
-                   helm-ghq
-                   helm-projectile-find-file
-                   helm-projectile-recentf
-                   helm-swoop
-                   helm-occur
-                   helm-git-grep-at-point
-                   deadgrep
-                   xref-find-references
-                   xref-find-definitions)
-        do (advice-add x :before #'backward-forward-push-mark-wrapper))
+  (cl-loop for x in '(helm-bookmarks
+                      helm-for-files
+                      helm-find-files
+                      helm-all-mark-rings
+                      helm-ghq
+                      helm-projectile-find-file
+                      helm-projectile-recentf
+                      helm-swoop
+                      helm-occur
+                      helm-git-grep-at-point
+                      deadgrep
+                      xref-find-references
+                      xref-find-definitions)
+           do (advice-add x :before #'backward-forward-push-mark-wrapper))
   (backward-forward-mode t))
 
 (use-package command-log

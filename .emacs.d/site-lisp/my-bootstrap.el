@@ -30,15 +30,16 @@
   (bind-key "M-s 9" 'find-file-zshrc))
 
 (use-package modus-themes
-  :ensure
+  :ensure t
   :init
-  (setq modus-themes-bold-constructs t
-        modus-themes-italic-constructs t
-        modus-themes-subtle-line-numbers t
-        modus-themes-hl-line  '(accented)
-        modus-themes-paren-match '(bold)
-        modus-themes-region '(bg-only no-extend accented))
   (modus-themes-load-themes)
+  :custom
+  (modus-themes-bold-constructs t)
+  (modus-themes-italic-constructs t)
+  (modus-themes-subtle-line-numbers t)
+  (modus-themes-hl-line  '(accented))
+  (modus-themes-paren-match '(bold))
+  (modus-themes-region '(bg-only no-extend accented))
   :config
   (my-macro-ring-hook "my-themes" '(manoj-dark modus-vivendi))
   (defun my-theme--init-basic-appearance ()
@@ -171,6 +172,8 @@
 (use-package my-misc
   :straight (my-misc :type built-in)
   :bind
+  ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
+  ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
   ("C-x g t" . my-misc-tig-blame-current-buffer)
   ("C-x C-x" . my-misc-exchange-point-and-mark))
