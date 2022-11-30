@@ -3,7 +3,7 @@
 ```shell
 make init
 make deploy
-make gitconfig
+make git
 make emacs
 ```
 

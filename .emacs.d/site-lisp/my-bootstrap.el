@@ -175,7 +175,6 @@
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
-  ("C-x g t" . my-misc-tig-blame-current-buffer)
   ("C-x C-x" . my-misc-exchange-point-and-mark))
 
 (use-package my-scroll

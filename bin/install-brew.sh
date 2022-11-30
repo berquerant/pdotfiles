@@ -36,7 +36,12 @@ formulas=(
     zplug
     tmux
     ripgrep
-    tig
+    exa
+    bat
+    procs
+    hexyl
+    fd
+    tokei
     jq
     htop
     nkf

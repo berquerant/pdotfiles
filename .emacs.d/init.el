@@ -49,6 +49,8 @@
       (progn (message (format "[my-getenv] not found %s" arg))
              nil)))
 
+(setq straight-profiles `((nil . ,(format "%s/dotfiles/.emacs.d/straight-default.el" (my-getenv "HOME")))))
+
 ;; for prefix
 (unbind-key "M-s w")
 (unbind-key "M-m")
@@ -155,8 +157,6 @@
 (use-package format-all
   :bind
   ("M-s f" . format-all-buffer))
-
-(use-package evil)
 
 (use-package magit
   :bind
@@ -682,6 +682,8 @@ https://github.com/zeroturnaround/sql-formatter"
   (smartrep-define-key global-map "C-]"
     '(("f" . sp-forward-sexp)
       ("b" . sp-backward-sexp)
+      ("," . sp-backward-barf-sexp)
+      ("." . sp-backward-slurp-sexp)
       ("n" . sp-up-sexp)
       ("p" . sp-down-sexp)
       ("k" . sp-kill-sexp)
@@ -981,16 +983,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                    (my-getenv "GHQ_ROOT")
                                    (my-getenv "GIT_USER"))))
 
-(use-package dart-mode
-  :after projectile
-  :init
-  (defun dart-mode-before-save-local-hook ()
-    (add-hook 'before-save-hook 'dart-format-buffer nil t))
-  (add-hook 'dart-mode-hook 'dart-mode-before-save-local-hook)
-  :config
-  (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
-  (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
-
 (use-package flycheck-haskell
   :after (haskell-mode flycheck)
   :hook
@@ -1008,6 +1000,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package clojure-mode)
 
 (use-package cider)
+
+(use-package cypher-mode
+  :mode (("\\.cql\\'" . cypher-mode)))
+
+(use-package terraform-mode
+  :hook (terraform-mode . terraform-format-on-save-mode))
+
+(use-package zig-mode
+  :mode "\\.zig\\'")
+
+(use-package svelte-mode)
 
 ;; syntax checkers
 (use-package flymake-diagnostic-at-point
@@ -1126,10 +1129,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook
   (((typescript-mode
      typescript-tsx-mode
+     svelte-mode
      rust-mode
+     clojure-mode
+     clojurescript-mode
+     clojurec-mode
+     zig-mode
      css-mode
+     terraform-mode
      html-mode) . lsp-deferred)
-   (lsp-mode . lsp-lens-mode))
+   (lsp-mode . lsp-lens-mode)
+   (zig-mode . flymake-mode))
   :bind
   (("M-s M-s M-l" . lsp)
    :map lsp-mode-map
@@ -1142,6 +1152,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("C-c p a" . lsp-execute-code-action)
    ("C-c p r" . lsp-rename))
   :custom
+  (lsp-disabled-clients '(tfls))
   (lsp-auto-guess-root t)
   (lsp-prefer-capf t)
   (lsp-prefer-flymake nil)
@@ -1171,14 +1182,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t)
   (lsp-rust-analyzer-display-parameter-hints t)
-  (lsp-rust-analyzer-display-reborrow-hints t))
-
-(use-package lsp-dart
-  :hook
-  (dart-mode . lsp)
-  :custom
-  (lsp-dart-flutter-sdk-dir (format "%s/flutter" (my-getenv "FLUTTER_ROOT")))
-  (lsp-dart-sdk-dir (format "%s/flutter/bin/cache/dart-sdk" (my-getenv "FLUTTER_ROOT"))))
+  (lsp-rust-analyzer-display-reborrow-hints t)
+  (lsp-terraform-enable-logging nil))
 
 (use-package lsp-ui
   :commands (ladicle/toggle-lsp-ui-doc)
@@ -1219,6 +1224,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
           (lsp-ui-doc-mode -1)
           (lsp-ui-doc--hide-frame))
         (lsp-ui-doc-mode 1))))
+
+(use-package lsp-treemacs
+  :config
+  (lsp-treemacs-sync-mode 1)
+  :bind
+  (:map lsp-mode-map
+        ("C-c t e" . lsp-treemacs-errors-list)
+        ("C-c t l" . lsp-treemacs-symbols)
+        ("C-c t ?" . lsp-treemacs-references)
+        ("C-c t i" . lsp-treemacs-implementations)
+        ("C-c t c" . lsp-treemacs-call-hierarchy)
+        ("C-c t t" . lsp-treemacs-type-hierarchy)))
+
 
 (use-package goto-chg
   :demand t

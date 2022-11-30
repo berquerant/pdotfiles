@@ -17,6 +17,8 @@ get-go: go go-packages golangci-lint ## install go and make it available
 go: ## install go
 	brew install go
 
+go-update: go-packages
+
 go-packages: ## install golang utilities
 	go install golang.org/x/tools/gopls@latest
 	go install golang.org/x/tools/cmd/goimports@latest
@@ -115,7 +117,6 @@ rust-crates: ## install rust tools
 	cargo install evcxr_repl
 	cargo install cargo-binutils
 	cargo install cargo-make
-	brew install fd
 
 rust-analyzer:
 	brew install rust-analyzer
@@ -151,17 +152,31 @@ markdown: ruby ## install markdown utilities
 clean-markdown: ## uninstall markdown utilities
 	gem uninstall github-markup commonmarker
 
-get-flutter: ## install flutter
-	mkdir -p $(FLUTTER_ROOT)
-	cd $(FLUTTER_ROOT)
-	wget https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_2.10.3-stable.zip
-	unzip flutter_macos_2.10.3-stable.zip
-
-clean-flutter: ## uninstall flutter
-	rm -rf $(FLUTTER_ROOT)
-
-closure: ## install clojure
+clojure: ## install clojure
 	brew install clojure/tools/clojure leiningen clojure-lsp/brew/clojure-lsp-native
 
 clean-clojure: ## uninstall clojure
 	brew uninstall clojure/tools/clojure leiningen clojure-lsp/brew/clojure-lsp-native
+
+terraform: ## install terraform
+	brew tap hashicorp/tap
+	brew install hashicorp/tap/terraform
+	brew install hashicorp/tap/terraform-ls
+
+clean-terraform: ## uninstall terraform
+	brew uninstall hashicorp/tap/terraform
+	brew uninstall hashicorp/tap/terraform-ls
+
+get-zig: zig zig-ls  ## install zig
+
+zig: ## install zig
+	brew install zig z3
+
+zig-ls: ## install zls, require interactive session
+	mkdir -p $(PROJECT)/tmp
+	cd $(PROJECT)/tmp &&\
+	git clone --recurse-submodules https://github.com/zigtools/zls ||\
+	cd $(PROJECT)/tmp/zls &&\
+	zig build -Drelease-safe &&\
+	./zig-out/bin/zls --config
+	ln -s $(PROJECT)/tmp/zls/zig-out/bin/zls /usr/local/bin/zls

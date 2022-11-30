@@ -46,35 +46,19 @@ on_failed() {
 
 on_success() {
     mv nextstep/Emacs.app /Applications/
-    make clean
+    make distclean
     cecho green "GCC Emacs Installed!"
     cecho green "Now emacs is ${NEXT_HASH}"
     cecho green "Done!"
 }
 
 find . -name "*.pdmp" -type f -delete
+find . -name "*.elc" -type f -delete
 rm -rf ${EMACSD}/eln-cache
 
-# emacs at commit d5e74d9cd7
-#
-# ./configure causes an error:
-# configure: error: ELisp native compiler was requested, but libgccjit was not found.
-#
-# is caused by MAC_LIBS, that contains multiple lines.
-#
-# apply patch:
-# --- a/configure.ac
-# +++ b/configure.ac
-# @@ -4241,7 +4241,7 @@ AC_DEFUN
-#            MAC_CFLAGS="-I$(dirname $($BREW ls -v libgccjit | \
-#                                                  grep libgccjit.h))"
-#            MAC_LIBS="-L$(dirname $($BREW ls -v libgccjit| \
-# -                                            grep -E 'libgccjit\.(so|dylib)$'))"
-# +                                            grep -E 'libgccjit\.(so|dylib)$'|grep 'current'))"
-#          fi
-#        fi
 export CC=clang
-./autogen.sh &&\
-  ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" CFLAGS="-O3" --with-native-compilation --with-xwidgets --without-webp --without-sound &&\
+make distclean &&\
+  ./autogen.sh &&\
+  ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" --with-native-compilation --with-xwidgets --without-webp --without-sound --without-pop &&\
   make -j4 && make install &&\
   on_success || on_failed

@@ -41,17 +41,6 @@
       (insert (format "%S" v))))
 
 ;;;###autoload
-(defun my-misc-tig-blame-current-buffer ()
-  "Run tig blame on current buffer into new tmux window."
-  (interactive)
-  (shell-command
-   (format "bash -c \"tmux new-window -n %s -c %s 'tig blame +%s %s'\""
-           (my-getenv "TMUX_TIG_WINDOW")
-           (file-name-directory buffer-file-name)
-           (line-number-at-pos)
-           (file-name-nondirectory buffer-file-name))))
-
-;;;###autoload
 (defun my-misc-exchange-point-and-mark ()
   (interactive)
   (exchange-point-and-mark)

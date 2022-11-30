@@ -1,6 +1,5 @@
 .DS_Store
 tmp/
-.metals/
 __pycache__/
-dist-newstyle/
 .mypy_cache/
+.ropeproject/

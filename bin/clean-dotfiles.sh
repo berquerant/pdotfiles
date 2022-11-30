@@ -28,11 +28,8 @@ dotfiles=(
     .zshrc
     .pythonrc.py
     .tmux.conf
-    .tigrc
     golangci.yml
     .aspell.conf
-    .gitattributes
-    .gitignore
     .rustfmt.toml
 )
 
@@ -46,7 +43,6 @@ done
 message "Remove emacs configurations"
 
 exec_or_dry "rm -f ${EMACSD}/init.el"
-exec_or_dry "rm -f ${EMACSD}/straight/versions/default.el"
 exec_or_dry "rm -f ${EMACSD}/site-lisp"
 
 message "Remove others"

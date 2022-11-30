@@ -8,7 +8,8 @@ from inspect import (getclasstree, getdoc, getfile, getmembers, getsource,
                      getsourcelines, isfunction, ismethod, signature)
 from pprint import pprint
 from pyclbr import readmodule_ex
-from typing import Any, Callable, Hashable, Optional, TypeVar
+from typing import (Any, Callable, ClassVar, Hashable, Optional, ParamSpec,
+                    TypeVar)
 from uuid import uuid4
 
 readline.parse_and_bind("tab: complete")
@@ -22,7 +23,8 @@ atexit.register(readline.write_history_file, histfile)
 
 
 T = TypeVar("T")
-D = TypeVar("D", bound=Callable)
+D = TypeVar("D")
+P = ParamSpec("P")
 
 
 class devutil:
@@ -38,11 +40,11 @@ class devutil:
             return f"{self.value}{s}{self.end.value}"
 
     @classmethod
-    def ignore_exception(cls, f: Callable[..., T]) -> Callable[..., Optional[T]]:
+    def ignore_exception(cls, f: Callable[P, T]) -> Callable[P, Optional[T]]:
         """Ignore any exceptions raised by f."""
 
         @wraps(f)
-        def inner(*args: list, **kwargs: dict) -> Optional[T]:
+        def inner(*args: P.args, **kwargs: P.kwargs) -> Optional[T]:
             try:
                 return f(*args, **kwargs)
             except Exception as e:
@@ -52,7 +54,7 @@ class devutil:
         return inner
 
     @classmethod
-    def describe_function_or_method(cls, x: Any):
+    def describe_function_or_method(cls, x: Any) -> None:
         """Describe x's methods or functions."""
         for _, member in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
             print(cls.color.green.add(f"{member.__name__}{signature(member)}"))
@@ -62,37 +64,37 @@ class devutil:
 class dev:
     """Tools for python interpreter are available. Print help by dev.h()."""
 
-    FILE = __file__
+    FILE: ClassVar[str] = __file__
 
     @classmethod
     @devutil.ignore_exception
-    def h(cls):
+    def h(cls) -> None:
         """Print help."""
         print(cls.__doc__)
         devutil.describe_function_or_method(cls)
 
     @staticmethod
     @devutil.ignore_exception
-    def c(x: Any):
+    def c(x: Any) -> None:
         """Print source of x."""
         print(getsource(x))
 
     @classmethod
     @devutil.ignore_exception
-    def cb(cls, module: str):
+    def cb(cls, module: str) -> None:
         """Print class browser of module."""
         for v in readmodule_ex(module).values():
             cls.pp(vars(v))
 
     @staticmethod
     @devutil.ignore_exception
-    def d(x: Any):
+    def d(x: Any) -> None:
         """Print docstring of x."""
         print(getdoc(x))
 
     @staticmethod
     @devutil.ignore_exception
-    def l(x: Any):
+    def l(x: Any) -> None:
         """Print the location in which x was defined in."""
         srcfile = getfile(x)
         lines, start_linum = getsourcelines(x)
@@ -101,7 +103,7 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def f(x: Any, n: bool = False):
+    def f(x: Any, n: bool = False) -> None:
         """Less source of x. Display line number if n is True."""
         cmd = ["less"]
         if n:
@@ -117,32 +119,32 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def pp(x: Any):
+    def pp(x: Any) -> None:
         """Pretty print."""
         pprint(x, width=120, depth=None)
 
     @staticmethod
     @devutil.ignore_exception
-    def s(x: Any):
+    def s(x: Any) -> None:
         """Print signature of x."""
         print(devutil.color.green.add(f"{x.__name__}{signature(x)}"))
 
     @staticmethod
     @devutil.ignore_exception
-    def t(x: Any):
+    def t(x: Any) -> Any:
         """Get class tree."""
         return getclasstree([type(x)])
 
     @dataclass
     class InspectMembers:
-        members: dict
+        members: dict[str, Any]
 
         @staticmethod
         def new(x: Any):
             return dev.InspectMembers(members=dict(getmembers(x)))
 
         @property
-        def h(self):
+        def h(self) -> None:
             """Print help."""
             devutil.describe_function_or_method(self)
 
@@ -156,7 +158,7 @@ class dev:
             """Get keys of members."""
             return list(self.members.keys())
 
-        def get(self, key: str):
+        def get(self, key: str) -> Any:
             """Get a member by key."""
             return self.members.get(key)
 
@@ -172,11 +174,11 @@ class dev:
         return x
 
     @staticmethod
-    def w(f: D) -> D:
+    def w(f: Callable[P, T]) -> Callable[P, T]:
         """Watch the arguments and the return value."""
 
         @wraps(f)
-        def wrapper(*args: Any, **kwargs: Any) -> Any:
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
             rid = uuid4()
             s = signature(f)
             bindings = ",".join(
@@ -187,7 +189,7 @@ class dev:
             print(f"[{rid}] Returned {r}")
             return r
 
-        return wrapper  # type: ignore
+        return wrapper
 
 
 del histfile, atexit, readline

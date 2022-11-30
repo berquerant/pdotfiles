@@ -27,13 +27,18 @@
   "translation output buffer name."
   :type 'string)
 
+(defun my-trans--insert-output-buffer (input)
+  "Insert INPUT into buffer `my-trans-output-buffer-name'."
+  (with-current-buffer (get-buffer-create my-trans-output-buffer-name)
+    (insert input)))
+
 (defun my-trans--trans-output-filter (p output)
   "translation output process filter."
-  (with-current-buffer (get-buffer-create my-trans-output-buffer-name)
-    (insert output)))
+  (my-trans--insert-output-buffer output))
 
 (defun my-trans-trans (src dest txt)
   "Translate TXT (as lang SRC) into lang DEST."
+  (my-trans--insert-output-buffer (format "[%s]\n%s\n[%s]\n" src txt dest))
   (little-async-start-process (format "trans -b -s %s -t %s" src dest)
                               :input txt
                               :process-name my-trans-process-name

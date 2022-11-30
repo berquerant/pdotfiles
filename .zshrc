@@ -18,13 +18,19 @@ zplug "zsh-users/zsh-completions"
 if ! zplug check ; then zplug install ; fi
 zplug load
 
-source $DOTFILES_ROOT/bin/forward.zsh
-source $DOTFILES_ROOT/bin/time.zsh
-source $DOTFILES_ROOT/bin/tmux.zsh
-source $DOTFILES_ROOT/bin/emacs.zsh
-source $DOTFILES_ROOT/bin/git.zsh
-source $DOTFILES_ROOT/bin/peco.zsh
-source $DOTFILES_ROOT/bin/util.zsh
+libs=(
+    forward
+    time
+    tmux
+    emacs
+    git
+    peco
+    util
+)
+
+for name in $libs ; do
+    source "${DOTFILES_ROOT}/bin/${name}.zsh"
+done
 
 # go
 export GOPATH="$HOME/go"
@@ -55,9 +61,6 @@ nvm() { # lazy
     source "$NVM_DIR/nvm.sh"
     nvm "$@"
 }
-# flutter
-export FLUTTER_ROOT="$HOME/.flutter"
-export PATH="$FLUTTER_ROOT/flutter/bin:$PATH"
 # activate lazy envs
 load_envs() {
     pyenv --version
