@@ -3,7 +3,6 @@ git-global: ## modify global git settings
 	git config --global color.ui auto
 	git config --global diff.renames true
 	git config --global core.attributesfile ~/.gitattributes
-	git config --global core.excludesfile ~/.gitignore
 	git config --global log.abbrevCommit true
 	git config --global core.ignorecase false
 
@@ -160,11 +159,11 @@ clean-clojure: ## uninstall clojure
 
 terraform: ## install terraform
 	brew tap hashicorp/tap
-	brew install hashicorp/tap/terraform
+	brew install tfenv
 	brew install hashicorp/tap/terraform-ls
 
 clean-terraform: ## uninstall terraform
-	brew uninstall hashicorp/tap/terraform
+	brew uninstall tfenv
 	brew uninstall hashicorp/tap/terraform-ls
 
 get-zig: zig zig-ls  ## install zig

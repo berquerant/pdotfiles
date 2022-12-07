@@ -18,6 +18,7 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
+  autocrlf = false
 [log]
   abbrevCommit = true
 [alias]
@@ -43,3 +44,5 @@
   undo-commit = reset --soft @^
   undo-add = reset @
   recent = for-each-ref refs/heads/ --sort=-committerdate --format='%(committerdate:iso) %(color:green)%(refname:short)%(color:reset) %(color:red)%(authoremail) %(authorname)%(color:reset) %(subject)'
+  force-pull = "!f() { git fetch ; git reset --hard origin/$1 }; f"
+  redo-commit = revert @

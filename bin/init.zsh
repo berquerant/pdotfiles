@@ -13,7 +13,7 @@ unsetopt BEEP
 setopt ignore_eof # C-d does not exit zsh
 setopt interactive_comments # after '#' is also a comment in command line
 # history
-export HISTSIZE=100
+export HISTSIZE=1000
 export HISTFILE=~/.history_zsh # avoid the tragedy that zsh loads histories
 export SAVEHIST=100000
 export LESSHISTFILE=- # no histories for less

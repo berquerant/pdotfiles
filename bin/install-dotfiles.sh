@@ -22,7 +22,7 @@ message "Make symbolic links to this repository root on home directory"
 
 exec_query "Are you sure?" "Bye!"
 
-exec_or_dry "ln -snvf ${PROJECT} ~/"
+exec_or_dry "ln -snvf ${PROJECT} ~/dotfiles"
 
 dotfiles=(
     .zshrc

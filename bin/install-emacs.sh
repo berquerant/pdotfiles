@@ -8,6 +8,13 @@ cecho green "This takes a long time..."
 brew install --cask xquartz
 brew install --build-from-source libgccjit
 brew install cmigemo
+brew install gnutls
+# update makeinfo
+brew install texinfo
+if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
+    echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
+fi
+export PATH=/usr/local/opt/texinfo/bin:$PATH
 
 cecho green "Backing up Emacs."
 
