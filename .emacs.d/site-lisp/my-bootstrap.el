@@ -159,19 +159,10 @@
 
 ;; important utilities
 
-(defun my-get-current-path ()
-  "Store current buffer file name to kill ring."
-  (interactive)
-  (let ((p (buffer-file-name)))
-    (when p
-      (message "Stored: %s" p)
-      (kill-new p))))
-
-(bind-key "M-s p p" 'my-get-current-path)
-
 (use-package my-misc
   :straight (my-misc :type built-in)
   :bind
+  ("M-s p p" . my-misc-current-path)
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)

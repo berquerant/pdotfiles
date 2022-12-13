@@ -43,6 +43,7 @@ formulas=(
     fd
     tokei
     jq
+    yq
     htop
     nkf
     ghq

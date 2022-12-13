@@ -156,7 +156,52 @@
 
 (use-package format-all
   :bind
-  ("M-s f" . format-all-buffer))
+  ("M-s f" . my-format-all-buffer-or-region)
+  :config
+  (defun my-format-all-buffer-or-region ()
+    (interactive)
+    (if (use-region-p)
+        (call-interactively 'my-format-all-region)
+      (call-interactively 'format-all-buffer)))
+
+  (define-format-all-formatter
+   yamlfmt
+   (:executable "yamlfmt")
+   (:install "go install github.com/google/yamlfmt/cmd/yamlfmt@latest")
+   (:languages "YAML")
+   (:features)
+   (:format
+    (format-all--buffer-easy
+     executable
+     (or (buffer-file-name) (buffer-name)))))
+  (add-to-list 'format-all-default-formatters '("YAML-2" yamlfmt))
+
+  (defun my-format-all-region (start end lang &optional prompt)
+    "Format the source in the current region by the selected language.
+c.f. `format-all-region'."
+    (interactive
+     (let ((prompt (if current-prefix-arg 'always t))
+           (lang (completing-read "Lang: "
+                                  (cl-loop for x in format-all-default-formatters
+                                           collect (car x)))))
+       (if (use-region-p)
+           (list (region-beginning) (region-end) lang prompt)
+         (error "The region is not active now"))))
+    ;; disable cache lang for current buffer, invoke `format-all--prompt-for-formatter' always
+    (defun my-format-all-region--format-all--get-chain-override-advice (language)
+      nil)
+    (defun my-format-all-region--format-all--set-chain-override-advice (language chain)
+      nil)
+    ;; override language
+    (defun my-format-all-region--format-all--language-id-buffer-override-advice ()
+      lang)
+    (advice-add #'format-all--get-chain :override #'my-format-all-region--format-all--get-chain-override-advice)
+    (advice-add #'format-all--set-chain :override #'my-format-all-region--format-all--set-chain-override-advice)
+    (advice-add #'format-all--language-id-buffer :override #'my-format-all-region--format-all--language-id-buffer-override-advice)
+    (format-all--buffer-or-region prompt (cons start end))
+    (advice-remove #'format-all--language-id-buffer #'my-format-all-region--format-all--language-id-buffer-override-advice)
+    (advice-remove #'format-all--set-chain #'my-format-all-region--format-all--set-chain-override-advice)
+    (advice-remove #'format-all--get-chain #'my-format-all-region--format-all--get-chain-override-advice)))
 
 (use-package magit
   :bind
@@ -334,12 +379,7 @@
     (when (use-region-p)
       (shell-command-on-region (region-beginning) (region-end) command t t)))
   (setq selected-minor-mode-override t)
-  (selected-global-mode 1)
-  (defun my-sql-format-on-region ()
-    "Format sql on region, sql-formatter required.
-https://github.com/zeroturnaround/sql-formatter"
-    (interactive)
-    (shell-command-on-region-and-insert "sql-formatter -u")))
+  (selected-global-mode 1))
 
 (use-package my-trans
   :demand t
