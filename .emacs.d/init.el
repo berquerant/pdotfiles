@@ -58,6 +58,7 @@
 (unbind-key "C-x m")
 (unbind-key "M-t")
 (unbind-key "M-j")
+(unbind-key "C-x f")
 
 (add-to-list 'load-path (format "%s/site-lisp" (my-getenv "EMACSD")))
 (add-to-list 'load-path (format "%s/external-site-lisp" (my-getenv "EMACSD")))
@@ -203,11 +204,6 @@ c.f. `format-all-region'."
     (advice-remove #'format-all--set-chain #'my-format-all-region--format-all--set-chain-override-advice)
     (advice-remove #'format-all--get-chain #'my-format-all-region--format-all--get-chain-override-advice)))
 
-(use-package magit
-  :bind
-  ("C-x g s" . magit-status)
-  ("C-x g b" . magit-blame))
-
 (use-package treemacs
   :bind
   ("M-t M-t" . treemacs-select-window)
@@ -217,6 +213,10 @@ c.f. `format-all-region'."
   (treemacs-indentation 1)
   (treemacs-indentation-string "|")
   :config
+  (defun my-treemacs-delete-other-window-predicate (window)
+    "Prevent WINDOW from `delete-other-windows'."
+    (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
+  (my-misc-delete-window-predicates-add 'my-treemacs-delete-other-window-predicate)
   (treemacs-follow-mode t)
   (treemacs-project-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -502,24 +502,26 @@ c.f. `format-all-region'."
   (dumb-jump-selector 'helm)
   (dumb-jump-force-searcher 'rg))
 
-(use-package git-gutter
+(use-package git-gutter+
   :demand t
-  :after (projectile goto-chg)
-  :diminish ((global-git-gutter-mode . "")
-             (git-gutter-mode . ""))
+  :after (projectile backward-forward)
+  :diminish ((global-git-gutter+-mode . "")
+             (git-gutter+-mode . ""))
   :bind
-  (("M-s l" . git-gutter))
+  ("M-s g ." . git-gutter+-show-hunk)
+  ("M-s g n" . git-gutter+-next-hunk)
+  ("M-s g p" . git-gutter+-previous-hunk)
   :custom
-  (git-gutter:update-commands nil)
-  (git-gutter:update-windows-commands nil)
-  (git-gutter:update-hooks '(after-save-hook
+  (git-gutter+:update-commands nil)
+  (git-gutter+:update-windows-commands nil)
+  (git-gutter+:update-hooks '(after-save-hook
                              after-revert-hook))
   :custom-face
-  (git-gutter:added ((t (:foreground "green"))))
-  (git-gutter:deleted ((t (:foreground "red"))))
-  (git-gutter:modified ((t (:foreground "yellow"))))
+  (git-gutter+-added ((t (:foreground "green"))))
+  (git-gutter+-deleted ((t (:foreground "red"))))
+  (git-gutter+-modified ((t (:foreground "yellow"))))
   :config
-  (global-git-gutter-mode t))
+  (global-git-gutter+-mode t))
 
 (use-package helm-bm
   :demand t
@@ -560,8 +562,8 @@ c.f. `format-all-region'."
 
 (use-package auto-yasnippet
   :bind
-  ("M-z" . aya-expand)
-  ("M-Z" . aya-create)
+  ("M-s z" . aya-expand)
+  ("M-s Z" . aya-create)
   :custom
   (aya-create-with-newline t))
 
@@ -1052,6 +1054,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package svelte-mode)
 
+(use-package plantuml-mode
+  :init
+  (defun my-plantuml-local-hook ()
+    (flycheck-mode nil))
+  (defun add-plantuml-local-hook ()
+    (add-hook 'before-save-hook 'my-plantuml-local-hook nil t))
+  (add-hook 'plantuml-mode 'add-plantuml-local-hook)
+  :bind
+  ("M-s u" . plantuml-preview)
+  :config
+  (setq plantuml-output-type "svg")
+  :custom
+  (plantuml-executable-args '("-headless" "-theme" "toy"))
+  (plantuml-default-exec-mode 'executable)
+  (plantuml-executable-path "plantuml"))
+
 ;; syntax checkers
 (use-package flymake-diagnostic-at-point
   :after flymake
@@ -1301,6 +1319,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                       helm-occur
                       helm-git-grep-at-point
                       deadgrep
+                      git-gutter+-next-hunk
+                      git-gutter+-previous-hunk
                       xref-find-references
                       xref-find-definitions)
            do (advice-add x :before #'backward-forward-push-mark-wrapper))

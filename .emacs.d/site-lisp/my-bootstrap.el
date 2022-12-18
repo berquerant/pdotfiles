@@ -26,8 +26,16 @@
   (my-macro-handle-file find-file my-init-el)
   (my-macro-handle-file load-file my-init-el)
   (my-macro-handle-file find-file my-zshrc)
+  (my-macro-handle-buffer switch-to-buffer "*scratch*")
+  (my-macro-handle-buffer switch-to-buffer-other-window "*scratch*")
+  (my-macro-handle-buffer switch-to-buffer-other-tab "*scratch*")
+  (my-macro-handle-buffer switch-to-buffer-other-frame "*scratch*")
   (bind-key "M-s 0" 'find-file-initel)
-  (bind-key "M-s 9" 'find-file-zshrc))
+  (bind-key "M-s 9" 'find-file-zshrc)
+  (bind-key "M-s 5" 'switch-to-buffer-scratch)
+  (bind-key "M-s 6" 'switch-to-buffer-other-window-scratch)
+  (bind-key "M-s 7" 'switch-to-buffer-other-tab-scratch)
+  (bind-key "M-s 8" 'switch-to-buffer-other-frame-scratch))
 
 (use-package modus-themes
   :ensure t
@@ -75,6 +83,7 @@
 (line-number-mode t)
 (column-number-mode t)
 (global-display-line-numbers-mode t)
+(repeat-mode t)
 (set-face-attribute 'default nil :height 100) ; initial font size
 (setq-default major-mode 'text-mode       ; use text-mode instead of fundamental-mode
               bidi-display-reordering nil ; ignore the writing direction: right to left
@@ -130,6 +139,12 @@
            ([?\C-\M-¥] . [?\C-\M-\\])
            ("C-t" . other-window)
            ("C-T" . other-window-back)
+           ("C-<tab>" . tab-next)
+           ("C-S-<tab>" . tab-previous)
+           ;; TODO: find workaround. delete-frame crashes emacs. (delete-frame (selected-frame) nil) too
+           ;; https://github.com/syl20bnr/spacemacs/issues/6301
+           ;; ("C-x f 0" . delete-frame)
+           ;; ("C-x f 1" . delete-other-frames)
            ("C-x C-t" . toggle-truncate-lines)
            ("C-x C-r" . read-only-mode)
            ("C-x w w" . overwrite-mode)
@@ -140,6 +155,7 @@
            ("M-s y" . repeat-complex-command)
            ("M-s c" . compile)
            ("M-g ." . eldoc)
+           ("M-z" . repeat)
            ("M-s q" . text-scale-adjust))
 
 ;; copy and paste
@@ -161,7 +177,9 @@
 
 (use-package my-misc
   :straight (my-misc :type built-in)
+  :commands my-misc-delete-window-predicates-add
   :bind
+  ("C-x 1" . my-misc-delete-other-windows)
   ("M-s p p" . my-misc-current-path)
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
@@ -178,9 +196,13 @@
 
 (use-package my-sticky-buffer-mode
   :straight (my-sticky-buffer-mode :type built-in)
+  :config
+  (defun my-sticky-buffer-mode-delete-window-predicate (window)
+    "Prevent WINDOW from `delete-other-windows'."
+    (not my-sticky-buffer-mode))
+  (my-misc-delete-window-predicates-add 'my-sticky-buffer-mode-delete-window-predicate)
   :bind
-  ("M-s M-t" . my-sticky-buffer-mode)
-  ("C-x 1" . my-sticky-buffer-mode-delete-other-windows))
+  ("M-s M-t" . my-sticky-buffer-mode))
 
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

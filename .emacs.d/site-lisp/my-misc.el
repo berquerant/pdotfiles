@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 's)
+(require 'cl-lib)
 
 (defgroup my-misc nil
   "My miscellaneous utilities."
@@ -77,4 +78,35 @@ e.g. path is /a/b/c and CUT is 1 then stores b/c"
       (message "Stored: %s" p)
       (kill-new p))))
 
+(defvar my-misc-delete-window-predicates nil
+  "List of function: window to bool.
+Return t means that the window is deletable.
+When a predicate is called, selected window will be the window of the argument.")
+
+(defun my-misc--delete-window-deletable (window)
+  (select-window window)
+  (cl-loop for f in my-misc-delete-window-predicates
+           when (not (apply f (list window)))
+           return nil
+           finally return t))
+
+(defun my-misc--delete-other-windows (&optional window)
+  (cl-loop for w in (window-list)
+           when (not (eq w window))
+           do (when (my-misc--delete-window-deletable w)
+                (delete-window w)))
+  (select-window window))
+
+;;;###autoload
+(defun my-misc-delete-window-predicates-add (f)
+  "Add F to `my-misc-delete-window-predicates'."
+    (add-to-list 'my-misc-delete-window-predicates f))
+
+;;;###autoload
+(defun my-misc-delete-other-windows (&optional window)
+  "`delete-other-windows' except WINDOW and windows `my-misc-delete-window-predicates' return nil."
+  (interactive)
+  (my-misc--delete-other-windows (or window (get-buffer-window))))
+
+(provide 'my-misc)
 ;;; my-misc.el ends here

@@ -10,3 +10,6 @@ trans: ## install https://github.com/soimort/translate-shell
 
 clean-trans: ## uninstall translate-shell
 	rm -f /usr/local/bin/trans $(PROJECT)/tmp/trans
+
+plantuml:
+	brew install plantuml
