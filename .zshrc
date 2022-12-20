@@ -33,8 +33,16 @@ for name in $libs ; do
 done
 
 # go
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
+export PATH="$GOROOT/bin:$PATH"
+goenv() { # lazy
+    unset -f goenv
+    source <(goenv init -)
+    goenv "$@"
+}
 # python
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -63,6 +71,7 @@ nvm() { # lazy
 }
 # activate lazy envs
 load_envs() {
+    goenv --version
     pyenv --version
     nvm --version
 }

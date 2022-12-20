@@ -14,7 +14,8 @@ brew-update:
 get-go: go go-packages golangci-lint ## install go and make it available
 
 go: ## install go
-	brew install go
+	git clone https://github.com/syndbg/goenv.git $(GOENV_ROOT)
+	goenv install $(GO_VERSION)
 
 go-update: go-packages
 
@@ -29,7 +30,8 @@ golangci-lint: ## install linter
 	brew upgrade golangci/tap/golangci-lint
 
 clean-go: ## uninstall go
-	brew uninstall go golangci/tap/golangci-lint
+	brew uninstall goenv golangci/tap/golangci-lint
+	rm -rf $(GOENV_ROOT)
 
 get-python: py-env-manager pyenv-global ## install python and make it available
 
@@ -57,11 +59,11 @@ clean-pyenv: ## uninstall python
 
 get-ruby: ruby ## install ruby and make it available
 
-rbenv-global: ## install ruby
+ruby: ## install ruby
 	brew install ruby
 	gem install solargraph rubocop
 
-clean-rbenv: ## uninstall ruby
+clean-ruby: ## uninstall ruby
 	brew uninstall ruby
 
 get-typescript: node typescript ## install typescript and make it available
@@ -145,7 +147,7 @@ clean-clang-tools: ## uninstall c utils
 	brew uninstall clang-format
 	brew uninstall ccls
 
-markdown: ruby ## install markdown utilities
+markdown: get-ruby ## install markdown utilities
 	gem install github-markup commonmarker
 
 clean-markdown: ## uninstall markdown utilities

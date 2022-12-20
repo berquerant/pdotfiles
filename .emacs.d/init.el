@@ -206,9 +206,11 @@ c.f. `format-all-region'."
 
 (use-package treemacs
   :bind
-  ("M-t M-t" . treemacs-select-window)
-  ("M-t M-n" . treemacs-next-workspace)
-  ("M-t M-f" . treemacs-find-file)
+  (("M-t M-t" . treemacs-select-window)
+   ("M-t M-n" . treemacs-next-workspace)
+   ("M-t M-f" . treemacs-find-file)
+   :map treemacs-mode-map
+   ([mouse-1] . treemacs-single-click-expand-action))
   :custom
   (treemacs-indentation 1)
   (treemacs-indentation-string "|")
@@ -765,7 +767,9 @@ c.f. `format-all-region'."
   :mode ("\\.md\\'" . gfm-mode)
   :bind
   (:map gfm-mode-map
-        ("C-c m >" . markdown-follow-thing-at-point))
+        ("C-c ." . markdown-follow-thing-at-point)
+        ("C-c +" . markdown-promote)
+        ("C-c -" . markdown-demote))
   :config
   (defun markdown-mode-before-save-hook ()
     "Disable `delete-trailing-whitespace' if `major-mode' is `markdown-mode' or `gfm-mode'."
