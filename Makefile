@@ -23,7 +23,7 @@ clean: ## uninstall dotfiles
 
 gitconfig: ## generate .gitconfig
 	@bin/gen-gitconfig.sh
-	@echo Please cp tmp/.gitconfig ~/ to install.
+	@echo Please cp $(PJTMP)/.gitconfig ~/ to install.
 
 gitatttibutes: ## generate .gitattributes
 	@bin/install-gitattributes.sh
@@ -33,4 +33,4 @@ git: gitconfig gitattributes ## install git configurations
 emacs: ## install or update emacs
 	@bin/install-emacs.sh
 
-update: brew-update pyenv-update node-update rust-update go-update ## update except emacs
+update: brew-update pyenv-update node-update rust-update go-update zig-update ## update except emacs

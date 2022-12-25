@@ -73,3 +73,11 @@ run_or_dry() {
 stopwatch() {
     gdate +"%F %T.%N"
 }
+
+# mkdir if not exists, and cd.
+#
+# $1 : required. directory.
+ensure_cd() {
+    mkdir -p "$1"
+    cd "$1"
+}

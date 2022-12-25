@@ -5,6 +5,7 @@ git-global: ## modify global git settings
 	git config --global core.attributesfile ~/.gitattributes
 	git config --global log.abbrevCommit true
 	git config --global core.ignorecase false
+	git config --global core.autocrlf false
 
 brew-update:
 	brew update
@@ -45,12 +46,13 @@ pyenv-global: ## install python utilities
 	pip install --upgrade pip setuptools
 	pip install -r requirements.txt
 
-pyenv-install-requirements: ## upgrade python requirements
+pyenv-upgrade-requirements: ## upgrade python requirements
 	pip install --upgrade pip setuptools
-	pip freeze > $(PROJECT)/tmp/requirements_backup.txt
+	pip freeze > $(PJTMP)/requirements_backup.txt
 	pip install --upgrade -r requirements.txt
+	pip freeze > $(PJTMP)/requirements.txt
 
-pyenv-update: pyenv-install-requirements
+pyenv-update: pyenv-upgrade-requirements
 
 clean-pyenv: ## uninstall python
 	brew uninstall pipenv
@@ -122,16 +124,8 @@ rust-crates: ## install rust tools
 rust-analyzer:
 	brew install rust-analyzer
 
-LLVM_PATH = $(shell brew --prefix llvm)
-
 lldb-mi:
-	ghq get lldb-tools/lldb-mi
-	export LDFLAGS="-L$(LLVM_PATH)/lib"
-	export CPPFLAGS="-I$(LLVM_PATH)/include"
-	export PATH="$(LLVM_PATH)/bin:$PATH"
-	cmake .
-	cmake --build .
-	ln -s $(PWD)/src/lldb-mi /usr/local/bin/
+	bin/install-lldb-mi.sh
 
 clean-rust: ## uninstall rust
 	rustup self uninstall
@@ -171,13 +165,6 @@ clean-terraform: ## uninstall terraform
 get-zig: zig zig-ls  ## install zig
 
 zig: ## install zig
-	brew install zig z3
+	bin/install-zig.sh
 
-zig-ls: ## install zls, require interactive session
-	mkdir -p $(PROJECT)/tmp
-	cd $(PROJECT)/tmp &&\
-	git clone --recurse-submodules https://github.com/zigtools/zls ||\
-	cd $(PROJECT)/tmp/zls &&\
-	zig build -Drelease-safe &&\
-	./zig-out/bin/zls --config
-	ln -s $(PROJECT)/tmp/zls/zig-out/bin/zls /usr/local/bin/zls
+zig-update: zig

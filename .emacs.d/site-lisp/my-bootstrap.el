@@ -204,5 +204,20 @@
   :bind
   ("M-s M-t" . my-sticky-buffer-mode))
 
+(use-package switch-buffer-functions
+  :bind
+  ("M-s C-r" . read-only-mode-thyristor-toggle)
+  :config
+  (my-macro-thyristor read-only-mode)
+  (read-only-mode-thyristor-set nil)
+  (defvar my-read-only-hook-exclude-regex
+    "Minibuf")
+  (defun my-switch-buffer-functions--read-only-hook (prev cur)
+    "Enable `read-only-mode' when buffer switched.
+Disable the function by setting `read-only-mode-thyristor-flag' to nil."
+    (unless (string-match-p my-read-only-hook-exclude-regex (buffer-name cur))
+      (read-only-mode-thyristor)))
+  (add-to-list 'switch-buffer-functions 'my-switch-buffer-functions--read-only-hook))
+
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

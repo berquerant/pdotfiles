@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 d=$(cd $(dirname $0); pwd)
 . $d/common.sh
 

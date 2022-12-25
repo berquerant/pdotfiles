@@ -1,71 +1,61 @@
 #!/bin/bash
 
-source ${DOTFILES_ROOT}/bin/common.sh
+. "${DOTFILES_ROOT}/bin/common.sh"
+. "${DOTFILES_ROOT}/bin/install-git-runner.sh"
 
-cecho green "Install GCC Emacs."
-cecho green "This takes a long time..."
+export IG_WORKD="$PJTMP"
 
-brew install --cask xquartz
-brew install --build-from-source libgccjit
-brew install cmigemo
-brew install gnutls
-# update makeinfo
-brew install texinfo
-if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
-    echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
-fi
-export PATH=/usr/local/opt/texinfo/bin:$PATH
+readonly emacs_reponame="emacs"
+readonly emacs_repod="${IG_WORKD}/${emacs_reponame}"
 
-cecho green "Backing up Emacs."
-
-rm -rf /Applications/Emacs.app.bk
-mv /Applications/Emacs.app /Applications/Emacs.app.bk
-rm -rf ${EMACSD}/straight.bk
-mv ${EMACSD}/straight ${EMACSD}/straight.bk
-
-mkdir -p ${PROJECT}/tmp
-cd ${PROJECT}/tmp
-
-if [ ! -d ./emacs ]; then
-    cecho green "Download emacs repo."
-    git clone git://git.sv.gnu.org/emacs.git
-fi
-
-cd ./emacs
-CURRENT_HASH=$(git rev-parse HEAD)
-cecho green "Now emacs is ${CURRENT_HASH}"
-git pull
-NEXT_HASH=$(git rev-parse HEAD)
-cecho green "Next emacs will be ${NEXT_HASH}"
-
-rollback() {
-    mv /Applications/Emacs.app.bk /Applications/Emacs.app
-    mv ${EMACSD}/straight.bk ${EMACSD}/straight
-    cecho yellow "Emacs rolled back!"
+setup_emacs_brew() {
+    brew install --cask xquartz &&\
+        brew install --build-from-source libgccjit &&\
+        brew install cmigemo gnutls texinfo
 }
 
-on_failed() {
-    cecho red "Install GCC Emacs ${NEXT_HASH} failed!"
-    rollback
-    cecho red "Now emacs is ${CURRENT_HASH}"
-    exit 1
+readonly emacs_location="/Applications/Emacs.app"
+readonly emacs_location_backup="${emacs_location}.bk"
+
+backup_emacs() {
+    rm -rf "$emacs_location_backup"
+    mv "$emacs_location" "$emacs_location_backup"
 }
 
-on_success() {
-    mv nextstep/Emacs.app /Applications/
-    make distclean
-    cecho green "GCC Emacs Installed!"
-    cecho green "Now emacs is ${NEXT_HASH}"
-    cecho green "Done!"
+restore_emacs() {
+    mv "$emacs_location_backup" "$emacs_location"
 }
 
-find . -name "*.pdmp" -type f -delete
-find . -name "*.elc" -type f -delete
-rm -rf ${EMACSD}/eln-cache
+rollback_emacs() {
+    restore_emacs
+}
 
-export CC=clang
-make distclean &&\
-  ./autogen.sh &&\
-  ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" --with-native-compilation --with-xwidgets --without-webp --without-sound --without-pop &&\
-  make -j4 && make install &&\
-  on_success || on_failed
+setup_emacs() {
+    backup_emacs && setup_emacs_brew || return $?
+    if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
+        echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
+    fi
+}
+
+install_emacs() {
+    export PATH=/usr/local/opt/texinfo/bin:$PATH
+    export CC=clang
+    cd "$emacs_repod" &&\
+        find . -name "*.pdmp" -type f -delete &&\
+        find . -name "*.elc" -type f -delete &&\
+        rm -rf "${EMACSD}/eln-cache" &&\
+        make distclean &&\
+        ./autogen.sh &&\
+        ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" --with-native-compilation --with-xwidgets --without-webp --without-sound --without-pop &&\
+        make -j4 &&\
+        make install &&\
+        mv nextstep/Emacs.app /Applications/ &&\
+        make distclean
+}
+
+ig_run "git://git.sv.gnu.org/emacs.git" \
+       "$emacs_reponame" \
+       "master" \
+       "setup_emacs" \
+       "install_emacs" \
+       "rollback_emacs"

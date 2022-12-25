@@ -1,10 +1,10 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0); pwd)
-. ${d}/common.sh
+set -e
 
-tmp=${d}/../tmp
-mkdir -p $tmp
+. "${DOTFILES_ROOT}/bin/common.sh"
+
+ensure_cd "$PJTMP"
 
 read -p "GIT_USER_NAME? > " gun
 if [ -z "$gun" ]
@@ -24,5 +24,5 @@ echo "git user.email = $gue" >&2
 exec_query "generate $tmp/.gitconfig, are you sure?" "bye!"
 export GIT_USER_NAME=$gun
 export GIT_USER_EMAIL=$gue
-envsubst < ${d}/.gitconfig.tpl > ${tmp}/.gitconfig
-cecho green "${tmp}/.gitconfig generated!"
+envsubst < "${PROJECT}/bin/.gitconfig.tpl" > "${PJTMP}/.gitconfig"
+cecho green "${PJTMP}/.gitconfig generated!"

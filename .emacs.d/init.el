@@ -556,18 +556,18 @@ c.f. `format-all-region'."
                                             ("f" . bm-next))))
 
 ;; snippet management
-(use-package yasnippet
-  :diminish (yas-minor-mode . "")
-  :config
-  (yas-reload-all)
-  (yas-global-mode 1))
+;; (use-package yasnippet
+;;   :diminish (yas-minor-mode . "")
+;;   :config
+;;   (yas-reload-all)
+;;   (yas-global-mode 1))
 
-(use-package auto-yasnippet
-  :bind
-  ("M-s z" . aya-expand)
-  ("M-s Z" . aya-create)
-  :custom
-  (aya-create-with-newline t))
+;; (use-package auto-yasnippet
+;;   :bind
+;;   ("M-s z" . aya-expand)
+;;   ("M-s Z" . aya-create)
+;;   :custom
+;;   (aya-create-with-newline t))
 
 ;; completions
 (use-package company
@@ -1337,6 +1337,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (command-log-histfile (my-getenv "EMACS_HISTFILE"))
   :config
   (command-log-setup))
+
+(use-package message-routing
+  :straight (message-routing :host github
+                             :repo "berquerant/emacs-message-routing")
+  :custom
+  (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")))
+  :config
+  (message-routing-setup))
 
 (use-package recentf-ext
   :custom

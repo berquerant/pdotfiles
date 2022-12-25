@@ -1,74 +1,59 @@
 #!/bin/bash
 
-source "${DOTFILES_ROOT}/bin/common.sh"
+. "${DOTFILES_ROOT}/bin/common.sh"
+. "${DOTFILES_ROOT}/bin/install-git-runner.sh"
 
-DEST="${HOME}/.gitattributes"
-TARGETS=(
-    "C++"
-    "Common"
-    "Go"
-    "Java"
-    "Markdown"
-    "Perl"
-    "Python"
-    "Rails"
-    "Rust"
-    "sql"
-    "Web"
-)
+export IG_WORKD="$PJTMP"
 
-cecho green "Install .gitattributes."
+readonly attr_reponame="gitattributes"
+readonly attr_repod="${IG_WORKD}/${attr_reponame}"
 
-cecho green "Backing up .gitattributes."
-DEST_BKUP="${DEST}.bk"
-mv -f $DEST $DEST_BKUP
+readonly attr_location="${HOME}/.gitattributes"
+readonly attr_location_backup="${HOME}/.gitattributes.bk"
 
-mkdir -p "${PROJECT}/tmp"
-cd "${PROJECT}/tmp"
+backup_attr() {
+    mv -f "$attr_location" "$attr_location_backup"
+}
 
-if [ ! -d ./gitattributes ]; then
-    cecho "Download gitattributes repo."
-    git clone https://github.com/alexkaratarakis/gitattributes.git
-    git checkout master
-fi
+restore_attr() {
+    mv -f "$attr_location_backup" "$attr_location"
+}
 
-cd gitattributes
-CURRENT_HASH=$(git rev-parse HEAD)
-cecho green "Now gitattributes is ${CURRENT_HASH}"
-git pull
-NEXT_HASH=$(git rev-parse HEAD)
-cecho green "Next gitattributes will be ${NEXT_HASH}"
+setup_attr() {
+    backup_attr && brew install ripgrep
+}
 
-GITATTRIBUTES="${PROJECT}/tmp/gitattributes"
+rollback_attr() {
+    restore_attr
+}
 
-generate() {
-    echo "# From ${NEXT_HASH}" > $DEST
-    for target in "${TARGETS[@]}" ; do
+install_attr() {
+    cd "$attr_repod" || return $?
+    readonly current_hash="$(git rev-parse HEAD)"
+    readonly targets=(
+        "C++"
+        "Common"
+        "Go"
+        "Java"
+        "Markdown"
+        "Perl"
+        "Python"
+        "Rails"
+        "Rust"
+        "sql"
+        "Web"
+    )
+    echo "# From ${current_hash}" > "$attr_location"
+    for target in "${targets[@]}" ; do
         local t="${target}.gitattributes"
         cecho green "Load ${t}..."
-        rg -v "^(#|$)" < "${GITATTRIBUTES}/${t}" >> $DEST
+        rg -v "^(#|$)" < "${attr_repod}/${t}" >> "$attr_location" || return $?
     done
 }
 
-rollback() {
-    mv -f $DEST_BKUP $DEST
-    cd $GITATTRIBUTES
-    git checkout $CURRENT_HASH
-    cecho yellow "gitattributes rolled back!"
-}
-
-on_failed() {
-    cecho red "Install gitattributes ${NEXT_HASH} failed!"
-    rollback
-    cecho red "Now gitattributes is ${CURRENT_HASH}"
-    exit 1
-}
-
-on_success() {
-    cecho green ".gitattribtes Installed!"
-    cecho green "Now .gitattributes is ${NEXT_HASH}"
-    cecho green "Done!"
-}
-
-
-generate && on_success || on_failed
+ig_run "https://github.com/alexkaratarakis/gitattributes.git" \
+       "$attr_reponame" \
+       "master" \
+       "setup_attr" \
+       "install_attr" \
+       "rollback_attr"
