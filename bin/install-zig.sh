@@ -23,7 +23,7 @@ install_zig() {
 }
 
 rollback_zig() {
-    cecho red "zig rollback noop"
+    :
 }
 
 prepare_zig() {

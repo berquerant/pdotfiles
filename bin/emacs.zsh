@@ -5,6 +5,9 @@ export MIGEMO_DICT="$(brew --prefix cmigemo)/share/migemo/utf-8/migemo-dict"
 export EMACS_HISTFILE=$EMACSD/.history_emacs
 alias emacs='open -a /Applications/Emacs.app'
 
+kill_emacs() {
+    ps aux | rg "[/]Applications/Emacs" | awk '{print $2}' | xargs kill -9
+}
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]] \
     && [[ -n ${EMACS_VTERM_PATH} ]] \

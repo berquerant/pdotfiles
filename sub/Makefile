@@ -15,8 +15,7 @@ brew-update:
 get-go: go go-packages golangci-lint ## install go and make it available
 
 go: ## install go
-	git clone https://github.com/syndbg/goenv.git $(GOENV_ROOT)
-	goenv install $(GO_VERSION)
+	bin/install-go.sh
 
 go-update: go-packages
 
@@ -30,14 +29,10 @@ golangci-lint: ## install linter
 	brew install golangci/tap/golangci-lint
 	brew upgrade golangci/tap/golangci-lint
 
-clean-go: ## uninstall go
-	brew uninstall goenv golangci/tap/golangci-lint
-	rm -rf $(GOENV_ROOT)
-
 get-python: py-env-manager pyenv-global ## install python and make it available
 
 py-env-manager: ## install python env
-	brew install pyenv
+	bin/install-python.sh
 	brew install pipenv
 
 pyenv-global: ## install python utilities
@@ -50,14 +45,9 @@ pyenv-upgrade-requirements: ## upgrade python requirements
 	pip install --upgrade pip setuptools
 	pip freeze > $(PJTMP)/requirements_backup.txt
 	pip install --upgrade -r requirements.txt
-	pip freeze > $(PJTMP)/requirements.txt
+	pip freeze > $(PROJECT)/requirements.txt
 
 pyenv-update: pyenv-upgrade-requirements
-
-clean-pyenv: ## uninstall python
-	brew uninstall pipenv
-	brew uninstall pyenv
-	rm -rf $(PYENV_ROOT)
 
 get-ruby: ruby ## install ruby and make it available
 

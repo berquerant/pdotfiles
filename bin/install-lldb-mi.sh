@@ -25,7 +25,7 @@ install_mi() {
 }
 
 rollback_mi() {
-    cecho red "lldb-mi rollback noop"
+    :
 }
 
 ig_run "https://github.com/lldb-tools/lldb-mi.git" \
