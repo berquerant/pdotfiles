@@ -1,12 +1,12 @@
 #!/bin/bash
 
 . "${DOTFILES_ROOT}/bin/common.sh"
-. "${DOTFILES_ROOT}/bin/install-git-runner.sh"
+. "${DOTFILES_ROOT}/bin/install-via-git.sh"
 
-export IG_WORKD="$PJTMP"
+export IVG_WORKD="$PJTMP"
 
 readonly emacs_reponame="emacs"
-readonly emacs_repod="${IG_WORKD}/${emacs_reponame}"
+readonly emacs_repod="${IVG_WORKD}/${emacs_reponame}"
 
 setup_emacs_brew() {
     brew install --cask xquartz &&\
@@ -53,9 +53,9 @@ install_emacs() {
         make distclean
 }
 
-ig_run "git://git.sv.gnu.org/emacs.git" \
-       "$emacs_reponame" \
-       "master" \
-       "setup_emacs" \
-       "install_emacs" \
-       "rollback_emacs"
+ivg_run "git://git.sv.gnu.org/emacs.git" \
+        "$emacs_reponame" \
+        "master" \
+        "setup_emacs" \
+        "install_emacs" \
+        "rollback_emacs"

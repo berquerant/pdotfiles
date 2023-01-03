@@ -84,6 +84,7 @@
 (column-number-mode t)
 (global-display-line-numbers-mode t)
 (repeat-mode t)
+(display-time) ; display time on modeline
 (set-face-attribute 'default nil :height 100) ; initial font size
 (setq-default major-mode 'text-mode       ; use text-mode instead of fundamental-mode
               bidi-display-reordering nil ; ignore the writing direction: right to left
@@ -121,6 +122,8 @@
       split-height-threshold 120
       eval-expression-print-length nil
       eval-expression-print-level nil
+      display-time-interval 1 ; display time every second
+      display-time-string-forms '((format-time-string "%Y-%m-%d %H:%M:%S" now))
       eval-expression-print-maximum-character nil
       package-native-compile t
       read-process-output-max (* 1024 1024)
@@ -137,6 +140,8 @@
            ([?\C-¥] . [?\C-\\])
            ([?\M-¥] . [?\M-\\])
            ([?\C-\M-¥] . [?\C-\M-\\])
+           ("C-s" . isearch-forward-thing-at-point)
+           ("C-r" . isearch-backward-thing-at-point)
            ("C-t" . other-window)
            ("C-T" . other-window-back)
            ("C-<tab>" . tab-next)

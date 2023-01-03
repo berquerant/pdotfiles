@@ -1,12 +1,12 @@
 #!/bin/bash
 
 . "${DOTFILES_ROOT}/bin/common.sh"
-. "${DOTFILES_ROOT}/bin/install-git-runner.sh"
+. "${DOTFILES_ROOT}/bin/install-via-git.sh"
 
-export IG_WORKD="$PJTMP"
+export IVG_WORKD="$PJTMP"
 
 readonly attr_reponame="gitattributes"
-readonly attr_repod="${IG_WORKD}/${attr_reponame}"
+readonly attr_repod="${IVG_WORKD}/${attr_reponame}"
 
 readonly attr_location="${HOME}/.gitattributes"
 readonly attr_location_backup="${HOME}/.gitattributes.bk"
@@ -51,9 +51,9 @@ install_attr() {
     done
 }
 
-ig_run "https://github.com/alexkaratarakis/gitattributes.git" \
-       "$attr_reponame" \
-       "master" \
-       "setup_attr" \
-       "install_attr" \
-       "rollback_attr"
+ivg_run "https://github.com/alexkaratarakis/gitattributes.git" \
+        "$attr_reponame" \
+        "master" \
+        "setup_attr" \
+        "install_attr" \
+        "rollback_attr"

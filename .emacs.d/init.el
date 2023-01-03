@@ -49,7 +49,7 @@
       (progn (message (format "[my-getenv] not found %s" arg))
              nil)))
 
-(setq straight-profiles `((nil . ,(format "%s/dotfiles/.emacs.d/straight-default.el" (my-getenv "HOME")))))
+(setq straight-profiles `((nil . ,(format "%s/.emacs.d/straight-default.el" (my-getenv "DOTFILES_ROOT")))))
 
 ;; for prefix
 (unbind-key "M-s w")
@@ -208,7 +208,6 @@ c.f. `format-all-region'."
   :bind
   (("M-t M-t" . treemacs-select-window)
    ("M-t M-n" . treemacs-next-workspace)
-   ("M-t M-f" . treemacs-find-file)
    :map treemacs-mode-map
    ([mouse-1] . treemacs-single-click-expand-action))
   :custom
@@ -225,8 +224,6 @@ c.f. `format-all-region'."
   (treemacs-git-mode 'deferred)
   (treemacs-hide-gitignored-files-mode nil)
   (treemacs-fringe-indicator-mode 'always))
-
-(use-package shut-up)
 
 ;; popup window manager
 (use-package popwin
@@ -250,62 +247,153 @@ c.f. `format-all-region'."
   :config
   (migemo-init))
 
-;; framework for completion
-(use-package helm
-  :diminish (helm-mode . "")
-  :after migemo
-  :bind
-  (("C-x C-b" . helm-for-files)
-   ("C-x C-f" . helm-find-files)
-   ("M-x" . helm-M-x)
-   ("M-y" . helm-show-kill-ring)
-   ("C-x t o" . helm-occur)
-   ("C-x t b" . helm-bookmarks)
-   ("C-x t m" . helm-all-mark-rings)
-   ("C-x t d" . helm-dabbrev)
-   ("C-x t f" . helm-multi-files)
-   ("C-x t i" . helm-semantic-or-imenu)
-   ("C-x t a" . helm-apropos)
-   ("C-x C-q" . helm-resume)
-   :map helm-map
-   ("C-h" . delete-backward-char)
-   ("C-l" . helm-select-action)
-   :map helm-find-files-map
-   ("C-h" . delete-backward-char)
-   ("TAB" . helm-execute-persistent-action))
+(use-package prescient
+  :config
+  (prescient-persist-mode t)
   :custom
-  (helm-input-idle-delay 0.3)
-  (helm-M-x-fuzzy-match t)
-  (helm-buffers-fuzzy-matching nil)
-  (helm-ff-fuzzy-matching nil)
-  (helm-buffer-details-flag nil)
-  (helm-apropos-fuzzy-match t)
-  (helm-imenu-fuzzy-match t)
-  (helm-follow-mode-persistent t)
-  (helm-delete-minibuffer-contents-from-point t) ; kill by C-k
-  (helm-display-function #'display-buffer)
-  (helm-recentf-fuzzy-match nil)
-  (helm-split-window-inside-p t)
-  (helm-mini-default-sources '(helm-source-buffers-list
-                               helm-source-buffer-not-found))
-  (helm-for-files-preferred-list '(helm-source-buffers-list
-                                   helm-source-bookmarks
-                                   helm-source-recentf
-                                   helm-source-file-cache
-                                   helm-source-files-in-current-dir
-                                   helm-source-bookmark-set
-                                   helm-source-locate))
-  :config
-  (helm-mode t)
-  (helm-migemo-mode 1)
-  (diminish 'helm-migemo-mode)
-  (setq helm-idle-delay 0.3))
+  (prescient-save-file (format "%s/prescient-save.el" (my-getenv "EMACSD")))
+  (prescient-filter-method '(literal regexp initialism fuzzy)))
 
-(use-package helm-descbinds
-  :bind
-  ("C-h b" .  helm-descbinds)
+(use-package company-prescient
+  :after (company prescient)
   :config
-  (helm-descbinds-mode))
+  (company-prescient-mode t)
+  :custom
+  (company-prescient-sort-length-enable nil))
+
+(use-package vertico-prescient
+  :after (vertico prescient)
+  :config
+  (vertico-prescient-mode t)
+  :custom
+  (vertico-prescient-enable-filtering nil))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package vertico
+  :init
+  (vertico-mode)
+  :custom
+  (vertico-count 20)
+  (vertico-resize t)
+  (vertico-cycle t)
+  (vertico-scroll-margin 0))
+
+(use-package consult
+  :demand t
+  :init
+  (setq xref-show-xrefs-function #'consult-xref
+        xref-show-definitions-function #'consult-xref)
+  :config
+  (my-macro-region-or-at-point-direct consult-line)
+  (my-macro-region-or-at-point-direct consult-line-multi)
+  (my-macro-region-or-at-point-direct consult-git-grep)
+  (bind-key "C-x o" 'consult-line-region-or-at-point)
+  (bind-key "C-x C-o" 'consult-line-multi-region-or-at-point)
+  (bind-key "C-x g g" 'consult-git-grep-region-or-at-point)
+  :bind
+  (("C-x g f" . consult-project-buffer) ; find file in project
+   ("M-g X" . consult-register)
+   ("M-g M-x" . consult-register-store)
+   ("M-g x" . consult-register-load)
+   ("M-g o" . consult-outline)
+   ("M-g m" . consult-bookmark)
+   ("M-g k" . consult-mark)
+   ("M-g K" . consult-global-mark)
+   ("M-g M-g" . consult-goto-line) ; goto-line
+   ("M-s y" . consult-complex-command) ; repeat-complex-command
+   ("M-y" . consult-yank-pop) ; yank
+   ("C-x b" . consult-buffer) ; switch-to-buffer
+   ("M-g i" . consult-imenu)
+   ("M-g M-i" . consult-imenu-multi)
+   :map isearch-mode-map
+   ("C-l" . consult-isearch-history)
+   ("C-o" . consult-line)
+   ("C-O" . consult-line-multi)
+   :map minibuffer-local-map
+   ("C-o" . consult-history)))
+
+(use-package consult-dir
+  :ensure t
+  :after (consult vertico)
+  :bind
+  (:map vertico-map
+        ("C-d" . consult-dir)
+        ("C-j" . consult-dir-jump-file)))
+
+(use-package affe
+  :after (consult orderless)
+  :bind
+  ("C-x C-f" . affe-find) ; find-file
+  :custom
+  (affe-highlight-function 'orderless-highlight-matches)
+  (affe-regexp-function 'orderless-pattern-compiler)
+  (affe-find-command "fd --color=never --full-path"))
+
+(use-package consult-ghq
+  :after consult
+  :bind
+  ("C-x c f" . consult-ghq-find)
+  ("C-x c g" . consult-ghq-grep))
+
+(use-package consult-flycheck
+  :after (consult flycheck))
+
+(use-package marginalia
+  :ensure t
+  :bind
+  (("M-A" . marginalia-cycle)
+   :map minibuffer-local-map
+   ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
+(use-package embark
+  :ensure t
+  :bind
+  (("M-0" . embark-act)
+   ("C-h B" . embark-bindings)
+   :map minibuffer-local-map
+   ("M-0" . embark-act)
+   :map embark-collect-mode-map
+   ("M-0" . embark-act))
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+(use-package embark-consult
+  :ensure t
+  :after (embark consult)
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
+
+(use-package bm
+  :demand t
+  :init
+  (add-hook 'after-init-hook 'bm-repository-load)
+  (add-hook 'find-file-hook 'bm-buffer-restore)
+  (add-hook 'after-revert-hook 'bm-buffer-restore)
+  (add-hook 'kill-buffer-hook 'bm-buffer-save)
+  (add-hook 'after-save-hook 'bm-buffer-save)
+  (add-hook 'vc-before-checkin-hook 'bm-buffer-save)
+  (add-hook 'kill-emacs-hook (lambda ()
+                               (bm-buffer-save-all)
+                               (bm-repository-save)))
+  :bind
+  ("M-s m" . bm-toggle)
+  :custom
+  (bm-buffer-persistence t)
+  (bm-repository-file (format "%s/.bm" (my-getenv "EMACSD")))
+  (bm-cycle-all-buffers t)
+  (bm-restore-repository-on-load t))
 
 (use-package projectile
   :demand t
@@ -327,36 +415,14 @@ c.f. `format-all-region'."
   (advice-add 'projectile-project-root :around 'my-advice-project-root)
   :custom
   (projectile-use-git-grep t)
-  (projectile-dynamic-mode-line nil)
-  (projectile-completion-system 'helm))
-
-;; https://github.com/x-motemen/ghq
-(use-package helm-ghq
-  :demand t
-  :bind
-  ("C-x c g" . helm-ghq))
-
-(use-package helm-projectile
-  :demand t
-  :after (projectile helm-ghq)
-  :hook
-  (projectile-mode . helm-projectile-on)
-  :custom
-  (helm-projectile-fuzzy-match nil)
-  :config
-  (my-macro-fallback-interactively my-project-p helm-projectile-find-file helm-ghq)
-  (my-macro-fallback-interactively my-project-p helm-projectile-recentf helm-ghq)
-  (bind-keys :map projectile-mode-map
-             ("C-x g f" . helm-projectile-find-file-fallback-to-helm-ghq)
-             ("C-x g h" . helm-projectile-recentf-fallback-to-helm-ghq)))
+  (projectile-dynamic-mode-line nil))
 
 ;; key bindings when region activated
 (use-package selected
   :demand t
   :diminish (selected-minor-mode . "")
   :commands (shell-command-on-region-and-insert
-             shell-command-on-region-and-replace
-             my-sql-format-on-region)
+             shell-command-on-region-and-replace)
   :bind
   (:map selected-keymap
         ("@" . rectangle-mark-mode)
@@ -367,8 +433,7 @@ c.f. `format-all-region'."
         ("i" . indent-rigidly)
         ("b" . shell-command-on-region)
         ("C-b" . shell-command-on-region-and-insert)
-        ("B" . shell-command-on-region-and-replace)
-        ("l" . my-sql-format-on-region))
+        ("B" . shell-command-on-region-and-replace))
   :config
   (defun shell-command-on-region-and-insert (command)
     "Execute COMMAND with specified region and insert result into current buffer."
@@ -393,12 +458,6 @@ c.f. `format-all-region'."
   (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)
   (bind-key "M-j t e" 'my-trans-into-en-region-or-at-point))
 
-(use-package helm-selected
-  :after selected
-  :bind
-  (:map selected-keymap
-        ("h" . helm-selected)))
-
 ;; omit continuous command
 (use-package smartrep
   :demand t
@@ -411,50 +470,14 @@ c.f. `format-all-region'."
       ("/" . winner-undo)
       ("_" . winner-redo))))
 
-;; strong isearch
-(use-package helm-swoop
-  :demand t
-  :bind
-  (("M-s o" . helm-multi-swoop)
-   :map isearch-mode-map
-   ("C-o" . helm-swoop-from-isearch)
-   :map helm-swoop-map
-   ("C-c C-e" . helm-swoop-edit)
-   ("C-r" . helm-previous-line)
-   ("C-s" . helm-next-line)
-   ("C-o" . helm-multi-swoop-current-mode-from-helm-swoop)
-   :map helm-multi-swoop-map
-   ("C-r" . helm-previous-line)
-   ("C-s" . helm-next-line))
-  :custom
-  (helm-swoop-use-fuzzy-match nil)
-  (helm-swoop-move-to-line-cycle t)
+(use-package string-inflection
+  :after smartrep
   :config
-  (defun my-helm-swoop-or-occur-p ()
-    "Return T if do swoop."
-    (< (buffer-size) (* 10 (expt 2 10))))
-  (my-macro-fallback-interactively my-helm-swoop-or-occur-p helm-swoop helm-occur)
-  (bind-key "C-x o" 'helm-swoop-fallback-to-helm-occur))
-
-(use-package helm-git-grep
-  :after (helm-projectile helm-ghq)
-  :demand t
-  :bind
-  (:map isearch-mode-map
-   ("C-0" . helm-git-grep-from-isearch)
-   :map helm-map
-   ("C-0" . helm-git-grep-from-helm))
-  :config
-  (my-macro-fallback-interactively my-project-p helm-git-grep-at-point helm-ghq)
-  (bind-key "C-x g g" 'helm-git-grep-at-point-fallback-to-helm-ghq))
+  (smartrep-define-key global-map "M-s a"
+    '(("a" . string-inflection-all-cycle))))
 
 (use-package deadgrep
   :demand t
-  :commands (my-deadgrep-hidden my-deadgrep-with-path)
-  :bind
-  (("C-x a o" . deadgrep)
-   ("C-x a a" . my-deadgrep-hidden)
-   ("C-x a p" . my-deadgrep-with-path))
   :config
   (add-to-list 'deadgrep-project-root-overrides `("~/" . ,(concat (my-getenv "DOTFILES_ROOT") "/"))) ; deny searching at the home directory
   (my-macro-thyristor my-deadgrep-specify-path)
@@ -482,11 +505,17 @@ c.f. `format-all-region'."
         (my-deadgrep-set-search-hidden-files-thyristor-set nil))
       result))
   (advice-add 'deadgrep--arguments :around 'my-advice-deadgrep--arguments)
-  (defun my-deadgrep-hidden ()
+  (defun my-deadgrep-hidden (term)
     "Do `deadgrep' with rg --hidden."
-    (interactive)
+    (interactive "s")
     (my-deadgrep-set-search-hidden-files-thyristor-set t)
-    (call-interactively 'deadgrep)))
+    (deadgrep term))
+  (my-macro-region-or-at-point deadgrep "[deadgrep] ")
+  (my-macro-region-or-at-point my-deadgrep-hidden "[deadgrep-hidden] ")
+  (bind-key "C-x a o" 'deadgrep-region-or-at-point)
+  (bind-key "C-x a a" 'my-deadgrep-hidden-region-or-at-point)
+  :bind
+  ("C-x a p" . my-deadgrep-with-path))
 
 (use-package dumb-jump
   :demand t
@@ -510,9 +539,7 @@ c.f. `format-all-region'."
   :diminish ((global-git-gutter+-mode . "")
              (git-gutter+-mode . ""))
   :bind
-  ("M-s g ." . git-gutter+-show-hunk)
-  ("M-s g n" . git-gutter+-next-hunk)
-  ("M-s g p" . git-gutter+-previous-hunk)
+  ("M-s g" . git-gutter+-show-hunk)
   :custom
   (git-gutter+:update-commands nil)
   (git-gutter+:update-windows-commands nil)
@@ -525,49 +552,14 @@ c.f. `format-all-region'."
   :config
   (global-git-gutter+-mode t))
 
-(use-package helm-bm
+(use-package goto-chg
   :demand t
-  :after smartrep
-  :commands bm-toggle-or-helm
-  :bind
-  (("M-0" . bm-toggle-or-helm))
+  :after (projectile git-gutter+)
   :config
-  (require 'bm)
-  (add-hook 'find-file-hook 'bm-buffer-restore)
-  (add-hook 'kill-buffer-hook 'bm-buffer-save)
-  (add-hook 'after-save-hook 'bm-buffer-save)
-  (add-hook 'after-revert-hook 'bm-buffer-restore)
-  (add-hook 'vc-before-checkin-hook 'bm-buffer-save)
-  (defun save-bm-before-kill-emacs ()
-    (bm-buffer-save-all)
-    (bm-repository-save))
-  (add-hook 'kill-emacs-hook 'save-bm-before-kill-emacs)
-  (setq bookmark-save-flag 1)
-  (setq bookmark-use-annotations t)
-  (setq bookmark-automatically-show-annotations t)
-  (defun bm-toggle-or-helm ()
-    (interactive)
-    (bm-toggle)
-    (when (eq last-command 'bm-toggle-or-helm)
-      (helm-bm)))
-  (push '(migemo) helm-source-bm)
-  (setq helm-source-bm (delete '(multiline) helm-source-bm))
-  (smartrep-define-key global-map "C-x j" '(("b" . bm-previous)
-                                            ("f" . bm-next))))
-
-;; snippet management
-;; (use-package yasnippet
-;;   :diminish (yas-minor-mode . "")
-;;   :config
-;;   (yas-reload-all)
-;;   (yas-global-mode 1))
-
-;; (use-package auto-yasnippet
-;;   :bind
-;;   ("M-s z" . aya-expand)
-;;   ("M-s Z" . aya-create)
-;;   :custom
-;;   (aya-create-with-newline t))
+  (my-macro-fallback-interactively my-project-p git-gutter+-next-hunk goto-last-change)
+  (my-macro-fallback-interactively my-project-p git-gutter+-previous-hunk goto-last-change-reverse)
+  (bind-key "M-," 'git-gutter+-next-hunk-fallback-to-goto-last-change)
+  (bind-key "M-." 'git-gutter+-previous-hunk-fallback-to-goto-last-change-reverse))
 
 ;; completions
 (use-package company
@@ -615,13 +607,6 @@ c.f. `format-all-region'."
   :config
   (global-company-mode))
 
-(use-package company-statistics
-  :hook
-  (company-mode . company-statistics-mode)
-  :custom
-  (company-transformers '(company-sort-by-statistics
-                          company-sort-by-backend-importance)))
-
 (use-package company-quickhelp
   :hook
   (company-mode . company-quickhelp-mode)
@@ -643,14 +628,6 @@ c.f. `format-all-region'."
   (save-abbrevs t)
   :config
   (quietly-read-abbrev-file))
-
-;; jump by char
-(use-package avy
-  :demand t
-  :bind
-  ("M-g M-g" . avy-goto-line)
-  :custom
-  (avy-timeout-seconds nil))
 
 (use-package avy-migemo
   :demand t
@@ -690,21 +667,6 @@ c.f. `format-all-region'."
         (">" . mc/mark-next-like-this)
         ("<" . mc/mark-previous-like-this))))
 
-;; isearch from region
-(use-package phi-search-migemo
-  :after (selected migemo)
-  :bind
-  (:map selected-keymap
-        ("s" . phi-search-migemo)
-        ("r" . phi-search-migemo-backward)))
-
-(use-package replace-from-region
-  :after selected
-  :bind
-  (:map selected-keymap
-        ("q" . query-replace-from-region)
-        ("C-q" . query-replace-regexp-from-region)))
-
 ;; search assist
 (use-package anzu
   :custom
@@ -740,28 +702,6 @@ c.f. `format-all-region'."
   (sp-local-pair '(emacs-lisp-mode) "'" "'" :actions nil) ; disable right ' completion
   (sp-local-pair '(emacs-lisp-mode) "`" "`" :actions nil) ; disable right ` completion
   (smartparens-global-mode t))
-
-(use-package highlight-symbol
-  :after smartrep
-  :config
-  (smartrep-define-key global-map "M-]"
-    `(("n" . highlight-symbol-next)
-      ("p" . highlight-symbol-prev)
-      ("." . highlight-symbol-at-point)
-      ("q" . highlight-symbol-query-replace)
-      ("r" . highlight-symbol-remove-all)
-      ("l" . highlight-symbol-list-all)
-      ("o" . highlight-symbol-occur)
-      ("h" . highlight-symbol-mode)))
-  :custom
-  (highlight-symbol-colors
-   '("Green"
-     "Magenta"
-     "Blue"
-     "Orange"
-     "Purple"
-     "Brown"
-     "selectedMenuItemColor")))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode)
@@ -1068,7 +1008,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :bind
   ("M-s u" . plantuml-preview)
   :config
-  (setq plantuml-output-type "svg")
+  (setq plantuml-output-type "png")
   :custom
   (plantuml-executable-args '("-headless" "-theme" "toy"))
   (plantuml-default-exec-mode 'executable)
@@ -1115,13 +1055,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-flake8-maximum-line-length 120)
   :config
   (my-macro-thyristor flycheck-mode)
-  (smartrep-define-key global-map "C-c f"
-    '(("f" . flycheck-list-errors)
-      ("." . flycheck-display-error-at-point)
-      ("n" . flycheck-next-error)
-      ("p" . flycheck-previous-error)
-      ("e" . flycheck-buffer)
-      ("w" . flycheck-copy-errors-as-kill)))
   (if (display-graphic-p)
       (flycheck-pos-tip-mode)
     (flycheck-popup-tip-mode)))
@@ -1186,6 +1119,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (eglot-connect-timeout 5)
   (eglot-send-changes-idle-time 5)
   (eglot-confirm-server-initiated-edits nil))
+
+(use-package consult-eglot
+  :ensure t
+  :bind
+  (:map eglot-mode-map
+        ("C-x p o" . consult-eglot-symbols))
+  :after (consult eglot))
 
 (use-package lsp-mode
   :hook
@@ -1287,6 +1227,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
           (lsp-ui-doc--hide-frame))
         (lsp-ui-doc-mode 1))))
 
+(use-package consult-lsp
+  :ensure t
+  :bind
+  (:map lsp-mode-map
+        ("C-c p o" . consult-lsp-symbols))
+  :after (consult lsp-mode))
+
 (use-package lsp-treemacs
   :config
   (lsp-treemacs-sync-mode 1)
@@ -1299,36 +1246,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
         ("C-c t c" . lsp-treemacs-call-hierarchy)
         ("C-c t t" . lsp-treemacs-type-hierarchy)))
 
-
-(use-package goto-chg
-  :demand t
-  :bind
-  ("M-," . goto-last-change-reverse)
-  ("M-." . goto-last-change))
+(use-package restclient)
 
 (use-package backward-forward
   :demand t
+  :after consult
+  :hook
+  (consult-after-jump . backward-forward-push-mark-wrapper)
   :bind
   ("C-," . backward-forward-previous-location)
   ("C-." . backward-forward-next-location)
   :config
-  (cl-loop for x in '(helm-bookmarks
-                      helm-for-files
-                      helm-find-files
-                      helm-all-mark-rings
-                      helm-ghq
-                      helm-projectile-find-file
-                      helm-projectile-recentf
-                      helm-swoop
-                      helm-occur
-                      helm-git-grep-at-point
-                      deadgrep
+  (cl-loop for x in '(deadgrep
                       git-gutter+-next-hunk
                       git-gutter+-previous-hunk
                       xref-find-references
                       xref-find-definitions)
            do (advice-add x :before #'backward-forward-push-mark-wrapper))
   (backward-forward-mode t))
+
+(use-package indent-guide
+  :custom
+  (indent-guide-delay 0.4)
+  :config
+  (indent-guide-global-mode))
 
 (use-package command-log
   :straight (command-log :host github
@@ -1346,6 +1287,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (message-routing-setup))
 
+(use-package shut-up)
 (use-package recentf-ext
   :custom
   (recentf-save-file (format "%s/.recentf" (my-getenv "EMACSD")))
@@ -1353,6 +1295,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (recentf-max-saved-items 100)
   (recentf-auto-cleanup 'never)
   :config
-  (run-with-idle-timer 60 t (lambda () (shut-up (recentf-save-list)))))
+  (run-with-idle-timer 30 t #'(lambda () (shut-up (recentf-save-list)))))
 
 ;;; init.el ends here
