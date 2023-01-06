@@ -327,12 +327,10 @@ c.f. `format-all-region'."
 
 (use-package affe
   :after (consult orderless)
-  :bind
-  ("C-x C-f" . affe-find) ; find-file
   :custom
   (affe-highlight-function 'orderless-highlight-matches)
   (affe-regexp-function 'orderless-pattern-compiler)
-  (affe-find-command "fd --color=never --full-path"))
+  (affe-find-command "git ls --full-name"))
 
 (use-package consult-ghq
   :after consult

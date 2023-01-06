@@ -141,7 +141,6 @@
            ([?\M-¥] . [?\M-\\])
            ([?\C-\M-¥] . [?\C-\M-\\])
            ("C-s" . isearch-forward-thing-at-point)
-           ("C-r" . isearch-backward-thing-at-point)
            ("C-t" . other-window)
            ("C-T" . other-window-back)
            ("C-<tab>" . tab-next)
