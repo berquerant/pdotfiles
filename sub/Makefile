@@ -45,9 +45,12 @@ pyenv-upgrade-requirements: ## upgrade python requirements
 	pip install --upgrade pip setuptools
 	pip freeze > $(PJTMP)/requirements_backup.txt
 	pip install --upgrade -r requirements.txt
-	pip freeze > $(PROJECT)/requirements.txt
+	pip freeze > $(PJTMP)/requirements.txt
 
-pyenv-update: pyenv-upgrade-requirements
+pyenv-force-update:
+	IVG_FORCE_UPDATE=1 bin/install-python.sh
+
+pyenv-update: pyenv-force-update pyenv-upgrade-requirements
 
 get-ruby: ruby ## install ruby and make it available
 
@@ -55,27 +58,11 @@ ruby: ## install ruby
 	brew install ruby
 	gem install solargraph rubocop
 
-clean-ruby: ## uninstall ruby
-	brew uninstall ruby
-
-get-typescript: node typescript ## install typescript and make it available
-
-node: ## install node
-	mkdir -p $(NVM_DIR)
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM_VERSION)/install.sh | bash
-	. $(NVM_DIR)/nvm.sh
-	nvm install --lts
-	npm i -g eslint csslint
-
-typescript: ## install typescript
-	npm i -g typescript typescript-formatter typescript-eslint typescript-language-server ts-node
+get-node: ## install node
+	bin/install-node.sh
 
 node-update:
-	npm update -g npm
-	npm update --location=global
-
-clean-node: ## uninstall node
-	rm -rf $(NVM_DIR) $(NPM_ROOT)
+	IVG_FORCE_UPDATE=1 bin/install-node.sh
 
 get-rust: rust rust-components rust-crates rust-analyzer ## install rust and make it available
 
@@ -140,21 +127,15 @@ clean-markdown: ## uninstall markdown utilities
 clojure: ## install clojure
 	brew install clojure/tools/clojure leiningen clojure-lsp/brew/clojure-lsp-native
 
-clean-clojure: ## uninstall clojure
-	brew uninstall clojure/tools/clojure leiningen clojure-lsp/brew/clojure-lsp-native
-
 terraform: ## install terraform
 	brew tap hashicorp/tap
 	brew install tfenv
 	brew install hashicorp/tap/terraform-ls
 
-clean-terraform: ## uninstall terraform
-	brew uninstall tfenv
-	brew uninstall hashicorp/tap/terraform-ls
-
-get-zig: zig zig-ls  ## install zig
+get-zig: zig ## install zig
 
 zig: ## install zig
 	bin/install-zig.sh
 
-zig-update: zig
+zig-update:
+	IVG_FORCE_UPDATE=1 bin/install-zig.sh

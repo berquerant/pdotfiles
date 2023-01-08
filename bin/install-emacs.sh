@@ -31,7 +31,7 @@ rollback_emacs() {
 }
 
 setup_emacs() {
-    backup_emacs && setup_emacs_brew || return $?
+    backup_emacs || setup_emacs_brew || return $?
     if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
         echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
     fi

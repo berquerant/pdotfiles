@@ -7,11 +7,11 @@ export IVG_WORKD="$PJTMP"
 
 readonly pyenv_reponame="pyenv"
 readonly pyenv_repod="${IVG_WORKD}/${pyenv_reponame}"
-readonly pyenv_location="${HOME}/.pyenv"
+readonly pyenv_location="$PYENV_ROOT"
 
 install_pyenv() {
     ln -snvf "$pyenv_repod" "$pyenv_location" &&\
-        pyenv install "$PY_VERSION" &&\
+        pyenv install --skip-existing "$PY_VERSION" &&\
         pyenv local "$PY_VERSION"
 }
 

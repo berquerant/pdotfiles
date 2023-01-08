@@ -291,10 +291,13 @@ c.f. `format-all-region'."
   :config
   (my-macro-region-or-at-point-direct consult-line)
   (my-macro-region-or-at-point-direct consult-line-multi)
-  (my-macro-region-or-at-point-direct consult-git-grep)
+  (defun my-consult-git-grep (&optional initial dir)
+    (interactive "P")
+    (consult-git-grep dir initial))
+  (my-macro-region-or-at-point-direct my-consult-git-grep)
   (bind-key "C-x o" 'consult-line-region-or-at-point)
   (bind-key "C-x C-o" 'consult-line-multi-region-or-at-point)
-  (bind-key "C-x g g" 'consult-git-grep-region-or-at-point)
+  (bind-key "C-x g g" 'my-consult-git-grep-region-or-at-point)
   :bind
   (("C-x g f" . consult-project-buffer) ; find file in project
    ("M-g X" . consult-register)

@@ -19,8 +19,12 @@
 
 (defmacro my-macro-toggle (x)
   "Toggle X as boolean."
-  `(setq ,(read (symbol-name x))
-         (equal ,(read (symbol-name x)) nil)))
+  `(progn
+     (message "[my-macro-toggle] toggle %s into %s"
+              ,(symbol-name x)
+              (equal ,(read (symbol-name x)) nil))
+     (setq ,(read (symbol-name x))
+         (equal ,(read (symbol-name x)) nil))))
 
 (defmacro my-macro-defun-toggle (x)
   "Define function toggle X."

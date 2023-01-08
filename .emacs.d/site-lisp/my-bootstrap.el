@@ -84,7 +84,6 @@
 (column-number-mode t)
 (global-display-line-numbers-mode t)
 (repeat-mode t)
-(display-time) ; display time on modeline
 (set-face-attribute 'default nil :height 100) ; initial font size
 (setq-default major-mode 'text-mode       ; use text-mode instead of fundamental-mode
               bidi-display-reordering nil ; ignore the writing direction: right to left
@@ -129,6 +128,9 @@
       read-process-output-max (* 1024 1024)
       max-lisp-eval-depth 1500
       max-specpdl-size 3000)
+
+(display-time) ; display time on modeline
+(run-with-idle-timer 60 t #'display-time)
 
 (defun other-window-back ()
   "Reverse `other-window'."

@@ -7,11 +7,11 @@ export IVG_WORKD="$PJTMP"
 
 readonly goenv_reponame="goenv"
 readonly goenv_repod="${IVG_WORKD}/${goenv_reponame}"
-readonly goenv_location="${HOME}/.goenv"
+readonly goenv_location="$GOENV_ROOT"
 
 install_goenv() {
     ln -snvf "$goenv_repod" "$goenv_location" &&\
-        goenv install "$GO_VERSION" &&\
+        goenv install --skip-existing "$GO_VERSION" &&\
         goenv local "$GO_VERSION"
 }
 

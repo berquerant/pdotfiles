@@ -20,7 +20,7 @@ restore_attr() {
 }
 
 setup_attr() {
-    backup_attr && brew install ripgrep
+    backup_attr || brew install ripgrep
 }
 
 rollback_attr() {
