@@ -30,4 +30,10 @@ if type bat >/dev/null 2>&1 ; then
     batdiff() {
         git diff --name-only --relative --diff-filter=d | xargs bat --diff
     }
+else
+    alias bat='cat'
+fi
+
+if ! type rg >/dev/null 2>&1 ; then
+    alias rg='grep'
 fi

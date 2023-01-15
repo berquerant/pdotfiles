@@ -333,7 +333,7 @@ c.f. `format-all-region'."
   :custom
   (affe-highlight-function 'orderless-highlight-matches)
   (affe-regexp-function 'orderless-pattern-compiler)
-  (affe-find-command "git ls --full-name"))
+  (affe-find-command "git ls-files --full-name"))
 
 (use-package consult-ghq
   :after consult
