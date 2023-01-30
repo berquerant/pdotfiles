@@ -19,8 +19,13 @@
   excludesfile = ~/.gitignore
   ignorecase = false
   autocrlf = false
+  safecrlf = true
 [log]
   abbrevCommit = true
+[fetch]
+  prune = true
+[pull]
+  ff = only
 [alias]
   a = add
   aliases = !git config --list | grep -E "^alias" | cut -d "." -f 2- | sort
@@ -32,7 +37,7 @@
   d = diff
   dt = difftool
   dw = diff --color-words
-  merged = git branch --merged
+  merged = branch --merged
   g = grep --heading
   l = log
   logs = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -44,5 +49,8 @@
   undo-commit = reset --soft @^
   undo-add = reset @
   recent = for-each-ref refs/heads/ --sort=-committerdate --format='%(committerdate:iso) %(color:green)%(refname:short)%(color:reset) %(color:red)%(authoremail) %(authorname)%(color:reset) %(subject)'
-  force-pull = "!f() { git fetch ; git reset --hard origin/$1 }; f"
   redo-commit = revert @
+  hash = show --format='%H' --no-patch
+  log-num = log --numstat
+  log-name = log --name-status
+  ps = push origin HEAD

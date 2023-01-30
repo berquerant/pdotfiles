@@ -30,6 +30,8 @@ message "Install tools"
 formulas=(
     bash
     git
+    gh
+    glab
     direnv # .envrc
     readline # .pythonrc
     gettext

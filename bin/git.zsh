@@ -25,3 +25,13 @@ ggrepo() {
     fi
     repo && git grep "$@"
 }
+
+gfpull() {
+    git fetch
+    git reset --hard origin/$1
+}
+
+gfbranch() {
+    git branch -D $1
+    git checkout -b $1
+}
