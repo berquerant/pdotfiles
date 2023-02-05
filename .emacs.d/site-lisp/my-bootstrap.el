@@ -140,6 +140,11 @@
   :bind
   ("M-s C-r" . read-only-mode-thyristor-toggle)
   :config
+  (defun my-switch-buffer-functions--flexible-window-size-hook (prev cur)
+    "Make window size flexible."
+    (setq window-size-fixed nil))
+  (add-to-list 'switch-buffer-functions 'my-switch-buffer-functions--flexible-window-size-hook)
+
   (my-macro-thyristor read-only-mode)
   (read-only-mode-thyristor-set nil)
   (defvar my-read-only-hook-exclude-regex
