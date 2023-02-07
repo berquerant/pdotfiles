@@ -211,8 +211,13 @@ c.f. `format-all-region'."
    :map treemacs-mode-map
    ([mouse-1] . treemacs-single-click-expand-action))
   :custom
+  (treemacs-no-png-images t) ; no icon
   (treemacs-indentation 1)
   (treemacs-indentation-string "|")
+  (treemacs-silent-refresh t)
+  (treemacs-show-cursor t)
+  (treemacs-silent-filewatch t)
+  (treemacs-tag-follow-delay 0.5)
   :config
   (defun my-treemacs-delete-other-window-predicate (window)
     "Prevent WINDOW from `delete-other-windows'."
