@@ -40,7 +40,7 @@
  ("emacs-libvterm" . "f14d113ee4618f052879509ec378feb9766b871b")
  ("emacs-little-async" . "6129b30bb386609f8862d0110e9d14713a155b25")
  ("emacs-message-routing" . "7a1d7167c1888ff312e3d95b3e18aca8c1ad5033")
- ("emacs-minimal-init" . "85b4f0fb975caa0168b6133dda1ef909b48b2e8c")
+ ("emacs-minimal-init" . "57e3ea43b22f9c58b5f1d67151a49c5555aa6e34")
  ("emacs-scala-mode" . "5d7cf21c37e345c49f921fe5111a49fd54efd1e0")
  ("emacs-which-key" . "8093644032854b1cdf3245ce4e3c7b6673f741bf")
  ("emacsmirror-mirror" . "91e39fcdc6122ce5fd02388872e0dd42bf4a09c1")

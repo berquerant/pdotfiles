@@ -140,11 +140,6 @@
   :bind
   ("M-s C-r" . read-only-mode-thyristor-toggle)
   :config
-  (defun my-switch-buffer-functions--revert-buffer-hook (prev cur)
-    "Ensure reverting buffer always.
-More aggressive than `global-auto-revert-mode'."
-    (revert-buffer t t))
-
   (defun my-switch-buffer-functions--flexible-window-size-hook (prev cur)
     "Make window size flexible."
     (setq window-size-fixed nil))
@@ -159,8 +154,7 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
     (unless (string-match-p my-read-only-hook-exclude-regex (buffer-name cur))
       (read-only-mode-thyristor)))
 
-  (dolist (f '(my-switch-buffer-functions--revert-buffer-hook
-               my-switch-buffer-functions--flexible-window-size-hook
+  (dolist (f '(my-switch-buffer-functions--flexible-window-size-hook
                my-switch-buffer-functions--read-only-hook))
     (add-to-list 'switch-buffer-functions f)))
 
