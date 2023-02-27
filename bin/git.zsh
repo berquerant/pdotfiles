@@ -20,18 +20,42 @@ grepo() {
 
 ggrepo() {
     if [[ -z "$1" ]] ; then
-        echo "git_grep_repo GIT_GREP_OPTIONS"
+        echo "ggrepo GIT_GREP_OPTIONS"
         return
     fi
     repo && git grep "$@"
 }
 
 gfpull() {
+    if [[ -z "$1" ]] ; then
+        echo "git pull, forcely"
+        echo "gfpull BRANCH"
+        return
+    fi
     git fetch
     git reset --hard origin/$1
 }
 
 gfbranch() {
+    if [[ -z "$1" ]] ; then
+        echo "git checkout -b, forcely"
+        echo "gfbranch BRANCH"
+        return
+    fi
     git branch -D $1
     git checkout -b $1
 }
+
+export GIT_WORKTREE_PREFIX="wrktr-"
+
+gwadd() {
+    if [[ -z "$1" ]] ; then
+        echo "git worktree add, prefix is ${GIT_WORKTREE_PREFIX}"
+        echo "gwadd BRANCH [OPTION]"
+        return
+    fi
+    git worktree add "${GIT_WORKTREE_PREFIX}${1}" "$@"
+}
+
+alias gwrm='git worktree remove'
+alias gwls='git worktree list'

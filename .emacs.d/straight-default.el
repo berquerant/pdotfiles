@@ -108,6 +108,7 @@
  ("prescient.el" . "35cf5d36132c3e96db9a9e4d1902dcfa207e7baa")
  ("project" . "9b761c219a9f0a46f1db14c36399f8dcff530107")
  ("projectile" . "036d327b5ad9b970bd1ea3123692a80bc1015b4a")
+ ("protobuf" . "1501afeb23c698263eb3969c98c114597c14bb3b")
  ("queue" . "130c2d656cd5d7376552272fab9e50a7c37d0c4a")
  ("rainbow-delimiters" . "a32b39bdfe6c61c322c37226d66e1b6d4f107ed0")
  ("rainbow-mode" . "55a8c15782197cd9db8950d2f5ed1b9caca08dae")

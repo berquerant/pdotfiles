@@ -1,6 +1,8 @@
 [user]
   name = ${GIT_USER_NAME}
   email = ${GIT_USER_EMAIL}
+[init]
+  defaultBranch = main
 [grep]
   lineNumber = true
   extendedRegexp = true
@@ -45,7 +47,6 @@
   rl = reflog
   root = rev-parse --show-toplevel
   s = status --short --branch
-  w = show
   undo-commit = reset --soft @^
   undo-add = reset @
   recent = for-each-ref refs/heads/ --sort=-committerdate --format='%(committerdate:iso) %(color:green)%(refname:short)%(color:reset) %(color:red)%(authoremail) %(authorname)%(color:reset) %(subject)'
@@ -54,3 +55,4 @@
   log-num = log --numstat
   log-name = log --name-status
   ps = push origin HEAD
+  w = worktree

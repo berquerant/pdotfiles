@@ -1,5 +1,5 @@
 run:
-  go: "1.19"
+  go: "1.20"
   concurrency: 4
   timeout: 10s
   skip-dirs:
@@ -36,3 +36,10 @@ linters:
     - gofumpt
     - ireturn
     - exhaustivestruct
+    - nosnakecase
+    - varcheck
+    - deadcode
+    - ifshort
+    - structcheck
+    - wastedassign
+    - rowserrcheck

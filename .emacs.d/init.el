@@ -951,7 +951,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package dockerfile-mode
   :mode
-  ("Dockerfile\\'" . dockerfile-mode))
+  ("Dockerfile" . dockerfile-mode))
+
+(use-package protobuf-mode
+  :mode
+  ("\\.proto\\'" . protobuf-mode)
+  :config
+  (defconst my-protobuf-style
+    '((c-basic-offset . 2)
+      (indent-tabs-mode . nil)))
+  (add-hook 'protobuf-mode-hook
+    (lambda () (c-add-style "my-style" my-protobuf-style t))))
 
 (use-package emmet-mode
   :hook
@@ -1036,8 +1046,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package flycheck
   :demand t
   :commands (flycheck-mode flycheck-mode-thyristor-2n)
-  :mode
-  (("\\.proto\\'" . flycheck-mode-thyristor-2n))
   :hook
   ((go-mode
     dart-mode
@@ -1047,6 +1055,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     c-mode
     sh-mode
     emacs-lisp-mode
+    protobuf-mode
     haskell-mode
     php-mode
     js2-mode) . flycheck-mode-thyristor-2n)

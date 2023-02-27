@@ -29,11 +29,16 @@
   (interactive)
   (other-window -1))
 
+(defun my-revert-buffer ()
+  (interactive)
+  (revert-buffer t t))
+
 (bind-keys :map global-map
            ([?\¥] . [?\\])
            ([?\C-¥] . [?\C-\\])
            ([?\M-¥] . [?\M-\\])
            ([?\C-\M-¥] . [?\C-\M-\\])
+           ("M-s z" . my-revert-buffer)
            ("C-s" . isearch-forward-thing-at-point)
            ("C-t" . other-window)
            ("C-T" . other-window-back)
