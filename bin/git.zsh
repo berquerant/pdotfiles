@@ -32,8 +32,7 @@ gfpull() {
         echo "gfpull BRANCH"
         return
     fi
-    git fetch
-    git reset --hard origin/$1
+    git fetch && git reset --hard origin/$1
 }
 
 gfbranch() {
@@ -42,8 +41,7 @@ gfbranch() {
         echo "gfbranch BRANCH"
         return
     fi
-    git branch -D $1
-    git checkout -b $1
+    git branch -D $1 && git checkout -b $1
 }
 
 export GIT_WORKTREE_PREFIX="wrktr-"
@@ -59,3 +57,12 @@ gwadd() {
 
 alias gwrm='git worktree remove'
 alias gwls='git worktree list'
+
+gsubremove() {
+    if [[ -z "$1" ]] ; then
+        echo "remove submodule"
+        echo "gsubremove MODULE"
+        return
+    fi
+    git submodule deinit -f "$1" && git rm -f "$1" && rm -rf .git/modules/ "$1"
+}

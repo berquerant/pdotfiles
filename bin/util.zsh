@@ -37,3 +37,23 @@ fi
 if ! type rg >/dev/null 2>&1 ; then
     alias rg='grep'
 fi
+
+mkcd() {
+    if [[ -z "$1" ]] ; then
+        echo "mkcd DIR"
+        echo "mkdir -p DIR && cd DIR"
+        return
+    fi
+
+    mkdir -p "$1" && cd "$1"
+}
+
+pcre() {
+    if [[ -z "$1" ]] ; then
+        echo "pcre REGEX"
+        echo "grep STDIN by REGEX"
+        return
+    fi
+
+    perl -e "while(<>){if(/${1}/){print}}"
+}

@@ -56,3 +56,5 @@
   log-name = log --name-status
   ps = push origin HEAD
   w = worktree
+  rename-branch = branch -m
+  fix-comment = commit --ammend
