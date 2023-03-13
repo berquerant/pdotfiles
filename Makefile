@@ -6,7 +6,8 @@ include util/Makefile
 usage: ## print this help
 	@cat $(MAKEFILE_LIST) | bin/help-makefile.sh
 
-init: ## install tools using homebrew
+init: ## init submodules and install tools using homebrew
+	@git submodule update --init
 	@bin/install-brew.sh
 
 dry-deploy: ## dry run deploying configurations

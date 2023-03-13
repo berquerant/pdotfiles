@@ -15,8 +15,8 @@ setup_mi() {
 install_mi() {
     local LLVM_PATH="$(brew --prefix llvm)"
     export LDFLAGS="-L${LLVM_PATH}/lib"
-	  export CPPFLAGS="-I${LLVM_PATH}/include"
-	  export PATH="${LLVM_PATH}/bin:${PATH}"
+    export CPPFLAGS="-I${LLVM_PATH}/include"
+    export PATH="${LLVM_PATH}/bin:${PATH}"
     cd "$mi_repod" &&\
         cmake . &&\
         cmake --build . &&\
@@ -24,8 +24,10 @@ install_mi() {
         lldb-mi --version
 }
 
-ivg_run "https://github.com/lldb-tools/lldb-mi.git" \
-        "$mi_reponame" \
-        "main" \
-        "setup_mi" \
-        "install_mi"
+export IVG_REPOSITORY="https://github.com/lldb-tools/lldb-mi.git"
+export IVG_REPOSITORY_NAME="$mi_reponame"
+export IVG_SETUP_COMMAND="setup_mi"
+export IVG_INSTALL_COMMAND="install_mi"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${mi_reponame}"
+
+ivg_run

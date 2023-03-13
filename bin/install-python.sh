@@ -15,8 +15,10 @@ install_pyenv() {
         pyenv local "$PY_VERSION"
 }
 
-ivg_run "https://github.com/pyenv/pyenv.git" \
-        "$pyenv_reponame" \
-        "master" \
-        "" \
-        "install_pyenv"
+export IVG_REPOSITORY="https://github.com/pyenv/pyenv.git"
+export IVG_REPOSITORY_NAME="$pyenv_reponame"
+export IVG_BRANCH="master"
+export IVG_INSTALL_COMMAND="install_pyenv"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${pyenv_reponame}"
+
+ivg_run

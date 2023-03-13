@@ -23,6 +23,10 @@ rollback_zig() {
     restore_zig
 }
 
+skipped_zig() {
+    restore_zig
+}
+
 setup_zig() {
     backup_zig || brew install llvm zstd
 }
@@ -37,52 +41,12 @@ install_zig() {
         zig version
 }
 
-prepare_zig() {
-    ivg_run "https://github.com/ziglang/zig.git" \
-            "$zig_reponame" \
-            "master" \
-            "setup_zig" \
-            "install_zig" \
-            "rollback_zig"
-}
-
-readonly zls_reponame="zls"
-readonly zls_repod="${IVG_WORKD}/${zls_reponame}"
-readonly zls_location="${zls_repod}/zig-out/bin/zls"
-readonly zls_location_backup="${zls_location}.bk"
-
-backup_zls() {
-    rm -rf "$zls_location_backup"
-    mv "$zls_location" "$zls_location_backup"
-}
-
-restore_zls() {
-    mv "$zls_location_backup" "$zls_location"
-}
-
-setup_zls() {
-    backup_zls || return 0
-}
-
-rollback_zls() {
-    restore_zls
-}
-
-install_zls() {
-    cd "$zls_repod" &&\
-        git submodule update --init &&\
-        zig build -Drelease-safe &&\
-        ln -snvf "$zls_location" /usr/local/bin/zls &&\
-        zls --version
-}
-
-prepare_zls() {
-    ivg_run "https://github.com/zigtools/zls" \
-            "$zls_reponame" \
-            "master" \
-            "setup_zls" \
-            "install_zls" \
-            "rollback_zls"
-}
-
-prepare_zig && prepare_zls
+export IVG_REPOSITORY="https://github.com/ziglang/zig.git"
+export IVG_REPOSITORY_NAME="$zig_reponame"
+export IVG_BRANCH="master"
+export IVG_SETUP_COMMAND="setup_zig"
+export IVG_INSTALL_COMMAND="install_zig"
+export IVG_ROLLBACK_COMMAND="rollback_zig"
+export IVG_SKIPPED_COMMAND="skipped_zig"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${zig_reponame}"
+ivg_run

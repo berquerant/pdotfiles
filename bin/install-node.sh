@@ -16,8 +16,10 @@ install_nvm() {
         npm i -g eslint csslint typescript typescript-formatter typescript-eslint typescript-language-server ts-node
 }
 
-ivg_run "https://github.com/nvm-sh/nvm.git" \
-        "$nvm_reponame" \
-        "master" \
-        "" \
-        "install_nvm"
+export IVG_REPOSITORY="https://github.com/nvm-sh/nvm.git"
+export IVG_REPOSITORY_NAME="$nvm_reponame"
+export IVG_INSTALL_COMMAND="install_nvm"
+export IVG_BRANCH="master"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${nvm_reponame}"
+
+ivg_run

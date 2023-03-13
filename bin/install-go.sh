@@ -15,8 +15,10 @@ install_goenv() {
         goenv local "$GO_VERSION"
 }
 
-ivg_run "https://github.com/syndbg/goenv.git" \
-        "$goenv_reponame" \
-        "master" \
-        "" \
-        "install_goenv"
+export IVG_REPOSITORY="https://github.com/syndbg/goenv.git"
+export IVG_REPOSITORY_NAME="$goenv_reponame"
+export IVG_BRANCH="master"
+export IVG_INSTALL_COMMAND="install_goenv"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${goenv_reponame}"
+
+ivg_run

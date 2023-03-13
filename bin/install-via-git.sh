@@ -1,7 +1,11 @@
 #!/bin/bash
 
-if [[ ! -d "${PJTMP}/install-via-git-sh" ]]; then
-    git clone "https://github.com/berquerant/install-via-git-sh.git" "${PJTMP}/install-via-git-sh"
+ivg_sh="${DOTFILES_ROOT}/install-via-git-sh/install-via-git.sh"
+
+if [ ! -f "$ivg_sh" ]; then
+    echo "Please make init to enable install-via-git-sh"
+    return 1
 fi
 
-. "${PJTMP}/install-via-git-sh/install-via-git.sh"
+export IVG_LOCKFILE_ROOT="${DOTFILES_ROOT}/.ivg.lock"
+. "$ivg_sh"

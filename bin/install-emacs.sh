@@ -10,8 +10,8 @@ readonly emacs_repod="${IVG_WORKD}/${emacs_reponame}"
 
 setup_emacs_brew() {
     brew install --cask xquartz &&\
-        brew install --build-from-source libgccjit &&\
-        brew install cmigemo gnutls texinfo
+        brew install gcc flann cmigemo gnutls texinfo &&\
+        brew install --build-from-source libgccjit
 }
 
 readonly emacs_location="/Applications/Emacs.app"
@@ -37,6 +37,10 @@ setup_emacs() {
     fi
 }
 
+skipped_emacs() {
+    restore_emacs
+}
+
 install_emacs() {
     export PATH=/usr/local/opt/texinfo/bin:$PATH
     export CC=clang
@@ -53,9 +57,13 @@ install_emacs() {
         make distclean
 }
 
-ivg_run "git://git.sv.gnu.org/emacs.git" \
-        "$emacs_reponame" \
-        "master" \
-        "setup_emacs" \
-        "install_emacs" \
-        "rollback_emacs"
+export IVG_REPOSITORY="git://git.sv.gnu.org/emacs.git"
+export IVG_REPOSITORY_NAME="$emacs_reponame"
+export IVG_BRANCH="master"
+export IVG_SETUP_COMMAND="setup_emacs"
+export IVG_INSTALL_COMMAND="install_emacs"
+export IVG_ROLLBACK_COMMAND="rollback_emacs"
+export IVG_SKIPPED_COMMAND="skipped_emacs"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${emacs_reponame}"
+
+ivg_run

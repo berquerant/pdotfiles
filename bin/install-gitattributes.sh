@@ -27,6 +27,10 @@ rollback_attr() {
     restore_attr
 }
 
+skipped_attr() {
+    restore_attr
+}
+
 install_attr() {
     cd "$attr_repod" || return $?
     readonly current_hash="$(git rev-parse HEAD)"
@@ -51,9 +55,13 @@ install_attr() {
     done
 }
 
-ivg_run "https://github.com/alexkaratarakis/gitattributes.git" \
-        "$attr_reponame" \
-        "master" \
-        "setup_attr" \
-        "install_attr" \
-        "rollback_attr"
+export IVG_REPOSITORY="https://github.com/alexkaratarakis/gitattributes.git"
+export IVG_REPOSITORY_NAME="$attr_reponame"
+export IVG_BRANCH="master"
+export IVG_SETUP_COMMAND="setup_attr"
+export IVG_INSTALL_COMMAND="install_attr"
+export IVG_ROLLBACK_COMMAND="rollback_attr"
+export IVG_SKIPPED_COMMAND="skipped_attr"
+export IVG_LOCKFILE="${IVG_LOCKFILE_ROOT}/${attr_reponame}"
+
+ivg_run

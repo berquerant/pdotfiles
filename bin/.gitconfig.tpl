@@ -20,8 +20,9 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
-  autocrlf = false
-  safecrlf = true
+  quotepath = false
+  autocrlf = input
+  safecrlf = false
 [log]
   abbrevCommit = true
 [fetch]

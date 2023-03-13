@@ -12,6 +12,7 @@
 (add-hook 'after-init-hook 'display-emacs-init-time)
 ;; install and initialize package manager
 (defvar bootstrap-version)
+(defvar native-comp-deferred-compilation-deny-list nil) ; Workaround: Symbol's value as variable is void: native-comp-deferred-compilation-deny-list
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
       (bootstrap-version 6))

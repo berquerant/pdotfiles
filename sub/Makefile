@@ -134,8 +134,14 @@ terraform: ## install terraform
 
 get-zig: zig ## install zig
 
-zig: ## install zig
+zig: ziglang zls ## install zig
+
+ziglang:
 	bin/install-zig.sh
+
+zls:
+	bin/install-zls.sh
 
 zig-update:
 	IVG_FORCE_UPDATE=1 bin/install-zig.sh
+	IVG_FORCE_UPDATE=1 bin/install-zls.sh
