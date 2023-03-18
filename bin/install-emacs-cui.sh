@@ -5,8 +5,10 @@
 
 export IVG_WORKD="$PJTMP"
 
-readonly emacs_reponame="emacs"
+readonly emacs_reponame="emacs-cui"
 readonly emacs_repod="${IVG_WORKD}/${emacs_reponame}"
+
+readonly emacs_compile_concurrency="${EMACS_COMPILE_CONCURRENCY:-4}"
 
 setup_emacs_brew() {
     brew install --cask xquartz &&\
@@ -14,7 +16,7 @@ setup_emacs_brew() {
         brew install --build-from-source libgccjit
 }
 
-readonly emacs_location="/Applications/Emacs.app"
+readonly emacs_location="/Applications/Emacs-CUI.app"
 readonly emacs_location_backup="${emacs_location}.bk"
 
 backup_emacs() {
@@ -50,10 +52,24 @@ install_emacs() {
         rm -rf "${EMACSD}/eln-cache" &&\
         make distclean &&\
         ./autogen.sh &&\
-        ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" --with-native-compilation --with-xwidgets --without-webp --without-sound --without-pop &&\
-        make -j4 &&\
+        ./configure AR="/usr/bin/ar" RANLIB="/usr/bin/ranlib" \
+                    --with-native-compilation \
+                    --with-ns \
+                    --without-webp \
+                    --without-sound \
+                    --without-pop \
+                    --without-x \
+                    --without-dbus \
+                    --without-gconf \
+                    --without-gsettings \
+                    --without-xwidgets \
+                    --without-xaw3d \
+                    --without-gpm \
+                    --without-makeinfo \
+                    --without-mailutils &&\
+        make -j"$emacs_compile_concurrency" &&\
         make install &&\
-        mv nextstep/Emacs.app /Applications/ &&\
+        mv nextstep/Emacs.app "$emacs_location" &&\
         make distclean
 }
 

@@ -1,8 +1,10 @@
 #!/bin/zsh
 
 # find files or directories >= 5GB
+# $1: path (default: /)
+# $2: depth (default: 5)
 diskcheck() {
-    sudo du -m -x -d 5 / 2> /dev/null | awk '$1 >= 5000' | awk '{print $1, length($2), $2}' | sort -rn | awk '{print $1, $3}'
+    sudo du -m -x -d "${2:-5}" "${1:-/}" 2> /dev/null | awk '$1 >= 5000 {print $1, length($2), $2}' | sort -n | awk '{print $1, $3}'
 }
 
 if type bat >/dev/null 2>&1 ; then
@@ -20,12 +22,7 @@ if type bat >/dev/null 2>&1 ; then
             return
         fi
 
-        local cmd="$1"
-        local help_opt="--help"
-        if [[ -n "$2" ]] ; then
-            help_opt="$2"
-        fi
-        $cmd $help_opt | bat --plain --language=help
+        "$cmd" "${2:---help}" | bat --plain --language=help
     }
     batdiff() {
         git diff --name-only --relative --diff-filter=d | xargs bat --diff
@@ -56,4 +53,8 @@ pcre() {
     fi
 
     perl -e "while(<>){if(/${1}/){print}}"
+}
+
+clean_tmpd() {
+    rm -rf "$TMPD" && mkdir -p "$TMPD"
 }

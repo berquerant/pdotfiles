@@ -31,7 +31,12 @@ gitatttibutes: ## generate .gitattributes
 
 git: gitconfig gitattributes ## install git configurations
 
-emacs: ## install or update emacs
-	@bin/install-emacs.sh
+emacs: emacs-gui emacs-cui ## install or update emacs
+
+emacs-gui: ## install or update GUI emacs
+	@bin/install-emacs-gui.sh
+
+emacs-cui: ## install or update CUI emacs
+	@bin/install-emacs-cui.sh
 
 update: brew-update pyenv-update node-update rust-update go-update zig-update ## update except emacs

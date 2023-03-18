@@ -39,7 +39,8 @@
            ([?\M-¥] . [?\M-\\])
            ([?\C-\M-¥] . [?\C-\M-\\])
            ("M-s z" . my-revert-buffer)
-           ("C-s" . isearch-forward-thing-at-point)
+           ("C-M-s" . isearch-forward-thing-at-point)
+           ("C-s" . isearch-forward)
            ("C-t" . other-window)
            ("C-T" . other-window-back)
            ("C-<tab>" . tab-next)
@@ -80,10 +81,10 @@
   (my-macro-handle-buffer switch-to-buffer-other-frame "*scratch*")
   (bind-key "M-s 0" 'find-file-initel)
   (bind-key "M-s 9" 'find-file-zshrc)
-  (bind-key "M-s 5" 'switch-to-buffer-scratch)
-  (bind-key "M-s 6" 'switch-to-buffer-other-window-scratch)
+  (bind-key "M-s 8" 'switch-to-buffer-scratch)
   (bind-key "M-s 7" 'switch-to-buffer-other-tab-scratch)
-  (bind-key "M-s 8" 'switch-to-buffer-other-frame-scratch))
+  (bind-key "M-s 6" 'switch-to-buffer-other-window-scratch)
+  (bind-key "M-s 5" 'switch-to-buffer-other-frame-scratch))
 
 (use-package modus-themes
   :ensure t
