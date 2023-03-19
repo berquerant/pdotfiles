@@ -129,7 +129,7 @@
 (use-package dired
   :straight (dired :type built-in)
   :config
-  (setq insert-directory-program "/usr/local/bin/gls") ; use coreutils ls to use ls --dired
+  (setq insert-directory-program "gls") ; use coreutils ls to use ls --dired
   (setq dired-dwim-target t)
   (setq dired-recursive-copies 'always)
   (setq dired-isearch-filenames t))
