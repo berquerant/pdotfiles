@@ -6,11 +6,6 @@
 
 ;;; Code:
 
-(use-package emacs-little-async
-  :commands little-async-start-process
-  :straight (emacs-little-async :host github
-                                :repo "berquerant/emacs-little-async"))
-
 (defgroup my-trans nil
   "My google translation."
   :prefix "my-trans-")

@@ -29,9 +29,12 @@
   (interactive)
   (other-window -1))
 
+(defun my--revert-buffer ()
+  (revert-buffer t t))
+
 (defun my-revert-buffer ()
   (interactive)
-  (revert-buffer t t))
+  (my--revert-buffer))
 
 (bind-keys :map global-map
            ([?\¥] . [?\\])
@@ -164,5 +167,9 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
                my-switch-buffer-functions--read-only-hook))
     (add-to-list 'switch-buffer-functions f)))
 
+(use-package emacs-little-async
+  :commands little-async-start-process
+  :straight (emacs-little-async :host github
+                                :repo "berquerant/emacs-little-async"))
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

@@ -17,7 +17,6 @@
   prompt = false
 [core]
   editor = vim
-  attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
   ignorecase = false
   quotepath = false
@@ -44,6 +43,9 @@
   g = grep --heading
   l = log
   logs = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  search-commit = log -G
+  search-commit-patch = log --patch -G
+  search-commit-message = log --grep
   ls = ls-files
   rl = reflog
   root = rev-parse --show-toplevel
@@ -59,3 +61,4 @@
   w = worktree
   rename-branch = branch -m
   fix-comment = commit --ammend
+  which-branch = branch --contains

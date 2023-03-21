@@ -21,8 +21,16 @@ fi
 
 echo "git user.name = $gun" >&2
 echo "git user.email = $gue" >&2
-exec_query "generate $tmp/.gitconfig, are you sure?" "bye!"
 export GIT_USER_NAME=$gun
 export GIT_USER_EMAIL=$gue
-envsubst < "${PROJECT}/bin/.gitconfig.tpl" > "${PJTMP}/.gitconfig"
-cecho green "${PJTMP}/.gitconfig generated!"
+
+current_config="${HOME}/.gitconfig"
+next_config="${PJTMP}/.gitconfig"
+envsubst < "${PROJECT}/bin/.gitconfig.tpl" > "$next_config"
+
+set +e
+if [ -f "$current_config" ]; then
+    diff "$current_config" "$next_config"
+fi
+cecho green "${next_config} generated!"
+cp -i "$next_config" "$current_config"

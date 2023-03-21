@@ -23,8 +23,7 @@ clean: ## uninstall dotfiles
 	@bin/clean-dotfiles.sh
 
 gitconfig: ## generate .gitconfig
-	@bin/gen-gitconfig.sh
-	@echo Please cp $(PJTMP)/.gitconfig ~/ to install.
+	@bin/install-gitconfig.sh
 
 gitatttibutes: ## generate .gitattributes
 	@bin/install-gitattributes.sh

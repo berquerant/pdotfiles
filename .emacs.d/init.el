@@ -220,6 +220,10 @@ c.f. `format-all-region'."
   (treemacs-silent-filewatch t)
   (treemacs-tag-follow-delay 0.5)
   :config
+  (defun my--revert-buffer--treemacs-refersh-after-advice ()
+    (call-interactively 'treemacs-refresh))
+  (advice-add #'my--revert-buffer :after #'my--revert-buffer--treemacs-refersh-after-advice)
+
   (defun my-treemacs-delete-other-window-predicate (window)
     "Prevent WINDOW from `delete-other-windows'."
     (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
@@ -464,6 +468,15 @@ c.f. `format-all-region'."
   (my-macro-region-or-at-point my-trans-into-en "To en: ")
   (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)
   (bind-key "M-j t e" 'my-trans-into-en-region-or-at-point))
+
+
+(use-package my-openai
+  :demand t
+  :straight (my-openai :type built-in)
+  :config
+  (add-to-list 'special-display-buffer-names my-openai-output-buffer-name)
+  (my-macro-region-or-at-point my-openai-chat "Message: ")
+  (bind-key "M-s k" 'my-openai-chat-region-or-at-point))
 
 ;; omit continuous command
 (use-package smartrep
