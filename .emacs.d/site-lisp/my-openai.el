@@ -14,7 +14,7 @@
 
 (defcustom my-openai-command-options nil
   "chat command options."
-  :type (repeat 'string)))
+  :type '(repeat string)))
 
 (defun my-openai--command ()
   (format "%s %s" my-openai-command (s-join " " my-openai-command-options)))
