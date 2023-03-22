@@ -12,9 +12,9 @@
   "chat command."
   :type 'string)
 
-(defcustom my-openai-command-options nil
+(defcustom my-openai-command-options '("--max_tokens" "3000")
   "chat command options."
-  :type '(repeat string)))
+  :type '(repeat string))
 
 (defun my-openai--command ()
   (format "%s %s" my-openai-command (s-join " " my-openai-command-options)))
