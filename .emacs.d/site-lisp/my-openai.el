@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 's)
+
 (defgroup my-openai nil
   "My openai chat."
   :prefix "my-openai-")
@@ -9,6 +11,13 @@
 (defcustom my-openai-command "python -m open_ai_chat.cli chat"
   "chat command."
   :type 'string)
+
+(defcustom my-openai-command-options nil
+  "chat command options."
+  :type (repeat 'string)))
+
+(defun my-openai--command ()
+  (format "%s %s" my-openai-command (s-join " " my-openai-command-options)))
 
 (defcustom my-openai-process-name "my-openai"
   "openai chat process name."
@@ -31,7 +40,7 @@
 (defun my-openai-chat (src)
   "Create chat and receive response."
   (my-openai--insert-output-buffer (format "[send]\n%s\n[end]\n" src))
-  (little-async-start-process my-openai-command
+  (little-async-start-process (my-openai--command)
                               :input src
                               :process-name my-openai-process-name
                               :buffer-name my-openai-output-buffer-name
