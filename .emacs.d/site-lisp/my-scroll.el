@@ -8,6 +8,10 @@
   "My utilities for scrolling."
   :prefix "my-scroll-")
 
+(defcustom my-scroll-medium-lines 10
+  "Define medium distance."
+  :type 'integer)
+
 ;;;###autoload
 (defun my-scroll-scroll-down (&optional arg)
   "Scroll down ARG lines.
@@ -41,6 +45,24 @@ default ARG is 1."
   (let ((x (prefix-numeric-value arg)))
     (scroll-up x)
     (forward-line x)))
+
+(defmacro my-scroll--medium (f)
+  "Define `my-scroll-scroll-XXX-medium' functions."
+  (let ((fname (symbol-name f))
+        (name (format "%s-medium" (symbol-name f)))
+        (doc-string (format "Call `%s' `my-scroll-medium-lines' times." (symbol-name f))))
+    `(progn
+       (defun ,(read name)
+           ()
+         ,doc-string
+         (interactive)
+         (,f my-scroll-medium-lines))
+       (autoload ',(read name) "my-scroll"))))
+
+(my-scroll--medium my-scroll-scroll-up)
+(my-scroll--medium my-scroll-scroll-down)
+(my-scroll--medium my-scroll-scroll-up-relationally)
+(my-scroll--medium my-scroll-scroll-down-relationally)
 
 (provide 'my-scroll)
 ;;; my-scroll.el ends here

@@ -126,13 +126,6 @@
   (rainbow-delimiters-depth-7-face ((t (:foreground "Magenta"))))
   (rainbow-delimiters-depth-8-face ((t (:foreground "Brown")))))
 
-;; cursor with beacon
-(use-package beacon
-  :custom
-  (beacon-color "Yellow")
-  :config
-  (beacon-mode 1))
-
 ;; highlight focused buffer
 (use-package dimmer
   :custom
@@ -469,7 +462,6 @@ c.f. `format-all-region'."
   (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)
   (bind-key "M-j t e" 'my-trans-into-en-region-or-at-point))
 
-
 (use-package my-openai
   :demand t
   :straight (my-openai :type built-in)
@@ -498,6 +490,7 @@ c.f. `format-all-region'."
 
 (use-package deadgrep
   :demand t
+  :commands deadgrep
   :config
   (add-to-list 'deadgrep-project-root-overrides `("~/" . ,(concat (my-getenv "DOTFILES_ROOT") "/"))) ; deny searching at the home directory
   (my-macro-thyristor my-deadgrep-specify-path)
@@ -1279,19 +1272,44 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package backward-forward
   :demand t
-  :after consult
-  :hook
-  (consult-after-jump . backward-forward-push-mark-wrapper)
+  :after (consult deadgrep)
   :bind
-  ("C-," . backward-forward-previous-location)
-  ("C-." . backward-forward-next-location)
+  ("M-h" . backward-forward-previous-location)
+  ("M-l" . backward-forward-next-location)
   :config
+  (defun my-backward-forward-clear-mark-ring ()
+    (interactive)
+    (setq backward-forward-mark-ring nil))
+  (defun my-backward-forward-push-mark (orig-func &rest args)
+    (let* ((before-buffer-name (buffer-name))
+           (before-point (point))
+           (result (apply orig-func args))
+           (after-buffer-name (buffer-name))
+           (after-point (point)))
+      (message "DEBUG backward-forward %s %d -> %s %d"
+               before-buffer-name before-point
+               after-buffer-name after-point)
+      result))
   (cl-loop for x in '(deadgrep
+                      find-file
+                      project-find-file
+                      project-find-regexp
+                      consult-project-buffer
+                      consult-buffer
+                      consult-ghq-find
+                      consult-ghq-grep
+                      consult-line
+                      consult-line-multi
+                      consult-git-grep
+                      beginning-of-buffer
+                      end-of-buffer
+                      isearch-forward
+                      isearch-backward
                       git-gutter+-next-hunk
                       git-gutter+-previous-hunk
                       xref-find-references
                       xref-find-definitions)
-           do (advice-add x :before #'backward-forward-push-mark-wrapper))
+           do (advice-add x :around 'my-backward-forward-push-mark))
   (backward-forward-mode t))
 
 (use-package indent-guide
@@ -1309,10 +1327,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (command-log-setup))
 
 (use-package message-routing
+  :demand t
   :straight (message-routing :host github
                              :repo "berquerant/emacs-message-routing")
   :custom
-  (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")))
+  (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")
+                            ("^DEBUG" . "*routed-debug-log*")))
   :config
   (message-routing-setup))
 

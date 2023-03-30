@@ -130,6 +130,8 @@
 (use-package my-scroll
   :straight (my-scroll :type built-in)
   :bind
+  ("M-u" . my-scroll-scroll-up-relationally-medium)
+  ("M-i" . my-scroll-scroll-down-relationally-medium)
   ("M-n" . my-scroll-scroll-up-relationally)
   ("M-p" . my-scroll-scroll-down-relationally)
   ("M-N" . my-scroll-scroll-up)
