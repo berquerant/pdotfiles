@@ -203,6 +203,7 @@ c.f. `format-all-region'."
   (("M-t M-t" . treemacs-select-window)
    ("M-t M-n" . treemacs-next-workspace)
    :map treemacs-mode-map
+   ("M-t M-t" . delete-window) ; delete treemacs window
    ([mouse-1] . treemacs-single-click-expand-action))
   :custom
   (treemacs-no-png-images t) ; no icon
