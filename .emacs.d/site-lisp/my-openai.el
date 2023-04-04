@@ -30,6 +30,7 @@
 (defun my-openai--insert-output-buffer (input)
   "Insert INPUT into buffer `my-openai-output-buffer-name'."
   (with-current-buffer (get-buffer-create my-openai-output-buffer-name)
+    (goto-char (point-max))
     (insert input)))
 
 (defun my-openai--openai-output-filter (p output)

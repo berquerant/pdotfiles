@@ -221,6 +221,12 @@ c.f. `format-all-region'."
     "Prevent WINDOW from `delete-other-windows'."
     (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
   (my-misc-delete-window-predicates-add 'my-treemacs-delete-other-window-predicate)
+
+  (defun my-treemacs-other-window-predicate (window)
+    "Prevent WINDOW from `other-window'."
+    (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
+  (my-misc-other-window-predicates-add 'my-treemacs-other-window-predicate)
+
   (treemacs-follow-mode t)
   (treemacs-project-follow-mode t)
   (treemacs-filewatch-mode t)
@@ -1286,7 +1292,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
            (result (apply orig-func args))
            (after-buffer-name (buffer-name))
            (after-point (point)))
-      (message "DEBUG backward-forward %s %d -> %s %d"
+      (message "DEBUG [my-backward-forward-push-mark] %s %d -> %s %d"
                before-buffer-name before-point
                after-buffer-name after-point)
       result))

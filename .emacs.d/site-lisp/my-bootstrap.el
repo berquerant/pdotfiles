@@ -44,8 +44,6 @@
            ("M-s z" . my-revert-buffer)
            ("C-M-s" . isearch-forward-thing-at-point)
            ("C-s" . isearch-forward)
-           ("C-t" . other-window)
-           ("C-T" . other-window-back)
            ("C-<tab>" . tab-next)
            ("C-S-<tab>" . tab-previous)
            ;; TODO: find workaround. delete-frame crashes emacs. (delete-frame (selected-frame) nil) too
@@ -118,8 +116,11 @@
 
 (use-package my-misc
   :straight (my-misc :type built-in)
-  :commands my-misc-delete-window-predicates-add
+  :commands (my-misc-delete-window-predicates-add
+             my-misc-other-window-predicates-add)
   :bind
+  ("C-t" . my-misc-other-window)
+  ("C-M-t" . my-misc-other-window-reverse)
   ("C-x 1" . my-misc-delete-other-windows)
   ("M-s p p" . my-misc-current-path)
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)

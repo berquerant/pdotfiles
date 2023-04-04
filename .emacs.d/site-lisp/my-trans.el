@@ -25,6 +25,7 @@
 (defun my-trans--insert-output-buffer (input)
   "Insert INPUT into buffer `my-trans-output-buffer-name'."
   (with-current-buffer (get-buffer-create my-trans-output-buffer-name)
+    (goto-char (point-max))
     (insert input)))
 
 (defun my-trans--trans-output-filter (p output)

@@ -78,10 +78,52 @@ e.g. path is /a/b/c and CUT is 1 then stores b/c"
       (message "Stored: %s" p)
       (kill-new p))))
 
-(defvar my-misc-delete-window-predicates nil
-  "List of function: window to bool.
+(defcustom my-misc-other-window-prediates nil
+  "List of functions: window to bool.
+Return t means that the window is selectable by `other-window'."
+  :type '(repeat function))
+
+(defun my-misc--other-window-selectable (window)
+  (select-window window)
+  (cl-loop for f in my-misc-other-window-prediates
+           when (not (apply f (list window)))
+           return nil
+           finally return t))
+
+(defun my-misc--other-window (count &optional window)
+  (let ((windows-len (length (window-list)))
+        (select-count 0))
+    (message "DEBUG [my-misc--other-window] %d window %s" select-count (get-buffer-window))
+    (other-window count)
+    (while (and (< select-count windows-len)
+                     (not (my-misc--other-window-selectable
+                           (get-buffer-window))))
+      (message "DEBUG [my-misc--other-window] %d window %s" select-count (get-buffer-window))
+      (+ select-count 1)
+      (other-window count))))
+
+;;;###autoload
+(defun my-misc-other-window-predicates-add (f)
+  "Add F to `my-misc-other-window-prediates'."
+  (add-to-list 'my-misc-other-window-prediates f))
+
+;;;###autoload
+(defun my-misc-other-window (&optional window)
+  "`other-window' except WINDOW and windows `my-misc-other-window-prediates' return nil."
+  (interactive)
+  (my-misc--other-window 1 (or window (get-buffer-window))))
+
+;;;###autoload
+(defun my-misc-other-window-reverse (&optional window)
+  "Reversed `other-window' except WINDOW and windows `my-misc-other-window-prediates' return nil."
+  (interactive)
+  (my-misc--other-window -1 (or window (get-buffer-window))))
+
+(defcustom my-misc-delete-window-predicates nil
+  "List of functions: window to bool.
 Return t means that the window is deletable.
-When a predicate is called, selected window will be the window of the argument.")
+When a predicate is called, selected window will be the window of the argument."
+  :type '(repeat function))
 
 (defun my-misc--delete-window-deletable (window)
   (select-window window)
