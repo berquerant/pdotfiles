@@ -56,8 +56,14 @@ pyenv() { # lazy
     pyenv "$@"
 }
 # ruby
-export PATH="$(brew --prefix ruby)/bin:$PATH"
+export RBENV_ROOT="$HOME/.rbenv"
+export RB_VERSION=3.2.2
 export PATH="$(gem environment gemdir)/bin:$PATH"
+rbenv() { # lazy
+    unset -f rbenv
+    source <(~/.rbenv/bin/rbenv init - zsh)
+    rbenv "$@"
+}
 # rust
 export CARGO_HOME="$HOME/.cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
@@ -72,8 +78,12 @@ nvm() { # lazy
 # activate lazy envs
 load_envs() {
     goenv --version
+    goenv global "$GO_VERSION"
     pyenv --version
-    nvm --version
+    pyenv global "$PY_VERSION"
+    echo "nvm $(nvm --version)"
+    rbenv --version
+    rbenv global "$RB_VERSION"
 }
 
 # zplugins

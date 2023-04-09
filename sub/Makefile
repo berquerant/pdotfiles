@@ -55,8 +55,10 @@ pyenv-update: pyenv-force-update pyenv-upgrade-requirements
 get-ruby: ruby ## install ruby and make it available
 
 ruby: ## install ruby
-	brew install ruby
-	gem install solargraph rubocop
+	bin/install-ruby.sh
+
+ruby-update:
+	IVG_FORCE_UPDATE=1 bin/install-ruby.sh
 
 get-node: ## install node
 	bin/install-node.sh

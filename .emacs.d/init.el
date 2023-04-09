@@ -469,14 +469,6 @@ c.f. `format-all-region'."
   (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)
   (bind-key "M-j t e" 'my-trans-into-en-region-or-at-point))
 
-(use-package my-openai
-  :demand t
-  :straight (my-openai :type built-in)
-  :config
-  (add-to-list 'special-display-buffer-names my-openai-output-buffer-name)
-  (my-macro-region-or-at-point my-openai-chat "Message: ")
-  (bind-key "M-s k" 'my-openai-chat-region-or-at-point))
-
 ;; omit continuous command
 (use-package smartrep
   :demand t
@@ -726,10 +718,18 @@ c.f. `format-all-region'."
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode)
   :bind
-  (:map gfm-mode-map
+  (:map markdown-mode-map
         ("C-c ." . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
-        ("C-c -" . markdown-demote))
+        ("C-c -" . markdown-demote)
+        ("M-n" . my-scroll-scroll-up-relationally)
+        ("M-p" . my-scroll-scroll-down-relationally)
+   :map gfm-mode-map
+        ("C-c ." . markdown-follow-thing-at-point)
+        ("C-c +" . markdown-promote)
+        ("C-c -" . markdown-demote)
+        ("M-n" . my-scroll-scroll-up-relationally)
+        ("M-p" . my-scroll-scroll-down-relationally))
   :config
   (defun markdown-mode-before-save-hook ()
     "Disable `delete-trailing-whitespace' if `major-mode' is `markdown-mode' or `gfm-mode'."
@@ -1332,6 +1332,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (command-log-histfile (my-getenv "EMACS_HISTFILE"))
   :config
   (command-log-setup))
+
+(use-package openai-chat
+  :straight (openai-chat :host github
+                         :repo "berquerant/emacs-openai-chat")
+  :bind (("M-s k" . openai-chat-start-region))
+  :custom
+  (openai-chat-history-file (format "%s/history_openai-chat" (my-getenv "EMACSD"))))
 
 (use-package message-routing
   :demand t
