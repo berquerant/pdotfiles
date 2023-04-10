@@ -1336,8 +1336,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package openai-chat
   :straight (openai-chat :host github
                          :repo "berquerant/emacs-openai-chat")
-  :bind (("M-s k" . openai-chat-start-region))
+  :bind (("M-s 2" . openai-chat-start-region))
   :custom
+  (openai-chat-chat-completion-timeout 60)
   (openai-chat-history-file (format "%s/history_openai-chat" (my-getenv "EMACSD"))))
 
 (use-package message-routing

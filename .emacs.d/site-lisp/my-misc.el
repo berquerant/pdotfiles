@@ -150,5 +150,22 @@ When a predicate is called, selected window will be the window of the argument."
   (interactive)
   (my-misc--delete-other-windows (or window (get-buffer-window))))
 
+(defconst my-misc-git-browse-buffer-name "*git-browse*"
+  "Buffer to git browse output.")
+
+(defun my-misc-git-browse--generate-repo-url ()
+  (shell-command-to-string "git config --get remote.origin.url | tr ':' '/' | sed 's|git@|https://|' | tr -d '\n'"))
+
+;;;###autoload
+(defun my-misc-git-browse ()
+  "Open the current file committed to git in browser."
+    (interactive)
+    (let ((path (file-name-nondirectory (buffer-file-name)))
+          (linum (line-number-at-pos))
+          (repo-url (my-misc-git-browse--generate-repo-url)))
+      (little-async-start-process (format "gh browse %s:%s || open %s" path linum repo-url)
+                                  :process-name "github-cli"
+                                  :buffer-name my-misc-git-browse-buffer-name)))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here

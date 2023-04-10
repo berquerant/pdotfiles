@@ -126,7 +126,10 @@
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
-  ("C-x C-x" . my-misc-exchange-point-and-mark))
+  ("C-x C-x" . my-misc-exchange-point-and-mark)
+  ("M-s 4" . my-misc-git-browse)
+  :config
+  (add-to-list 'special-display-buffer-names my-misc-git-browse-buffer-name))
 
 (use-package my-scroll
   :straight (my-scroll :type built-in)
