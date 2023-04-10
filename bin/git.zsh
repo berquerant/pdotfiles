@@ -8,7 +8,10 @@ alias g='git'
 alias repos='ghq list -p | peco'
 alias repo='cd $(repos)'
 alias repopath='ghq list | peco | cut -d "/" -f 2,3'
-alias rrepo='hub browse $(repopath)'
+
+gbrowse() {
+    gh browse "$@" || open "$(git config --get remote.origin.url | tr ':' '/' | sed 's|git@|https://|' | tr -d '\n')"
+}
 
 grepo() {
     if [[ -z "$1" ]] ; then

@@ -53,7 +53,6 @@ formulas=(
     ghq
     openssl
     zlib
-    hub
     watch
     aspell
     unar
