@@ -3,7 +3,6 @@
 [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 alias reload='source ~/.zshrc'
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
-source $DOTFILES_ROOT/bin/init.zsh
 export PATH="~/.local/bin:$PATH"
 eval "$(direnv hook zsh)"
 
@@ -18,19 +17,7 @@ zplug "zsh-users/zsh-completions"
 if ! zplug check ; then zplug install ; fi
 zplug load
 
-libs=(
-    forward
-    time
-    tmux
-    emacs
-    git
-    peco
-    util
-)
-
-for name in $libs ; do
-    source "${DOTFILES_ROOT}/bin/${name}.zsh"
-done
+find "${DOTFILES_ROOT}/bin/z" -type f | sort | while read x ; do source "$x" ; done
 
 # go
 export GOENV_ROOT="$HOME/.goenv"
@@ -61,7 +48,7 @@ export RB_VERSION=3.2.2
 export PATH="$(gem environment gemdir)/bin:$PATH"
 rbenv() { # lazy
     unset -f rbenv
-    source <(~/.rbenv/bin/rbenv init - zsh)
+    eval "$(~/.rbenv/bin/rbenv init - zsh)"
     rbenv "$@"
 }
 # rust
@@ -79,11 +66,15 @@ nvm() { # lazy
 load_envs() {
     goenv --version
     goenv global "$GO_VERSION"
+    go version
     pyenv --version
     pyenv global "$PY_VERSION"
+    python -V
     echo "nvm $(nvm --version)"
+    node --version
     rbenv --version
     rbenv global "$RB_VERSION"
+    ruby --version
 }
 
 # zplugins

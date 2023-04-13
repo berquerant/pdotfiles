@@ -9,21 +9,7 @@ diskcheck() {
 
 if type bat >/dev/null 2>&1 ; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'" # colorizing pager for man
-    alias bathelp='bat --plain --language=help'  # colorizing help, e.g. rg --help | bathelp
-    belp() {
-        if [[ -z "$1" ]] ; then
-            echo "belp COMMAND [HELP]"
-            echo "  COMMAND:"
-            echo "    a command to be displayed manual"
-            echo "    belp COMMAND runs COMMAND --help | bathelp"
-            echo "  HELP:"
-            echo "    specify COMMAND's help option"
-            echo "    belp COMMAND HELP runs COMMAND HELP | bathelp"
-            return
-        fi
-
-        "$cmd" "${2:---help}" | bat --plain --language=help
-    }
+    alias bh='bat --plain --language=help' # colorizing help, e.g. rg --help | bh
     batdiff() {
         git diff --name-only --relative --diff-filter=d | xargs bat --diff
     }
