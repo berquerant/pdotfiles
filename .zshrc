@@ -22,6 +22,7 @@ find "${DOTFILES_ROOT}/bin/z" -type f | sort | while read x ; do source "$x" ; d
 # go
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
+export GO_VERSION="1.20.2"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$GOROOT/bin:$PATH"

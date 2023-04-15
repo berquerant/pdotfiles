@@ -17,7 +17,10 @@ get-go: go go-packages golangci-lint ## install go and make it available
 go: ## install go
 	bin/install-go.sh
 
-go-update: go-packages
+go-update: go-update-install go-packages
+
+go-update-install:
+	IVG_FORCE_UPDATE=1 bin/install-go.sh
 
 go-packages: ## install golang utilities
 	go install golang.org/x/tools/gopls@latest

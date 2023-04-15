@@ -50,8 +50,6 @@
       (progn (message (format "[my-getenv] not found %s" arg))
              nil)))
 
-(setq straight-profiles `((nil . ,(format "%s/.emacs.d/straight-default.el" (my-getenv "DOTFILES_ROOT")))))
-
 ;; for prefix
 (unbind-key "M-s w")
 (unbind-key "M-m")
@@ -61,6 +59,7 @@
 (unbind-key "M-j")
 (unbind-key "C-x f")
 
+(setq straight-profiles `((nil . ,(format "%s/straight-default.el" (my-getenv "EMACSD")))))
 (add-to-list 'load-path (format "%s/site-lisp" (my-getenv "EMACSD")))
 (add-to-list 'load-path (format "%s/external-site-lisp" (my-getenv "EMACSD")))
 
@@ -1338,7 +1337,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                          :repo "berquerant/emacs-openai-chat")
   :bind (("M-s 2" . openai-chat-start-region))
   :custom
-  (openai-chat-chat-completion-timeout 60)
+  (openai-chat-chat-completion-timeout 300) ; 5min
   (openai-chat-history-file (format "%s/history_openai-chat" (my-getenv "EMACSD"))))
 
 (use-package message-routing

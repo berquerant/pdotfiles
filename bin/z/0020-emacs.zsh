@@ -25,6 +25,7 @@ alias cmacs="emacs_cui"
 kill_emacs() {
     ps aux | rg "[/]Applications/Emacs" | awk '{print $2}' | xargs kill -9
 }
+alias ekill='kill_emacs'
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]] \
     && [[ -n ${EMACS_VTERM_PATH} ]] \
