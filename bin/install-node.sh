@@ -12,8 +12,7 @@ readonly nvm_location="$NVM_DIR"
 install_nvm() {
     ln -snvf "$nvm_repod" "$nvm_location" &&\
         . "${NVM_DIR}/nvm.sh" &&\
-        nvm install --lts --latest-npm &&\
-        npm i -g eslint csslint typescript typescript-formatter typescript-eslint typescript-language-server ts-node
+        nvm install --lts --latest-npm
 }
 
 export IVG_REPOSITORY="https://github.com/nvm-sh/nvm.git"

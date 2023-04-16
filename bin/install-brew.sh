@@ -26,51 +26,7 @@ brew update
 brew upgrade
 
 message "Install tools"
-
-formulas=(
-    bash
-    git
-    gh
-    glab
-    direnv # .envrc
-    readline # .pythonrc
-    gettext
-    peco
-    zsh
-    zplug
-    tmux
-    ripgrep
-    exa
-    bat
-    procs
-    hexyl
-    fd
-    tokei
-    jq
-    yq
-    htop
-    nkf
-    ghq
-    openssl
-    zlib
-    watch
-    aspell
-    unar
-    nmap
-    shellcheck # flymake
-    autoconf
-    automake
-    gcc
-    cmake
-    libvterm
-    libtool
-)
-
-for formula in "${formulas[@]}"
-do
-    brew install $formula
-    brew upgrade $formula
-done
+brew bundle --file "${d}/../.Brewfile"
 
 if ! which gettext > /dev/null
 then
@@ -78,30 +34,6 @@ then
 else
     message "Already gettext linked" green
 fi
-
-message "Install GNU tools, g-prefixed commands and others"
-
-gnu_formulas=(
-    coreutils
-    diffutils
-    findutils
-    binutils
-    gawk
-    gnu-sed
-    gnu-tar
-    grep
-    gzip
-    pandoc
-    wget
-    unzip
-    gnu-time
-)
-
-for formula in "${gnu_formulas[@]}"
-do
-    brew install $formula
-    brew upgrade $formula
-done
 
 brew cleanup -s
 

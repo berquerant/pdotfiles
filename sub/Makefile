@@ -55,18 +55,29 @@ pyenv-force-update:
 
 pyenv-update: pyenv-force-update pyenv-upgrade-requirements
 
-get-ruby: ruby ## install ruby and make it available
+get-ruby: ruby ruby-gems  ## install ruby and make it available
 
 ruby: ## install ruby
 	bin/install-ruby.sh
 
+ruby-gems:
+	gem install bundler solargraph rubocop
+
 ruby-update:
 	IVG_FORCE_UPDATE=1 bin/install-ruby.sh
+	gem update
 
-get-node: ## install node
+get-node: install-node node-dependencies ## install node
+
+install-node:
 	bin/install-node.sh
 
-node-update:
+node-dependencies:
+	npm update -g npm
+	npm i -g eslint csslint typescript typescript-formatter typescript-eslint typescript-language-server ts-node
+	npm update -g
+
+node-update: node-dependencies
 	IVG_FORCE_UPDATE=1 bin/install-node.sh
 
 get-rust: rust rust-components rust-crates rust-analyzer ## install rust and make it available

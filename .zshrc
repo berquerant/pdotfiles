@@ -46,10 +46,11 @@ pyenv() { # lazy
 # ruby
 export RBENV_ROOT="$HOME/.rbenv"
 export RB_VERSION=3.2.2
+export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$(gem environment gemdir)/bin:$PATH"
 rbenv() { # lazy
     unset -f rbenv
-    eval "$(~/.rbenv/bin/rbenv init - zsh)"
+    eval "$(rbenv init - zsh)"
     rbenv "$@"
 }
 # rust

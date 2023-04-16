@@ -17,8 +17,7 @@ install_rbenv() {
     ln -snvf "$rbenv_repod" "$rbenv_location" &&\
         eval "$(${RBENV_ROOT}/bin/rbenv init - zsh)" &&\
         RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@3) rb_cv_symbol_prefix=_" rbenv install "$RB_VERSION" --skip-existing &&\
-        rbenv local "$RB_VERSION" &&\
-        gem install bundler solargraph rubocop
+        rbenv local "$RB_VERSION"
 }
 
 export IVG_REPOSITORY="https://github.com/rbenv/rbenv"
