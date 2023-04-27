@@ -199,10 +199,9 @@ c.f. `format-all-region'."
 
 (use-package treemacs
   :bind
-  (("M-t M-t" . treemacs-select-window)
-   ("M-t M-n" . treemacs-next-workspace)
+  (("M-t" . treemacs-select-window)
    :map treemacs-mode-map
-   ("M-t M-t" . delete-window) ; delete treemacs window
+   ("M-t" . delete-window) ; delete treemacs window
    ([mouse-1] . treemacs-single-click-expand-action))
   :custom
   (treemacs-no-png-images t) ; no icon

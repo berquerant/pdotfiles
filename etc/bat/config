@@ -1,0 +1,6 @@
+# bat --list-themes
+--theme='zenburn'
+
+# bat --list-languages
+--map-syntax='*.conf:INI'
+--map-syntax='*.Brewfile:Ruby'
