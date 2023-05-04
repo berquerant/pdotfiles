@@ -153,21 +153,14 @@ When a predicate is called, selected window will be the window of the argument."
 (defconst my-misc-git-browse-buffer-name "*git-browse*"
   "Buffer to git browse output.")
 
-(defun my-misc-git-browse-generate-brob-url ()
-  (let* ((repo-url (shell-command-to-string "git config --get remote.origin.url | tr ':' '/' | sed -e 's|git@|https///|' -e 's|git///|https///|' -e 's/\.git$//' | sed 's|https///|https://|' | tr -d '\n'"))
-         (branch (shell-command-to-string "git rev-parse --abbrev-ref @ | tr -d '\n'"))
-         (filename (file-name-nondirectory (buffer-file-name)))
-         (rel-path (shell-command-to-string (format "git ls-files --full-name %s | tr -d '\n'" filename))))
-    (format "%s/blob/%s/%s" repo-url branch rel-path)))
-
 ;;;###autoload
 (defun my-misc-git-browse ()
-  "Open the current file committed to git in browser."
+  "Open the current file committed to git in browser.
+Requires https://github.com/berquerant/gbrowse"
     (interactive)
     (let ((path (file-name-nondirectory (buffer-file-name)))
-          (linum (line-number-at-pos))
-          (blob-url (my-misc-git-browse-generate-brob-url)))
-      (little-async-start-process (format "gh browse %s:%s || open '%s#L%s'" path linum blob-url linum)
+          (linum (line-number-at-pos)))
+      (little-async-start-process (format "gbrowse %s:%s" path linum)
                                   :process-name "git-browse"
                                   :buffer-name my-misc-git-browse-buffer-name)))
 

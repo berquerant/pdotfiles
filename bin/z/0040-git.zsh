@@ -9,38 +9,6 @@ alias repos='ghq list -p | peco'
 alias repo='cd $(repos)'
 alias repopath='ghq list | peco | cut -d "/" -f 2,3'
 
-gbrowse-raw() {
-    local file=""
-    local linum=""
-
-    if echo "$1" | grep -q ":" ; then
-        file=$(echo "$1" | cut -d ":" -f1)
-        linum=$(echo "$1" | cut -d ":" -f2)
-    else
-        file="$1"
-    fi
-
-    local repo_url=$(git config --get remote.origin.url | tr ':' '/' | sed -e 's|git@|https///|' -e 's|git///|https///|' -e 's/\.git$//' | sed 's|https///|https://|')
-    local branch=$(git rev-parse --abbrev-ref @)
-    local p=""
-    if [ -z "$file" ]; then
-        p=$(git rev-parse --show-prefix)
-    else
-        p=$(git ls-files --full-name $file)
-    fi
-    local fr=""
-    if [ -n "$linum" ]; then
-        fr="#L${linum}"
-    fi
-    local url="${repo_url}/blob/${branch}/${p}${fr}"
-    echo "$url"
-    open "$url"
-}
-
-gbrowse() {
-    gh browse "$@" || gbrowse-raw "$@"
-}
-
 grepo() {
     if [[ -z "$1" ]] ; then
         repo && bat $(git ls --full-name | peco)

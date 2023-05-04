@@ -3,4 +3,7 @@
 
 # bat --list-languages
 --map-syntax='*.conf:INI'
---map-syntax='*.Brewfile:Ruby'
+--map-syntax='*.Brewfile:Ruby' # homebrew
+--map-syntax='*.cap:Ruby' # capistrano
+--map-syntax='Procfile:Ruby' # foreman
+--map-syntax='Schemafile:Ruby' # ridgepole
