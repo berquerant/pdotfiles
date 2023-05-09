@@ -1301,6 +1301,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                       project-find-regexp
                       consult-project-buffer
                       consult-buffer
+                      consult-imenu
+                      consult-goto-line
                       consult-ghq-find
                       consult-ghq-grep
                       consult-line
