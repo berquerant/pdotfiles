@@ -319,6 +319,7 @@ c.f. `format-all-region'."
    ("M-s y" . consult-complex-command) ; repeat-complex-command
    ("M-y" . consult-yank-pop) ; yank
    ("C-x b" . consult-buffer) ; switch-to-buffer
+   ("C-x f" . consult-find) ; find-file
    ("M-g i" . consult-imenu)
    ("M-g M-i" . consult-imenu-multi)
    :map isearch-mode-map
