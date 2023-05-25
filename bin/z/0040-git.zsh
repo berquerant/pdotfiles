@@ -31,7 +31,7 @@ gfpull() {
         echo "gfpull BRANCH"
         return
     fi
-    git fetch && git reset --hard "origin/$1" && git checkout "$1"
+    git fetch && git checkout "$1" && git reset --hard "origin/$1"
 }
 
 gfbranch() {

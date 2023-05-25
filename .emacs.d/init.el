@@ -1103,12 +1103,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package eglot
   :hook
   (((python-mode
-     go-mode
      ruby-mode
      c-mode
      c++-mode) . eglot-ensure)
    (eglot-managed-mode . (lambda () (flymake-mode 0)))
-   (eglot-managed-mode . my-eglot-before-save-hook))
+   (eglot-managed-mode . my-eglot-before-save-hook)
+   (eglot-managed-mode . eglot-inlay-hints-mode))
   :bind
   (("M-s M-s M-e" . eglot)
    :map eglot-mode-map
@@ -1159,6 +1159,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook
   (((typescript-mode
      typescript-tsx-mode
+     go-mode
      svelte-mode
      rust-mode
      clojure-mode
@@ -1200,6 +1201,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-enable-on-type-formatting t)
   (lsp-enable-text-document-color t)
   (lsp-enable-file-watchers t)
+  (lsp-inlay-hint-enable t)
   (lsp-eldoc-enable-hover t)
   (lsp-eldoc-render-all t)
   (lsp-diagnostic-package nil)
@@ -1213,7 +1215,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t)
   (lsp-rust-analyzer-display-parameter-hints t)
   (lsp-rust-analyzer-display-reborrow-hints t)
-  (lsp-terraform-enable-logging nil))
+  (lsp-terraform-enable-logging nil)
+  :config
+  (lsp-register-custom-settings
+   '(("gopls.hints" ((assignVariableTypes . t)
+                     (compositeLiteralFields . t)
+                     (compositeLiteralTypes . t)
+                     (constantValues . t)
+                     (functionTypeParameters . t)
+                     (parameterNames . t)
+                     (rangeVariableTypes . t))))))
 
 (use-package lsp-ui
   :commands (ladicle/toggle-lsp-ui-doc)
