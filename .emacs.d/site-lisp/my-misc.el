@@ -63,17 +63,23 @@
 (defun my-misc--current-path (cut)
   (let ((p (buffer-file-name)))
     (cond ((not p) (message "Not visiting file.") nil)
-          ((not cut) p)
-          (t (s-join "/" (nthcdr cut (s-split "/" p)))))))
+          ((or (not cut) (eql cut 0)) p)
+          (t (let ((ss (s-split "/" p)))
+               (s-join "/"
+                       (nthcdr (if (>= cut 0) (+ cut 1)
+                                 (+ (length ss) cut))
+                               (s-split "/" p))))))))
 
 ;;;###autoload
 (defun my-misc-current-path (cut)
   "Store current buffer file path to kill ring.
 If CUT, trim CUT parent directories.
-e.g. path is /a/b/c and CUT is 1 then stores b/c"
+e.g. path is /a/b/c and CUT is 1 then stores b/c
+  -1 then stores c
+  -2 then stores b/c"
   (interactive (list (read-string (format "Cut index (%s): " (buffer-file-name) nil))))
   (let ((p (my-misc--current-path
-            (if cut (+ 1 (string-to-number cut))
+            (if cut (string-to-number cut)
               nil))))
     (when p
       (message "Stored: %s" p)
