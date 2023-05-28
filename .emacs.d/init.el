@@ -10,6 +10,8 @@
   "Display the elapsed time to initialize."
   (message "init time: %s" (emacs-init-time)))
 (add-hook 'after-init-hook 'display-emacs-init-time)
+
+(setq user-emacs-directory (expand-file-name user-emacs-directory)) ; into absolute path
 ;; install and initialize package manager
 (defvar bootstrap-version)
 (defvar native-comp-deferred-compilation-deny-list nil) ; Workaround: Symbol's value as variable is void: native-comp-deferred-compilation-deny-list
@@ -26,9 +28,13 @@
   (load bootstrap-file nil 'nomessage))
 (straight-use-package 'use-package) ; use-package integration
 
+(defconst my-straight-profile (concat user-emacs-directory "straight-default.el"))
+(defconst my-straight-directory (concat straight-base-dir "straight"))
+
 (setq use-package-verbose t                  ; enable logs in *Message* buffer
       use-package-minimum-reported-time 0.2
       use-package-compute-statistics t       ; see use-package-report
+      straight-profiles `((nil . ,my-straight-profile))
       straight-use-package-by-default t      ; use-package integration
       byte-compile-warnings '(cl-functions)  ; ignore package cl is deprecated
       warning-suppress-types '((comp)))      ; do not display comp warnings immediately
@@ -46,9 +52,11 @@
 
 (defun my-getenv (&optional arg)
   "Get environment variable ARG or $HOME."
-  (or (getenv (or arg "HOME"))
-      (progn (message (format "[my-getenv] not found %s" arg))
-             nil)))
+  (or
+   (and (s-equals? arg "EMACSD") user-emacs-directory)
+   (getenv (or arg "HOME"))
+   (progn (message (format "[my-getenv] not found %s" arg))
+          nil)))
 
 ;; for prefix
 (unbind-key "M-s w")
@@ -59,7 +67,6 @@
 (unbind-key "M-j")
 (unbind-key "C-x f")
 
-(setq straight-profiles `((nil . ,(format "%s/straight-default.el" (my-getenv "EMACSD")))))
 (add-to-list 'load-path (format "%s/site-lisp" (my-getenv "EMACSD")))
 (add-to-list 'load-path (format "%s/external-site-lisp" (my-getenv "EMACSD")))
 
@@ -303,9 +310,10 @@ c.f. `format-all-region'."
     (interactive "P")
     (consult-git-grep dir initial))
   (my-macro-region-or-at-point-direct my-consult-git-grep)
-  (bind-key "C-x o" 'consult-line-region-or-at-point)
-  (bind-key "C-x C-o" 'consult-line-multi-region-or-at-point)
-  (bind-key "C-x g g" 'my-consult-git-grep-region-or-at-point)
+  (bind-key* "C-x o" 'consult-line-region-or-at-point)
+  (bind-key* "C-x C-o" 'consult-line-multi-region-or-at-point)
+  (bind-key* "C-x g g" 'my-consult-git-grep-region-or-at-point)
+  (bind-key* "C-x f" 'consult-find)
   :bind
   (("C-x g f" . consult-project-buffer) ; find file in project
    ("M-g X" . consult-register)
@@ -319,7 +327,6 @@ c.f. `format-all-region'."
    ("M-s y" . consult-complex-command) ; repeat-complex-command
    ("M-y" . consult-yank-pop) ; yank
    ("C-x b" . consult-buffer) ; switch-to-buffer
-   ("C-x f" . consult-find) ; find-file
    ("M-g i" . consult-imenu)
    ("M-g M-i" . consult-imenu-multi)
    :map isearch-mode-map
@@ -589,9 +596,9 @@ c.f. `format-all-region'."
    ("C-p" . company-select-previous))
   :custom-face
   (company-tooltip ((t (:foreground "Black" :background "DimGray"))))
-  (company-tooltip-common ((t (:foreground "Black" :background "DimGray"))))
-  (company-tooltip-common-selection ((t (:foreground "White" :background "SteelBlue"))))
-  (company-tooltip-selection ((t (:foreground "Black" :background "SteelBlue"))))
+  (company-tooltip-common ((t (:foreground "Yellow" :background "DimGray"))))
+  (company-tooltip-common-selection ((t (:foreground "Yellow" :background "SteelBlue"))))
+  (company-tooltip-selection ((t (:foreground "Yellow" :background "SteelBlue"))))
   (company-preview-common ((t (:foreground "DimGray" :background nil :underline t))))
   (company-scrollbar-fg ((t (:background "Orange"))))
   (company-scrollbar-bg ((t (:background "Gray"))))
@@ -625,8 +632,7 @@ c.f. `format-all-region'."
   (company-quickhelp-max-lines 10))
 
 (use-package git-complete
-  :straight (git-complete :host github
-                          :repo "zk-phi/git-complete")
+  :straight (git-complete :host github :repo "zk-phi/git-complete")
   :bind
   ("M-q" . git-complete)
   :custom
@@ -1338,16 +1344,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (indent-guide-global-mode))
 
 (use-package command-log
-  :straight (command-log :host github
-                         :repo "berquerant/emacs-command-log")
+  :straight (command-log :host github :repo "berquerant/emacs-command-log")
   :custom
   (command-log-histfile (my-getenv "EMACS_HISTFILE"))
   :config
   (command-log-setup))
 
 (use-package openai-chat
-  :straight (openai-chat :host github
-                         :repo "berquerant/emacs-openai-chat")
+  :straight (openai-chat :host github :repo "berquerant/emacs-openai-chat")
   :bind (("M-s 2" . openai-chat-start-region))
   :custom
   (openai-chat-chat-completion-timeout 300) ; 5min
@@ -1355,13 +1359,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package message-routing
   :demand t
-  :straight (message-routing :host github
-                             :repo "berquerant/emacs-message-routing")
+  :straight (message-routing :host github :repo "berquerant/emacs-message-routing")
   :custom
   (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")
-                            ("^DEBUG" . "*routed-debug-log*")))
+                            ("^DEBUG" . "*routed-debug-log*")
+                            ("^my-package" . "*my-package*")))
   :config
   (message-routing-setup))
+
+(use-package my-package
+  :straight (my-package :type built-in)
+  :config
+  (defun my-straight-update-all ()
+    (interactive)
+    (dolist (f (straight-pull-all
+                straight-rebuild-all
+                straight-freeze-versions))
+      (message "my-package: %s" (symbol-name f))
+      (unless my-package-dryrun
+        (call-interactively f))))
+  (defun my-new-backup-straight-remove-origin ()
+    (interactive)
+    (my-new-backup--straight t))
+  (defun my-new-backup-straight ()
+    (interactive)
+    (my-new-backup--straight))
+  (defun my-new-backup--straight (&optional remove-origin)
+    (dolist (target `(,my-straight-profile
+                      ,my-straight-directory))
+      (my-package-new-backup target remove-origin))))
 
 (use-package shut-up)
 (use-package recentf-ext

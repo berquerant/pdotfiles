@@ -19,8 +19,7 @@
 
 (use-package minimal-init
   :demand t
-  :straight (minimal-init :host github
-                          :repo "berquerant/emacs-minimal-init")
+  :straight (minimal-init :host github :repo "berquerant/emacs-minimal-init")
   :config
   (minimal-init-setup))
 
@@ -117,7 +116,8 @@
 (use-package my-misc
   :straight (my-misc :type built-in)
   :commands (my-misc-delete-window-predicates-add
-             my-misc-other-window-predicates-add)
+             my-misc-other-window-predicates-add
+             my-misc-call-process)
   :bind
   ("C-t" . my-misc-other-window)
   ("C-M-t" . my-misc-other-window-reverse)
@@ -175,7 +175,10 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
 
 (use-package emacs-little-async
   :commands little-async-start-process
-  :straight (emacs-little-async :host github
-                                :repo "berquerant/emacs-little-async"))
+  :straight (emacs-little-async :host github :repo "berquerant/emacs-little-async"))
+
+(use-package my-time
+  :straight (my-time :type built-in))
+
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

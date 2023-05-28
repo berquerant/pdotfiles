@@ -6,6 +6,7 @@
 
 (require 's)
 (require 'cl-lib)
+(require 'little-async)
 
 (defgroup my-misc nil
   "My miscellaneous utilities."
@@ -163,6 +164,38 @@ Requires https://github.com/berquerant/gbrowse"
       (little-async-start-process (format "gbrowse %s:%s" path linum)
                                   :process-name "git-browse"
                                   :buffer-name my-misc-git-browse-buffer-name)))
+
+(defconst my-misc-call-process-buffer "*my-misc-call-process*"
+  "Where `my-misc-call-process' write output.")
+
+(defun my-misc-call-process--insert-buffer (msg)
+  (with-current-buffer (get-buffer-create my-misc-call-process-buffer)
+    (goto-char (point-max))
+    (insert msg)))
+
+;;;###autoload
+(defun my-misc-call-process (program &optional dry &rest args)
+  "Call PROGRAM synchronously in separate process."
+  (my-misc-call-process--insert-buffer
+   (if dry (format "my-misc-call-process:dry:%s %s\n" program (s-join " " args))
+     (format "my-misc-call-process:%s %s=> %d\n"
+             program
+             (s-join " " args)
+             (apply 'call-process program nil my-misc-call-process-buffer nil args))))
+  nil)
+
+;;;###autoload
+(defun my-misc-copy-file (src dst)
+  "Copy SRC to DST."
+  (with-temp-buffer
+    (insert-file-contents src)
+    (mm-write-region (point-min) (point-max) dst)))
+
+;;;###autoload
+(defun my-misc-clear-file (path)
+  "Clear PATH."
+  (when (file-writable-p path)
+    (with-temp-file path)))
 
 (provide 'my-misc)
 ;;; my-misc.el ends here

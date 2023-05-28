@@ -44,7 +44,7 @@ message "Install emacs configurations"
 
 exec_or_dry "mkdir -p ${EMACSD}"
 exec_or_dry "ln -snvf $d/.emacs.d/init.el ${EMACSD}/"
-exec_or_dry "mkdir -p ${EMACSD}/straight/versions"
+exec_or_dry "ln -snvf $d/.emacs.d/straight-default.el ${EMACSD}/straight-default.el"
 exec_or_dry "ln -snvf $d/.emacs.d/site-lisp ${EMACSD}/site-lisp"
 exec_or_dry "mkdir -p ${EMACSD}/snippets"
 exec_or_dry "mkdir -p ${EMACSD}/junk"
