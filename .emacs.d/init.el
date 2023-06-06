@@ -1233,11 +1233,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                      (rangeVariableTypes . t))))))
 
 (use-package lsp-ui
-  :commands (ladicle/toggle-lsp-ui-doc)
+  :commands
+  (ladicle/toggle-lsp-ui-doc
+   lsp-ui-peek-find-references
+   lsp-ui-peek-find-definitions
+   lsp-ui-peek-find-implementation)
   :bind
   (:map lsp-mode-map
-        ("C-c p ?" . lsp-ui-peek-find-references)
-        ("C-c p >" . lsp-ui-peek-find-definitions)
+        ("M-g ?" . lsp-ui-peek-find-references)
+        ("M-g g" . lsp-ui-peek-find-definitions)
         ("C-c p i" . lsp-ui-peek-find-implementation)
         ("C-c p s" . lsp-ui-sideline-mode)
         ("C-c p d" . ladicle/toggle-lsp-ui-doc))
@@ -1332,6 +1336,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                       isearch-backward
                       git-gutter+-next-hunk
                       git-gutter+-previous-hunk
+                      xref-go-back
                       xref-find-references
                       xref-find-definitions)
            do (advice-add x :around 'my-backward-forward-push-mark))

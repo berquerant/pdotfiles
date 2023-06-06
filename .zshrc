@@ -22,7 +22,7 @@ find "${DOTFILES_ROOT}/bin/z" -type f | sort | while read x ; do source "$x" ; d
 # go
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-export GO_VERSION="1.20.2"
+export GO_VERSION="1.20.4"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$GOROOT/bin:$PATH"
@@ -72,7 +72,7 @@ load_envs() {
     pyenv --version
     pyenv global "$PY_VERSION"
     python -V
-    echo "nvm $(nvm --version)"
+    nvm --version
     node --version
     rbenv --version
     rbenv global "$RB_VERSION"
