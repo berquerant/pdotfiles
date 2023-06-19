@@ -216,5 +216,44 @@ Requires https://github.com/berquerant/gbrowse"
   (when (file-writable-p path)
     (with-temp-file path)))
 
+(defun my-misc-approx-collect-symbols (buffer-or-name)
+  "Experimental: Collect symbols in the BUFFER-OR-NAME."
+  (let (symbols)
+    (with-current-buffer (get-buffer-create buffer-or-name)
+      (save-excursion
+        (goto-char (point-min))
+        (while (not (eq (point) (point-max)))
+          (when (not (or (looking-at-p "[[:space:]\n]+$")
+                         (and (bolp) (eolp))))
+            (let ((symbol (intern (current-word))))
+              (add-to-list 'symbols symbol)))
+          (forward-word))))
+    symbols))
+
+(defun my-misc-describe-symbol (symbol)
+  "Return result of `describe-symbol SYMBOL' as string."
+  (describe-symbol symbol)
+  (with-current-buffer (help-buffer)
+    (buffer-substring-no-properties (point-min) (point-max))))
+
+(defun my-misc-symbol-introduced-version (symbol)
+  "Experimental: Get Emacs version when SYMBOL was introduced."
+  (describe-symbol symbol)
+  (let ((doc (my-misc-describe-symbol symbol)))
+    (and (string-match (format "^%s is" (symbol-name symbol)) doc) ; SYMBOL is...
+         (string-match "Probably introduced at or before Emacs version \\(.*\\).$" doc)
+         (match-string 1 doc))))
+
+(defun my-misc-approx-collect-symbols-introduced-version (buffer-or-name)
+  "Experimental: Get the symbols in the BUFFER-OR-NAME and Emacs version in which they were introduced.
+Maybe more useful to search from https://www.gnu.org/software/emacs/news/"
+  (let ((result nil))
+    (cl-loop for symbol in (my-misc-approx-collect-symbols buffer-or-name)
+             when (not (assoc symbol result))
+             do (let ((version (my-misc-symbol-introduced-version symbol)))
+                  (when version
+                    (add-to-list 'result `(,symbol . ,version)))))
+    result))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here
