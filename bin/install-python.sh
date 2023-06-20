@@ -10,6 +10,9 @@ readonly pyenv_repod="${IVG_WORKD}/${pyenv_reponame}"
 readonly pyenv_location="$PYENV_ROOT"
 
 install_pyenv() {
+    # FIXME:
+    # want: ~/.pyenv -> $PJTMP/pyenv
+    # now: ~/.pyenv/pyenv -> $PJTMP/pyenv
     ln -snvf "$pyenv_repod" "$pyenv_location" &&\
         pyenv install --skip-existing "$PY_VERSION" &&\
         pyenv local "$PY_VERSION"

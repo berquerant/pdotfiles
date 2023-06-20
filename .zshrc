@@ -22,36 +22,35 @@ find "${DOTFILES_ROOT}/bin/z" -type f | sort | while read x ; do source "$x" ; d
 # go
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-export GO_VERSION="1.20.4"
+export GO_VERSION="1.20.5"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$GOROOT/bin:$PATH"
-goenv() { # lazy
-    unset -f goenv
-    source <(goenv init -)
-    goenv "$@"
+eval "$(goenv init -)"
+load_go() {
+    goenv shell "$GO_VERSION"
+    go version
 }
 # python
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PY_VERSION=3.10.0
+export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/pyenv/bin:$PATH"
+export PY_VERSION=3.11.4
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PYTHONHISTORY="$HOME/.python.history"
-pyenv() { # lazy
-    unset -f pyenv
-    source <(pyenv init --path)
-    source <(pyenv init -)
-    pyenv "$@"
+eval "$(pyenv init -)"
+load_python() {
+    pyenv shell "$PY_VERSION"
+    python -V
 }
 # ruby
 export RBENV_ROOT="$HOME/.rbenv"
 export RB_VERSION=3.2.2
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$(gem environment gemdir)/bin:$PATH"
-rbenv() { # lazy
-    unset -f rbenv
-    eval "$(rbenv init - zsh)"
-    rbenv "$@"
+eval "$(rbenv init - zsh)"
+load_ruby() {
+    rbenv shell "$RB_VERSION"
+    ruby -v
 }
 # rust
 export CARGO_HOME="$HOME/.cargo"
@@ -59,26 +58,19 @@ export PATH="$CARGO_HOME/bin:$PATH"
 # node
 export NVM_DIR="$HOME/.nvm"
 export NPM_ROOT="$HOME/.npm"
-nvm() { # lazy
-    unset -f nvm
-    source "$NVM_DIR/nvm.sh"
-    nvm "$@"
-}
-# activate lazy envs
-load_envs() {
-    goenv --version
-    goenv global "$GO_VERSION"
-    go version
-    pyenv --version
-    pyenv global "$PY_VERSION"
-    python -V
-    nvm --version
+export NODE_VERSION=v20.3.0
+source "$NVM_DIR/nvm.sh"
+load_node() {
+    nvm use "$NODE_VERSION"
     node --version
-    rbenv --version
-    rbenv global "$RB_VERSION"
-    ruby --version
 }
 
+load_env() {
+    load_go
+    load_python
+    load_ruby
+    load_node
+}
 # zplugins
 ## pure
 PURE_CMD_MAX_EXEC_TIME=10

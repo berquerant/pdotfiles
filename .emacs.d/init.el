@@ -310,9 +310,14 @@ c.f. `format-all-region'."
     (interactive "P")
     (consult-git-grep dir initial))
   (my-macro-region-or-at-point-direct my-consult-git-grep)
+  (defun my-consult-find (&optional initial dir)
+    (interactive "P")
+    (consult-find dir initial))
+  (my-macro-region-or-at-point-direct my-consult-find)
   (bind-key* "C-x o" 'consult-line-region-or-at-point)
   (bind-key* "C-x C-o" 'consult-line-multi-region-or-at-point)
   (bind-key* "C-x g g" 'my-consult-git-grep-region-or-at-point)
+  (bind-key* "C-x C-g C-g" 'my-consult-find-region-or-at-point)
   (bind-key* "C-x f" 'consult-find)
   :bind
   (("C-x g f" . consult-project-buffer) ; find file in project
