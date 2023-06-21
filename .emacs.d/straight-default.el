@@ -39,7 +39,7 @@
  ("emacs-libvterm" . "f14d113ee4618f052879509ec378feb9766b871b")
  ("emacs-little-async" . "e8f36bce08151a2d5e12c4fd8bf6baa39ad594a3")
  ("emacs-message-routing" . "32df5b22a1dc573063dc9f1830fb32f83c0f36cf")
- ("emacs-minimal-init" . "42b98deb175edfb0482ec51f44004c769b888107")
+ ("emacs-minimal-init" . "f055433f94809cead2291940d547627728d16923")
  ("emacs-openai-chat" . "b4f06de3a9aa172cfa738b61f1872e492f7d7e01")
  ("emacs-request" . "01e338c335c07e4407239619e57361944a82cb8a")
  ("emacs-scala-mode" . "5d7cf21c37e345c49f921fe5111a49fd54efd1e0")
