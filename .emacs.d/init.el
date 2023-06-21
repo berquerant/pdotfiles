@@ -684,7 +684,8 @@ c.f. `format-all-region'."
 
 (use-package multiple-cursors
   :config
-  (smartrep-define-key global-map "C-x m"
+  (unbind-key "M-r")
+  (smartrep-define-key global-map "M-r"
       '(("." . mc/edit-lines)
         (">" . mc/mark-next-like-this)
         ("<" . mc/mark-previous-like-this))))

@@ -71,6 +71,7 @@ load_env() {
     load_ruby
     load_node
 }
+load_env
 # zplugins
 ## pure
 PURE_CMD_MAX_EXEC_TIME=10
