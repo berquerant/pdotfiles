@@ -9,6 +9,27 @@
 (require 'cl-lib)
 (require 's)
 
+(defmacro my-macro-advice-add-const (f &optional ret)
+  "Disable F calls and return const RET."
+  (let* ((fname (symbol-name f))
+         (advice-name (format "my-macro-advice-add-const-aroound-%s" fname)))
+    `(progn
+       (defun ,(read advice-name) (orig-func &rest args)
+         ,ret)
+       (advice-add ',(read fname) :around ',(read advice-name)))))
+
+(defmacro my-macro-advice-add-debug (f)
+  "Add logs before and after the call of F."
+  (let* ((fname (symbol-name f))
+         (advice-name (format "my-macro-advice-add-debug-around-%s" fname)))
+    `(progn
+       (defun ,(read advice-name) (orig-func &rest args)
+         (message "%s: start %s" ,advice-name args)
+         (let ((ret (apply orig-func args)))
+           (message "%s: end %s" ,advice-name ret)
+           ret))
+       (advice-add ',(read fname) :around ',(read advice-name)))))
+
 (defmacro my-macro-do-once (f)
   "Make lambda that invokes F, re-invocation of F is denied if you invoke F through the lambda."
   (let ((flag (format "%s-once-flag" (symbol-name f))))

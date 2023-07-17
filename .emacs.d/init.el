@@ -844,9 +844,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package flycheck-golangci-lint
   :demand t
   :after (go-mode flycheck)
-  :hook (go-mode . flycheck-golangci-lint-setup)
-  :custom
-  (flycheck-golangci-lint-config "~/golangci.yml"))
+  :hook (go-mode . flycheck-golangci-lint-setup))
 
 (use-package go-playground
   :custom

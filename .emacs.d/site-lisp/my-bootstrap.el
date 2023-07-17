@@ -156,6 +156,12 @@
   :bind
   ("M-s C-r" . read-only-mode-thyristor-toggle)
   :config
+  (defun my-kick-out-fundamental-mode-hook (&rest args)
+    "Disable `fundamental-mode' at all times and enable `text-mode' instead."
+    (when (eq major-mode 'fundamental-mode)
+      (text-mode)))
+  (add-hook 'after-change-major-mode-hook 'my-kick-out-fundamental-mode-hook)
+
   (defun my-switch-buffer-functions--flexible-window-size-hook (prev cur)
     "Make window size flexible."
     (setq window-size-fixed nil))
@@ -171,7 +177,8 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
       (read-only-mode-thyristor)))
 
   (dolist (f '(my-switch-buffer-functions--flexible-window-size-hook
-               my-switch-buffer-functions--read-only-hook))
+               my-switch-buffer-functions--read-only-hook
+               my-kick-out-fundamental-mode-hook))
     (add-to-list 'switch-buffer-functions f)))
 
 (use-package emacs-little-async

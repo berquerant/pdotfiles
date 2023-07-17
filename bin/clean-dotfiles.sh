@@ -30,7 +30,7 @@ dotfiles=(
     .zshrc
     .pythonrc.py
     .tmux.conf
-    golangci.yml
+    .golangci.yml
     .aspell.conf
     .rustfmt.toml
 )
