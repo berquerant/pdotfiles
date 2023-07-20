@@ -40,7 +40,7 @@
  ("emacs-little-async" . "e8f36bce08151a2d5e12c4fd8bf6baa39ad594a3")
  ("emacs-message-routing" . "32df5b22a1dc573063dc9f1830fb32f83c0f36cf")
  ("emacs-minimal-init" . "f055433f94809cead2291940d547627728d16923")
- ("emacs-openai-chat" . "b9030a484aca13c2b627f3780a523618c543e3bf")
+ ("emacs-openai-chat" . "accd5db4af713dc84d5618ab7a21b879a5d63296")
  ("emacs-request" . "01e338c335c07e4407239619e57361944a82cb8a")
  ("emacs-scala-mode" . "5d7cf21c37e345c49f921fe5111a49fd54efd1e0")
  ("emacs-which-key" . "8093644032854b1cdf3245ce4e3c7b6673f741bf")
