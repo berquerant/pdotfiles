@@ -1,0 +1,32 @@
+uri: https://github.com/ziglang/zig.git
+branch: 0.11.0
+locald: repos/zig
+lock: zig.lock
+env:
+  _IVG_EXECUTABLE: "${IVG_WORKD}/${IVG_LOCALD}/build/stage3/bin/zig"
+  _IVG_BACKUP: "${_IVG_EXECUTABLE}.bk"
+  _IVG_BREW: "/usr/local/homebrew/bin/brew"
+setup:
+  - |
+    if [ -e "$_IVG_EXECUTABLE" ]; then
+      mv $_IVG_EXECUTABLE $_IVG_BACKUP
+    fi
+  - arch -x86_64 $_IVG_BREW install llvm zstd z3
+  - brew install llvm zstd
+install:
+  - mkdir -p build
+  - cd build
+  - cmake .. -DZIG_NO_LANGREF=ON -DZIG_STATIC_LLVM=ON -DCMAKE_PREFIX_PATH="$($_IVG_BREW --prefix llvm);$($_IVG_BREW --prefix zstd)"
+  - arch -x86_64 make install
+  - ln -snvf $_IVG_EXECUTABLE /usr/local/bin/zig
+  - zig version
+skip:
+  - |
+    if [ -e "$_IVG_BACKUP" ]; then
+      mv $_IVG_BACKUP $_IVG_EXECUTABLE
+    fi
+rollback:
+  - |
+    if [ -e "$_IVG_BACKUP" ]; then
+      mv $_IVG_BACKUP $_IVG_EXECUTABLE
+    fi

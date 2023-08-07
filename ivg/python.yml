@@ -1,0 +1,8 @@
+uri: https://github.com/pyenv/pyenv.git
+branch: master
+locald: repos/pyenv
+lock: python.lock
+install:
+  - ln -snvf $PWD $PYEMV_ROOT
+  - pyenv install --skip-existing $PY_VERSION
+  - pyenv local $PY_VERSION

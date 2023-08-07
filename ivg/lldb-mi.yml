@@ -1,0 +1,15 @@
+uri: https://github.com/lldb-tools/lldb-mi.git
+branch: main
+locald: repos/lldb-mi
+lock: lldb-mi.lock
+setup:
+  - brew install llvm
+install:
+  - export LLVM_PATH="$(brew --prefix llvm)"
+  - export LDFLAGS="-L${LLVM_PATH}/lib"
+  - export CPPFLAGS="-I${LLVM_PATH}/include"
+  - export PATH="${LLVM_PATH}/bin:${PATH}"
+  - cmake .
+  - cmake --build .
+  - ln -snvf "${PWD}/src/lldb-mi" /usr/local/bin/lldb-mi
+  - lldb-mi --version

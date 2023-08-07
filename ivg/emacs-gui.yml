@@ -1,0 +1,65 @@
+uri: git://git.sv.gnu.org/emacs.git
+branch: master
+locald: repos/emacs-gui
+lock: emacs-gui.lock
+env:
+  _IVG_CONCURRENCY: 2
+  _IVG_APP: /Applications/Emacs-GUI.app
+  _IVG_BACKUP: "${_IVG_APP}.bk"
+  _IVG_GCC: "${IVG_WORKD}/${IVG_LOCALD}/__gcc"
+setup:
+  - |
+    if [ -d "$_IVG_APP" ]; then
+      rm -rf $_IVG_BACKUP
+      mv $_IVG_APP $_IVG_BACKUP
+    fi
+  - brew install --build-from-source gcc
+  - brew install --build-from-source libgccjit
+  - brew install --cask xquartz
+  - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ zlib gnutls
+  - |
+    if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
+      echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
+    fi
+install:
+  - export PATH=/usr/local/opt/texinfo/bin:$PATH
+  - find . -name "*.pdmp" -type f -delete
+  - find . -name "*.elc" -type f -delete
+  - rm -rf "${EMACSD}/eln-cache"
+  - make distclean
+  - ./autogen.sh
+  - |
+    cat - <<'EOS' > ${_IVG_GCC}
+    #!/bin/bash
+    if [ "$1" = "-V" ]; then
+      exit
+    fi
+    if [ "$1" = "-version" ]; then
+      exit
+    fi
+    if [ "$1" = "-qversion" ]; then
+      exit
+    fi
+    gcc "$@"
+    EOS
+  - chmod +x $_IVG_GCC
+  - export CC="$_IVG_GCC"
+  - export LDFLAGS="-I/opt/homebrew/include -I$(dirname $(brew ls -v libgccjit|grep libgccjit.h))"
+  - export LIBS="-L/opt/homebrew/lib -L$(dirname $(brew ls -v libgccjit|grep -m1 -E 'libgccjit\.(so|dylib)$'))"
+  - export LIBRARY_PATH="/opt/homebrew/lib:$(dirname $(brew ls -v libgccjit|grep -m1 -E 'libgccjit\.(so|dylib)$'))"
+  - export AR="/usr/bin/ar"
+  - export RANLIB="/usr/bin/ranlib"
+  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --with-x-toolkit=no
+  - make -j"$_IVG_CONCURRENTCY"
+  - make install
+  - mv nextstep/Emacs.app $_IVG_APP
+skip:
+  - |
+    if [ -d "$_IVG_BACKUP" ]; then
+      mv $_IVG_BACKUP $_IVG_APP
+    fi
+rollback:
+  - |
+    if [ -d "$_IVG_BACKUP" ]; then
+      mv $_IVG_BACKUP $_IVG_APP
+    fi

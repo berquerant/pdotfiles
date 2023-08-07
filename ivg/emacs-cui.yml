@@ -1,0 +1,62 @@
+uri: git://git.sv.gnu.org/emacs.git
+branch: master
+locald: repos/emacs-cui
+lock: emacs-cui.lock
+env:
+  _IVG_CONCURRENCY: 2
+  _IVG_APP: /Applications/Emacs-CUI2.app
+  _IVG_BACKUP: "${_IVG_APP}.bk"
+  _IVG_GCC: "${IVG_WORKD}/${IVG_LOCALD}/__gcc"
+setup:
+  - |
+    if [ -d "$_IVG_APP" ]; then
+      rm -rf $_IVG_BACKUP
+      mv $_IVG_APP $_IVG_BACKUP
+    fi
+  - brew install --cask xquartz
+  - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ gcc libgccjit zlib gnutls
+  - |
+    if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
+      echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
+    fi
+install:
+  - export PATH=/usr/local/opt/texinfo/bin:$PATH
+  - find . -name "*.pdmp" -type f -delete
+  - find . -name "*.elc" -type f -delete
+  - rm -rf "${EMACSD}/eln-cache"
+  - make distclean
+  - ./autogen.sh
+  - |
+    cat - <<'EOS' > ${_IVG_GCC}
+    #!/bin/bash
+    if [ "$1" = "-V" ]; then
+      exit
+    fi
+    if [ "$1" = "-version" ]; then
+      exit
+    fi
+    if [ "$1" = "-qversion" ]; then
+      exit
+    fi
+    clang "$@"
+    EOS
+  - chmod +x $_IVG_GCC
+  - export CC="$_IVG_GCC"
+  - export LDFLAGS="-I/opt/homebrew/include"
+  - export LIBS="-L/opt/homebrew/lib"
+  - export AR="/usr/bin/ar"
+  - export RANLIB="/usr/bin/ranlib"
+  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-x --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils
+  - make -j"$_IVG_CONCURRENTCY"
+  - make install
+  - mv nextstep/Emacs.app $_IVG_APP
+skip:
+  - |
+    if [ -d "$_IVG_BACKUP" ]; then
+      mv $_IVG_BACKUP $_IVG_APP
+    fi
+rollback:
+  - |
+    if [ -d "$_IVG_BACKUP" ]; then
+      mv $_IVG_BACKUP $_IVG_APP
+    fi

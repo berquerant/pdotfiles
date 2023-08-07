@@ -1,3 +1,0 @@
-[submodule "install-via-git-sh"]
-	path = install-via-git-sh
-	url = https://github.com/berquerant/install-via-git-sh

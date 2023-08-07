@@ -4,6 +4,7 @@
 make init
 make deploy
 make git
+make install-via-git
 make emacs
 ```
 

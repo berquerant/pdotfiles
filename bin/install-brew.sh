@@ -11,7 +11,9 @@ message() {
 
 message "Install Xcode"
 
+set +e
 xcode-select --install
+set -e
 
 if ! which brew > /dev/null
 then
@@ -21,7 +23,9 @@ else
     message "Homebrew found"
 fi
 
+set +e
 brew doctor
+set -e
 brew update
 brew upgrade
 

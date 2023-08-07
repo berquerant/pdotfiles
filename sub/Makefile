@@ -15,12 +15,12 @@ brew-update:
 get-go: go go-packages golangci-lint ## install go and make it available
 
 go: ## install go
-	bin/install-go.sh
+	bin/install-via-git.sh go
 
 go-update: go-update-install go-packages
 
 go-update-install:
-	IVG_FORCE_UPDATE=1 bin/install-go.sh
+	bin/install-via-git.sh go --update
 
 go-packages: ## install golang utilities
 	go install golang.org/x/tools/gopls@latest
@@ -35,11 +35,11 @@ golangci-lint: ## install linter
 get-python: py-env-manager pyenv-global ## install python and make it available
 
 py-env-manager: ## install python env
-	bin/install-python.sh
+	bin/install-via-git.sh python
 	brew install pipenv
 
 pyenv-global: ## install python utilities
-	pyenv install $(PY_VERSION)
+	pyenv install --skip-existing $(PY_VERSION)
 	pyenv local $(PY_VERSION)
 	pip install --upgrade pip setuptools
 	pip install -r requirements.txt
@@ -51,26 +51,26 @@ pyenv-upgrade-requirements: ## upgrade python requirements
 	pip freeze > $(PJTMP)/requirements.txt
 
 pyenv-force-update:
-	IVG_FORCE_UPDATE=1 bin/install-python.sh
+	bin/install-via-git.sh python --update
 
 pyenv-update: pyenv-force-update pyenv-upgrade-requirements
 
 get-ruby: ruby ruby-gems  ## install ruby and make it available
 
 ruby: ## install ruby
-	bin/install-ruby.sh
+	bin/install-via-git.sh ruby
 
 ruby-gems:
 	gem install bundler solargraph rubocop
 
 ruby-update:
-	IVG_FORCE_UPDATE=1 bin/install-ruby.sh
+	bin/install-via-git.sh ruby --update
 	gem update
 
 get-node: install-node node-dependencies ## install node
 
 install-node:
-	bin/install-node.sh
+	./bin/install-via-git.sh node
 
 node-dependencies:
 	npm update -g npm
@@ -78,7 +78,7 @@ node-dependencies:
 	npm update -g
 
 node-update: node-dependencies
-	IVG_FORCE_UPDATE=1 bin/install-node.sh
+	./bin/install-via-git.sh node --update
 
 get-rust: rust rust-components rust-crates rust-analyzer ## install rust and make it available
 
@@ -118,7 +118,7 @@ rust-analyzer:
 	brew install rust-analyzer
 
 lldb-mi:
-	bin/install-lldb-mi.sh
+	bin/install-via-git.sh lldb-mi
 
 clean-rust: ## uninstall rust
 	rustup self uninstall
@@ -153,11 +153,13 @@ get-zig: zig ## install zig
 zig: ziglang zls ## install zig
 
 ziglang:
-	bin/install-zig.sh
+	# bin/install-via-git.sh zig
+	brew install zig
 
 zls:
-	bin/install-zls.sh
+	bin/install-via-git.sh zls
 
 zig-update:
-	IVG_FORCE_UPDATE=1 bin/install-zig.sh
-	IVG_FORCE_UPDATE=1 bin/install-zls.sh
+	# bin/install-via-git.sh zig --update
+	brew upgrade zig
+	bin/install-via-git.sh zls --update

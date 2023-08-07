@@ -1,0 +1,8 @@
+uri: https://github.com/syndbg/goenv.git
+branch: master
+locald: repos/goenv
+lock: go.lock
+install:
+  - ln -snvf $PWD $GOENV_ROOT
+  - goenv install --skip-existing $GO_VERSION
+  - goenv local $GO_VERSION

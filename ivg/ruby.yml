@@ -1,0 +1,11 @@
+uri: https://github.com/rbenv/rbenv
+branch: master
+locald: repos/rbenv
+lock: ruby.lock
+setup:
+  - brew install openssl@3 readline libyaml gmp ruby-build
+install:
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $RBENV_ROOT
+  - eval "$(${RBENV_ROOT}/bin/rbenv init - zsh)"
+  - rbenv install "$RB_VERSION" --skip-existing -v
+  - rbenv local "$RB_VERSION"

@@ -44,3 +44,18 @@ pcre() {
 clean_tmpd() {
     rm -rf "$TMPD" && mkdir -p "$TMPD"
 }
+
+__concat_lower() {
+    echo "$@" | tr " " "\n" | awk '{acc=acc""tolower($0)}END{print acc}'
+}
+
+__join_case() {
+    sep="$1"
+    shift
+    echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | tr " " "$sep"
+}
+
+# e.g. rg -i "$(csgen get input json)"
+csgen() {
+    echo "($(__concat_lower $@)|$(__join_case _ $@)|$(__join_case \- $@)|($(__join_case " " $@)))"
+}

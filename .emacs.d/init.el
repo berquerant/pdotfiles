@@ -1114,6 +1114,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook
   (((python-mode
      ruby-mode
+     go-mode
      c-mode
      c++-mode) . eglot-ensure)
    (eglot-managed-mode . (lambda () (flymake-mode 0)))
@@ -1169,7 +1170,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook
   (((typescript-mode
      typescript-tsx-mode
-     go-mode
+     ;; go-mode
      svelte-mode
      rust-mode
      clojure-mode
@@ -1203,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-trace nil)
   (lsp-restart 'ignore)
   (lsp-idle-delay 0.7)
-  (lsp-file-watch-threshold 50)
+  (lsp-file-watch-threshold 20)
   (lsp-enable-snippet t)
   (lsp-enable-xref t)
   (lsp-enable-indentation nil)

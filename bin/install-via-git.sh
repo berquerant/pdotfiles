@@ -1,11 +1,22 @@
 #!/bin/bash
 
-ivg_sh="${DOTFILES_ROOT}/install-via-git-sh/install-via-git.sh"
+ivg="install-via-git"
 
-if [ ! -f "$ivg_sh" ]; then
-    echo "Please make init to enable install-via-git-sh"
-    return 1
+if [ ! -e $(which $ivg) ] ; then
+    echo "Please make install-via-git to install it"
+    exit 1
 fi
 
-export IVG_LOCKFILE_ROOT="${DOTFILES_ROOT}/.ivg.lock"
-. "$ivg_sh"
+target="$1"
+if [ -z "$target" ] ; then
+    echo "target is required"
+    exit 1
+fi
+shift
+
+ivg_configd="${DOTFILES_ROOT}/ivg"
+ivg_workd="${DOTFILES_ROOT}/ivg"
+config="${ivg_configd}/${target}.yml"
+
+set -x
+"$ivg" run --workDir "$ivg_workd" --config "$config" "$@"
