@@ -2,10 +2,19 @@ uri: https://github.com/rbenv/rbenv
 branch: master
 locald: repos/rbenv
 lock: ruby.lock
+env:
+  PATH: "/opt/homebrew/opt/bison/bin:$PATH"
+  LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/openssl@3/3.1.2/include/openssl"
+  LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/openssl@3/3.1.2/lib"
+  CPPFLAGS: ""
+  OPENSSL_CFLAGS: ""
+  RUBY_CONFIGURE_OPTS: ""
+  CC: "/opt/homebrew/opt/gcc/bin/gcc-13"
 setup:
-  - brew install openssl@3 readline libyaml gmp ruby-build
+  - brew install openssl@3 readline libyaml gmp ruby-build bison gperf zlib libffi
 install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $RBENV_ROOT
   - eval "$(${RBENV_ROOT}/bin/rbenv init - zsh)"
+  - eval "$(/opt/homebrew/bin/brew shellenv)"
   - rbenv install "$RB_VERSION" --skip-existing -v
   - rbenv local "$RB_VERSION"

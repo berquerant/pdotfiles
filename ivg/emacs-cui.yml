@@ -4,49 +4,39 @@ locald: repos/emacs-cui
 lock: emacs-cui.lock
 env:
   _IVG_CONCURRENCY: 2
-  _IVG_APP: /Applications/Emacs-CUI2.app
+  _IVG_APP: /Applications/Emacs-CUI.app
   _IVG_BACKUP: "${_IVG_APP}.bk"
-  _IVG_GCC: "${IVG_WORKD}/${IVG_LOCALD}/__gcc"
+  LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/libgccjit/13.1.0/include -I/opt/homebrew/Cellar/gtk+/2.24.33_1/include/gtk-2.0/gdk"
+  LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current -L/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
+  LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current:/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
+  CC: "/opt/homebrew/opt/gcc/bin/gcc-13" # brew gcc
 setup:
   - |
     if [ -d "$_IVG_APP" ]; then
       rm -rf $_IVG_BACKUP
       mv $_IVG_APP $_IVG_BACKUP
     fi
+  - brew install --build-from-source gcc
+  - brew install --build-from-source libgccjit
   - brew install --cask xquartz
-  - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ gcc libgccjit zlib gnutls
+  - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ zlib gnutls gtk
   - |
     if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
       echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
     fi
 install:
+  - eval $(/opt/homebrew/bin/brew shellenv)
   - export PATH=/usr/local/opt/texinfo/bin:$PATH
   - find . -name "*.pdmp" -type f -delete
   - find . -name "*.elc" -type f -delete
   - rm -rf "${EMACSD}/eln-cache"
   - make distclean
   - ./autogen.sh
-  - |
-    cat - <<'EOS' > ${_IVG_GCC}
-    #!/bin/bash
-    if [ "$1" = "-V" ]; then
-      exit
-    fi
-    if [ "$1" = "-version" ]; then
-      exit
-    fi
-    if [ "$1" = "-qversion" ]; then
-      exit
-    fi
-    clang "$@"
-    EOS
-  - chmod +x $_IVG_GCC
-  - export CC="$_IVG_GCC"
-  - export LDFLAGS="-I/opt/homebrew/include"
-  - export LIBS="-L/opt/homebrew/lib"
-  - export AR="/usr/bin/ar"
-  - export RANLIB="/usr/bin/ranlib"
-  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-x --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils
+  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-x --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils || echo "bad configure"
+  - make bootstrap
+  # xterm.h:70:10: fatal error: gdk/gdkx.h: No such file or directory
+  # 70 | #include <gdk/gdkx.h>
+  #    |          ^~~~~~~~~~~~
   - make -j"$_IVG_CONCURRENTCY"
   - make install
   - mv nextstep/Emacs.app $_IVG_APP
