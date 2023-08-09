@@ -2,7 +2,11 @@ uri: https://github.com/pyenv/pyenv.git
 branch: master
 locald: repos/pyenv
 lock: python.lock
+shell:
+  - "arch"
+  - "--arm64e"
+  - "/bin/bash"
 install:
-  - ln -snvf $PWD $PYEMV_ROOT
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $PYENV_ROOT
   - pyenv install --skip-existing $PY_VERSION
   - pyenv local $PY_VERSION

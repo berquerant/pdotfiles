@@ -5,19 +5,25 @@ lock: zig.lock
 env:
   _IVG_EXECUTABLE: "${IVG_WORKD}/${IVG_LOCALD}/build/stage3/bin/zig"
   _IVG_BACKUP: "${_IVG_EXECUTABLE}.bk"
-  _IVG_BREW: "/usr/local/homebrew/bin/brew"
+  LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/llvm/16.0.6/include"
+  LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/llvm/16.0.6/lib"
+  LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/llvm/16.0.6/lib"
+  CC: "/usr/local/clang"
+shell:
+  - "arch"
+  - "--arm64e"
+  - "/bin/bash"
 setup:
   - |
     if [ -e "$_IVG_EXECUTABLE" ]; then
       mv $_IVG_EXECUTABLE $_IVG_BACKUP
     fi
-  - arch -x86_64 $_IVG_BREW install llvm zstd z3
-  - brew install llvm zstd
+  - brew install llvm zstd z3
 install:
   - mkdir -p build
   - cd build
-  - cmake .. -DZIG_NO_LANGREF=ON -DZIG_STATIC_LLVM=ON -DCMAKE_PREFIX_PATH="$($_IVG_BREW --prefix llvm);$($_IVG_BREW --prefix zstd)"
-  - arch -x86_64 make install
+  - cmake .. -DZIG_NO_LANGREF=ON -DZIG_STATIC_LLVM=ON -DCMAKE_PREFIX_PATH="$(brew --prefix llvm);$(brew --prefix zstd)"
+  - make install
   - ln -snvf $_IVG_EXECUTABLE /usr/local/bin/zig
   - zig version
 skip:

@@ -1,21 +1,21 @@
+# prerequires
+# - sudo mkdir -p /usr/local/libexec/emacs
+# - sudo chown $(whoami) /usr/local/libexec/emacs
 uri: git://git.sv.gnu.org/emacs.git
 branch: master
 locald: repos/emacs-cui
 lock: emacs-cui.lock
+shell:
+  - "arch"
+  - "--arm64e"
+  - "/bin/bash"
 env:
   _IVG_CONCURRENCY: 2
-  _IVG_APP: /Applications/Emacs-CUI.app
-  _IVG_BACKUP: "${_IVG_APP}.bk"
   LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/libgccjit/13.1.0/include -I/opt/homebrew/Cellar/gtk+/2.24.33_1/include/gtk-2.0/gdk"
   LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current -L/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
   LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current:/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
-  CC: "/opt/homebrew/opt/gcc/bin/gcc-13" # brew gcc
+  CC: "/opt/homebrew/opt/gcc/bin/gcc-13"
 setup:
-  - |
-    if [ -d "$_IVG_APP" ]; then
-      rm -rf $_IVG_BACKUP
-      mv $_IVG_APP $_IVG_BACKUP
-    fi
   - brew install --build-from-source gcc
   - brew install --build-from-source libgccjit
   - brew install --cask xquartz
@@ -32,21 +32,9 @@ install:
   - rm -rf "${EMACSD}/eln-cache"
   - make distclean
   - ./autogen.sh
-  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-x --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils || echo "bad configure"
+  # ignore gdk/gdkx.h by --without-x-toolkit
+  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-x --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils --without-x --without-x-toolkit || echo "bad configure"
   - make bootstrap
-  # xterm.h:70:10: fatal error: gdk/gdkx.h: No such file or directory
-  # 70 | #include <gdk/gdkx.h>
-  #    |          ^~~~~~~~~~~~
   - make -j"$_IVG_CONCURRENTCY"
   - make install
-  - mv nextstep/Emacs.app $_IVG_APP
-skip:
-  - |
-    if [ -d "$_IVG_BACKUP" ]; then
-      mv $_IVG_BACKUP $_IVG_APP
-    fi
-rollback:
-  - |
-    if [ -d "$_IVG_BACKUP" ]; then
-      mv $_IVG_BACKUP $_IVG_APP
-    fi
+  - /usr/local/bin/emacs --version

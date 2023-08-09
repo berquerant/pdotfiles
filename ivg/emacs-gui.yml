@@ -1,7 +1,14 @@
+# prerequires
+# - sudo mkdir -p /usr/local/libexec/emacs
+# - sudo chown $(whoami) /usr/local/libexec/emacs
 uri: git://git.sv.gnu.org/emacs.git
 branch: master
 locald: repos/emacs-gui
 lock: emacs-gui.lock
+shell:
+  - "arch"
+  - "--arm64e"
+  - "/bin/bash"
 env:
   _IVG_CONCURRENCY: 2
   _IVG_APP: /Applications/Emacs-GUI.app
@@ -9,7 +16,7 @@ env:
   LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/libgccjit/13.1.0/include -I/opt/homebrew/Cellar/gtk+/2.24.33_1/include/gtk-2.0/gdk"
   LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current -L/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
   LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current:/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
-  CC: "/opt/homebrew/opt/gcc/bin/gcc-13" # brew gcc
+  CC: "/usr/bin/clang" # for nextstep AppKit/AppKit.h
 setup:
   - |
     if [ -d "$_IVG_APP" ]; then
@@ -32,11 +39,9 @@ install:
   - rm -rf "${EMACSD}/eln-cache"
   - make distclean
   - ./autogen.sh
-  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --with-xpm=ifavailable || echo "bad configure"
+  # ignore gdk/gdkx.h by --without-x-toolkit
+  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --with-gif=ifavailable --with-tiff=ifavailable --with-xpm=ifavailable --without-x --without-x-toolkit || echo "bad configure"
   - make bootstrap
-  # xterm.h:70:10: fatal error: gdk/gdkx.h: No such file or directory
-  # 70 | #include <gdk/gdkx.h>
-  #    |          ^~~~~~~~~~~~
   - make -j"$_IVG_CONCURRENTCY"
   - make install
   - mv nextstep/Emacs.app $_IVG_APP

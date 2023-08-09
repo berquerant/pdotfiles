@@ -14,8 +14,7 @@ emacs_gui() {
 }
 
 emacs_cui() {
-    emacs_app="/Applications/Emacs-CUI.app/Contents/MacOS/Emacs"
-    "$emacs_app" -nw "$@"
+    /usr/local/bin/emacs "$@"
 }
 
 alias emacs="emacs_gui"
