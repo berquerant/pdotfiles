@@ -153,8 +153,7 @@ get-zig: zig ## install zig
 zig: ziglang zls ## install zig
 
 ziglang:
-	# bin/install-via-git.sh zig
-	brew install zig
+	bin/install-via-git.sh zig
 
 zls:
 	bin/install-via-git.sh zls

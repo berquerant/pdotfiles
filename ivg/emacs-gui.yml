@@ -1,6 +1,3 @@
-# prerequires
-# - sudo mkdir -p /usr/local/libexec/emacs
-# - sudo chown $(whoami) /usr/local/libexec/emacs
 uri: git://git.sv.gnu.org/emacs.git
 branch: master
 locald: repos/emacs-gui
@@ -18,6 +15,8 @@ env:
   LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current:/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
   CC: "/usr/bin/clang" # for nextstep AppKit/AppKit.h
 setup:
+  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs
+  - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs
   - |
     if [ -d "$_IVG_APP" ]; then
       rm -rf $_IVG_BACKUP
@@ -26,7 +25,7 @@ setup:
   - brew install --build-from-source gcc
   - brew install --build-from-source libgccjit
   - brew install --cask xquartz
-  - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ zlib gnutls gtk+
+  - brew install flann cmigemo texinfo autoconf automake jpeg zlib gnutls gtk+
   - |
     if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
       echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile

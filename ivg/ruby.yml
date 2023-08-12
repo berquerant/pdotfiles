@@ -8,12 +8,14 @@ shell:
   - "/bin/bash"
 env:
   PATH: "/opt/homebrew/opt/bison/bin:$PATH"
-  LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/openssl@3/3.1.2/include/openssl"
-  LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/openssl@3/3.1.2/lib"
+  LDFLAGS: "-I/opt/homebrew/include"
+  LIBS: "-L/opt/homebrew/lib"
+  PKG_CONFIG_PATH: "/opt/homebrew/share/pkgconfig"
   CPPFLAGS: ""
   OPENSSL_CFLAGS: ""
-  RUBY_CONFIGURE_OPTS: ""
-  CC: "/usr/bin/clang"
+  # https://github.com/rbenv/ruby-build/issues/1723
+  RUBY_CONFIGURE_OPTS: "--enable-yjit --with-coroutine=ucontext"
+  CC: "/opt/homebrew/opt/gcc/bin/gcc-13"
 setup:
   - brew install openssl@3 readline libyaml gmp ruby-build bison gperf zlib libffi
 install:

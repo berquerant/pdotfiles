@@ -1153,6 +1153,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
   (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp" "-v" "--tcp" "--host" "127.0.0.1" "--port" :autoport)))
+  (add-to-list 'eglot-server-programs '(ruby-mode . ("solargraph" "stdio")))
   :custom
   (eglot-autoreconnect nil)
   (eglot-connect-timeout 5)
