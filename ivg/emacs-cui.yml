@@ -32,7 +32,7 @@ install:
   - make distclean
   - ./autogen.sh
   # ignore gdk/gdkx.h by --without-x-toolkit
-  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-x --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils --without-x --without-x-toolkit || echo "bad configure"
+  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils --without-x --without-x-toolkit || echo "bad configure"
   - make bootstrap
   - make -j"$_IVG_CONCURRENTCY"
   - make install

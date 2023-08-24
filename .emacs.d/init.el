@@ -1167,11 +1167,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         ("C-x p o" . consult-eglot-symbols))
   :after (consult eglot))
 
+(use-package yasnippet)
 (use-package lsp-mode
   :hook
   (((typescript-mode
      typescript-tsx-mode
      ;; go-mode
+     ;; ruby-mode
      svelte-mode
      rust-mode
      clojure-mode
@@ -1229,6 +1231,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-rust-analyzer-display-reborrow-hints t)
   (lsp-terraform-enable-logging nil)
   :config
+  ;; use steep-ls
+  ;; (cl-loop for x in '(ruby-ls
+  ;;                     rubocop-ls)
+  ;;          do (add-to-list 'lsp-disabled-clients x))
   (lsp-register-custom-settings
    '(("gopls.hints" ((assignVariableTypes . t)
                      (compositeLiteralFields . t)

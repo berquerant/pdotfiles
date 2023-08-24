@@ -61,7 +61,7 @@ ruby: ## install ruby
 	bin/install-via-git.sh ruby
 
 ruby-gems:
-	gem install bundler solargraph rubocop
+	gem install bundler solargraph rubocop steep rufo
 
 ruby-update:
 	bin/install-via-git.sh ruby --update
