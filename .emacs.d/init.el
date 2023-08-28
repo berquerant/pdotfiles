@@ -904,7 +904,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (ruby-deep-indent-paren-style nil)
   (ruby-indent-tabs-mode nil))
 
-(use-package rbs-mode)
+(use-package rbs-mode
+  :mode ("\\.rbs\\'" . rbs-mode))
 
 (use-package rubocop
   :hook (ruby-mode . rubocop-mode))
