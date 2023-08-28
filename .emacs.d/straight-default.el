@@ -115,6 +115,7 @@
  ("queue" . "130c2d656cd5d7376552272fab9e50a7c37d0c4a")
  ("rainbow-delimiters" . "a32b39bdfe6c61c322c37226d66e1b6d4f107ed0")
  ("rainbow-mode" . "55a8c15782197cd9db8950d2f5ed1b9caca08dae")
+ ("rbs-mode" . "fd766a943d5f1f0624e10ffce096b9aaba14a5f4")
  ("recentf-ext" . "450de5f8544ed6414e88d4924d7daa5caa55b7fe")
  ("restclient.el" . "0ba72816f92f3d5906cdf76f418fd0a3ee72809b")
  ("rubocop-emacs" . "f5fd18aa810c3d3269188cbbd731ddc09006f8f5")
