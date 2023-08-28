@@ -733,14 +733,14 @@ c.f. `format-all-region'."
         ("C-c ." . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
         ("C-c -" . markdown-demote)
-        ("M-n" . my-scroll-scroll-up-relationally)
-        ("M-p" . my-scroll-scroll-down-relationally)
+        ("M-n" . scroll-util-scroll-up-relationally)
+        ("M-p" . scroll-util-scroll-down-relationally)
    :map gfm-mode-map
         ("C-c ." . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
         ("C-c -" . markdown-demote)
-        ("M-n" . my-scroll-scroll-up-relationally)
-        ("M-p" . my-scroll-scroll-down-relationally))
+        ("M-n" . scroll-util-scroll-up-relationally)
+        ("M-p" . scroll-util-scroll-down-relationally))
   :config
   (defun markdown-mode-before-save-hook ()
     "Disable `delete-trailing-whitespace' if `major-mode' is `markdown-mode' or `gfm-mode'."

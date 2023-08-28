@@ -43,6 +43,7 @@
  ("emacs-openai-chat" . "accd5db4af713dc84d5618ab7a21b879a5d63296")
  ("emacs-request" . "01e338c335c07e4407239619e57361944a82cb8a")
  ("emacs-scala-mode" . "5d7cf21c37e345c49f921fe5111a49fd54efd1e0")
+ ("emacs-scroll-util" . "337ae328ea1d7b8f2a0a9e86d8adf8940e8c9f55")
  ("emacs-which-key" . "8093644032854b1cdf3245ce4e3c7b6673f741bf")
  ("emacsmirror-mirror" . "91e39fcdc6122ce5fd02388872e0dd42bf4a09c1")
  ("embark" . "629cce948c562361ddd6136d7cc49c5c981bb610")

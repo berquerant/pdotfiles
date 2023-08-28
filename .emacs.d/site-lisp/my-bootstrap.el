@@ -8,7 +8,6 @@
 ;; - Load my local packages
 ;;   - my-macro
 ;;   - my-misc
-;;   - my-scroll
 ;;   - my-sticky-buffer-mode
 
 ;;; Code:
@@ -132,16 +131,6 @@
   :config
   (add-to-list 'special-display-buffer-names my-misc-git-browse-buffer-name))
 
-(use-package my-scroll
-  :straight (my-scroll :type built-in)
-  :bind
-  ("M-u" . my-scroll-scroll-up-relationally-medium)
-  ("M-i" . my-scroll-scroll-down-relationally-medium)
-  ("M-n" . my-scroll-scroll-up-relationally)
-  ("M-p" . my-scroll-scroll-down-relationally)
-  ("M-N" . my-scroll-scroll-up)
-  ("M-P" . my-scroll-scroll-down))
-
 (use-package my-sticky-buffer-mode
   :straight (my-sticky-buffer-mode :type built-in)
   :config
@@ -184,6 +173,16 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
 (use-package emacs-little-async
   :commands little-async-start-process
   :straight (emacs-little-async :host github :repo "berquerant/emacs-little-async"))
+
+(use-package scroll-util
+  :straight (emacs-scroll-util :host github :repo "berquerant/emacs-scroll-util")
+  :bind
+  ("M-u" . scroll-util-scroll-up-relationally-medium)
+  ("M-i" . scroll-util-scroll-down-relationally-medium)
+  ("M-n" . scroll-util-scroll-up-relationally)
+  ("M-p" . scroll-util-scroll-down-relationally)
+  ("M-N" . scroll-util-scroll-up)
+  ("M-P" . scroll-util-scroll-down))
 
 (use-package my-time
   :straight (my-time :type built-in))
