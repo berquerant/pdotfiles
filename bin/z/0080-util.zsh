@@ -59,3 +59,7 @@ __join_case() {
 csgen() {
     echo "($(__concat_lower $@)|$(__join_case _ $@)|$(__join_case \- $@)|($(__join_case " " $@)))"
 }
+
+if type gbrowse >/dev/null 2>&1 ; then
+    alias gb='gbrowse'
+fi

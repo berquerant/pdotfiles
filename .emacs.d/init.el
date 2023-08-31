@@ -1234,9 +1234,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-rust-analyzer-display-reborrow-hints t)
   (lsp-terraform-enable-logging nil)
   :config
-  ;; use steep-ls
-  ;; (cl-loop for x in '(ruby-ls
-  ;;                     rubocop-ls)
+  ;; use solargprah
+  ;; (cl-loop for x in '(rubocop-ls
+  ;;                     steep-ls
+  ;;                     ruby-syntax-tree-ls
+  ;;                     typeprof-ls
+  ;;                     ruby-lsp-ls
+  ;;                     sorbet-ls
+  ;;                     semgrep-ls)
   ;;          do (add-to-list 'lsp-disabled-clients x))
   (lsp-register-custom-settings
    '(("gopls.hints" ((assignVariableTypes . t)
