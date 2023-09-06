@@ -1382,6 +1382,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (openai-chat-chat-completion-timeout 300) ; 5min
   (openai-chat-history-file (format "%s/history_openai-chat" (my-getenv "EMACSD"))))
 
+(use-package thread-buffer
+  :straight (thread-buffer :host github :repo "berquerant/emacs-thread-buffer"))
+
+(use-package thread-buffer-chat
+  :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
+
+(use-package my-openai-chat-web
+  :straight (my-openai-chat-web :type built-in)
+  :bind ("M-s M-s M-w" . my-openai-chat-web-start))
+
 (use-package message-routing
   :demand t
   :straight (message-routing :host github :repo "berquerant/emacs-message-routing")
@@ -1424,4 +1434,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (run-with-idle-timer 30 t #'(lambda () (shut-up (recentf-save-list)))))
 
+(message "init.el loaded.")
 ;;; init.el ends here

@@ -170,7 +170,8 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
                my-kick-out-fundamental-mode-hook))
     (add-to-list 'switch-buffer-functions f)))
 
-(use-package emacs-little-async
+(use-package little-async
+  :demand t
   :commands little-async-start-process
   :straight (emacs-little-async :host github :repo "berquerant/emacs-little-async"))
 
