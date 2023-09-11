@@ -1154,7 +1154,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (defun my-eglot-before-save-hook ()
     (add-hook 'before-save-hook #'my-eglot-format-and-imports))
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
-  (add-to-list 'eglot-server-programs '(go-mode . ("gopls")))
+  (add-to-list 'eglot-server-programs '(go-mode . ("gopls"
+                                                   :initializationOptions
+                                                   (:hints (:parameterNames t
+                                                            :rangeVariableTypes t
+                                                            :functionTypeParameters t
+                                                            :assignVariableTypes t
+                                                            :compositeLiteralFields t
+                                                            :compositeLiteralTypes t
+                                                            :constantValues t)))))
   (add-to-list 'eglot-server-programs '(python-mode . ("pylsp" "-v" "--tcp" "--host" "127.0.0.1" "--port" :autoport)))
   (add-to-list 'eglot-server-programs '(ruby-mode . ("solargraph" "stdio")))
   :custom
@@ -1390,7 +1398,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package my-openai-chat-web
   :straight (my-openai-chat-web :type built-in)
-  :bind ("M-s M-s M-w" . my-openai-chat-web-start))
+  :bind ("M-s M-s M-w" . my-openai-chat-web-start)
+  :custom
+  (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh"
+                                      (my-getenv "DOTFILES_ROOT"))))
 
 (use-package message-routing
   :demand t

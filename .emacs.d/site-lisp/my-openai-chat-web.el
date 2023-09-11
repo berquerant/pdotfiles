@@ -7,8 +7,7 @@
 (defgroup my-openai-chat-web nil
   "My openai-chat-web integration.")
 
-(defcustom my-openai-chat-web-command
-  "openai_chat_web.sh chat --chat_model gpt-3.5-turbo --show_history"
+(defcustom my-openai-chat-web-command "openai_chat_web.sh"
   "openai-chat-web command."
   :type 'string
   :group 'my-openai-chat-web)
@@ -28,13 +27,17 @@
   :type 'string
   :group 'my-openai-chat-web)
 
+(defun my-openai-chat-web--command ()
+  (format "%s chat --chat_model gpt-3.5-turbo --show_history"
+          my-openai-chat-web-command))
+
 (defun my-openai-chat-web-start (txt)
   "Send whole buffer or region to `my-openai-chat-web-command'."
   (interactive
    (list (cond
           ((use-region-p) (buffer-substring (region-beginning) (region-end)))
           (t (buffer-substring (point-min) (point-max))))))
-  (thread-buffer-chat-start my-openai-chat-web-command
+  (thread-buffer-chat-start (my-openai-chat-web--command)
                             txt
                             :timeout my-openai-chat-web-timeout
                             :buffer-template my-openai-chat-web-buffer-template
