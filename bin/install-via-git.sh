@@ -1,10 +1,10 @@
 #!/bin/bash
 
+d=$(cd $(dirname $0); pwd)
 ivg="install-via-git"
 
-if [ ! -e $(which $ivg) ] ; then
-    echo "Please make install-via-git to install it"
-    exit 1
+if [ ! -e "$(which $ivg)" ] ; then
+    "${d}/install-via-git-go.sh" || exit 1
 fi
 
 target="$1"

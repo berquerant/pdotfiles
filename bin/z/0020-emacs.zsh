@@ -22,7 +22,7 @@ alias gmacs="emacs_gui"
 alias cmacs="emacs_cui"
 
 kill_emacs() {
-    ps aux | rg "[/]Applications/Emacs" | awk '{print $2}' | xargs kill -9
+    pkill -KILL "[eE]macs"
 }
 alias ekill='kill_emacs'
 

@@ -43,9 +43,8 @@ alias less='less -R'
 alias ldd='otool -L'
 alias dc='cd'
 alias history='history -t "%F %T"'
-if type exa >/dev/null 2>&1 ; then
-    export EXA_COLORS="da=01:37" # Date Modified into white
-    alias ls='exa'
+if type eza >/dev/null 2>&1 ; then
+    alias ls='eza'
 fi
 if type hexyl >/dev/null 2>&1 ; then
     alias od='hexyl'

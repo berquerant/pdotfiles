@@ -2,6 +2,8 @@
 
 set -xe
 
+docker version
+
 readonly repo="https://github.com/berquerant/install-via-git-go.git"
 readonly reponame="install-via-git-go"
 readonly repod="${PJTMP}/${reponame}"
