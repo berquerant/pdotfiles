@@ -37,14 +37,14 @@ class devutil:
 
         def add(self, s: str) -> str:
             """Add color to the string."""
-            return f"{self.value}{s}{self.end.value}"
+            return self.value + s + self.end.value
 
     @classmethod
-    def ignore_exception(cls, f: Callable[P, T]) -> Callable[P, Optional[T]]:
+    def ignore_exception(cls, f: Callable[P, T]) -> Callable[P, T | None]:
         """Ignore any exceptions raised by f."""
 
         @wraps(f)
-        def inner(*args: P.args, **kwargs: P.kwargs) -> Optional[T]:
+        def inner(*args: P.args, **kwargs: P.kwargs) -> T | None:
             try:
                 return f(*args, **kwargs)
             except Exception as e:
@@ -58,7 +58,8 @@ class devutil:
         """Describe x's methods or functions."""
         for _, member in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
             print(cls.color.green.add(f"{member.__name__}{signature(member)}"))
-            print("  " + member.__doc__)
+            if member.__doc__:
+                print("  " + member.__doc__)
 
 
 class dev:
@@ -165,13 +166,15 @@ class dev:
     @classmethod
     def hashable(cls, x: Any) -> Hashable:
         """Get hashable."""
-        if isinstance(x, list | tuple | set | frozenset):
-            return tuple(cls.hashable(z) for z in x)
-        if isinstance(x, dict):
-            return tuple((k, cls.hashable(x[k])) for k in sorted(x))
-        if isinstance(x, bytearray):
-            return bytes(x)
-        return x
+        match x:
+            case list() | tuple() | set() | frozenset():
+                return tuple(cls.hashable(z) for z in x)
+            case dict():
+                return tuple((k, cls.hashable(x[k])) for k in sorted(x))
+            case bytearray():
+                return bytes(x)
+            case _:
+                return x
 
     @staticmethod
     def w(f: Callable[P, T]) -> Callable[P, T]:
