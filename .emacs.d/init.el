@@ -1052,6 +1052,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (setq plantuml-output-type "png")
   :custom
+  (plantuml-indent-level 2)
   (plantuml-executable-args '("-headless" "-theme" "toy"))
   (plantuml-default-exec-mode 'executable)
   (plantuml-executable-path "plantuml"))
