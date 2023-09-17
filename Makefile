@@ -48,4 +48,4 @@ update-emacs-gui: ## update GUI emacs
 update-emacs-cui: ## update CUI emacs
 	@bin/install-via-git.sh emacs-cui --update
 
-update: brew-update pyenv-update node-update rust-update ruby-update go-update zig-update ## update except emacs
+update: brew-update python-update node-update rust-update ruby-update go-update zig-update ## update except emacs

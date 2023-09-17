@@ -53,3 +53,32 @@ brew "gnu-time"
 # cask
 cask "google-chrome"
 cask "docker"
+
+# python
+brew pipenv
+
+# go
+brew golangci/tap/golangci-lint
+
+# rust
+brew rust-analyzer
+
+# clang
+brew llvm
+brew clang-format
+
+# clojure
+brew clojure/tools/clojure
+brew leiningen
+brew clojure-lsp/brew/clojure-lsp-native
+
+# terraform 
+tap hashicorp/tap
+brew tfenv
+brew hashicorp/tap/terraform-ls
+
+# zig
+brew zig
+
+# plantuml
+brew plantuml

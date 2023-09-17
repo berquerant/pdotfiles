@@ -1,4 +1,3 @@
-wheel
 pylsp-mypy
 pyls-isort
 python-lsp-black

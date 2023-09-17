@@ -34,7 +34,7 @@ load_go() {
 # python
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/pyenv/bin:$PATH"
-export PY_VERSION=3.11.4
+export PY_VERSION="3.11.4"
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PYTHONHISTORY="$HOME/.python.history"
 eval "$(pyenv init -)"
@@ -44,7 +44,7 @@ load_python() {
 }
 # ruby
 export RBENV_ROOT="$HOME/.rbenv"
-export RB_VERSION=3.2.2
+export RB_VERSION="3.2.2"
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$(gem environment gemdir)/bin:$PATH"
 eval "$(rbenv init - zsh)"
@@ -58,7 +58,7 @@ export PATH="$CARGO_HOME/bin:$PATH"
 # node
 export NVM_DIR="$HOME/.nvm"
 export NPM_ROOT="$HOME/.npm"
-export NODE_VERSION=v20.3.0
+export NODE_VERSION="v20.6.1"
 source "$NVM_DIR/nvm.sh"
 load_node() {
     nvm use "$NODE_VERSION"

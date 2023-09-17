@@ -1,5 +1,5 @@
 uri: https://github.com/zigtools/zls
-branch: master
+branch: 0.11.0
 locald: repos/zls
 lock: zls.lock
 env:

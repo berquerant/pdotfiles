@@ -1,0 +1,11 @@
+cargo-watch
+cargo-edit
+cargo-update
+cargo-tree
+cargo-benchcmp
+cargo-expand
+cargo-outdated
+cargo-xtask
+evcxr_repl
+cargo-binutils
+cargo-make
