@@ -49,3 +49,7 @@ update-emacs-cui: ## update CUI emacs
 	@bin/install-via-git.sh emacs-cui --update
 
 update: brew-update python-update node-update rust-update ruby-update go-update zig-update ## update except emacs
+
+.PHONY: requirements
+requirements: ## install all requirements
+	@bin/install-requirements.sh all

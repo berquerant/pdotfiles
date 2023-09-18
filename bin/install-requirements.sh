@@ -4,7 +4,7 @@ d=$(cd $(dirname $0)/..; pwd)
 target="$1"
 
 req() {
-    echo "${d}/${1}_requirements.txt"
+    echo "${d}/requirements/${1}.txt"
 }
 
 install_python() {
@@ -19,7 +19,7 @@ install_go() {
     cat "$1" | while read pkg ; do go install "$pkg" ; done
 }
 
-install_ruby() {
+install_gem() {
     cat "$1" | while read line ; do gem install $line ; done
 }
 
@@ -63,11 +63,22 @@ case "${target}" in
     "go")
         install_go "$req_file"
         ;;
+    "gem")
+        install_gem "$req_file"
+        ;;
     "ruby")
-        install_ruby "$req_file"
+        install_gem "$(req gem)"
         ;;
     "node")
         install_node "$req_file"
+        ;;
+    "all")
+        install_python "$(req python)"
+        install_go "$(req go)"
+        install_node "$(req node)"
+        install_gem "$(req gem)"
+        install_cargo "$(req cargo)"
+        install_rustup "$(req rustup)"
         ;;
     *)
         echo "Unknown target ${target}" >&2

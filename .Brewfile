@@ -72,7 +72,7 @@ brew clojure/tools/clojure
 brew leiningen
 brew clojure-lsp/brew/clojure-lsp-native
 
-# terraform 
+# terraform
 tap hashicorp/tap
 brew tfenv
 brew hashicorp/tap/terraform-ls
