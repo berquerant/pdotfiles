@@ -35,8 +35,9 @@ install_cargo() {
 }
 
 install_rustup() {
+    rustup self update
     rustup install stable
-    rustup override set nightly
+    rustup override set stable
     rustup update nightly
     rustup toolchain add nightly
     cat "$1" | xargs rustup component add

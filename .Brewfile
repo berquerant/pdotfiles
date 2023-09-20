@@ -55,30 +55,30 @@ cask "google-chrome"
 cask "docker"
 
 # python
-brew pipenv
+brew "pipenv"
 
 # go
-brew golangci/tap/golangci-lint
+brew "golangci/tap/golangci-lint"
 
 # rust
-brew rust-analyzer
+brew "rust-analyzer"
 
 # clang
-brew llvm
-brew clang-format
+brew "llvm"
+brew "clang-format"
 
 # clojure
-brew clojure/tools/clojure
-brew leiningen
-brew clojure-lsp/brew/clojure-lsp-native
+brew "clojure/tools/clojure"
+brew "leiningen"
+brew "clojure-lsp/brew/clojure-lsp-native"
 
 # terraform
-tap hashicorp/tap
-brew tfenv
-brew hashicorp/tap/terraform-ls
+tap "hashicorp/tap"
+brew "tfenv"
+brew "hashicorp/tap/terraform-ls"
 
 # zig
-brew zig
+brew "zig"
 
 # plantuml
-brew plantuml
+brew "plantuml"
