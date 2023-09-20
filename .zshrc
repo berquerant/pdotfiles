@@ -16,8 +16,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
 if ! zplug check ; then zplug install ; fi
 zplug load
-
-find "${DOTFILES_ROOT}/bin/z" -type f | sort | while read x ; do source "$x" ; done
+source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 
 # go
 export GOENV_ROOT="$HOME/.goenv"
