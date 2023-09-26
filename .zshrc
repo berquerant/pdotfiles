@@ -21,7 +21,7 @@ source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 # go
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-export GO_VERSION="1.20.5"
+export GO_VERSION="1.21.1"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$GOROOT/bin:$PATH"

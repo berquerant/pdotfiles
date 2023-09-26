@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/gbrowse
+branch: main
+locald: repos/gbrowse
+lock: gbrowse.lock
+install:
+  - make dist/gbrowse
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/gbrowse" /usr/local/bin/gbrowse
+  - gbrowse -h

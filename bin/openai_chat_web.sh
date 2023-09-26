@@ -3,23 +3,8 @@
 set -e
 
 log="${EMACSD}/history_openai-chat-web"
-repo="berquerant/openai-chat-web"
-loc="${GHQ_ROOT}/github.com/${repo}"
+loc="${DOTFILES_ROOT}/ivg/repos/openai-chat-web"
 command="pipenv run python -m openai_chat_web.cli $@"
-
-repo_exist() {
-    ghq list | grep -q "$repo"
-}
-
-ensure_init_repo() {
-    if repo_exist ; then
-        return
-    fi
-
-    ghq get "$repo"
-    cd "$loc"
-    pipenv install
-}
 
 write_log() {
     log_input_file="$1"
@@ -37,7 +22,6 @@ write_log() {
 }
 
 main() {
-    ensure_init_repo
     input=$(mktemp)
     output=$(mktemp)
     cd "$loc"
