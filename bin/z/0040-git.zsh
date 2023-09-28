@@ -25,13 +25,13 @@ ggrepo() {
     repo && git grep "$@"
 }
 
-gfpull() {
+gfswitch() {
     if [[ -z "$1" ]] ; then
-        echo "git pull, forcely"
-        echo "gfpull BRANCH"
+        echo "git switch, forcely"
+        echo "gfswitch BRANCH"
         return
     fi
-    git fetch && git checkout "$1" && git reset --hard "origin/$1"
+    git branch -D "$1" && git fetch origin "$1" && git switch "$1"
 }
 
 gfbranch() {
