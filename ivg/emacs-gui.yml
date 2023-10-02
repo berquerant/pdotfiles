@@ -15,8 +15,8 @@ env:
   LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current:/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
   CC: "/usr/bin/clang" # for nextstep AppKit/AppKit.h
 setup:
-  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs
-  - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs
+  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir
+  - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir
   - |
     if [ -d "$_IVG_APP" ]; then
       rm -rf $_IVG_BACKUP

@@ -10,9 +10,17 @@ kustomize_sorted() {
 alias kks='kustomize_sorted'
 
 kustomize_diff() {
+    if [[ -z "$1" ]] ; then
+        echo "kustomize build and diff"
+        echo "kustomize_diff LEFT_DIR RIGHT_DIR [QUERY_LEFT] [QUERY_RIGHT]"
+        echo "e.g."
+        echo "kustomize_diff overlays/env1 overlays/env2 'select(.metadata.name==\"xxx\")'"
+        return
+    fi
+
     left="$1"
     right="$2"
-    query_left="${3:-.}"
+    query_left="${3}"
     query_right="${4:-$3}"
 
     left_kustomized="$(mktemp)"
@@ -27,10 +35,18 @@ kustomize_diff() {
 alias kd='kustomize_diff'
 
 kustomize_diff_between_branch() {
+    if [[ -z "$1" ]] ; then
+        echo "kustomize build and diff between branches"
+        echo "kustomize_diff_between_branch DIR LEFT_BRANCH RIGHT_BRANCH [QUERY_LEFT] [QUERY_RIGHT]"
+        echo "e.g."
+        echo "kustomize_diff_between_branch overlays/env master new 'select(.metadata.name==\"\xxx)'"
+        return
+    fi
+
     target="$1"
     left="$2"
     right="$3"
-    query_left="${4:-.}"
+    query_left="${4}"
     query_right="${5:-$4}"
 
     original_branch="$(git branch --show-current)"
