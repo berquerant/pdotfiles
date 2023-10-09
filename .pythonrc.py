@@ -4,12 +4,20 @@ import readline
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
-from inspect import (getclasstree, getdoc, getfile, getmembers, getsource,
-                     getsourcelines, isfunction, ismethod, signature)
+from inspect import (
+    getclasstree,
+    getdoc,
+    getfile,
+    getmembers,
+    getsource,
+    getsourcelines,
+    isfunction,
+    ismethod,
+    signature,
+)
 from pprint import pprint
 from pyclbr import readmodule_ex
-from typing import (Any, Callable, ClassVar, Hashable, Optional, ParamSpec,
-                    TypeVar)
+from typing import Any, Callable, ClassVar, Hashable, ParamSpec, TypeVar
 from uuid import uuid4
 
 readline.parse_and_bind("tab: complete")

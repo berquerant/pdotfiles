@@ -1,5 +1,4 @@
 #!/bin/zsh
-
 [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 alias reload='source ~/.zshrc'
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
@@ -33,7 +32,7 @@ load_go() {
 # python
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/pyenv/bin:$PATH"
-export PY_VERSION="3.11.4"
+export PY_VERSION="3.12.0"
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PYTHONHISTORY="$HOME/.python.history"
 eval "$(pyenv init -)"
