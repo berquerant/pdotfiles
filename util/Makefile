@@ -16,3 +16,15 @@ gbrowse: ## install gbrowse
 
 gbrowse-update: ## update gbrowse
 	bin/install-via-git.sh gbrowse --update
+
+ip2bin: ## install ip2bin
+	bin/install-via-git.sh ip2bin
+
+ip2bin-update: ## update ip2bin
+	bin/install-via-git.sh ip2bin --update
+
+cv: ## install cv
+	bin/install-via-git.sh cv
+
+cv-update: ## update cv
+	bin/install-via-git.sh cv --update
