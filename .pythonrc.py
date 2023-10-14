@@ -1,6 +1,7 @@
 import atexit
-import os
 import readline
+
+import os
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
@@ -19,6 +20,7 @@ from pprint import pprint
 from pyclbr import readmodule_ex
 from typing import Any, Callable, ClassVar, Hashable, ParamSpec, TypeVar
 from uuid import uuid4
+
 
 readline.parse_and_bind("tab: complete")
 histfile = os.path.join(os.environ["PYTHONHISTORY"])

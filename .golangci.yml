@@ -42,3 +42,5 @@ linters:
     - structcheck
     - wastedassign
     - rowserrcheck
+    - depguard
+    - exhaustruct
