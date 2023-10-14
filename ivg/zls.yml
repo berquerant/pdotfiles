@@ -1,7 +1,7 @@
 uri: https://github.com/zigtools/zls
 branch: 0.11.0
 locald: repos/zls
-lock: zls.lock
+lock: locks/zls.lock
 env:
   _IVG_EXECUTABLE: "${IVG_WORKD}/${IVG_LOCALD}/zig-out/bin/zls"
   _IVG_BACKUP: "${_IVG_EXECUTABLE}.bk"

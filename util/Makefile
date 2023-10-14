@@ -28,3 +28,21 @@ cv: ## install cv
 
 cv-update: ## update cv
 	bin/install-via-git.sh cv --update
+
+docker-man: ## install docker-man
+	bin/install-via-git.sh docker-man
+
+docker-man-update: ## update docker-man
+	bin/install-via-git.sh docker-man --update
+
+joiny: ## install joiny
+	bin/install-via-git.sh joiny
+
+joiny-update: ## update joiny
+	bin/install-via-git.sh joiny 00update
+
+csvcut: ## install csvcut
+	bin/install-via-git.sh csvcut
+
+csvcut-update: ## update csvcut
+	bin/install-via-git.sh csvcut 00update

@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/joiny
+branch: main
+locald: repos/joiny
+lock: locks/joiny.lock
+install:
+  - make dist/joiny
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/joiny" /usr/local/bin/joiny
+  - joiny -h

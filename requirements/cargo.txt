@@ -9,3 +9,4 @@ cargo-xtask
 evcxr_repl
 cargo-binutils
 cargo-make
+cargo-audit

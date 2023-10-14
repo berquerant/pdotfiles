@@ -1,7 +1,7 @@
 uri: https://github.com/rbenv/rbenv
 branch: master
 locald: repos/rbenv
-lock: ruby.lock
+lock: locks/ruby.lock
 shell:
   - "arch"
   - "--arm64e"

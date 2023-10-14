@@ -1,6 +1,6 @@
 uri: https://github.com/berquerant/openai-chat-web
 branch: main
 locald: repos/openai-chat-web
-lock: openai-chat-web.lock
+lock: locks/openai-chat-web.lock
 install:
   - pipenv install

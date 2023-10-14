@@ -1001,6 +1001,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package rust-mode
   :hook
+  (rust-mode . flycheck-rust-setup)
   (rust-mode . (lambda () (setq indent-tabs-mode nil)))
   :custom
   (rust-format-on-save t))
@@ -1082,6 +1083,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     c-mode
     sh-mode
     emacs-lisp-mode
+    dockerfile-mode
     protobuf-mode
     haskell-mode
     php-mode

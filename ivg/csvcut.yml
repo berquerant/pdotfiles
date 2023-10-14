@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/csvcut
+branch: main
+locald: repos/csvcut
+lock: locks/csvcut.lock
+install:
+  - cargo build --release
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/target/release/csvcut" /usr/local/bin/csvcut
+  - csvcut --help

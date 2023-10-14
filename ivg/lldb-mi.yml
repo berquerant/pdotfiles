@@ -1,7 +1,7 @@
 uri: https://github.com/lldb-tools/lldb-mi.git
 branch: main
 locald: repos/lldb-mi
-lock: lldb-mi.lock
+lock: locks/lldb-mi.lock
 shell:
   - "arch"
   - "--arm64e"

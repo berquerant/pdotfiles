@@ -1,7 +1,7 @@
 uri: https://github.com/berquerant/cv
 branch: main
 locald: repos/cv
-lock: cv.lock
+lock: locks/cv.lock
 install:
   - make dist/cv
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/cv" /usr/local/bin/cv

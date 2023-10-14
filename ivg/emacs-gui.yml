@@ -1,7 +1,7 @@
 uri: git://git.sv.gnu.org/emacs.git
 branch: master
 locald: repos/emacs-gui
-lock: emacs-gui.lock
+lock: locks/emacs-gui.lock
 shell:
   - "arch"
   - "--arm64e"

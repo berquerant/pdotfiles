@@ -63,3 +63,11 @@ csgen() {
 if type gbrowse >/dev/null 2>&1 ; then
     alias gb='gbrowse'
 fi
+
+if type cheat >/dev/null 2>&1 ; then
+    alias c='cheat'
+fi
+
+dman() {
+    "${DOTFILES_ROOT}/bin/docker-man.sh" $@
+}

@@ -34,6 +34,8 @@ brew "gcc"
 brew "cmake"
 brew "libvterm"
 brew "libtool"
+brew "cheat"
+brew "hadolint"
 
 # GNU tools
 brew "coreutils"

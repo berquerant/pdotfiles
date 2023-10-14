@@ -1,7 +1,7 @@
 uri: git://git.sv.gnu.org/emacs.git
 branch: master
 locald: repos/emacs-cui
-lock: emacs-cui.lock
+lock: locks/emacs-cui.lock
 shell:
   - "arch"
   - "--arm64e"

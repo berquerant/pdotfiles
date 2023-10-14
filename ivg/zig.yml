@@ -1,7 +1,7 @@
 uri: https://github.com/ziglang/zig.git
 branch: 0.11.0
 locald: repos/zig
-lock: zig.lock
+lock: locks/zig.lock
 env:
   _IVG_EXECUTABLE: "${IVG_WORKD}/${IVG_LOCALD}/build/stage3/bin/zig"
   _IVG_BACKUP: "${_IVG_EXECUTABLE}.bk"
