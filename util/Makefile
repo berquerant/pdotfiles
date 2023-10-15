@@ -39,10 +39,16 @@ joiny: ## install joiny
 	bin/install-via-git.sh joiny
 
 joiny-update: ## update joiny
-	bin/install-via-git.sh joiny 00update
+	bin/install-via-git.sh joiny --update
 
 csvcut: ## install csvcut
 	bin/install-via-git.sh csvcut
 
 csvcut-update: ## update csvcut
-	bin/install-via-git.sh csvcut 00update
+	bin/install-via-git.sh csvcut --update
+
+sqlite-csv: ## install sqlite-csv
+	bin/install-via-git.sh sqlite-csv
+
+sqlite-csv-update: ## update sqlite-csv
+	bin/install-via-git.sh sqlite-csv --update

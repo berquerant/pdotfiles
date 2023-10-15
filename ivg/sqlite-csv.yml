@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/sqlite-csv
+branch: main
+locald: repos/sqlite-csv
+lock: locks/sqlite-csv.lock
+setup:
+  - brew install sqlite
+install:
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/sqlite-csv.sh" /usr/local/bin/sqlite-csv.sh

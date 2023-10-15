@@ -71,3 +71,5 @@ fi
 dman() {
     "${DOTFILES_ROOT}/bin/docker-man.sh" $@
 }
+
+alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
