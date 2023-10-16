@@ -1,3 +1,6 @@
+sub: go python ruby node rust zig
+sub-update: brew-update go-update python-update ruby-update node-update rust-update zig-update
+
 git-global: ## modify global git settings
 	@echo you should set user.email and user.name
 	git config --global color.ui auto
@@ -43,11 +46,8 @@ rust: ## install rust
 rust-update: ## update rust
 	bin/install-requirements.sh rust
 
-lldb-mi: ## install lldb-mi
-	bin/install-via-git.sh lldb-mi
-
-zls: ## install zls
+zig: ## install zig
 	bin/install-via-git.sh zls
 
-zig-update: ## update zls
+zig-update: ## update zig
 	bin/install-via-git.sh zls --update

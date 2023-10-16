@@ -6,7 +6,7 @@ include util/Makefile
 usage: ## print this help
 	@cat $(MAKEFILE_LIST) | bin/help-makefile.sh
 
-init: ## init submodules and install tools using homebrew
+init: ## install tools using homebrew
 	@bin/install-brew.sh
 
 install-via-git: ## install tool to install
@@ -48,7 +48,8 @@ update-emacs-gui: ## update GUI emacs
 update-emacs-cui: ## update CUI emacs
 	@bin/install-via-git.sh emacs-cui --update
 
-update: brew-update python-update node-update rust-update ruby-update go-update zig-update ## update except emacs
+install: sub util ## install tools
+update: sub-update util-update ## update except emacs
 
 .PHONY: requirements
 requirements: ## install all requirements

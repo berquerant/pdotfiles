@@ -13,7 +13,9 @@ install:
   - export LDFLAGS="-L${LLVM_PATH}/lib"
   - export CPPFLAGS="-I${LLVM_PATH}/include"
   - export PATH="${LLVM_PATH}/bin:${PATH}"
+  - export LLDB_MI_EXECUTABLE="${IVG_WORKD}/${IVG_LOCALD}/src/lldb-mi"
+  - rm -f "$LLDB_MI_EXECUTABLE"
   - cmake .
   - cmake --build .
-  - ln -snvf "${IVG_WORKD}/${LOCALD}/src/lldb-mi" /usr/local/bin/lldb-mi
+  - ln -snvf "$LLDB_MI_EXECUTABLE" /usr/local/bin/lldb-mi
   - lldb-mi --version
