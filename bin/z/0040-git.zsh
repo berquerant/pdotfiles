@@ -65,3 +65,12 @@ gsubremove() {
     fi
     git submodule deinit -f "$1" && git rm -f "$1" && rm -rf .git/modules/ "$1"
 }
+
+gfreset() {
+    if [[ -z "$1" ]] ; then
+        echo "sync to remote branch"
+        echo "gfreset BRANCH"
+        return
+    fi
+    git fetch && git reset --hard "origin/$1"
+}
