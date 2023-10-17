@@ -69,7 +69,7 @@ if type cheat >/dev/null 2>&1 ; then
 fi
 
 dman() {
-    "${DOTFILES_ROOT}/bin/docker-man.sh" $@
+    "${DOTFILES_ROOT}/bin/docker-rmit.sh" docker-man:debian "$@"
 }
 
 alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'

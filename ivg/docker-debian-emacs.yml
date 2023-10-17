@@ -1,0 +1,7 @@
+uri: https://github.com/berquerant/docker-debian-emacs
+branch: main
+locald: repos/docker-debian-emacs
+lock: locks/docker-debian-emacs.lock
+install:
+  - make
+  - docker run --rm docker-debian-emacs --version

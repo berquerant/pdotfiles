@@ -17,9 +17,14 @@ emacs_cui() {
     /usr/local/bin/emacs "$@"
 }
 
+emacs_docker() {
+    "${DOTFILES_ROOT}/bin/docker-rmit.sh" docker-debian-emacs "$@"
+}
+
 alias emacs="emacs_gui"
 alias gmacs="emacs_gui"
 alias cmacs="emacs_cui"
+alias dmacs="emacs_docker"
 
 kill_emacs() {
     pkill -KILL "[eE]macs"

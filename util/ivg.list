@@ -7,3 +7,4 @@ docker-man
 joiny
 csvcut
 sqlite-csv
+docker-debian-emacs
