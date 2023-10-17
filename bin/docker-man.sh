@@ -2,4 +2,4 @@
 
 set -e
 
-docker run --rm -it docker-man:debian man "$@"
+docker run --rm -it docker-man:debian "$@"

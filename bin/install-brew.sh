@@ -36,7 +36,7 @@ if ! which gettext > /dev/null
 then
     brew link --force gettext
 else
-    message "Already gettext linked" green
+    message "Already gettext linked"
 fi
 
 brew cleanup -s
