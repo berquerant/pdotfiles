@@ -18,7 +18,7 @@ emacs_cui() {
 }
 
 emacs_docker() {
-    "${DOTFILES_ROOT}/bin/docker-rmit.sh" docker-debian-emacs "$@"
+    "${DOTFILES_ROOT}/bin/docker-rmit.sh" "$@" docker-debian-emacs
 }
 
 alias emacs="emacs_gui"
