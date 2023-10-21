@@ -55,8 +55,8 @@ __join_case() {
     echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | tr " " "$sep"
 }
 
-# e.g. rg -i "$(csgen get input json)"
-csgen() {
+# e.g. rg -i "$(csg get input json)"
+csg() {
     echo "($(__concat_lower $@)|$(__join_case _ $@)|$(__join_case \- $@)|($(__join_case " " $@)))"
 }
 
@@ -73,3 +73,7 @@ dman() {
 }
 
 alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
+
+dterra() {
+    "${DOTFILES_ROOT}/bin/docker-rmit.sh" hashicorp/terraform:latest "$@"
+}

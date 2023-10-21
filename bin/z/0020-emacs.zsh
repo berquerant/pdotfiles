@@ -40,3 +40,7 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]] \
     PS1=$TMP_PS1
     PROMPT_COMMAND=$TMP_PROMPT_COMMAND
 fi
+
+# ld: library not found for -lemutls_w
+# libgccjit.so: error: error invoking gcc driver
+export LIBRARY_PATH="${LIBRARY_PATH}:$(brew --prefix gcc)/lib/gcc/current:$(brew --prefix libgccjit)/lib/gcc/current:$(brew --prefix gcc)/lib/gcc/current/gcc/aarch64-apple-darwin23/13"

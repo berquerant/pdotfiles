@@ -8,12 +8,13 @@ shell:
   - "/bin/bash"
 env:
   _IVG_CONCURRENCY: 2
-  LDFLAGS: "-I/opt/homebrew/include -I/opt/homebrew/Cellar/libgccjit/13.1.0/include -I/opt/homebrew/Cellar/gtk+/2.24.33_1/include/gtk-2.0/gdk"
-  LIBS: "-L/opt/homebrew/lib -L/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current -L/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
-  LIBRARY_PATH: "/opt/homebrew/lib:/opt/homebrew/Cellar/libgccjit/13.1.0/lib/gcc/current:/opt/homebrew/Cellar/gtk+/2.24.33_1/lib"
-  CC: "/opt/homebrew/opt/gcc/bin/gcc-13"
+  LDFLAGS: "-I/opt/homebrew/include"
+  LIBS: "-L/opt/homebrew/lib"
+  LIBRARY_PATH: "/opt/homebrew/lib"
+  # [brew gcc] configure: error: The include files (AppKit/AppKit.h etc)
+  CC: "/usr/bin/clang"
 setup:
-  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir
+  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs
   - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir
   - brew install --build-from-source gcc
   - brew install --build-from-source libgccjit
