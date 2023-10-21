@@ -48,7 +48,7 @@ update-emacs-gui: ## update GUI emacs
 update-emacs-cui: ## update CUI emacs
 	@bin/install-via-git.sh emacs-cui --update
 
-install: sub util ## install tools
+install: install-via-git sub util ## install tools
 update: install-via-git sub-update util-update ## update except emacs
 
 .PHONY: requirements

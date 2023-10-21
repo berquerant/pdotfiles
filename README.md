@@ -5,6 +5,7 @@ make init
 make deploy
 make git
 make emacs
+make install
 ```
 
 ## Additional tools
