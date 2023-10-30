@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/godepdump
+branch: main
+locald: repos/godepdump
+lock: locks/godepdump.lock
+install:
+  - make
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/godepdump" /usr/local/bin/godepdump
+  - godepdump -h
