@@ -1,0 +1,11 @@
+uri: https://github.com/berquerant/mpv-settings
+branch: main
+locald: repos/mpv-settings
+lock: locks/mpv-settings.lock
+env:
+  MUSIC_ROOT: "${MUSIC_ROOT}"
+  YTDL_ROOT: "${HOME}/ytdl"
+setup:
+  - brew install mpv
+install:
+  - ./install.sh

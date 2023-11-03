@@ -1,5 +1,10 @@
 #!/bin/zsh
-[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -x /opt/homebrew/bin/brew ]] ; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    autoload -Uz compinit
+    compinit
+fi
 alias reload='source ~/.zshrc'
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
 export PATH="~/.local/bin:$PATH"
