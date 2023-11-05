@@ -11,3 +11,4 @@ docker-debian-emacs
 godepdump
 mpv-settings
 json2dot
+makedepdump

@@ -3,6 +3,9 @@ help: usage
 include sub/Makefile
 include util/Makefile
 
+dependencies: ## generate depndency graph
+	bin/make-dependencies-graph.sh
+
 usage: ## print this help
 	@cat $(MAKEFILE_LIST) | bin/help-makefile.sh
 
@@ -27,7 +30,7 @@ clean: ## uninstall dotfiles
 gitconfig: ## generate .gitconfig
 	@bin/install-gitconfig.sh
 
-gitatttibutes: ## generate .gitattributes
+gitattributes: ## generate .gitattributes
 	@bin/install-gitattributes.sh
 
 git: gitconfig gitattributes ## install git configurations
@@ -49,8 +52,23 @@ update-emacs-cui: ## update CUI emacs
 	@bin/install-via-git.sh emacs-cui --update
 
 install: install-via-git sub util ## install tools
-update: install-via-git sub-update util-update ## update except emacs
+update: install-via-git brew-update sub-update util-update ## update except emacs
+retry: install-via-git sub-retry util-retry ## retry to install tools
 
 .PHONY: requirements
 requirements: ## install all requirements
 	@bin/install-requirements.sh all
+
+git-global: ## modify global git settings
+	@echo you should set user.email and user.name
+	git config --global color.ui auto
+	git config --global diff.renames true
+	git config --global core.attributesfile ~/.gitattributes
+	git config --global log.abbrevCommit true
+	git config --global core.ignorecase false
+	git config --global core.autocrlf false
+
+brew-update: ## update brew packages
+	brew update
+	brew upgrade
+	brew cleanup

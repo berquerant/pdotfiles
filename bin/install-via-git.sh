@@ -1,6 +1,7 @@
 #!/bin/bash
 
 d=$(cd $(dirname $0); pwd)
+. "${d}/common.sh"
 ivg="install-via-git"
 
 if [ ! -e "$(which $ivg)" ] ; then
@@ -12,6 +13,14 @@ if [ -z "$target" ] ; then
     echo "target is required"
     exit 1
 fi
+
+if [ -n "$IVG_SH_IGNORE" ] ; then
+    if echo "$target" | grep -q -E "$IVG_SH_IGNORE" ; then
+        cecho yellow "$(basename $0) ignores ${target} because IVG_SH_IGNORE=${IVG_SH_IGNORE} matched"
+        exit
+    fi
+fi
+
 shift
 
 ivg_configd="${DOTFILES_ROOT}/ivg"

@@ -1,8 +1,15 @@
-util:
-	cat util/ivg.list | bin/install-via-git-bulk.sh
+UTIL_IVG_LIST := util/ivg.list
+IVG_BULK := bin/install-via-git-bulk.sh
 
-util-update:
-	cat util/ivg.list | bin/install-via-git-bulk.sh --update
+.PHONY: util
+util: ## install util dependencies
+	cat $(UTIL_IVG_LIST) | $(IVG_BULK)
+
+util-update: ## update util dependencies
+	cat $(UTIL_IVG_LIST) | $(IVG_BULK) --update
+
+util-retry: ## retry to install util dependencies
+	cat $(UTIL_IVG_LIST) | $(IVG_BULK) --retry
 
 gdbinit: ## install gdbinit for python
 	wget -P ~ https://git.io/.gdbinit

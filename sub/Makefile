@@ -1,43 +1,20 @@
-sub: go python ruby node rust zig
-sub-update: brew-update go-update python-update ruby-update node-update rust-update zig-update
+SUB_TARGET_LIST := sub/target.list
+TARGET_BULK := bin/install-target-bulk.sh
+IVG_SH := bin/install-via-git.sh
 
-git-global: ## modify global git settings
-	@echo you should set user.email and user.name
-	git config --global color.ui auto
-	git config --global diff.renames true
-	git config --global core.attributesfile ~/.gitattributes
-	git config --global log.abbrevCommit true
-	git config --global core.ignorecase false
-	git config --global core.autocrlf false
+.PHONY: sub
+sub: sub-target rust zig ## install sub dependencies
+sub-update: sub-target-update rust-update zig-update ## update sub dependencies
+sub-retry: sub-target-retry rust-retry zig-retry ## retry to install sub dependencies
 
-brew-update: ## update brew packages
-	brew update
-	brew upgrade
-	brew cleanup
+sub-target: ## install sub targets
+	cat $(SUB_TARGET_LIST) | $(TARGET_BULK)
 
-go: ## install go
-	bin/install-target.sh go
+sub-target-update: ## update sub targets
+	cat $(SUB_TARGET_LIST) | $(TARGET_BULK) --update
 
-go-update: ## update go
-	bin/install-target.sh go 1
-
-python: ## install python
-	bin/install-target.sh python
-
-python-update: ## update python
-	bin/install-target.sh python 1
-
-ruby: ## install ruby
-	bin/install-target.sh ruby
-
-ruby-update: ## update ruby
-	bin/install-target.sh ruby 1
-
-node: ## install node
-	bin/install-target.sh node
-
-node-update: ## update node
-	bin/install-target.sh node 1
+sub-target-retry: ## retry to install sub targets
+	cat $(SUB_TARGET_LIST) | $(TARGET_BULK) --retry
 
 rust: ## install rust
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -46,8 +23,13 @@ rust: ## install rust
 rust-update: ## update rust
 	bin/install-requirements.sh rust
 
+rust-retry: rust ## retry to install rust
+
 zig: ## install zig
-	bin/install-via-git.sh zls
+	$(IVG_SH) zls
 
 zig-update: ## update zig
-	bin/install-via-git.sh zls --update
+	$(IVG_SH) zls --update
+
+zig-retry: ## retry to install zig
+	$(IVG_SH) zls --retry
