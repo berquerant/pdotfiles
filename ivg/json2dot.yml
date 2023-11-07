@@ -4,6 +4,5 @@ locald: repos/json2dot
 lock: locks/json2dot.lock
 install:
   - pipenv sync --dev
-  - pipenv run dist
-  - pip install dist/json2dot-0.1.0.tar.gz
-  - json2dot --help
+  - pip install .
+  - json2dot --version
