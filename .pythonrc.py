@@ -18,7 +18,7 @@ from inspect import (
 )
 from pprint import pprint
 from pyclbr import readmodule_ex
-from typing import Any, Callable, ClassVar, Hashable, ParamSpec, TypeVar
+from typing import Any, Callable, ClassVar, Hashable
 from uuid import uuid4
 
 
@@ -26,15 +26,10 @@ readline.parse_and_bind("tab: complete")
 histfile = os.path.join(os.environ["PYTHONHISTORY"])
 try:
     readline.read_history_file(histfile)
-    readline.set_history_length(500)
+    readline.set_history_length(1000)
 except IOError:
     pass
 atexit.register(readline.write_history_file, histfile)
-
-
-T = TypeVar("T")
-D = TypeVar("D")
-P = ParamSpec("P")
 
 
 class devutil:
@@ -50,7 +45,7 @@ class devutil:
             return self.value + s + self.end.value
 
     @classmethod
-    def ignore_exception(cls, f: Callable[P, T]) -> Callable[P, T | None]:
+    def ignore_exception[T, **P](cls, f: Callable[P, T]) -> Callable[P, T | None]:
         """Ignore any exceptions raised by f."""
 
         @wraps(f)
@@ -187,7 +182,7 @@ class dev:
                 return x
 
     @staticmethod
-    def w(f: Callable[P, T]) -> Callable[P, T]:
+    def w[T, **P](f: Callable[P, T]) -> Callable[P, T]:
         """Watch the arguments and the return value."""
 
         @wraps(f)

@@ -55,6 +55,7 @@ message "Install others"
 
 exec_or_dry "ln -snvf $d/etc/peco ~/.config/peco"
 exec_or_dry "ln -snvf $d/etc/bat ~/.config/bat"
+exec_or_dry "ln -snvf $d/.ruff.toml '${HOME}/Library/Application Support/.ruff.toml'"
 
 message "Dotfiles installed!"
 message "Please make gitconfig to install .gitconfig"

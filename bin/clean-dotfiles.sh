@@ -45,11 +45,14 @@ done
 message "Remove emacs configurations"
 
 exec_or_dry "rm -f ${EMACSD}/init.el"
-exec_or_dry "rm -f ${EMACSD}/site-lisp"
+exec_or_dry "rm -f ${EMACSD}/straight-default.el "
+exec_or_dry "rm -rf ${EMACSD}/site-lisp"
 
 message "Remove others"
 
 exec_or_dry "rm -f ~/.config/peco"
+exec_or_dry "rm -rf ~/.config/bat"
+exec_or_dry "rm -f '~/Library/Application Support/.ruff.toml'"
 
 message "Dotfiles removed!"
 if ${is_dry}

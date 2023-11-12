@@ -1,11 +1,9 @@
 pylsp-mypy
-pyls-isort
 python-lsp-black
 pylsp-rope
 pycodestyle
-pydocstyle
 mccabe
-pyls-flake8
 pyls-memestra
 python-lsp-server[all]
 debugpy
+python-lsp-ruff

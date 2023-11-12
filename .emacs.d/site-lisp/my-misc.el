@@ -160,22 +160,14 @@ When a predicate is called, selected window will be the window of the argument."
 (defconst my-misc-git-browse-buffer-name "*git-browse*"
   "Buffer to git browse output.")
 
-(defun my-misc--git-browse (&optional default-branch)
+(defun my-misc--git-browse ()
   "Open the current file committed to git in browser.
 Requires https://github.com/berquerant/gbrowse"
     (let ((path (file-name-nondirectory (buffer-file-name)))
-          (linum (line-number-at-pos))
-          (opt (if default-branch "-default " "")))
-      (little-async-start-process (format "gbrowse %s%s:%s" opt path linum)
+          (linum (line-number-at-pos)))
+      (little-async-start-process (format "gbrowse %s:%s" path linum)
                                   :process-name "git-browse"
                                   :buffer-name my-misc-git-browse-buffer-name)))
-
-;;;###autoload
-(defun my-misc-git-browse-default-branch ()
-  "Open the current file committed to git in browser.
-Requires https://github.com/berquerant/gbrowse"
-    (interactive)
-    (my-misc--git-browse t))
 
 ;;;###autoload
 (defun my-misc-git-browse ()

@@ -897,6 +897,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (setq py-python-command (format "%s/shims/python" (my-getenv "PYENV_ROOT"))))
 
+(use-package flymake-ruff
+  :ensure t
+  :straight (flymake-ruff :type git :host github :repo "erickgnavar/flymake-ruff")
+  :hook (python-mode . flymake-ruff-load))
+
 (use-package ruby-mode
   :mode ("\\.rb\\'" . ruby-mode)
   :interpreter ("ruby" . ruby-mode)

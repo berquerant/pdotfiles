@@ -127,7 +127,6 @@
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
   ("C-x C-x" . my-misc-exchange-point-and-mark)
   ("M-s 4" . my-misc-git-browse)
-  ("M-s 3" . my-misc-git-browse-default-branch)
   :config
   (add-to-list 'special-display-buffer-names my-misc-git-browse-buffer-name))
 
