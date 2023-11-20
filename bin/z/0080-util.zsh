@@ -52,12 +52,12 @@ __concat_lower() {
 __join_case() {
     sep="$1"
     shift
-    echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | tr " " "$sep"
+    echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | sed "s^ ^${sep}^g"
 }
 
 # e.g. rg -i "$(csg get input json)"
 csg() {
-    echo "($(__concat_lower $@)|$(__join_case _ $@)|$(__join_case \- $@)|($(__join_case " " $@)))"
+    echo "($(__concat_lower $@)|$(__join_case "->" $@)|$(__join_case "\\\." $@)|$(__join_case ":" $@)|$(__join_case "::" $@)|$(__join_case "/" $@)|$(__join_case _ $@)|$(__join_case \- $@)|($(__join_case " " $@)))"
 }
 
 if type gbrowse >/dev/null 2>&1 ; then
