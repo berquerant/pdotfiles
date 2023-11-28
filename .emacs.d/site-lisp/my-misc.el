@@ -160,21 +160,41 @@ When a predicate is called, selected window will be the window of the argument."
 (defconst my-misc-git-browse-buffer-name "*git-browse*"
   "Buffer to git browse output.")
 
-(defun my-misc--git-browse ()
+(defconst my-misc-gomod-browse-buffer-name "*gomod-browse*"
+  "Buffer to gomod browse output.")
+
+(defun my-misc--git-browse (&optional phases)
   "Open the current file committed to git in browser.
 Requires https://github.com/berquerant/gbrowse"
-    (let ((path (file-name-nondirectory (buffer-file-name)))
-          (linum (line-number-at-pos)))
-      (little-async-start-process (format "gbrowse %s:%s" path linum)
+    (let* ((path (file-name-nondirectory (buffer-file-name)))
+           (linum (line-number-at-pos))
+           (location (format "%s:%s" path linum))
+           (phase (if phases (format "-phase %s" (s-join "," phases))
+                    ""))
+           (args `("gbrowse" ,phase ,location)))
+      (little-async-start-process (format "gomodbrowse %s" location)
+                                  :process-name "gomod-browse"
+                                  :buffer-name my-misc-gomod-browse-buffer-name)
+      (little-async-start-process (s-join " " args)
                                   :process-name "git-browse"
                                   :buffer-name my-misc-git-browse-buffer-name)))
 
 ;;;###autoload
-(defun my-misc-git-browse ()
+(defun my-misc-git-browse (arg)
   "Open the current file committed to git in browser.
+
+phases:
+
+C-u C-u : default_branch
+C-u     : tag,branch
+(nil)   : (empty)
+
 Requires https://github.com/berquerant/gbrowse"
-    (interactive)
-    (my-misc--git-browse))
+  (interactive "p")
+  (my-misc--git-browse (case arg
+                         (16 '("default_branch"))
+                         (4 '("tag" "branch"))
+                         (t nil))))
 
 (defconst my-misc-call-process-buffer "*my-misc-call-process*"
   "Where `my-misc-call-process' write output.")
