@@ -112,6 +112,14 @@
 
 ;; important utilities
 
+;; popup window manager
+(use-package popwin
+  :demand t
+  :config
+  (popwin-mode t)
+  (setq special-display-function 'popwin:special-display-popup-window)
+  (setq display-buffer-function 'popwin:display-buffer))
+
 (use-package my-misc
   :straight (my-misc :type built-in)
   :commands (my-misc-delete-window-predicates-add
@@ -126,9 +134,7 @@
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
   ("C-x C-x" . my-misc-exchange-point-and-mark)
-  ("M-s 4" . my-misc-git-browse)
-  :config
-  (add-to-list 'special-display-buffer-names my-misc-git-browse-buffer-name))
+  ("M-s 4" . my-misc-git-browse))
 
 (use-package my-sticky-buffer-mode
   :straight (my-sticky-buffer-mode :type built-in)

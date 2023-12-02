@@ -241,12 +241,12 @@ c.f. `format-all-region'."
   (treemacs-fringe-indicator-mode 'always))
 
 ;; popup window manager
-(use-package popwin
-  :demand t
-  :config
-  (popwin-mode t)
-  (setq special-display-function 'popwin:special-display-popup-window)
-  (setq display-buffer-function 'popwin:display-buffer))
+;; (use-package popwin
+;;   :demand t
+;;   :config
+;;   (popwin-mode t)
+;;   (setq special-display-function 'popwin:special-display-popup-window)
+;;   (setq display-buffer-function 'popwin:display-buffer))
 
 (use-package posframe)
 
@@ -474,7 +474,7 @@ c.f. `format-all-region'."
   :demand t
   :straight (my-trans :type built-in)
   :config
-  (add-to-list 'special-display-buffer-names my-trans-output-buffer-name)
+  (push `(,my-trans-output-buffer-name :noselect t) popwin:special-display-config)
   (my-macro-region-or-at-point my-trans-into-ja "To ja: ")
   (my-macro-region-or-at-point my-trans-into-en "To en: ")
   (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)

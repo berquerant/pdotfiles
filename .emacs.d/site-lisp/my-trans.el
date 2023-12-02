@@ -26,7 +26,8 @@
   "Insert INPUT into buffer `my-trans-output-buffer-name'."
   (with-current-buffer (get-buffer-create my-trans-output-buffer-name)
     (goto-char (point-max))
-    (insert input)))
+    (insert input))
+  (display-buffer my-trans-output-buffer-name))
 
 (defun my-trans--trans-output-filter (p output)
   "translation output process filter."
