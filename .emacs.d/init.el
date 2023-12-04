@@ -240,14 +240,6 @@ c.f. `format-all-region'."
   (treemacs-hide-gitignored-files-mode nil)
   (treemacs-fringe-indicator-mode 'always))
 
-;; popup window manager
-;; (use-package popwin
-;;   :demand t
-;;   :config
-;;   (popwin-mode t)
-;;   (setq special-display-function 'popwin:special-display-popup-window)
-;;   (setq display-buffer-function 'popwin:display-buffer))
-
 (use-package posframe)
 
 ;; search with romaji
