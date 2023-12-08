@@ -2,7 +2,6 @@
 
 # initial settings
 ulimit -n 65535
-export TMPD=$HOME/tmp
 export LOGD=$TMPD/logs
 export EDITOR='vim'
 bindkey -e # emacs

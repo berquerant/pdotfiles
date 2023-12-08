@@ -43,15 +43,27 @@ gfbranch() {
     git branch -D $1 && git checkout -b $1
 }
 
-export GIT_WORKTREE_PREFIX="wrktr-"
+grepopath() {
+    git config --get remote.origin.url |\
+        tr ":" "/" |\
+        sed -E 's|git@|https///|' |\
+        sed -E 's|git///|https///|' |\
+        sed -E 's|\.git||' |\
+        sed -E 's|https///|https://|' |\
+        sed -E 's|https://||'
+}
 
+export GIT_WORKTREE_ROOT="$GHQ_ROOT/git-worktree"
 gwadd() {
+    worktree_prefix="${GIT_WORKTREE_ROOT}/$(grepopath)"
     if [[ -z "$1" ]] ; then
-        echo "git worktree add, prefix is ${GIT_WORKTREE_PREFIX}"
+        echo "git worktree add, prefix is ${worktree_prefix}"
         echo "gwadd BRANCH [OPTION]"
         return
     fi
-    git worktree add "${GIT_WORKTREE_PREFIX}${1}" "$@"
+    worktree_path="${worktree_prefix}/${1}"
+    echo "${worktree_path}"
+    git worktree add "${worktree_path}" "$@"
 }
 
 alias gwrm='git worktree remove'

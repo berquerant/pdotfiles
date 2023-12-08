@@ -21,12 +21,10 @@ zplug "zsh-users/zsh-completions"
 if ! zplug check ; then zplug install ; fi
 zplug load
 source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
+"${DOTFILES_ROOT}/bin/load-envs.sh"
 
 # go
-export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-export GO_VERSION="1.21.4"
-export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$GOROOT/bin:$PATH"
 eval "$(goenv init -)"
@@ -35,9 +33,7 @@ load_go() {
     go version
 }
 # python
-export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/pyenv/bin:$PATH"
-export PY_VERSION="3.12.0"
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 export PYTHONHISTORY="$HOME/.python.history"
 eval "$(pyenv init -)"
@@ -46,8 +42,6 @@ load_python() {
     python -V
 }
 # ruby
-export RBENV_ROOT="$HOME/.rbenv"
-export RB_VERSION="3.2.2"
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$(gem environment gemdir)/bin:$PATH"
 eval "$(rbenv init - zsh)"
@@ -56,12 +50,8 @@ load_ruby() {
     ruby -v
 }
 # rust
-export CARGO_HOME="$HOME/.cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
 # node
-export NVM_DIR="$HOME/.nvm"
-export NPM_ROOT="$HOME/.npm"
-export NODE_VERSION="v20.6.1"
 source "$NVM_DIR/nvm.sh"
 load_node() {
     nvm use "$NODE_VERSION"
