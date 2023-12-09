@@ -72,3 +72,6 @@ brew-update: ## update brew packages
 	brew update
 	brew upgrade
 	brew cleanup
+
+renovate.json: renovate.yml ## generate renovate.json
+	yq -ojson $< > $@
