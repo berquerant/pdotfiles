@@ -5,11 +5,11 @@
     ":label(renovate)",
     ":prConcurrentLimitNone",
     ":prHourlyLimitNone",
-    ":timezone(Asia/Tokyo)"
+    ":timezone(Asia/Tokyo)",
+    ":rebaseStalePrs",
+    ":dependencyDashboard"
   ],
   "automerge": false,
-  "dependencyDashboard": false,
-  "branchConcurrentLimit": 0,
   "baseBranches": [
     "main",
     "master"
@@ -18,7 +18,7 @@
   "packageRules": [
     {
       "groupName": "go",
-      "labels": [
+      "addLabels": [
         "go"
       ],
       "matchDatasources": [
@@ -27,7 +27,7 @@
     },
     {
       "groupName": "pypi",
-      "labels": [
+      "addLabels": [
         "pypi"
       ],
       "matchDatasources": [
@@ -36,7 +36,7 @@
     },
     {
       "groupName": "npm",
-      "labels": [
+      "addLabels": [
         "npm"
       ],
       "matchDatasources": [
@@ -45,7 +45,7 @@
     },
     {
       "groupName": "rubygems",
-      "labels": [
+      "addLabels": [
         "rubuygems"
       ],
       "matchDatasources": [
@@ -54,7 +54,7 @@
     },
     {
       "groupName": "nodejs/node",
-      "labels": [
+      "addLabels": [
         "nodejs/node"
       ],
       "matchDepNames": [
@@ -63,7 +63,7 @@
     },
     {
       "groupName": "golang/go",
-      "labels": [
+      "addLabels": [
         "golang/go"
       ],
       "matchDepNames": [
@@ -72,7 +72,7 @@
     },
     {
       "groupName": "ruby/ruby",
-      "labels": [
+      "addLabels": [
         "ruby/ruby"
       ],
       "matchDepNames": [
@@ -81,7 +81,7 @@
     },
     {
       "groupName": "python/cpython",
-      "labels": [
+      "addLabels": [
         "python/cpython"
       ],
       "matchDepNames": [

@@ -5,51 +5,51 @@ extends:
   - ":prConcurrentLimitNone"
   - ":prHourlyLimitNone"
   - ":timezone(Asia/Tokyo)"
+  - ":rebaseStalePrs"
+  - ":dependencyDashboard"
 automerge: false
-dependencyDashboard: false
-branchConcurrentLimit: 0
 baseBranches:
   - "main"
   - "master"
 rangeStrategy: "auto"
 packageRules:
   - groupName: "go"
-    labels:
+    addLabels:
       - "go"
     matchDatasources:
       - "go"
   - groupName: "pypi"
-    labels:
+    addLabels:
       - "pypi"
     matchDatasources:
       - "pypi"
   - groupName: "npm"
-    labels:
+    addLabels:
       - "npm"
     matchDatasources:
       - "npm"
   - groupName: "rubygems"
-    labels:
+    addLabels:
       - "rubuygems"
     matchDatasources:
       - "rubygems"
   - groupName: "nodejs/node"
-    labels:
+    addLabels:
       - "nodejs/node"
     matchDepNames:
       - "nodejs/node"
   - groupName: "golang/go"
-    labels:
+    addLabels:
       - "golang/go"
     matchDepNames:
       - "golang/go"
   - groupName: "ruby/ruby"
-    labels:
+    addLabels:
       - "ruby/ruby"
     matchDepNames:
       - "ruby/ruby"
   - groupName: "python/cpython"
-    labels:
+    addLabels:
       - "python/cpython"
     matchDepNames:
       - "python/cpython"
