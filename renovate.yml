@@ -82,30 +82,28 @@ customManagers:
     datasourceTemplate: "rubygems"
     versioningTemplate: "semver"
   - customType: "regex"
-    fileMatch:
-      - "^bin/load-envs.sh$"
+    fileMatch: &envFiles
+      - "^.zshrc$"
+      - "^.envrc$"
     matchStrings:
       - "export NODE_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "github-tags"
     depNameTemplate: "nodejs/node"
   - customType: "regex"
-    fileMatch:
-      - "^bin/load-envs.sh$"
+    fileMatch: *envFiles
     matchStrings:
       - "export GO_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "github-tags"
     depNameTemplate: "golang/go"
     extractVersionTemplate: "^go(?<version>\\d+\\.\\d+\\.\\d+)$" # remove prefix `go` from datasource
   - customType: "regex"
-    fileMatch:
-      - "^bin/load-envs.sh$"
+    fileMatch: *envFiles
     matchStrings:
       - "export RB_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "github-releases"
     depNameTemplate: "ruby/ruby"
   - customType: "regex"
-    fileMatch:
-      - "^bin/load-envs.sh$"
+    fileMatch: *envFiles
     matchStrings:
       - "export PY_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "github-tags"

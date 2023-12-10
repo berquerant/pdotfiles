@@ -136,7 +136,8 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^bin/load-envs.sh$"
+        "^.zshrc$",
+        "^.envrc$"
       ],
       "matchStrings": [
         "export NODE_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
@@ -147,7 +148,8 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^bin/load-envs.sh$"
+        "^.zshrc$",
+        "^.envrc$"
       ],
       "matchStrings": [
         "export GO_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
@@ -159,7 +161,8 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^bin/load-envs.sh$"
+        "^.zshrc$",
+        "^.envrc$"
       ],
       "matchStrings": [
         "export RB_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
@@ -170,7 +173,8 @@
     {
       "customType": "regex",
       "fileMatch": [
-        "^bin/load-envs.sh$"
+        "^.zshrc$",
+        "^.envrc$"
       ],
       "matchStrings": [
         "export PY_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"

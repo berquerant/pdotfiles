@@ -1,9 +1,9 @@
-pylsp-mypy==0.6.7
+pylsp-mypy==0.6.8
 python-lsp-black==1.3.0
 pylsp-rope==0.1.11
-pycodestyle==2.11.0
+pycodestyle==2.11.1
 mccabe==0.7.0
 pyls-memestra==0.0.16
-python-lsp-server==1.8.1
+python-lsp-server==1.9.0
 debugpy==1.8.0
-python-lsp-ruff==1.6.0
+python-lsp-ruff==2.0.0
