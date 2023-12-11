@@ -12,6 +12,18 @@ baseBranches:
   - "main"
   - "master"
 rangeStrategy: "auto"
+pin:
+  addLabels:
+    - "pin"
+patch:
+  addLabels:
+    - "patch"
+minor:
+  addLabels:
+    - "minor"
+major:
+  addLabels:
+    - "major"
 packageRules:
   - groupName: "go"
     addLabels:
@@ -30,7 +42,7 @@ packageRules:
       - "npm"
   - groupName: "rubygems"
     addLabels:
-      - "rubuygems"
+      - "rubygems"
     matchDatasources:
       - "rubygems"
   - groupName: "nodejs/node"

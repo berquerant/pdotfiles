@@ -15,6 +15,26 @@
     "master"
   ],
   "rangeStrategy": "auto",
+  "pin": {
+    "addLabels": [
+      "pin"
+    ]
+  },
+  "patch": {
+    "addLabels": [
+      "patch"
+    ]
+  },
+  "minor": {
+    "addLabels": [
+      "minor"
+    ]
+  },
+  "major": {
+    "addLabels": [
+      "major"
+    ]
+  },
   "packageRules": [
     {
       "groupName": "go",
@@ -46,7 +66,7 @@
     {
       "groupName": "rubygems",
       "addLabels": [
-        "rubuygems"
+        "rubygems"
       ],
       "matchDatasources": [
         "rubygems"
