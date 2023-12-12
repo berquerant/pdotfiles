@@ -1,5 +1,5 @@
 #!/bin/zsh
 
 renovate-dry() {
-    "${DOTFILES_ROOT}/bin/renovate-dr.sh" "$@"
+    "${DOTFILES_ROOT}/bin/renovate-dry.sh" "$@"
 }
