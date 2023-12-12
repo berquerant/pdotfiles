@@ -168,7 +168,7 @@
   (define-format-all-formatter
    yamlfmt
    (:executable "yamlfmt")
-   (:install "go install github.com/google/yamlfmt/cmd/yamlfmt@latest")
+   (:install "go install github.com/google/yamlfmt/cmd/yamlfmt@v0.10.0")
    (:languages "YAML")
    (:features)
    (:format
