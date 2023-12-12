@@ -1,6 +1,6 @@
 bundler -v 2.4.22
 solargraph -v 0.50.0
-rubocop -v 1.58.0
+rubocop -v 1.59.0
 steep -v 1.6.0
 rufo -v 0.16.3
 github-markup -v 4.0.2

@@ -65,7 +65,18 @@ packageRules:
       - "python/cpython"
     matchDepNames:
       - "python/cpython"
+  - addLabels:
+      - "emacs"
+    matchFileNames:
+      - ".emacs.d/**"
 customManagers:
+  - customType: "regex"
+    fileMatch:
+      - ".emacs.d/init.el"
+    matchStrings:
+      - "github.com/google/yamlfmt/cmd/yamlfmt@(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+    datasourceTemplate: "github-releases"
+    depNameTemplate: "google/yamlfmt"
   - customType: "regex"
     fileMatch:
       - "^requirements/go.txt$"

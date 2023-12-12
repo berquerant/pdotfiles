@@ -1,0 +1,18 @@
+#!/bin/bash
+
+d=$(cd $(dirname $0); pwd)
+bin="${d}/bin"
+
+target="${bin}/install-via-git.sh"
+case "$1" in
+    "r" | "req" | "requirements")
+        target="${bin}/install-requirements.sh"
+        shift
+        ;;
+    "t" | "target")
+        target="${bin}/install-target.sh"
+        shift
+        ;;
+esac
+
+"$target" "$@"
