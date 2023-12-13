@@ -3,11 +3,11 @@
   "extends": [
     "config:recommended",
     ":label(renovate)",
-    ":prConcurrentLimitNone",
+    ":prConcurrentLimit10",
     ":prHourlyLimitNone",
     ":timezone(Asia/Tokyo)",
     ":rebaseStalePrs",
-    ":dependencyDashboard"
+    "schedule:nonOfficeHours"
   ],
   "automerge": false,
   "baseBranches": [
@@ -15,6 +15,11 @@
     "master"
   ],
   "rangeStrategy": "auto",
+  "digest": {
+    "addLabels": [
+      "digest"
+    ]
+  },
   "pin": {
     "addLabels": [
       "pin"
@@ -120,6 +125,7 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "Manage yamlfmt used for Emacs",
       "fileMatch": [
         ".emacs.d/init.el"
       ],
@@ -131,6 +137,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage go dependencies",
       "fileMatch": [
         "^requirements/go.txt$"
       ],
@@ -141,6 +148,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage python dependencies",
       "fileMatch": [
         "^requirements/python.txt$"
       ],
@@ -148,10 +156,11 @@
         "(?<depName>.*)==(?<currentValue>.*)"
       ],
       "datasourceTemplate": "pypi",
-      "versioningTemplate": "pep440"
+      "versioningTemplate": "python"
     },
     {
       "customType": "regex",
+      "description": "Manage node dependencies",
       "fileMatch": [
         "^requirements/node.txt$"
       ],
@@ -163,6 +172,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage ruby dependencies",
       "fileMatch": [
         "^requirements/gem.txt$"
       ],
@@ -174,6 +184,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage node verssion",
       "fileMatch": [
         "^.zshrc$",
         "^.envrc$"
@@ -186,6 +197,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage go version",
       "fileMatch": [
         "^.zshrc$",
         "^.envrc$"
@@ -199,6 +211,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage ruby version",
       "fileMatch": [
         "^.zshrc$",
         "^.envrc$"
@@ -211,6 +224,7 @@
     },
     {
       "customType": "regex",
+      "description": "Manage python version",
       "fileMatch": [
         "^.zshrc$",
         "^.envrc$"
