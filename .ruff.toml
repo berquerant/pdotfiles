@@ -32,7 +32,6 @@ exclude = [
   ".coverage",
 ]
 line-length = 120
-target-version = "py312"
 
 [lint.per-file-ignores]
 "__init__.py" = [
