@@ -1127,6 +1127,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :bind
   (("M-s M-s M-e" . eglot)
    :map eglot-mode-map
+   ("C-c p !" . eglot-inlay-hints-mode)
    ("C-x p m r" . eglot-reconnect)
    ("C-x p f" . eglot-format-buffer)
    ("C-x p a" . eglot-code-actions)
@@ -1204,6 +1205,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (("M-s M-s M-l" . lsp)
    :map lsp-mode-map
    ("M-s M-s M-l" . lsp-disconnect)
+   ("C-c p !" . lsp-inlay-hints-mode)
    ("C-c p w" . lsp-workspace-folders-add)
    ("M-s M-s l" . lsp-workspace-restart)
    ("C-c p C-w" . lsp-workspace-shutdown)
