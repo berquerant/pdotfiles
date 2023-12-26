@@ -86,3 +86,23 @@ gfreset() {
     fi
     git fetch && git reset --hard "origin/$1"
 }
+
+gggrep() {
+    if [[ -z "$1" ]] ; then
+        echo "grep multiple repositories"
+        echo "gggrep REPO_REGEX [OPT...] REGEX"
+        return
+    fi
+
+    repo_regex="$1"
+    shift
+    groot="$(ghq root)/"
+
+    ghq list -p | grep -E "$repo_regex" | while read line ; do
+        pushd "$line" > /dev/null
+        sed_expr="s|^${groot}||"
+        repo_path="$(echo $line|sed $sed_expr)"
+        git grep -H "$@" | awk -v r="$repo_path" '{print r""$0}'
+        popd > /dev/null
+    done
+}
