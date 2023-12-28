@@ -8,7 +8,6 @@ fi
 alias reload='source ~/.zshrc'
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
 export PATH="~/.local/bin:$PATH"
-eval "$(direnv hook zsh)"
 
 export ZPLUG_HOME=$(brew --prefix zplug)
 source $ZPLUG_HOME/init.zsh

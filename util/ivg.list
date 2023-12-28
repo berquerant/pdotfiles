@@ -13,3 +13,4 @@ mpv-settings
 json2dot
 makedepdump
 gomodbrowse
+cron2date

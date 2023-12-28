@@ -87,6 +87,35 @@ gfreset() {
     git fetch && git reset --hard "origin/$1"
 }
 
+ggdo() {
+    if [[ -z "$1" ]] ; then
+        echo "run command in multiple repositories"
+        echo "ggdo REPO_REGEX CMD"
+        echo "use bash -c to execute CMD, but when GGDO_RAW is not empty, execute CMD as is"
+        return
+    fi
+
+    repo_regex="$1"
+    shift
+
+    ghq list -p | rg "$repo_regex" | while read line ; do
+        pushd "$line" > /dev/null
+        if [[ -n "$GGDO_RAW" ]] ; then
+            "$@"
+        else
+            bash -c "$@"
+        fi
+        popd > /dev/null
+    done
+}
+
+__gggrep_run() {
+    groot="$(ghq root)/"
+    sed_expr="s|${groot}||"
+    repo_path="$(pwd|sed $sed_expr)"
+    git grep -H "$@" | awk -v r="$repo_path" '{print r""$0}'
+}
+
 gggrep() {
     if [[ -z "$1" ]] ; then
         echo "grep multiple repositories"
@@ -96,13 +125,5 @@ gggrep() {
 
     repo_regex="$1"
     shift
-    groot="$(ghq root)/"
-
-    ghq list -p | grep -E "$repo_regex" | while read line ; do
-        pushd "$line" > /dev/null
-        sed_expr="s|^${groot}||"
-        repo_path="$(echo $line|sed $sed_expr)"
-        git grep -H "$@" | awk -v r="$repo_path" '{print r""$0}'
-        popd > /dev/null
-    done
+    GGDO_RAW=1 ggdo "$repo_regex" __gggrep_run "$@"
 }

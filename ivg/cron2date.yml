@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/cron2date
+branch: main
+locald: repos/cron2date
+lock: locks/cron2date.lock
+install:
+  - make
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/cron2date" /usr/local/bin/cron2date
+  - cron2date -h

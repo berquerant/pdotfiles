@@ -49,3 +49,24 @@ fi
 if type hexyl >/dev/null 2>&1 ; then
     alias od='hexyl'
 fi
+
+export DIRENV_ENABLED=0
+direnv-on() {
+    eval "$(direnv hook zsh)"
+    export DIRENV_ENABLED=1
+}
+
+direnv-off() {
+    unset -f _direnv_hook
+    export DIRENV_ENABLED=0
+}
+
+direnv-toggle() {
+    if [[ "$DIRENV_ENABLED" = 0 ]] ; then
+        direnv-on
+    else
+        direnv-off
+    fi
+}
+
+direnv-on
