@@ -35,7 +35,10 @@ gitattributes: ## generate .gitattributes
 
 git: gitconfig gitattributes ## install git configurations
 
-emacs: emacs-gui emacs-cui ## install emacs
+fonts: ## install fonts
+	@bin/install-fonts.sh
+
+emacs: fonts emacs-gui emacs-cui ## install emacs
 
 emacs-gui: ## install GUI emacs
 	@bin/install-via-git.sh emacs-gui

@@ -15,6 +15,12 @@
 (setq inhibit-default-init t) ; ignore default.el
 (repeat-mode t)
 (setq-default ispell-program-name "aspell")
+(setq default-frame-alist
+      '((width . 180)
+        (height . 60)
+        (top . 0)
+        (left . 0)
+        (font . "-*-Inconsolata-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")))
 
 (use-package minimal-init
   :demand t
