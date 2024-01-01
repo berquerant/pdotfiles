@@ -1114,7 +1114,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                '(typescript-tsx-mode . tsx)))
 
 (use-package eglot
-  :disabled t
   :hook
   (((python-mode
      ruby-mode
@@ -1185,11 +1184,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook
   (((typescript-mode
      typescript-tsx-mode
-     go-mode
-     ruby-mode
-     python-mode
-     c-mode
-     c++-mode
+     ;; go-mode
+     ;; ruby-mode
+     ;; python-mode
+     ;; c-mode
+     ;; c++-mode
      svelte-mode
      rust-mode
      clojure-mode
