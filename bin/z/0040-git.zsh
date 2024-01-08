@@ -9,38 +9,19 @@ alias repos='ghq list -p | peco'
 alias repo='cd $(repos)'
 alias repopath='ghq list | peco | cut -d "/" -f 2,3'
 
-grepo() {
-    if [[ -z "$1" ]] ; then
-        repo && bat $(git ls --full-name | peco)
-    else
-        repo && rg "$@" $(git ls --full-name | peco)
-    fi
-}
-
-ggrepo() {
-    if [[ -z "$1" ]] ; then
-        echo "ggrepo GIT_GREP_OPTIONS"
-        return
-    fi
-    repo && git grep "$@"
-}
-
-gfswitch() {
-    if [[ -z "$1" ]] ; then
-        echo "git switch, forcely"
-        echo "gfswitch BRANCH"
-        return
-    fi
-    git branch -D "$1" && git fetch origin "$1" && git switch "$1"
-}
-
 gfbranch() {
     if [[ -z "$1" ]] ; then
-        echo "git checkout -b, forcely"
+        echo "switch branch if remote branch exists else create branch, forcely"
         echo "gfbranch BRANCH"
         return
     fi
-    git branch -D $1 && git checkout -b $1
+
+    branch="$1"
+    if git branch | grep -q "$branch" ; then
+        git branch -D "$branch"
+    fi
+    git fetch
+    git switch "$branch" || git checkout -b "$branch"
 }
 
 grepopath() {
@@ -126,4 +107,20 @@ gggrep() {
     repo_regex="$1"
     shift
     GGDO_RAW=1 ggdo "$repo_regex" __gggrep_run "$@"
+}
+
+rpeep() {
+    if [[ -z "$1" ]] ; then
+        repo && bat $(git ls --full-name | peco)
+    else
+        repo && rg "$@" $(git ls --full-name | peco)
+    fi
+}
+
+rgrep() {
+    if [[ -z "$1" ]] ; then
+        echo "rgrep GIT_GREP_OPTIONS"
+        return
+    fi
+    repo && git grep "$@"
 }
