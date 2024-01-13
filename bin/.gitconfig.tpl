@@ -45,7 +45,9 @@
   logs = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   search-commit = log -G
   search-commit-patch = log --patch -G
+  search-commit-patch-first = log --pickaxe-regex --patch -S
   search-commit-message = log --grep
+  search-branch = name-rev --refs="refs/heads/*"
   ls = ls-files
   rl = reflog
   root = rev-parse --show-toplevel
@@ -62,3 +64,4 @@
   rename-branch = branch -m
   fix-comment = commit --ammend
   which-branch = branch --contains
+  default-branch = remote show origin | grep "HEAD branch:" | cut -d ":" -f 2 | tr -d " "

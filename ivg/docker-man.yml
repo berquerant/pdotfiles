@@ -5,3 +5,4 @@ lock: locks/docker-man.lock
 install:
   - make
   - docker run --rm docker-man:debian
+  - docker run --rm docker-man:ubuntu

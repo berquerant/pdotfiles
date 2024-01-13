@@ -55,6 +55,7 @@ brew "gnu-time"
 # cask
 cask "google-chrome"
 cask "docker"
+cask "multipass"
 
 # python
 brew "pipenv"
