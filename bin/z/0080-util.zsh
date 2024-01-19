@@ -7,6 +7,10 @@ diskcheck() {
     sudo du -m -x -d "${2:-5}" "${1:-/}" 2> /dev/null | awk '$1 >= 5000 {print $1, length($2), $2}' | sort -n | awk '{print $1, $3}'
 }
 
+if type gsed >/dev/null 2>&1 ; then
+    alias sed='gsed'
+fi
+
 if type bat >/dev/null 2>&1 ; then
     export MANPAGER="sh -c 'col -bx | bat -l man -p'" # colorizing pager for man
     alias bh='bat --plain --language=help' # colorizing help, e.g. rg --help | bh
@@ -68,6 +72,10 @@ if type cheat >/dev/null 2>&1 ; then
     alias c='cheat'
 fi
 
+if [ -x /usr/local/bin/sqlite-csv.sh ] ; then
+    alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
+fi
+
 dman() {
     image=docker-man:debian
     case "$1" in
@@ -82,55 +90,10 @@ dman() {
     "${DOTFILES_ROOT}/bin/docker-rmit.sh" "$image" "$@"
 }
 
-alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
-
 dterraform() {
     "${DOTFILES_ROOT}/bin/docker-rmit.sh" hashicorp/terraform:latest "$@"
 }
 
 hurl() {
-    op="$1"
-    if [ -z "$1" ] ; then
-        cat - <<EOS
-Usage: hurl OP [CURL_OPTS]
-OP:
-  s, status:
-    http code only
-
-  r, response:
-    response headers
-
-  v, verbose:
-    headers
-
-  j, json:
-    info as a json
-
-  h, hjson:
-    response headers as a json
-EOS
-        return 1
-    fi
-
-    shift
-    case "$op" in
-        "s" | "status")
-            curl -s -o /dev/null -w "%{http_code}" "$@"
-            ;;
-        "r" | "response")
-            curl -D - -s -o /dev/null "$@"
-            ;;
-        "v" | "verbose")
-            curl -v -s -o /dev/null "$@"
-            ;;
-        "j" | "json")
-            curl -s -o /dev/null -w '%{json}' "$@"
-            ;;
-        "h" | "hjson")
-            curl -s -o /dev/null -w '%{header_json}' "$@"
-            ;;
-        *)
-            return 1
-            ;;
-    esac
+    "${DOTFILES_ROOT}/bin/hurl.sh" $@
 }
