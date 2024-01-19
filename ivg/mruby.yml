@@ -1,0 +1,7 @@
+# TODO: avoid segfault
+uri: https://github.com/mruby/mruby
+branch: master
+locald: repos/mruby
+lock: locks/mruby
+install:
+  - make

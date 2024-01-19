@@ -30,7 +30,7 @@
   ff = only
 [alias]
   a = add
-  aliases = !git config --list | grep -E "^alias" | cut -d "." -f 2- | sort
+  aliases = !git config --list | grep -E '^alias' | cut -d '.' -f 2- | sort
   b = branch
   c = checkout
   clone-shallow = clone --depth 1
@@ -64,4 +64,4 @@
   rename-branch = branch -m
   fix-comment = commit --ammend
   which-branch = branch --contains
-  default-branch = remote show origin | grep "HEAD branch:" | cut -d ":" -f 2 | tr -d " "
+  default-branch = !git remote show origin | grep -F 'HEAD branch:' | cut -d ':' -f 2 | tr -d ' '

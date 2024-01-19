@@ -36,6 +36,7 @@ brew "libvterm"
 brew "libtool"
 brew "cheat"
 brew "hadolint"
+brew "difftastic"
 
 # GNU tools
 brew "coreutils"

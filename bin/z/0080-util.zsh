@@ -84,6 +84,53 @@ dman() {
 
 alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
 
-dterra() {
+dterraform() {
     "${DOTFILES_ROOT}/bin/docker-rmit.sh" hashicorp/terraform:latest "$@"
+}
+
+hurl() {
+    op="$1"
+    if [ -z "$1" ] ; then
+        cat - <<EOS
+Usage: hurl OP [CURL_OPTS]
+OP:
+  s, status:
+    http code only
+
+  r, response:
+    response headers
+
+  v, verbose:
+    headers
+
+  j, json:
+    info as a json
+
+  h, hjson:
+    response headers as a json
+EOS
+        return 1
+    fi
+
+    shift
+    case "$op" in
+        "s" | "status")
+            curl -s -o /dev/null -w "%{http_code}" "$@"
+            ;;
+        "r" | "response")
+            curl -D - -s -o /dev/null "$@"
+            ;;
+        "v" | "verbose")
+            curl -v -s -o /dev/null "$@"
+            ;;
+        "j" | "json")
+            curl -s -o /dev/null -w '%{json}' "$@"
+            ;;
+        "h" | "hjson")
+            curl -s -o /dev/null -w '%{header_json}' "$@"
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }
