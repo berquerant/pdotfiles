@@ -43,7 +43,7 @@ main() {
         "j" | "json")
             cmd="${cmd} -w %{json}"
             ;;
-        "hj" | "hjson")
+        "h" | "hj" | "hjson")
             cmd="${cmd} -w %{header_json}"
             ;;
         *)
