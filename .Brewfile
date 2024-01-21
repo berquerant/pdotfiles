@@ -52,6 +52,7 @@ brew "pandoc"
 brew "wget"
 brew "unzip"
 brew "gnu-time"
+brew "gnupg"
 
 # cask
 cask "google-chrome"

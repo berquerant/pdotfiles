@@ -30,10 +30,7 @@ clean: ## uninstall dotfiles
 gitconfig: ## generate .gitconfig
 	@bin/install-gitconfig.sh
 
-gitattributes: ## generate .gitattributes
-	@bin/install-gitattributes.sh
-
-git: gitconfig gitattributes ## install git configurations
+git: gitconfig ## install git configurations
 
 fonts: ## install fonts
 	@bin/install-fonts.sh
