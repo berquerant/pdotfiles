@@ -1,9 +1,14 @@
 #!/bin/bash
 
-docker_prune() {
+clean_docker() {
     docker system prune --filter 'until=168h'
     docker volume prune --force
 }
 
+clean_brew() {
+    brew cleanup --prune 7
+}
+
 set -ex
-docker_prune
+clean_brew
+clean_docker
