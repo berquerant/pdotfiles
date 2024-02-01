@@ -79,3 +79,18 @@ fi
 hurl() {
     "${DOTFILES_ROOT}/bin/hurl.sh" $@
 }
+
+jmerge() {
+    if [ $# = 0 ] ; then
+        echo "jmerge FILE [FILE...]"
+        echo "merge json files"
+        return
+    fi
+
+    query='.[0]'
+    for ((i=1;i<$#;i++)); do
+        query="${query}*.[${i}]"
+    done
+
+    jq --slurp ${query} $*
+}
