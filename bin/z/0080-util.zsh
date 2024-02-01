@@ -76,24 +76,6 @@ if [ -x /usr/local/bin/sqlite-csv.sh ] ; then
     alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
 fi
 
-dman() {
-    image=docker-man:debian
-    case "$1" in
-        "d")
-            shift
-            ;;
-        "u")
-            shift
-            image=docker-man:ubuntu
-            ;;
-    esac
-    "${DOTFILES_ROOT}/bin/docker-rmit.sh" "$image" "$@"
-}
-
-dterraform() {
-    "${DOTFILES_ROOT}/bin/docker-rmit.sh" hashicorp/terraform:latest "$@"
-}
-
 hurl() {
     "${DOTFILES_ROOT}/bin/hurl.sh" $@
 }
