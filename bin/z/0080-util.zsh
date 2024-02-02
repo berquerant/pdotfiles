@@ -49,19 +49,14 @@ clean_tmpd() {
     rm -rf "$TMPD" && mkdir -p "$TMPD"
 }
 
-__concat_lower() {
-    echo "$@" | tr " " "\n" | awk '{acc=acc""tolower($0)}END{print acc}'
-}
-
-__join_case() {
-    sep="$1"
-    shift
-    echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | sed "s^ ^${sep}^g"
-}
-
 # e.g. rg -i "$(csg get input json)"
-csg() {
-    echo "($(__concat_lower $@)|$(__join_case "->" $@)|$(__join_case "\\\." $@)|$(__join_case ":" $@)|$(__join_case "::" $@)|$(__join_case "/" $@)|$(__join_case _ $@)|$(__join_case \- $@)|($(__join_case " " $@)))"
+csg(){
+    seed=' |->|>|.|:|/|_|\-'
+    if [ -n "${CSG}" ] ; then
+        seed="${CSG}"
+    fi
+    sep="(${seed})*"
+    echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | sed "s^ ^${sep}^g"
 }
 
 if type gbrowse >/dev/null 2>&1 ; then
