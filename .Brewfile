@@ -37,6 +37,7 @@ brew "libtool"
 brew "cheat"
 brew "hadolint"
 brew "difftastic"
+brew "kind"
 
 # GNU tools
 brew "coreutils"
