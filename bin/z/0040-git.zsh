@@ -94,7 +94,7 @@ __gggrep_run() {
     groot="$(ghq root)/"
     sed_expr="s|${groot}||"
     repo_path="$(pwd|sed $sed_expr)"
-    git grep -H "$@" | awk -v r="$repo_path" '{print r""$0}'
+    git grep -H "$@" | awk -v r="$repo_path" '{print r"/"$0}'
 }
 
 gggrep() {
