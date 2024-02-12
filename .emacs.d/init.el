@@ -1033,9 +1033,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package terraform-mode
   :hook (terraform-mode . terraform-format-on-save-mode))
 
-(use-package zig-mode
-  :mode "\\.zig\\'")
-
 (use-package svelte-mode)
 
 (use-package plantuml-mode
@@ -1168,7 +1165,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (add-to-list 'eglot-server-programs '(ruby-mode . ("solargraph" "stdio")))
   :custom
   (eglot-autoreconnect nil)
-  (eglot-connect-timeout 5)
+  (eglot-connect-timeout 20)
+  (eglot-extend-to-xref t)
   (eglot-send-changes-idle-time 5)
   (eglot-confirm-server-initiated-edits nil))
 
@@ -1194,12 +1192,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
      clojure-mode
      clojurescript-mode
      clojurec-mode
-     zig-mode
      css-mode
      terraform-mode
      html-mode) . lsp-deferred)
-   (lsp-mode . lsp-lens-mode)
-   (zig-mode . flymake-mode))
+   (lsp-mode . lsp-lens-mode))
   :bind
   (("M-s M-s M-l" . lsp)
    :map lsp-mode-map

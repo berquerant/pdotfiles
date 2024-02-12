@@ -149,6 +149,5 @@
  ("with-editor" . "4da109748da0828b79198701eb641d5b724153ce")
  ("xref" . "0dc81218b59e7f199265704d1af37219af86d381")
  ("yaml-mode" . "3fcb36d6039bef57e2a0f6e24c51f623c0bf5fb7")
- ("yasnippet" . "297546f0853a6a51f5b05e954d0c6aea8caa5ec2")
- ("zig-mode" . "a4e1ce7296c11e668487ed9962be358755b9a6fc"))
+ ("yasnippet" . "297546f0853a6a51f5b05e954d0c6aea8caa5ec2"))
 :gamma

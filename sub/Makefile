@@ -3,9 +3,9 @@ TARGET_BULK := bin/install-target-bulk.sh
 IVG_SH := bin/install-via-git.sh
 
 .PHONY: sub
-sub: sub-target rust zig ## install sub dependencies
-sub-update: sub-target-update rust-update zig-update ## update sub dependencies
-sub-retry: sub-target-retry rust-retry zig-retry ## retry to install sub dependencies
+sub: sub-target rust ## install sub dependencies
+sub-update: sub-target-update rust-update ## update sub dependencies
+sub-retry: sub-target-retry rust-retry ## retry to install sub dependencies
 
 sub-target: ## install sub targets
 	cat $(SUB_TARGET_LIST) | $(TARGET_BULK)
@@ -24,12 +24,3 @@ rust-update: ## update rust
 	bin/install-requirements.sh rust
 
 rust-retry: rust ## retry to install rust
-
-zig: ## install zig
-	$(IVG_SH) zls
-
-zig-update: ## update zig
-	$(IVG_SH) zls --update
-
-zig-retry: ## retry to install zig
-	$(IVG_SH) zls --retry

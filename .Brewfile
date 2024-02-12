@@ -83,8 +83,5 @@ tap "hashicorp/tap"
 brew "tfenv"
 brew "hashicorp/tap/terraform-ls"
 
-# zig
-brew "zig"
-
 # plantuml
 brew "plantuml"
