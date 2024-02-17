@@ -18,6 +18,10 @@ OP:
 
   h, hjson:
     response headers as a json
+
+Envs:
+  HURL_DRY:
+    dry run if set
 EOS
 }
 
@@ -52,7 +56,11 @@ main() {
             ;;
     esac
     cmd="${cmd} $*"
-    $cmd
+    if [ -n "$HURL_DRY" ] ; then
+        echo "$cmd"
+    else
+        $cmd
+    fi
 }
 
 main "$@"

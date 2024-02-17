@@ -95,8 +95,8 @@ helm_diff_between_branches() {
     right_sha="$(git rev-parse --short HEAD)"
     helm_build "$target" $HELM_BUILD_OPT | yq "$query_right" > "$right_result"
 
-    left_name="[${left}] ${target} ${query_left}"
-    right_name="[${right}] ${target} ${query_right}"
+    left_name="[${left}] ${left_sha} ${target} ${query_left}"
+    right_name="[${right}] ${right_sha} ${target} ${query_right}"
     diff -u "$left_result" "$right_result" | sed -e "s|${left_result}|${left_name}|" -e "s|${right_result}|${right_name}|"
 
     git switch "$original_branch"
@@ -157,8 +157,8 @@ kustomize_diff_between_branches() {
     right_sha="$(git rev-parse --short HEAD)"
     kustomize_sorted "$target" | yq "$query_right" > "$right_kustomized"
 
-    left_name="[${left}] ${target} ${query_left}"
-    right_name="[${right}] ${target} ${query_right}"
+    left_name="[${left}] ${left_sha} ${target} ${query_left}"
+    right_name="[${right}] ${right_sha} ${target} ${query_right}"
     diff -u "$left_kustomized" "$right_kustomized" | sed -e "s|${left_kustomized}|${left_name}|" -e "s|${right_kustomized}|${right_name}|"
 
     git switch "$original_branch"
