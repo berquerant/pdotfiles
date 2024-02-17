@@ -76,16 +76,17 @@ hurl() {
 }
 
 jmerge() {
-    if [ $# = 0 ] ; then
-        echo "jmerge FILE [FILE...]"
-        echo "merge json files"
-        return
-    fi
+    "${DOTFILES_ROOT}/bin/merge.sh" j $@
+}
 
-    query='.[0]'
-    for ((i=1;i<$#;i++)); do
-        query="${query}*.[${i}]"
-    done
+ymerge() {
+    "${DOTFILES_ROOT}/bin/merge.sh" y $@
+}
 
-    jq --slurp ${query} $*
+jsort() {
+    jq --sort-keys
+}
+
+ysort() {
+    yq --prettyPrint 'sort_keys(..)'
 }
