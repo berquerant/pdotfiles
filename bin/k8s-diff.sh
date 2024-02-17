@@ -5,11 +5,7 @@ sort_yaml() {
 }
 
 helm_sorted() {
-    helm template --generate-name "$@" | sort_yaml
-}
-
-empty_values() {
-    mktemp
+    helm template "$@" | sort_yaml
 }
 
 helm_diff() {
@@ -18,6 +14,8 @@ helm_diff() {
         echo "helm_diff CHART LEFT_VALUES RIGHT_VALUES [QUERY_LEFT] [QUERY_RIGHT]"
         echo "e.g."
         echo "helm_diff datadog/datadog left_values.yml right_values.yml"
+        echo "helm_diff datadog/datadog default right_values.yml"
+        echo "HELM_BUILD_OPT='--version 3.54.2' helm_diff datadog/datadog left_values.yml right_values.yml"
         return
     fi
 
@@ -27,25 +25,45 @@ helm_diff() {
     query_left="${4}"
     query_right="${5:-$4}"
 
-    if [ -z "$left" ] ; then
-        left="$(empty_values)"
+    if [ "$left" = "default" ] ; then
+        left_default=1
+        left="$(mktemp)"
     fi
-    if [ -z "$right" ] ; then
-        right="$(empty_values)"
+    if [ "$right" = "default" ] ; then
+        right_default=1
+        right="$(mktemp)"
     fi
     left_result="$(mktemp)"
     right_result="$(mktemp)"
-    helm_sorted "$target" --values "$left" | yq "$query_left" > "$left_result"
-    helm_sorted "$target" --values "$right" |  yq "$query_right"> "$right_result"
+    helm_sorted --generate-name "$target" --values "$left" $HELM_BUILD_OPT | yq "$query_left" > "$left_result"
+    helm_sorted --generate-name "$target" --values "$right" $HELM_BUILD_OPT |  yq "$query_right" > "$right_result"
+    if [ -n "$left_default" ] ; then
+        left="default"
+    fi
+    if [ -n "$right_default" ] ; then
+        right="default"
+    fi
     left_name="${left} ${query_left}"
     right_name="${right} ${query_right}"
     diff -u "$left_result" "$right_result" | sed -e "s|${left_result}|${left_name}|" -e "s|${right_result}|${right_name}|"
 }
 
+helm_build_prepare() {
+    target="$1"
+    chart_yaml="${target}/Chart.yaml"
+    yq '.dependencies[]' "$chart_yaml" -ojson | jq -c | while read line ; do
+        name="$(echo $line | jq .name -r)"
+        repo="$(echo $line | jq .repository -r)"
+        helm repo add "$name" "$repo"
+    done
+    helm repo update
+    helm dependencies build "$target"
+}
+
 helm_build() {
     target="$1"
-    helm dependencies build "$target"
-    helm_sorted "$target"
+    helm_build_prepare "$target" > /dev/stderr
+    helm_sorted "$@"
 }
 
 helm_diff_between_branches() {
@@ -54,6 +72,7 @@ helm_diff_between_branches() {
         echo "helm_diff_between_branches DIR LEFT_BRANCH RIGHT_BRANCH [QUERY_LEFT] [QUERY_RIGHT]"
         echo "e.g."
         echo "helm_diff_between_branches path/to/chart/dir master changed"
+        echo "HELM_BUILD_OPT='--values path/to/values.yaml' helm_diff_between_branches path/to/chart/dir master changed"
         return
     fi
 
@@ -70,11 +89,11 @@ helm_diff_between_branches() {
 
     git switch "$left"
     left_sha="$(git rev-parse --short HEAD)"
-    helm_build "$target" | yq "$query_left" > "$left_result"
+    helm_build "$target" $HELM_BUILD_OPT | yq "$query_left" > "$left_result"
 
     git switch "$right"
     right_sha="$(git rev-parse --short HEAD)"
-    helm_build "$target" | yq "$query_right" > "$right_result"
+    helm_build "$target" $HELM_BUILD_OPT | yq "$query_right" > "$right_result"
 
     left_name="[${left}] ${target} ${query_left}"
     right_name="[${right}] ${target} ${query_right}"

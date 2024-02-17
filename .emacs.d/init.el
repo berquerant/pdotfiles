@@ -293,6 +293,7 @@ c.f. `format-all-region'."
 (use-package consult
   :demand t
   :init
+  (advice-add #'register-preview :override #'consult-register-window)
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   :config
