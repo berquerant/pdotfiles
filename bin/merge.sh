@@ -4,7 +4,7 @@ __jmerge() {
     if [ $# = 0 ] ; then
         echo "jmerge FILE [FILE...]"
         echo "merge json files"
-        return
+        return 1
     fi
 
     query='.[0]'
@@ -22,7 +22,7 @@ __ymerge() {
     if [ $# = 0 ] ; then
         echo "ymerge FILE [FILE...]"
         echo "merge yaml files"
-        return
+        return 1
     fi
 
     m="$(($# - 1))"
@@ -44,5 +44,9 @@ case "$t" in
         ;;
     j | json)
         __jmerge $@
+        ;;
+    *)
+        echo "unknown command: ${t}"
+        exit 1
         ;;
 esac

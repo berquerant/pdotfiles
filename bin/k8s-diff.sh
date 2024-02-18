@@ -16,7 +16,7 @@ helm_diff() {
         echo "helm_diff datadog/datadog left_values.yml right_values.yml"
         echo "helm_diff datadog/datadog default right_values.yml"
         echo "HELM_BUILD_OPT='--version 3.54.2' helm_diff datadog/datadog left_values.yml right_values.yml"
-        return
+        return 1
     fi
 
     target="$1"
@@ -50,13 +50,6 @@ helm_diff() {
 
 helm_build_prepare() {
     target="$1"
-    chart_yaml="${target}/Chart.yaml"
-    yq '.dependencies[]' "$chart_yaml" -ojson | jq -c | while read line ; do
-        name="$(echo $line | jq .name -r)"
-        repo="$(echo $line | jq .repository -r)"
-        helm repo add "$name" "$repo"
-    done
-    helm repo update
     helm dependencies build "$target"
 }
 
@@ -73,7 +66,7 @@ helm_diff_between_branches() {
         echo "e.g."
         echo "helm_diff_between_branches path/to/chart/dir master changed"
         echo "HELM_BUILD_OPT='--values path/to/values.yaml' helm_diff_between_branches path/to/chart/dir master changed"
-        return
+        return 1
     fi
 
     target="$1"
@@ -112,7 +105,7 @@ kustomize_diff() {
         echo "kustomize_diff LEFT_DIR RIGHT_DIR [QUERY_LEFT] [QUERY_RIGHT]"
         echo "e.g."
         echo "kustomize_diff overlays/env1 overlays/env2 'select(.metadata.name==\"xxx\")'"
-        return
+        return 1
     fi
 
     left="$1"
@@ -135,7 +128,7 @@ kustomize_diff_between_branches() {
         echo "kustomize_diff_between_branches DIR LEFT_BRANCH RIGHT_BRANCH [QUERY_LEFT] [QUERY_RIGHT]"
         echo "e.g."
         echo "kustomize_diff_between_branches overlays/env master new 'select(.metadata.name==\"\xxx)'"
-        return
+        return 1
     fi
 
     target="$1"
@@ -178,5 +171,9 @@ case "$t" in
         ;;
     "kb" | "kbranch" | "kustomize_branches")
         kustomize_diff_between_branches $@
+        ;;
+    *)
+        echo "unknown command: ${t}"
+        exit 1
         ;;
 esac
