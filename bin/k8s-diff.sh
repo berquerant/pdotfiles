@@ -50,7 +50,7 @@ helm_diff() {
 
 helm_build_prepare() {
     target="$1"
-    helm dependency list sentry | grep -v '^$' | awk 'NR>1{print $1,$3}' | while read line ; do
+    helm dependency list --max-col-width 200 "$target" | grep -v '^$' | awk 'NR>1{print $1,$3}' | while read line ; do
         name="$(echo $line|cut -d' ' -f1)"
         repo="$(echo $line|cut -d' ' -f2)"
         helm repo add "$name" "$repo"
