@@ -6,7 +6,6 @@
     ":prConcurrentLimit10",
     ":prHourlyLimitNone",
     ":timezone(Asia/Tokyo)",
-    ":rebaseStalePrs",
     "schedule:nonOfficeHours"
   ],
   "automerge": false,
@@ -15,6 +14,8 @@
     "master"
   ],
   "rangeStrategy": "auto",
+  "internalChecksFilter": "strict",
+  "minimumReleaseAge": "7 days",
   "digest": {
     "addLabels": [
       "digest"
