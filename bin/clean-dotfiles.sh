@@ -45,7 +45,8 @@ done
 message "Remove emacs configurations"
 
 exec_or_dry "rm -f ${EMACSD}/init.el"
-exec_or_dry "rm -f ${EMACSD}/straight-default.el "
+exec_or_dry "rm -f ${EMACSD}/straight-default.el"
+exec_or_dry "rm -f ${EMACSD}/my-straight.json"
 exec_or_dry "rm -rf ${EMACSD}/site-lisp"
 
 message "Remove others"

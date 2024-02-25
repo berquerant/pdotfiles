@@ -1437,6 +1437,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                       ,my-straight-directory))
       (my-package-new-backup target remove-origin))))
 
+(use-package my-straight
+  :straight (my-straight :type built-in)
+  :custom
+  (my-straight-profile-path my-straight-profile)
+  (my-straight-dir-path my-straight-directory)
+  (my-straight-save-path (concat user-emacs-directory "my-straight.json"))
+  :config
+  (defun my-straight-freeze ()
+    (interactive)
+    (straight-freeze-versions)
+    (my-straight-save)))
+
 (use-package shut-up)
 (use-package recentf-ext
   :custom

@@ -267,5 +267,23 @@ Maybe more useful to search from https://www.gnu.org/software/emacs/news/"
                     (add-to-list 'result `(,symbol . ,version)))))
     result))
 
+(defun my-misc--cd (directory)
+  (cd directory)
+  nil)
+
+(defun my-misc-pwd ()
+  (nth 1 (s-split " " (pwd))))
+
+(defun my-misc-shell-command-to-string (command)
+  (s-chomp (shell-command-to-string command)))
+
+(defmacro my-misc-with-cd (directory current &rest body)
+  "Change directory to DIRECTORY, and evaluate BODY."
+  `(progn
+     (my-misc--cd ,directory)
+     (unwind-protect
+         (progn ,@body)
+       (my-misc--cd ,current))))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here
