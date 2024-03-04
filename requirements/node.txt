@@ -5,4 +5,4 @@ typescript-formatter@7.2.2
 typescript-eslint@7.0.2
 typescript-language-server@4.3.3
 ts-node@10.9.2
-renovate@37.212.0
+renovate@37.213.1

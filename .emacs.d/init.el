@@ -1411,6 +1411,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :custom
   (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")
                             ("^DEBUG" . "*routed-debug-log*")
+                            ("^my-straight" . "*my-straight*")
                             ("^my-package" . "*my-package*")))
   :config
   (message-routing-setup))
@@ -1442,12 +1443,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :custom
   (my-straight-profile-path my-straight-profile)
   (my-straight-dir-path my-straight-directory)
-  (my-straight-save-path (concat user-emacs-directory "my-straight.json"))
-  :config
-  (defun my-straight-freeze ()
-    (interactive)
-    (straight-freeze-versions)
-    (my-straight-save)))
+  (my-straight-save-path (concat user-emacs-directory "my-straight.json")))
 
 (use-package shut-up)
 (use-package recentf-ext
