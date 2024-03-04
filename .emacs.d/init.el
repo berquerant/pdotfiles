@@ -1442,8 +1442,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (my-straight :type built-in)
   :custom
   (my-straight-profile-path my-straight-profile)
-  (my-straight-dir-path my-straight-directory)
-  (my-straight-save-path (concat user-emacs-directory "my-straight.json")))
+  (my-straight-dir-path my-straight-directory))
 
 (use-package shut-up)
 (use-package recentf-ext
