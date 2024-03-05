@@ -13,3 +13,4 @@ json2dot
 makedepdump
 gomodbrowse
 cron2date
+grinfo
