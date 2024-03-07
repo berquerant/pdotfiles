@@ -47,18 +47,21 @@ https://github.com/berquerant/grinfo"
   (cl-loop for name in (my-straight-list-packages)
            collect (format "%s/repos/%s" my-straight-dir-path name)))
 
+(defun my-straight-display-profile-command ()
+  (format "%s -worker %d -buffer %d"
+          my-straight-grinfo
+          my-straight-grinfo-worker
+          my-straight-grinfo-buffer))
+
 (defun my-straight-display-profile ()
   "Display installed package git info."
   (interactive)
   (let ((directories (s-join "\n" (my-straight-list-package-directories))))
-    (little-async-start-process (format "%s -worker %d -buffer %d"
-                                        my-straight-grinfo
-                                        my-straight-grinfo-worker
-                                        my-straight-grinfo-buffer)
+    (little-async-start-process (my-straight-display-profile-command)
                                 :process-name "grinfo"
                                 :buffer-name "*my-straight-display-profile*"
                                 :timeout (* 300 1000) ; 300 seconds
                                 :input directories)))
 
 (provide 'my-straight)
-;;; my-straight ends here
+;;; my-straight.el ends here

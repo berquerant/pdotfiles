@@ -95,4 +95,4 @@ Return the path of the backup."
     (my-misc-copy-file src dst)))
 
 (provide 'my-package)
-;;; my-package ends here
+;;; my-package.el ends here

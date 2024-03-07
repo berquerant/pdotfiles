@@ -40,6 +40,20 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]] \
     PROMPT_COMMAND=$TMP_PROMPT_COMMAND
 fi
 
+emacs_batch() {
+    "${DOTFILES_ROOT}/bin/emacs-batch.sh" "$@"
+}
+
+emacs_package() {
+    "${DOTFILES_ROOT}/bin/emacs-package.sh" "$@"
+}
+
+emacs_select_update_package() {
+    emacs_package ls name | peco | while read name ; do
+        emacs_package update "$name"
+    done
+}
+
 # ld: library not found for -lemutls_w
 # libgccjit.so: error: error invoking gcc driver
 export LIBRARY_PATH="${LIBRARY_PATH}:$(brew --prefix gcc)/lib/gcc/current:$(brew --prefix libgccjit)/lib/gcc/current:$(brew --prefix gcc)/lib/gcc/current/gcc/aarch64-apple-darwin23/13"

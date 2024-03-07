@@ -68,59 +68,14 @@ gfreset() {
     git fetch && git reset --hard "origin/$1"
 }
 
-ggdo() {
-    if [[ -z "$1" ]] ; then
-        echo "run command in multiple repositories"
-        echo "ggdo REPO_REGEX CMD"
-        echo "use bash -c to execute CMD, but when GGDO_RAW is not empty, execute CMD as is"
-        return
-    fi
-
-    repo_regex="$1"
-    shift
-
-    ghq list -p | rg "$repo_regex" | while read line ; do
-        pushd "$line" > /dev/null
-        if [[ -n "$GGDO_RAW" ]] ; then
-            "$@"
-        else
-            bash -c "$@"
-        fi
-        popd > /dev/null
-    done
+gi() {
+    "${DOTFILES_ROOT}/bin/git-iter.sh" "$@"
 }
 
-__gggrep_run() {
-    groot="$(ghq root)/"
-    sed_expr="s|${groot}||"
-    repo_path="$(pwd|sed $sed_expr)"
-    git grep -H "$@" | awk -v r="$repo_path" '{print r"/"$0}'
-}
-
-gggrep() {
+gpeep() {
     if [[ -z "$1" ]] ; then
-        echo "grep multiple repositories"
-        echo "gggrep REPO_REGEX [OPT...] REGEX"
-        return
-    fi
-
-    repo_regex="$1"
-    shift
-    GGDO_RAW=1 ggdo "$repo_regex" __gggrep_run "$@"
-}
-
-rpeep() {
-    if [[ -z "$1" ]] ; then
-        repo && bat $(git ls --full-name | peco)
+        repo && cat $(git ls --full-name | peco)
     else
         repo && rg "$@" $(git ls --full-name | peco)
     fi
-}
-
-rgrep() {
-    if [[ -z "$1" ]] ; then
-        echo "rgrep GIT_GREP_OPTIONS"
-        return
-    fi
-    repo && git grep "$@"
 }

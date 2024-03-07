@@ -40,6 +40,8 @@
   (interactive)
   (my--revert-buffer))
 
+(defalias 'binary-mode 'hexl-mode)
+
 (bind-keys :map global-map
            ([?\¥] . [?\\])
            ([?\C-¥] . [?\C-\\])

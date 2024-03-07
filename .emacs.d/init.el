@@ -1444,6 +1444,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (my-straight-profile-path my-straight-profile)
   (my-straight-dir-path my-straight-directory))
 
+(use-package my-external
+  :straight (my-external :type built-in))
+
 (use-package shut-up)
 (use-package recentf-ext
   :custom
