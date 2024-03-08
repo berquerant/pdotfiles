@@ -24,7 +24,7 @@ source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 export EMACSD="$HOME/.emacs.d"
 export TMPD="$HOME/tmp"
 
-export GO_VERSION=1.22.0
+export GO_VERSION=1.22.1
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
