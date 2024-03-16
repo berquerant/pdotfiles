@@ -32,8 +32,8 @@ update_package() {
         echo "no package specified"
         return 1
     fi
-    emacs_batch --eval "(my-external-straight-update-package \"${pkg}\")" &&\
-        emacs_batch --eval '(my-external-straight-freeze)'
+    __batch --eval "(my-external-straight-update-package \"${pkg}\")" &&\
+        __batch --eval '(my-external-straight-freeze)'
 }
 
 usage() {
