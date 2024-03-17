@@ -28,7 +28,7 @@
   :group 'my-openai-chat-web)
 
 (defun my-openai-chat-web--command ()
-  (format "%s chat --chat_model gpt-3.5-turbo --show_history"
+  (format "%s chat --chat_model gpt-3.5-turbo --language Japanese"
           my-openai-chat-web-command))
 
 (defun my-openai-chat-web-start (txt)

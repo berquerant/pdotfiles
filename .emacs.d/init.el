@@ -1188,6 +1188,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
      ;; python-mode
      ;; c-mode
      ;; c++-mode
+     php-mode
      svelte-mode
      rust-mode
      clojure-mode
@@ -1220,7 +1221,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-trace nil)
   (lsp-restart 'ignore)
   (lsp-idle-delay 0.7)
-  (lsp-file-watch-threshold 20)
+  (lsp-file-watch-threshold 50)
   (lsp-enable-snippet t)
   (lsp-enable-xref t)
   (lsp-enable-indentation nil)
@@ -1244,15 +1245,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (lsp-rust-analyzer-display-reborrow-hints t)
   (lsp-terraform-enable-logging nil)
   :config
-  ;; use solargprah
-  ;; (cl-loop for x in '(rubocop-ls
-  ;;                     steep-ls
-  ;;                     ruby-syntax-tree-ls
-  ;;                     typeprof-ls
-  ;;                     ruby-lsp-ls
-  ;;                     sorbet-ls
-  ;;                     semgrep-ls)
-  ;;          do (add-to-list 'lsp-disabled-clients x))
   (lsp-register-custom-settings
    '(("gopls.hints" ((assignVariableTypes . t)
                      (compositeLiteralFields . t)

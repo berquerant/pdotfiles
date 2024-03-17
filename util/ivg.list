@@ -14,3 +14,4 @@ makedepdump
 gomodbrowse
 cron2date
 grinfo
+zetasqlite

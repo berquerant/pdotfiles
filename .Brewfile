@@ -85,3 +85,6 @@ brew "hashicorp/tap/terraform-ls"
 
 # plantuml
 brew "plantuml"
+
+# php
+brew "composer"
