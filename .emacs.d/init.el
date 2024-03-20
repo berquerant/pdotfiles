@@ -1404,7 +1404,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")
                             ("^DEBUG" . "*routed-debug-log*")
                             ("^my-straight" . "*my-straight*")
-                            ("^my-package" . "*my-package*")))
+                            ("^my-package" . "*my-package*")
+                            ("^my-macro-advice-add-debug" . "*my-macro-advice-add-debug*")))
   :config
   (message-routing-setup))
 

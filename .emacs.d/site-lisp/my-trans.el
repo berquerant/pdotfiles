@@ -36,7 +36,7 @@
 (defun my-trans-trans (src dest txt)
   "Translate TXT (as lang SRC) into lang DEST."
   (my-trans--insert-output-buffer (format "[%s]\n%s\n[%s]\n" src txt dest))
-  (little-async-start-process (format "trans -b -s %s -t %s" src dest)
+  (little-async-start-process `("trans" "-b" "-s" ,src "-t" ,dest)
                               :input txt
                               :process-name my-trans-process-name
                               :buffer-name my-trans-output-buffer-name

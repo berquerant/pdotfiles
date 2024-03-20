@@ -22,7 +22,7 @@
 https://github.com/berquerant/grinfo"
   :type 'string)
 
-(defcustom my-straight-grinfo-worker 4
+(defcustom my-straight-grinfo-worker 8
   "grinfo worker num."
   :type 'number)
 
@@ -48,10 +48,11 @@ https://github.com/berquerant/grinfo"
            collect (format "%s/repos/%s" my-straight-dir-path name)))
 
 (defun my-straight-display-profile-command ()
-  (format "%s -worker %d -buffer %d"
-          my-straight-grinfo
-          my-straight-grinfo-worker
-          my-straight-grinfo-buffer))
+  `(,my-straight-grinfo
+    "-worker"
+    ,(number-to-string my-straight-grinfo-worker)
+    "-buffer"
+    ,(number-to-string my-straight-grinfo-buffer)))
 
 (defun my-straight-display-profile ()
   "Display installed package git info."
@@ -60,6 +61,7 @@ https://github.com/berquerant/grinfo"
     (little-async-start-process (my-straight-display-profile-command)
                                 :process-name "grinfo"
                                 :buffer-name "*my-straight-display-profile*"
+                                :stderr "*my-straight-display-profile-err*"
                                 :timeout (* 300 1000) ; 300 seconds
                                 :input directories)))
 

@@ -5,6 +5,8 @@
 (require 's)
 (require 'my-time)
 (require 'my-misc)
+(require 'my-path)
+(require 'my-proc)
 
 (defgroup my-package nil
   "My package management."
@@ -62,9 +64,9 @@ Return the path of the backup."
   (message (format "my-package: %s" (apply 'format fmt args))))
 
 (defun my-package--call-process (program &rest args)
-  "`my-misc-call-process' with PROGRAM and `my-package-dryrun'."
+  "`my-proc-call-process' with PROGRAM and `my-package-dryrun'."
   (my-package--message "%s %s" program (s-join " " args))
-  (apply 'my-misc-call-process program my-package-dryrun args))
+  (apply 'my-proc-call-process program my-package-dryrun args))
 
 (defun my-package--ensured (path)
   "mkdir -p PATH."
@@ -86,13 +88,13 @@ Return the path of the backup."
   "echo -n > PATH."
   (my-package--message "clear %s" path)
   (unless my-package-dryrun
-    (my-misc-clear-file path)))
+    (my-path-clear-file path)))
 
 (defun my-package--copy-file-by-redirect (src dst)
   "cat SRC > DST."
   (my-package--message "copy %s into %s" src dst)
   (unless my-package-dryrun
-    (my-misc-copy-file src dst)))
+    (my-path-copy-file src dst)))
 
 (provide 'my-package)
 ;;; my-package.el ends here

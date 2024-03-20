@@ -17,19 +17,28 @@
   :type 'number
   :group 'my-openai-chat-web)
 
-(defcustom my-openai-chat-web-buffer-template "*openai-web-chat-%d*"
+(defcustom my-openai-chat-web-buffer-template "*openai-chat-web-%d*"
   "Buffer name template."
   :type 'string
   :group 'my-openai-chat-web)
 
-(defcustom my-openai-chat-web-buffer-regex "\\*openai-web-chat-[0-9]+\\*"
+(defcustom my-openai-chat-web-buffer-regex "\\*openai-chat-web-[0-9]+\\*"
   "Buffer name regex."
   :type 'string
   :group 'my-openai-chat-web)
 
+(defcustom my-openai-chat-web-err-buffer "*openai-chat-web-err*"
+  "Buffer name for error."
+  :type 'string
+  :group 'my-openai-chat-web)
+
 (defun my-openai-chat-web--command ()
-  (format "%s chat --chat_model gpt-3.5-turbo --language Japanese"
-          my-openai-chat-web-command))
+  `(,my-openai-chat-web-command
+    "chat"
+    "--chat_model"
+    "gpt-3.5-turbo"
+    "--language"
+    "Japanese"))
 
 (defun my-openai-chat-web-start (txt)
   "Send whole buffer or region to `my-openai-chat-web-command'."
@@ -40,6 +49,7 @@
   (thread-buffer-chat-start (my-openai-chat-web--command)
                             txt
                             :timeout my-openai-chat-web-timeout
+                            :stderr my-openai-chat-web-err-buffer
                             :buffer-template my-openai-chat-web-buffer-template
                             :buffer-regex my-openai-chat-web-buffer-regex))
 

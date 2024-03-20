@@ -6,7 +6,6 @@
 
 (require 's)
 (require 'cl-lib)
-(require 'little-async)
 
 (defgroup my-misc nil
   "My miscellaneous utilities."
@@ -15,25 +14,6 @@
 (defun my-misc--matches-only-spaces (s)
   "Is S the empty string or contain spaces only?"
   (or (s-equals? s "") (s-matches? "^\s *$" s)))
-
-(defvar my-misc--command-repeated-count 0
-  "Counter of repeated command.")
-
-(defun my-misc--command-repeated? ()
-  "Return t if command is repeated."
-  (eq last-command this-command))
-
-(defun my-misc-command-repeated-count ()
-  "Return count of repeated command."
-  my-misc--command-repeated-count)
-
-(defun my-misc--command-repeated-hook ()
-  "A hook to control `my-misc--command-repeated-count'."
-  (setq my-misc--command-repeated-count
-        (if (my-misc--command-repeated?)
-            (+ my-misc--command-repeated-count 1)
-          0)))
-(add-hook 'pre-command-hook 'my-misc--command-repeated-hook)
 
 ;;;###autoload
 (defun my-misc-eval-last-sexp-and-insert ()
@@ -59,31 +39,6 @@
   "Read sexp before point, output `macroexpand-all`-ed result in pretty format."
   (interactive)
   (pp (macroexpand-all (elisp--preceding-sexp))))
-
-(defun my-misc--current-path (cut)
-  (let ((p (buffer-file-name)))
-    (cond ((not p) (message "Not visiting file.") nil)
-          ((or (not cut) (eql cut 0)) p)
-          (t (let ((ss (s-split "/" p)))
-               (s-join "/"
-                       (nthcdr (if (>= cut 0) (+ cut 1)
-                                 (+ (length ss) cut))
-                               (s-split "/" p))))))))
-
-;;;###autoload
-(defun my-misc-current-path (cut)
-  "Store current buffer file path to kill ring.
-If CUT, trim CUT parent directories.
-e.g. path is /a/b/c and CUT is 1 then stores b/c
-  -1 then stores c
-  -2 then stores b/c"
-  (interactive (list (read-string (format "Cut index (%s): " (buffer-file-name) nil))))
-  (let ((p (my-misc--current-path
-            (if cut (string-to-number cut)
-              nil))))
-    (when p
-      (message "Stored: %s" p)
-      (kill-new p))))
 
 (defcustom my-misc-other-window-prediates nil
   "List of functions: window to bool.
@@ -157,77 +112,6 @@ When a predicate is called, selected window will be the window of the argument."
   (interactive)
   (my-misc--delete-other-windows (or window (get-buffer-window))))
 
-(defconst my-misc-git-browse-buffer-name "*git-browse*"
-  "Buffer to git browse output.")
-
-(defconst my-misc-gomod-browse-buffer-name "*gomod-browse*"
-  "Buffer to gomod browse output.")
-
-(defun my-misc--git-browse (&optional phases)
-  "Open the current file committed to git in browser.
-Requires https://github.com/berquerant/gbrowse"
-    (let* ((path (file-name-nondirectory (buffer-file-name)))
-           (linum (line-number-at-pos))
-           (location (format "%s:%s" path linum))
-           (phase (if phases (format "-phase %s" (s-join "," phases))
-                    ""))
-           (args `("gbrowse" ,phase ,location)))
-      (little-async-start-process (format "gomodbrowse %s" location)
-                                  :process-name "gomod-browse"
-                                  :buffer-name my-misc-gomod-browse-buffer-name)
-      (little-async-start-process (s-join " " args)
-                                  :process-name "git-browse"
-                                  :buffer-name my-misc-git-browse-buffer-name)))
-
-;;;###autoload
-(defun my-misc-git-browse (arg)
-  "Open the current file committed to git in browser.
-
-phases:
-
-C-u C-u : default_branch
-C-u     : tag,branch
-(nil)   : (empty)
-
-Requires https://github.com/berquerant/gbrowse"
-  (interactive "p")
-  (my-misc--git-browse (case arg
-                         (16 '("default_branch"))
-                         (4 '("tag" "branch"))
-                         (t nil))))
-
-(defconst my-misc-call-process-buffer "*my-misc-call-process*"
-  "Where `my-misc-call-process' write output.")
-
-(defun my-misc-call-process--insert-buffer (msg)
-  (with-current-buffer (get-buffer-create my-misc-call-process-buffer)
-    (goto-char (point-max))
-    (insert msg)))
-
-;;;###autoload
-(defun my-misc-call-process (program &optional dry &rest args)
-  "Call PROGRAM synchronously in separate process."
-  (my-misc-call-process--insert-buffer
-   (if dry (format "my-misc-call-process:dry:%s %s\n" program (s-join " " args))
-     (format "my-misc-call-process:%s %s=> %d\n"
-             program
-             (s-join " " args)
-             (apply 'call-process program nil my-misc-call-process-buffer nil args))))
-  nil)
-
-;;;###autoload
-(defun my-misc-copy-file (src dst)
-  "Copy SRC to DST."
-  (with-temp-buffer
-    (insert-file-contents src)
-    (mm-write-region (point-min) (point-max) dst)))
-
-;;;###autoload
-(defun my-misc-clear-file (path)
-  "Clear PATH."
-  (when (file-writable-p path)
-    (with-temp-file path)))
-
 (defun my-misc-approx-collect-symbols (buffer-or-name)
   "Experimental: Collect symbols in the BUFFER-OR-NAME."
   (let (symbols)
@@ -266,24 +150,6 @@ Maybe more useful to search from https://www.gnu.org/software/emacs/news/"
                   (when version
                     (add-to-list 'result `(,symbol . ,version)))))
     result))
-
-(defun my-misc--cd (directory)
-  (cd directory)
-  nil)
-
-(defun my-misc-pwd ()
-  (nth 1 (s-split " " (pwd))))
-
-(defun my-misc-shell-command-to-string (command)
-  (s-chomp (shell-command-to-string command)))
-
-(defmacro my-misc-with-cd (directory current &rest body)
-  "Change directory to DIRECTORY, and evaluate BODY."
-  `(progn
-     (my-misc--cd ,directory)
-     (unwind-protect
-         (progn ,@body)
-       (my-misc--cd ,current))))
 
 (provide 'my-misc)
 ;;; my-misc.el ends here

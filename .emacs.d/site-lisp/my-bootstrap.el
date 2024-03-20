@@ -6,9 +6,6 @@
 ;;
 ;; - Fundamental settings
 ;; - Load my local packages
-;;   - my-macro
-;;   - my-misc
-;;   - my-sticky-buffer-mode
 
 ;;; Code:
 
@@ -69,6 +66,9 @@
            ("M-z" . repeat)
            ("M-s q" . text-scale-adjust))
 
+(use-package my-uuid
+  :straight (my-uuid :type built-in))
+
 (use-package my-macro
   :demand t
   :straight (my-macro :type built-in)
@@ -128,21 +128,32 @@
   (setq special-display-function 'popwin:special-display-popup-window)
   (setq display-buffer-function 'popwin:display-buffer))
 
+(use-package my-path
+  :straight (my-path :type built-in)
+  :bind
+  ("M-s p p" . my-path-current-path))
+
+(use-package my-proc
+  :straight (my-proc :type built-in)
+  :commands (my-proc-call-process))
+
+(use-package my-git-browse
+  :straight (my-git-browse :type built-in)
+  :bind
+  ("M-s 4" . my-git-browse-git-browse))
+
 (use-package my-misc
   :straight (my-misc :type built-in)
   :commands (my-misc-delete-window-predicates-add
-             my-misc-other-window-predicates-add
-             my-misc-call-process)
+             my-misc-other-window-predicates-add)
   :bind
   ("C-t" . my-misc-other-window)
   ("C-M-t" . my-misc-other-window-reverse)
   ("C-x 1" . my-misc-delete-other-windows)
-  ("M-s p p" . my-misc-current-path)
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
   ("C-x C-M-e" . my-misc-eval-last-sexp-and-insert)
-  ("C-x C-x" . my-misc-exchange-point-and-mark)
-  ("M-s 4" . my-misc-git-browse))
+  ("C-x C-x" . my-misc-exchange-point-and-mark))
 
 (use-package my-sticky-buffer-mode
   :straight (my-sticky-buffer-mode :type built-in)
@@ -200,6 +211,11 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
 
 (use-package my-time
   :straight (my-time :type built-in))
+
+(use-package my-command-repeated
+  :straight (my-command-repeated :type built-in)
+  :config
+  (my-command-repeated-setup))
 
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.
