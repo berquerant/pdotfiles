@@ -36,6 +36,10 @@ update_package() {
         __batch --eval '(my-external-straight-freeze)'
 }
 
+check_all() {
+    __batch --eval '(my-exrernal-straight-check-all)'
+}
+
 usage() {
     name="${0##*/}"
     cat - <<EOS
@@ -59,6 +63,9 @@ Usage
 
   ${name} u|up|update PACKAGE
       Update package.
+
+  ${name} c|check
+      Rebuild any packages that have been modified.
 EOS
 }
 
@@ -96,6 +103,9 @@ main() {
             ;;
         "u" | "up" | "update")
             update_package "$@"
+            ;;
+        "c" | "check")
+            check_all
             ;;
         *)
             usage

@@ -20,7 +20,11 @@
   (straight-rebuild-package pkg))
 
 (defun my-external-straight-freeze ()
+  (straight-check-all)
   (straight-freeze-versions))
+
+(defun my-exrernal-straight-check-all ()
+  (straight-check-all))
 
 (provide 'my-external)
 ;;; my-external.el ends here
