@@ -40,6 +40,34 @@ check_all() {
     __batch --eval '(my-exrernal-straight-check-all)'
 }
 
+list_dependencies() {
+    __batch --eval '(my-external-straight-dependencies)'
+}
+
+list_dependents() {
+    __batch --eval '(my-external-straight-dependents)'
+}
+
+__render_deps() {
+    tmpfile="$(mktemp).svg"
+    jq 'to_entries[]|select(.value != null)|[.key, (.value | if type == "object" then keys else . end | flatten | unique[])] | @csv' -r |\
+        tr -d '"' |\
+        awk -F "," '{
+split($0, xs, ",");
+from = xs[1];
+for (i = 2; i <= length(xs); i++)
+  printf("{\"src\":{\"id\":\"%s\"},\"dst\":{\"id\":\"%s\"}}\n", from, xs[i])}' |\
+        json2dot -o "$tmpfile" && open "$tmpfile"
+}
+
+render_dependencies() {
+    list_dependencies | __render_deps
+}
+
+render_dependents() {
+    list_dependents | __render_deps
+}
+
 usage() {
     name="${0##*/}"
     cat - <<EOS
@@ -52,6 +80,9 @@ Usage
 
     d|dir|directories
       List package directories.
+
+    p|dep|dependencies
+      List package dependencies.
 
   ${name} d|desc|describe ...
     a|all
@@ -66,6 +97,13 @@ Usage
 
   ${name} c|check
       Rebuild any packages that have been modified.
+
+  ${name} r|render
+    d|dep|dependencies
+      Render dependencies graph.
+
+    q|det|dependents
+      Render dependents graph.
 EOS
 }
 
@@ -82,6 +120,12 @@ main() {
                     ;;
                 "d" | "dir" | "directories")
                     list_directories
+                    ;;
+                "p" | "dep" | "dependencies")
+                    list_dependencies
+                    ;;
+                "q" | "det" | "dependents")
+                    list_dependents
                     ;;
                 *)
                     usage
@@ -106,6 +150,22 @@ main() {
             ;;
         "c" | "check")
             check_all
+            ;;
+        "r" | "render")
+            cmd="$1"
+            shift
+            case "$cmd" in
+                "d" | "dep" | "dependencies")
+                    render_dependencies
+                    ;;
+                "q" | "det" | "dependents")
+                    render_dependents
+                    ;;
+                *)
+                    usage
+                    return 1
+                    ;;
+            esac
             ;;
         *)
             usage

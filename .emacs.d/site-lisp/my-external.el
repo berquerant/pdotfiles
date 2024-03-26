@@ -7,6 +7,18 @@
   "Write TEXT to stdout."
   (append-to-file text nil "/dev/stdout"))
 
+(defun my-external-straight-dependencies ()
+  (let ((h (make-hash-table)))
+    (cl-loop for name in (my-straight-list-packages)
+             do (puthash name (straight-dependencies name) h))
+    (my-external-write (json-encode h))))
+
+(defun my-external-straight-dependents ()
+  (let ((h (make-hash-table)))
+    (cl-loop for name in (my-straight-list-packages)
+             do (puthash name (straight-dependents name) h))
+    (my-external-write (json-encode h))))
+
 (defun my-external-straight-list-packages ()
   (cl-loop for name in (my-straight-list-packages)
            do (my-external-write (format "%s\n" name))))
