@@ -55,7 +55,7 @@
  ("external-completion" . "0c660850b272d9f1f01fabd9d17bd22dfa9a0d41")
  ("ez-query-replace" . "2b68472f4007a73908c3b242e83ac5a7587967ff")
  ("f.el" . "1e7020dc0d4c52d3da9bd610d431cab13aa02d8c")
- ("flycheck" . "79d20bf37ad90086c362dfcd8254bc94f66ed243")
+ ("flycheck" . "bf11b2a3eb2f9dc0eb07cc8fb6b5be606e6a698a")
  ("flycheck-golangci-lint" . "9def093e416e9a6ddd3cae8590dbb7ff6314925a")
  ("flycheck-haskell" . "50425a8b96fea84ea15940a4a07b184e43bb8e7a")
  ("flycheck-popup-tip" . "ef86aad907f27ca076859d8d9416f4f7727619c6")
