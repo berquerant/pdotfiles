@@ -48,3 +48,5 @@ linters:
     - exhaustruct
     - nonamedreturns
     - wrapcheck
+    - tagliatelle
+    - varnamelen
