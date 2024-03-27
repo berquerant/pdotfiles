@@ -51,6 +51,9 @@ update-emacs-gui: ## update GUI emacs
 update-emacs-cui: ## update CUI emacs
 	@bin/install-via-git.sh emacs-cui --update
 
+emacs-check-packages: ## update local package repos
+	@bin/emacs-package.sh check
+
 install: install-via-git sub util ## install tools
 update: install-via-git brew-update sub-update util-update ## update except emacs
 retry: install-via-git sub-retry util-retry ## retry to install tools
@@ -75,3 +78,5 @@ brew-update: ## update brew packages
 
 renovate.json: renovate.yml ## generate renovate.json
 	yq -ojson $< > $@
+
+cycle: install-via-git brew-update sub util emacs-check-packages

@@ -18,3 +18,7 @@ helm_diff() {
 helm_branch() {
     "${DOTFILES_ROOT}/bin/k8s-diff.sh" hb $@
 }
+
+kgetall() {
+    kubectl get "$(kubectl api-resources --namespaced=true --verbs=list --output=name | xargs | tr ' ' ',')" $@
+}

@@ -17,7 +17,7 @@ sub-target-retry: ## retry to install sub targets
 	cat $(SUB_TARGET_LIST) | $(TARGET_BULK) --retry
 
 rust: ## install rust
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 	bin/install-requirements.sh rust
 
 rust-update: ## update rust
