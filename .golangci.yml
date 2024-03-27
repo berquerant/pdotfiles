@@ -1,11 +1,11 @@
 run:
   concurrency: 4
-  timeout: 10s
-  skip-dirs-use-default: true
+  timeout: 30s
   allow-parallel-runners: true
   tests: false
 
 issues:
+  max-issues-per-linter: 10
   exclude-dirs:
     - tmp/
   exclude-files:
@@ -13,8 +13,6 @@ issues:
     - ".*\\.pb\\.go$"
 
 linter-settings:
-  govet:
-    check-shadowing: true
   godox:
     keywords:
       - NOTE
@@ -27,21 +25,11 @@ linter-settings:
 linters:
   enable-all: true
   disable:
-    - interfacer
-    - scopelint
-    - golint
-    - maligned
     - wsl
     - nlreturn
     - gomnd
     - gofumpt
     - ireturn
-    - exhaustivestruct
-    - nosnakecase
-    - varcheck
-    - deadcode
-    - ifshort
-    - structcheck
     - wastedassign
     - rowserrcheck
     - depguard
@@ -50,3 +38,16 @@ linters:
     - wrapcheck
     - tagliatelle
     - varnamelen
+    - gosmopolitan
+    - godot
+    # deprecated
+    - deadcode
+    - exhaustivestruct
+    - golint
+    - ifshort
+    - interfacer
+    - maligned
+    - nosnakecase
+    - scopelint
+    - structcheck
+    - varcheck

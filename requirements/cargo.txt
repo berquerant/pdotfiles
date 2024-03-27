@@ -10,3 +10,4 @@ evcxr_repl
 cargo-binutils
 cargo-make
 cargo-audit
+cargo-deny
