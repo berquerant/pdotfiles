@@ -41,6 +41,8 @@ linters:
     - gosmopolitan
     - godot
     - perfsprint
+    - tagalign
+    - forbidigo
     # deprecated
     - deadcode
     - exhaustivestruct
