@@ -33,6 +33,7 @@ dotfiles=(
     .golangci.yml
     .aspell.conf
     .rustfmt.toml
+    .npmrc
 )
 
 message "Remove dotfiles on home directory"

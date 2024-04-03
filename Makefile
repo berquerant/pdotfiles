@@ -79,4 +79,4 @@ brew-update: ## update brew packages
 renovate.json: renovate.yml ## generate renovate.json
 	yq -ojson $< > $@
 
-cycle: install-via-git brew-update sub util emacs-check-packages
+cycle: git install-via-git brew-update sub util emacs-check-packages

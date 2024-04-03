@@ -31,6 +31,7 @@ dotfiles=(
     .golangci.yml
     .aspell.conf
     .rustfmt.toml
+    .npmrc
 )
 
 message "Install dotfiles on home directory"
