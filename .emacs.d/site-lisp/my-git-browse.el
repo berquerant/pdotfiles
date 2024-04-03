@@ -24,11 +24,13 @@ Requires https://github.com/berquerant/gbrowse"
            (linum (line-number-at-pos))
            (location (format "%s:%s" path linum))
            (phase (if phases (format "-phase %s" (s-join "," phases))
-                    "")))
+                    ""))
+           (gbrowse-args (if (s-blank? phase) `("gbrowse" ,location)
+                           `("gbrowse" ,phase ,location))))
       (little-async-start-process `("gomodbrowse" ,location)
                                   :process-name "gomod-browse"
                                   :buffer-name my-git-browse-gomod-browse-buffer-name)
-      (little-async-start-process `("gbrowse" ,phase ,location)
+      (little-async-start-process gbrowse-args
                                   :process-name "git-browse"
                                   :buffer-name my-git-browse-git-browse-buffer-name)))
 
