@@ -2,6 +2,7 @@ help: usage
 
 include sub/Makefile
 include util/Makefile
+include additional/Makefile
 
 dependencies: ## generate depndency graph
 	bin/make-dependencies-graph.sh
