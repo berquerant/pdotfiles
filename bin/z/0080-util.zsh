@@ -90,3 +90,7 @@ jsort() {
 ysort() {
     yq --prettyPrint 'sort_keys(..)'
 }
+
+edot() {
+    "${DOTFILES_ROOT}/bin/dot.sh" $@
+}

@@ -81,3 +81,17 @@ ensure_cd() {
     mkdir -p "$1"
     cd "$1"
 }
+
+# remove extension
+#
+# $1 : required
+rmext() {
+    echo "${1%.*}"
+}
+
+# get extension
+#
+# $1 : required
+getext() {
+    echo "${1##*.}"
+}
