@@ -1,3 +1,4 @@
+#!/bin/bash
 # commmon functions
 
 # translate color name into a number for tput.

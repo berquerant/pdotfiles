@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 MPV_SETTINGS_ZSH="${DOTFILES_ROOT}/ivg/repos/mpv-settings/mpv.zsh"
 
 __mpv_installed() {

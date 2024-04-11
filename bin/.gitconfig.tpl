@@ -6,7 +6,7 @@
 [grep]
   lineNumber = true
   extendedRegexp = true
-  threads = 2
+  threads = 4
 [color]
   ui = auto
 [diff]
@@ -22,6 +22,7 @@
   quotepath = false
   autocrlf = input
   safecrlf = false
+  commentChar = ";"
 [log]
   abbrevCommit = true
 [fetch]
@@ -40,6 +41,7 @@
   dt = difftool
   dw = diff --color-words
   merged = branch --merged
+  force-push = push --force-with-lease --force-if-includes
   g = grep --heading
   l = log
   logs = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative

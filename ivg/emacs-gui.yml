@@ -37,9 +37,12 @@ install:
   - find . -name "*.elc" -type f -delete
   - rm -rf "${EMACSD}/eln-cache"
   - make distclean
+  - make extraclean
+  - git clean -fdx
   - ./autogen.sh
   # ignore gdk/gdkx.h by --without-x-toolkit
-  - ./configure --with-native-compilation --without-xwidgets --without-webp --without-sound --without-pop --with-gif=ifavailable --with-tiff=ifavailable --with-xpm=ifavailable --without-x --without-x-toolkit || echo "bad configure"
+  # without-jpeg : image.c:8492:11: fatal error: 'jpeglib.h' file not found
+  - ./configure --with-native-compilation --without-xwidgets --without-jpeg --without-webp --without-sound --without-pop --with-gif=ifavailable --with-tiff=ifavailable --with-xpm=ifavailable --without-x --without-x-toolkit || echo "bad configure"
   - make bootstrap
   - make -j"$_IVG_CONCURRENTCY"
   - make install
