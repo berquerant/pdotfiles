@@ -84,6 +84,7 @@
  ("lsp-mode" . "13f400b4f108b6286089764b3efad082c67f72ed")
  ("lsp-treemacs" . "e54e74deb8150964e3c3024e1ec14295a34e2a3b")
  ("lsp-ui" . "bc58c6664577d1d79060c6b32b7ad20e70ee19d0")
+ ("lua-mode" . "d074e4134b1beae9ed4c9b512af741ca0d852ba3")
  ("magit" . "65ecb9c5fc7586a1c527b60d180a97ea230da99f")
  ("map" . "361f23dd3c6ae6788685471b9fb4a70e7a9351b6")
  ("marginalia" . "c1365bf0c7b5d32e7531fa8f1a9a3b64a155cec0")

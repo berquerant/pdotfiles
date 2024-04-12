@@ -1055,6 +1055,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (plantuml-default-exec-mode 'executable)
   (plantuml-executable-path "plantuml"))
 
+(use-package lua-mode)
+
 ;; syntax checkers
 (use-package flymake-diagnostic-at-point
   :after flymake
