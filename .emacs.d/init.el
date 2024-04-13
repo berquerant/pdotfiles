@@ -842,11 +842,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-golangci-lint-deadline nil))
 
 (use-package go-playground
+  :init
+  (defconst my-go-playground-sh
+    (format "%s/bin/go-playground.sh"
+            (my-getenv "DOTFILES_ROOT")))
+  :bind
+  (:map go-playground-mode-map
+        ("C-c C-c" . my-go-playground-run))
+  :config
+  (defun my-go-playground-run ()
+    "Run snippet.go."
+    (interactive)
+    (compile (format "%s run" my-go-playground-sh)))
   :custom
   (go-playground-basedir (format "%s/github.com/%s/go-playground/"
                                  (my-getenv "GHQ_ROOT")
                                  (my-getenv "GIT_USER")))
-  (go-playground-init-command "go mod init"))
+  (go-playground-init-command (format "%s init" my-go-playground-sh)))
 
 
 (use-package tern

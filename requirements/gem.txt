@@ -1,4 +1,4 @@
-bundler -v 2.5.6
+bundler -v 2.5.7
 solargraph -v 0.50.0
 rubocop -v 1.62.1
 steep -v 1.6.0
