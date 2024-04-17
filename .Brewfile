@@ -88,3 +88,7 @@ brew "plantuml"
 
 # php
 brew "composer"
+
+# lua
+brew "lua"
+brew "lua-language-server"
