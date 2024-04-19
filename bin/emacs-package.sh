@@ -49,15 +49,13 @@ list_dependents() {
 }
 
 __render_deps() {
-    tmpfile="$(mktemp).svg"
     jq 'to_entries[]|select(.value != null)|[.key, (.value | if type == "object" then keys else . end | flatten | unique[])] | @csv' -r |\
         tr -d '"' |\
         awk -F "," '{
 split($0, xs, ",");
 from = xs[1];
 for (i = 2; i <= length(xs); i++)
-  printf("{\"src\":{\"id\":\"%s\"},\"dst\":{\"id\":\"%s\"}}\n", from, xs[i])}' |\
-        json2dot -o "$tmpfile" && open "$tmpfile"
+  printf("{\"src\":{\"id\":\"%s\"},\"dst\":{\"id\":\"%s\"}}\n", from, xs[i])}'
 }
 
 render_dependencies() {

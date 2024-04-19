@@ -1,0 +1,28 @@
+category:
+  - name: "Makefile"
+    filename:
+      - r: "Makefile"
+      - val:
+          - "Makefile"
+  - name: "requirements"
+    filename:
+      - r: "requirements/"
+  - name: "shebang"
+    text:
+      - r: "^#!/bin/(?P<v>\\w+)$"
+        tmpl: "$v"
+  - name: "emacs lisp"
+    filename:
+      - r: "\\.el$"
+      - val:
+          - "elisp"
+  - name: "ivg"
+    filename:
+      - g: "ivg/*.yml"
+      - val:
+          - "ivg"
+  - name: "brew"
+    filename:
+      - r: "\\.Brewfile"
+      - val:
+          - "brew"

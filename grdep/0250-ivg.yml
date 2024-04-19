@@ -1,0 +1,23 @@
+node:
+  - name: "ivg uri"
+    category: "^ivg$"
+    matcher:
+      - r: "^uri: (?P<v>.+)$"
+        tmpl: "$v"
+      # escape : of https:// due to render dot
+      - sh: "tr -d ':'"
+  - name: "ivg bin reference"
+    category: "^ivg$"
+    matcher:
+      - not: "^\\."
+      - not: "^#"
+      - r: "(?P<v>bin/[^ ]+)"
+        tmpl: "$v"
+      - sh: "tr -d '\"'"
+  - name: "ivg brew install"
+    category: "^ivg$"
+    matcher:
+      - r: "brew install"
+      - sh: "cut -d ' ' -f 3-"
+      - sh: "tr ' ' '\n'"
+      - not: "--(build-from-source|cask)"

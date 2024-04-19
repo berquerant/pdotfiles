@@ -1,0 +1,17 @@
+node:
+  - name: "bash source"
+    category: "^bash$"
+    matcher:
+      - r: "^\\. (?P<v>.+)$"
+        tmpl: "$v"
+      - sh: "tr -d '\"'"
+      - r: ".*/(?P<v>bin/.+)$"
+        tmpl: "$v"
+  - name: "bash bin reference"
+    category: "^bash$"
+    matcher:
+      - not: "^\\."
+      - not: "^#"
+      - r: "(?P<v>bin/[^ ]+)"
+        tmpl: "$v"
+      - sh: "tr -d '\"'"

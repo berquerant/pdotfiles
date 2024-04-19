@@ -1,0 +1,9 @@
+node:
+  - name: "zsh bin reference"
+    category: "^zsh$"
+    matcher:
+      - not: "^\\."
+      - not: "^#"
+      - r: "(?P<v>bin/[^ ]+)"
+        tmpl: "$v"
+      - sh: "tr -d '\"'"

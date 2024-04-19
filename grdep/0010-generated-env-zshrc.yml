@@ -1,0 +1,109 @@
+node:
+  - category: .*
+    matcher:
+      - r: CARGO_HOME
+      - val:
+          - CARGO_HOME
+    name: CARGO_HOME
+  - category: .*
+    matcher:
+      - r: DOTFILES_ROOT
+      - val:
+          - DOTFILES_ROOT
+    name: DOTFILES_ROOT
+  - category: .*
+    matcher:
+      - r: EMACSD
+      - val:
+          - EMACSD
+    name: EMACSD
+  - category: .*
+    matcher:
+      - r: GOENV_ROOT
+      - val:
+          - GOENV_ROOT
+    name: GOENV_ROOT
+  - category: .*
+    matcher:
+      - r: GOPATH
+      - val:
+          - GOPATH
+    name: GOPATH
+  - category: .*
+    matcher:
+      - r: GO_VERSION
+      - val:
+          - GO_VERSION
+    name: GO_VERSION
+  - category: .*
+    matcher:
+      - r: NODE_VERSION
+      - val:
+          - NODE_VERSION
+    name: NODE_VERSION
+  - category: .*
+    matcher:
+      - r: NPM_ROOT
+      - val:
+          - NPM_ROOT
+    name: NPM_ROOT
+  - category: .*
+    matcher:
+      - r: NVM_DIR
+      - val:
+          - NVM_DIR
+    name: NVM_DIR
+  - category: .*
+    matcher:
+      - r: PATH
+      - val:
+          - PATH
+    name: PATH
+  - category: .*
+    matcher:
+      - r: PYENV_ROOT
+      - val:
+          - PYENV_ROOT
+    name: PYENV_ROOT
+  - category: .*
+    matcher:
+      - r: PYTHONHISTORY
+      - val:
+          - PYTHONHISTORY
+    name: PYTHONHISTORY
+  - category: .*
+    matcher:
+      - r: PYTHONSTARTUP
+      - val:
+          - PYTHONSTARTUP
+    name: PYTHONSTARTUP
+  - category: .*
+    matcher:
+      - r: PY_VERSION
+      - val:
+          - PY_VERSION
+    name: PY_VERSION
+  - category: .*
+    matcher:
+      - r: RBENV_ROOT
+      - val:
+          - RBENV_ROOT
+    name: RBENV_ROOT
+  - category: .*
+    matcher:
+      - r: RB_VERSION
+      - val:
+          - RB_VERSION
+    name: RB_VERSION
+  - category: .*
+    matcher:
+      - r: TMPD
+      - val:
+          - TMPD
+    name: TMPD
+  - category: .*
+    matcher:
+      - r: ZPLUG_HOME
+      - val:
+          - ZPLUG_HOME
+    name: ZPLUG_HOME

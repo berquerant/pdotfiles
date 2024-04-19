@@ -1,7 +1,7 @@
 #!/bin/bash
 
 d=$(cd $(dirname $0)/..; pwd)
-. $d/bin/common.sh
+. "${d}/bin/common.sh"
 
 message() {
     cecho green "$1"

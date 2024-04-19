@@ -9,6 +9,16 @@ alias repos='ghq list -p | peco'
 alias repo='cd $(repos)'
 alias repopath='ghq list | peco | cut -d "/" -f 2,3'
 
+gtagpush() {
+    if [[ -z "$1" ]] ; then
+        echo "create tag and push it"
+        echo "gtagpush TAG"
+        return
+    fi
+    git tag "$1"
+    git push "$1"
+}
+
 gfbranch() {
     if [[ -z "$1" ]] ; then
         echo "switch branch if remote branch exists else create branch, forcely"

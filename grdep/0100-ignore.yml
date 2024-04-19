@@ -1,0 +1,7 @@
+ignore:
+  - r: ".git"
+  - r: "tmp"
+  - r: "\\.ropeproject"
+  - r: "\\.mypy_cache"
+  - r: "ivg/locks"
+  - r: "ivg/repos"

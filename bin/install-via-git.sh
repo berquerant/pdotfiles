@@ -1,11 +1,11 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0); pwd)
-. "${d}/common.sh"
+d=$(cd $(dirname $0)/..; pwd)
+. "${d}/bin/common.sh"
 ivg="install-via-git"
 
 if [ ! -e "$(which $ivg)" ] ; then
-    "${d}/install-via-git-go.sh" || exit 1
+    "${d}/bin/install-via-git-go.sh" || exit 1
 fi
 
 target="$1"

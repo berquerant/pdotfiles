@@ -1,7 +1,7 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0); pwd)
-ivgsh="${d}/install-via-git.sh"
+d=$(cd $(dirname $0)/..; pwd)
+ivgsh="${d}/bin/install-via-git.sh"
 
 set -e
 

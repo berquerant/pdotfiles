@@ -1,7 +1,7 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0); pwd)
-ivgsh="${d}/install-target.sh"
+d=$(cd $(dirname $0)/..; pwd)
+ivgsh="${d}/bin/install-target.sh"
 
 set -e
 

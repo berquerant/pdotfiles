@@ -34,7 +34,7 @@ cecho green "git user.email = ${GIT_USER_EMAIL}" >&2
 current_config="${HOME}/.gitconfig"
 next_config="${PJTMP}/.gitconfig"
 backup_config="${PJTMP}/.gitconfig.backup"
-envsubst < "${PROJECT}/bin/.gitconfig.tpl" > "$next_config"
+envsubst < "${PROJECT}/.gitconfig.tpl" > "$next_config"
 cp "$current_config" "$backup_config"
 
 set +e

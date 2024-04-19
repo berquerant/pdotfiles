@@ -2,8 +2,8 @@
 
 set -e
 
-d=$(cd $(dirname $0); pwd)
-. $d/common.sh
+d=$(cd $(dirname $0)/..; pwd)
+. "${d}/bin/common.sh"
 
 message() {
     cecho green "$1"

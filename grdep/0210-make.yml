@@ -1,0 +1,17 @@
+node:
+  - name: "Makefile include"
+    category: &make "^Makefile$"
+    matcher:
+      - r: "^include (?P<v>.+)$"
+        tmpl: "$v"
+  - name: "Makefile list"
+    category: *make
+    matcher:
+      - r: "\\.list$"
+      - sh: "cut -d ' ' -f 3"
+  - name: "Makefile bin"
+    category: *make
+    matcher:
+      - not: "/bin/"
+      - r: "(?P<v>bin/[^\\s]+)"
+        tmpl: "$v"

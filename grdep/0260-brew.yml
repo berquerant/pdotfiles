@@ -1,0 +1,11 @@
+node:
+  - name: "brew"
+    category: "^brew$"
+    matcher:
+      - r: "^brew \"(?P<v>\\w+)\"$"
+        tmpl: "$v"
+  - name: "cask"
+    category: "^brew$"
+    matcher:
+      - r: "^cask \"(?P<v>\\w+)\""
+        tmpl: "$v"

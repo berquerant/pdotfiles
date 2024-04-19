@@ -2,8 +2,8 @@
 
 set -e
 
-d=$(cd $(dirname $0); pwd)
-. $d/common.sh
+d=$(cd $(dirname $0)/..; pwd)
+. "${d}/bin/common.sh"
 
 message() {
     cecho green "$1"
@@ -30,7 +30,7 @@ brew update
 brew upgrade
 
 message "Install tools"
-brew bundle --file "${d}/../.Brewfile"
+brew bundle --file "${d}/.Brewfile"
 
 if ! which gettext > /dev/null
 then
