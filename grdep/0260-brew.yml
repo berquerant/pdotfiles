@@ -9,3 +9,10 @@ node:
     matcher:
       - r: "^cask \"(?P<v>\\w+)\""
         tmpl: "$v"
+normalizer:
+  node:
+    - name: "normalize brew"
+      matcher:
+        - r: "bin/brew"
+        - val:
+            - "brew"

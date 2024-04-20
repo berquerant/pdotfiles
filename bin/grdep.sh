@@ -12,9 +12,12 @@ __grdep() {
     git ls-files | grdep run $(find_config) "$@"
 }
 
-gen_env_config_from_zshrc() {
+gen_env_config() {
     # extract environment variables
-    grep -E '^export' "${DOTFILES_ROOT}/.zshrc" |\
+    echo ".envrc .zshrc bin/z/0010-init.zsh bin/z/0020-emacs.zsh" |\
+        tr ' ' '\n' |\
+        awk -v r="$DOTFILES_ROOT" '{print r"/"$0}' |\
+        xargs -n 1 grep -E '^export' |\
         cut -d "=" -f 1 |\
         cut -d " " -f 2 |\
         sort -u |\
@@ -56,10 +59,10 @@ case "$1" in
         shift
         case "$1" in
             "dry")
-                gen_env_config_from_zshrc
+                gen_env_config
                 ;;
             *)
-                gen_env_config_from_zshrc > "${DOTFILES_ROOT}/grdep/0010-generated-env-zshrc.yml"
+                gen_env_config > "${DOTFILES_ROOT}/grdep/0010-generated-env.yml"
                 ;;
         esac
         ;;

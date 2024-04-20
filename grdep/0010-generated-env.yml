@@ -7,16 +7,40 @@ node:
     name: CARGO_HOME
   - category: .*
     matcher:
+      - r: DIRENV_ENABLED
+      - val:
+          - DIRENV_ENABLED
+    name: DIRENV_ENABLED
+  - category: .*
+    matcher:
       - r: DOTFILES_ROOT
       - val:
           - DOTFILES_ROOT
     name: DOTFILES_ROOT
   - category: .*
     matcher:
+      - r: EDITOR
+      - val:
+          - EDITOR
+    name: EDITOR
+  - category: .*
+    matcher:
       - r: EMACSD
       - val:
           - EMACSD
     name: EMACSD
+  - category: .*
+    matcher:
+      - r: EMACS_HISTFILE
+      - val:
+          - EMACS_HISTFILE
+    name: EMACS_HISTFILE
+  - category: .*
+    matcher:
+      - r: GIT_USER
+      - val:
+          - GIT_USER
+    name: GIT_USER
   - category: .*
     matcher:
       - r: GOENV_ROOT
@@ -31,10 +55,58 @@ node:
     name: GOPATH
   - category: .*
     matcher:
+      - r: GOPROXY
+      - val:
+          - GOPROXY
+    name: GOPROXY
+  - category: .*
+    matcher:
+      - r: GOSUMDB
+      - val:
+          - GOSUMDB
+    name: GOSUMDB
+  - category: .*
+    matcher:
       - r: GO_VERSION
       - val:
           - GO_VERSION
     name: GO_VERSION
+  - category: .*
+    matcher:
+      - r: HISTFILE
+      - val:
+          - HISTFILE
+    name: HISTFILE
+  - category: .*
+    matcher:
+      - r: HISTSIZE
+      - val:
+          - HISTSIZE
+    name: HISTSIZE
+  - category: .*
+    matcher:
+      - r: LESSHISTFILE
+      - val:
+          - LESSHISTFILE
+    name: LESSHISTFILE
+  - category: .*
+    matcher:
+      - r: LIBRARY_PATH
+      - val:
+          - LIBRARY_PATH
+    name: LIBRARY_PATH
+  - category: .*
+    matcher:
+      - r: LOGD
+      - val:
+          - LOGD
+    name: LOGD
+  - category: .*
+    matcher:
+      - r: MIGEMO_DICT
+      - val:
+          - MIGEMO_DICT
+    name: MIGEMO_DICT
   - category: .*
     matcher:
       - r: NODE_VERSION
@@ -59,6 +131,18 @@ node:
       - val:
           - PATH
     name: PATH
+  - category: .*
+    matcher:
+      - r: PJTMP
+      - val:
+          - PJTMP
+    name: PJTMP
+  - category: .*
+    matcher:
+      - r: PROJECT
+      - val:
+          - PROJECT
+    name: PROJECT
   - category: .*
     matcher:
       - r: PYENV_ROOT
@@ -95,6 +179,12 @@ node:
       - val:
           - RB_VERSION
     name: RB_VERSION
+  - category: .*
+    matcher:
+      - r: SAVEHIST
+      - val:
+          - SAVEHIST
+    name: SAVEHIST
   - category: .*
     matcher:
       - r: TMPD

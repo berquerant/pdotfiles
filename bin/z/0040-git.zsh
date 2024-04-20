@@ -16,7 +16,7 @@ gtagpush() {
         return
     fi
     git tag "$1"
-    git push "$1"
+    git push origin "$1"
 }
 
 gfbranch() {

@@ -1,4 +1,5 @@
 ignore:
+  - r: "grdep"
   - r: ".git"
   - r: "tmp"
   - r: "\\.ropeproject"
