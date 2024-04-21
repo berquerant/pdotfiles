@@ -20,4 +20,4 @@ node:
       - r: "brew install"
       - sh: "cut -d ' ' -f 3-"
       - sh: "tr ' ' '\n'"
-      - not: "--(build-from-source|cask)"
+      - not: "-|--(build-from-source|cask)"
