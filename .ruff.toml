@@ -1,11 +1,11 @@
-select = [
+lint.select = [
   "F", # pyflakes
   "I", # isort
   "E", # pycodestyle
   "D", # pydocstyle
   "W", # pycodestyle
 ]
-ignore = [
+lint.ignore = [
   "D100",  # Missing docstring in public module
   "D101",  # Missing docstring in public class
   "D102",  # Missing docstring in public method

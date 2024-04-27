@@ -151,5 +151,9 @@ Maybe more useful to search from https://www.gnu.org/software/emacs/news/"
                     (add-to-list 'result `(,symbol . ,version)))))
     result))
 
+(defun my-misc-last-kill ()
+  "Return last killed string."
+  (current-kill 0 t))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here

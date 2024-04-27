@@ -297,6 +297,12 @@ c.f. `format-all-region'."
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   :config
+  (defun my-consult-find-from-last-kill ()
+    "Do `consult-find' with `my-misc-last-kill'."
+    (interactive)
+    (let ((path (s-trim (my-misc-last-kill))))
+      (if (file-directory-p path) (consult-find path)
+        (find-file path))))
   (my-macro-region-or-at-point-direct consult-line)
   (my-macro-region-or-at-point-direct consult-line-multi)
   (defun my-consult-git-grep (&optional initial dir)
@@ -314,6 +320,7 @@ c.f. `format-all-region'."
   (bind-key* "C-x f" 'consult-find)
   :bind
   (("C-x g f" . consult-project-buffer) ; find file in project
+   ("M-s -" . my-consult-find-from-last-kill)
    ("M-g X" . consult-register)
    ("M-g M-x" . consult-register-store)
    ("M-g x" . consult-register-load)
@@ -472,6 +479,19 @@ c.f. `format-all-region'."
   (my-macro-region-or-at-point my-trans-into-en "To en: ")
   (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)
   (bind-key "M-j t e" 'my-trans-into-en-region-or-at-point))
+
+(use-package my-pipenv
+  :demand t
+  :after consult
+  :straight (my-pipenv :type built-in)
+  :config
+  (defun my-pipenv-consult-find (module)
+    (consult-find (my-pipenv-get-path module)))
+  (my-macro-region-or-at-point my-pipenv-consult-find "Module: ")
+  (bind-key "M-s 3" 'my-pipenv-consult-find-region-or-at-point)
+  :custom
+  (my-pipenv-get-path-command (format "%s/bin/pipenv_get_path.sh"
+                                      (my-getenv "DOTFILES_ROOT"))))
 
 ;; omit continuous command
 (use-package smartrep

@@ -1,43 +1,70 @@
 #!/bin/bash
 
+d=$(cd $(dirname $0)/..; pwd)
+. "${d}/bin/common.sh"
+
+__run() {
+    cecho green "$*"
+    if [ -z "$DEBUG" ] ; then
+        "$@"
+    fi
+}
+
 clean_docker() {
-    docker system prune --force --filter 'until=168h'
-    docker volume prune --force
+    __run docker system prune --force --filter 'until=168h'
+    __run docker volume prune --force
 }
 
 clean_brew() {
-    brew cleanup --prune 7
+    __run brew cleanup --prune 7
 }
 
 clean_go() {
     goenv versions | grep -vE "${GO_VERSION}|system" | while read version ; do
-        goenv uninstall -f "$version"
+        cecho yellow "UNINSTALL go ${version}"
+        __run goenv uninstall -f "$version"
     done
 }
 
 clean_python() {
     pyenv versions | grep -vE "${PY_VERSION}|system" | while read version ; do
-        pyenv uninstall -f "$version"
+        cecho yellow "UNINSTALL python ${version}"
+        __run pyenv uninstall -f "$version"
     done
 }
 
 clean_ruby() {
     rbenv versions | grep -vE "${RB_VERSION}|system" | while read version ; do
-        rbenv uninstall -f "$version"
+        cecho yellow "UNINSTALL ruby ${version}"
+        __run rbenv uninstall -f "$version"
     done
 }
 
 clean_node() {
     . "${NVM_DIR}/nvm.sh"
-    nvm ls --no-colors | grep -E '^ ' | awk '{print $1}' | while read version ; do
-        nvm uninstall "$version"
+    nvm ls --no-colors | grep -vE "${NODE_VERSION}|default|N/A" | awk '{print $1}' | while read version ; do
+        cecho yellow "UNINSTALL node ${version}"
+        __run nvm uninstall "$version"
     done
 }
 
+clean_etc() {
+    __run rm -rf "$TMPD"
+}
+
 set -e
-clean_go
-clean_python
-clean_ruby
-clean_node
-clean_brew
-clean_docker
+
+case "$1" in
+    "go") clean_go ;;
+    "python") clean_python ;;
+    "ruby") clean_ruby ;;
+    "node") clean_node ;;
+    "brew") clean_brew ;;
+    "docker") clean_docker ;;
+    "etc") clean_etc ;;
+    *)
+        cecho green "go|python|ruby|node|brew|docker|etc"
+        cecho green "dryrun if envvar DEBUG is not empty"
+        exit 1
+        ;;
+esac

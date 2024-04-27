@@ -1,8 +1,6 @@
 import atexit
-import readline
-
 import os
-from dataclasses import dataclass
+import readline
 from enum import Enum
 from functools import wraps
 from inspect import (
@@ -18,9 +16,7 @@ from inspect import (
 )
 from pprint import pprint
 from pyclbr import readmodule_ex
-from typing import Any, Callable, ClassVar, Hashable
 from uuid import uuid4
-
 
 readline.parse_and_bind("tab: complete")
 histfile = os.path.join(os.environ["PYTHONHISTORY"])
@@ -40,29 +36,31 @@ class devutil:
         red = "\033[31m"
         green = "\033[32m"
 
-        def add(self, s: str) -> str:
+        def add(self, s):
             """Add color to the string."""
             return self.value + s + self.end.value
 
     @classmethod
-    def ignore_exception[T, **P](cls, f: Callable[P, T]) -> Callable[P, T | None]:
+    def ignore_exception(cls, f):
         """Ignore any exceptions raised by f."""
 
         @wraps(f)
-        def inner(*args: P.args, **kwargs: P.kwargs) -> T | None:
+        def inner(*args, **kwargs):
             try:
                 return f(*args, **kwargs)
             except Exception as e:
-                print(cls.color.red.add(f"{f.__name__}({args}, {kwargs}) caused {e}"))
+                msg = "{}({}, {}) caused {}".format(f.__name__, args, kwargs, e)
+                print(cls.color.red.add(msg))
                 return None
 
         return inner
 
     @classmethod
-    def describe_function_or_method(cls, x: Any) -> None:
+    def describe_function_or_method(cls, x):
         """Describe x's methods or functions."""
         for _, member in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
-            print(cls.color.green.add(f"{member.__name__}{signature(member)}"))
+            msg = "{}{}".format(member.__name__, signature(member))
+            print(cls.color.green.add(msg))
             if member.__doc__:
                 print("  " + member.__doc__)
 
@@ -70,46 +68,50 @@ class devutil:
 class dev:
     """Tools for python interpreter are available. Print help by dev.h()."""
 
-    FILE: ClassVar[str] = __file__
+    FILE = __file__
 
     @classmethod
     @devutil.ignore_exception
-    def h(cls) -> None:
+    def h(cls):
         """Print help."""
         print(cls.__doc__)
         devutil.describe_function_or_method(cls)
 
     @staticmethod
     @devutil.ignore_exception
-    def c(x: Any) -> None:
+    def c(x):
         """Print source of x."""
         print(getsource(x))
 
     @classmethod
     @devutil.ignore_exception
-    def cb(cls, module: str) -> None:
-        """Print class browser of module."""
+    def cb(cls, module):
+        """
+        Print class browser of module.
+        :param: module str
+        """
         for v in readmodule_ex(module).values():
             cls.pp(vars(v))
 
     @staticmethod
     @devutil.ignore_exception
-    def d(x: Any) -> None:
+    def d(x):
         """Print docstring of x."""
         print(getdoc(x))
 
     @staticmethod
     @devutil.ignore_exception
-    def l(x: Any) -> None:
+    def l(x):
         """Print the location in which x was defined in."""
         srcfile = getfile(x)
         lines, start_linum = getsourcelines(x)
         end_linum = start_linum + len(lines) - 1
-        print(f"file {srcfile} line {start_linum} to {end_linum}")
+        msg = "file {} line {} to {}".format(srcfile, start_linum, end_linum)
+        print(msg)
 
     @staticmethod
     @devutil.ignore_exception
-    def f(x: Any, n: bool = False) -> None:
+    def f(x, n=False):
         """Less source of x. Display line number if n is True."""
         cmd = ["less"]
         if n:
@@ -119,58 +121,65 @@ class dev:
 
     @classmethod
     @devutil.ignore_exception
-    def g(cls, x: Any):
+    def g(cls, x):
         """Get members using inspect. Help is available by property h."""
         return cls.InspectMembers.new(x)
 
     @staticmethod
     @devutil.ignore_exception
-    def pp(x: Any) -> None:
+    def pp(x):
         """Pretty print."""
         pprint(x, width=120, depth=None)
 
     @staticmethod
     @devutil.ignore_exception
-    def s(x: Any) -> None:
+    def s(x):
         """Print signature of x."""
-        print(devutil.color.green.add(f"{x.__name__}{signature(x)}"))
+        msg = "{}{}".format(x.__name__, signature(x))
+        print(devutil.color.green.add(msg))
 
     @staticmethod
     @devutil.ignore_exception
-    def t(x: Any) -> Any:
+    def t(x):
         """Get class tree."""
         return getclasstree([type(x)])
 
-    @dataclass
     class InspectMembers:
-        members: dict[str, Any]
+        def __init__(self, members):
+            self.members = members
 
         @staticmethod
-        def new(x: Any):
+        def new(x):
             return dev.InspectMembers(members=dict(getmembers(x)))
 
         @property
-        def h(self) -> None:
+        def h(self):
             """Print help."""
             devutil.describe_function_or_method(self)
 
         @property
-        def all(self) -> dict:
-            """Get all members."""
+        def all(self):
+            """
+            Get all members.
+            :return: dict
+            """
             return self.members
 
         @property
-        def keys(self) -> list:
+        def keys(self):
             """Get keys of members."""
             return list(self.members.keys())
 
-        def get(self, key: str) -> Any:
+        def get(self, key):
             """Get a member by key."""
             return self.members.get(key)
 
     @classmethod
-    def hashable(cls, x: Any) -> Hashable:
-        """Get hashable."""
+    def hashable(cls, x):
+        """
+        Get hashable.
+        :return: Hasable
+        """
         match x:
             case list() | tuple() | set() | frozenset():
                 return tuple(cls.hashable(z) for z in x)
@@ -182,19 +191,22 @@ class dev:
                 return x
 
     @staticmethod
-    def w[T, **P](f: Callable[P, T]) -> Callable[P, T]:
+    def w(f):
         """Watch the arguments and the return value."""
 
         @wraps(f)
-        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+        def wrapper(*args, **kwargs):
             rid = uuid4()
             s = signature(f)
             bindings = ",".join(
-                f"{k}={v}" for k, v in s.bind(*args, **kwargs).arguments.items()
+                "{}={}".format(k, v)
+                for k, v in s.bind(*args, **kwargs).arguments.items()
             )
-            print(f"[{rid}] Call {f.__name__}{bindings}")
+            msg = "[{}] call {}{}".format(rid, f.__name__, bindings)
+            print(msg)
             r = f(*args, **kwargs)
-            print(f"[{rid}] Returned {r}")
+            msg = "[{}] Returned {}".format(rid, r)
+            print(msg)
             return r
 
         return wrapper
