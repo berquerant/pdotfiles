@@ -1,5 +1,5 @@
 pylsp-mypy==0.6.8
-python-lsp-black==1.3.0
+python-lsp-black==2.0.0
 pylsp-rope==0.1.16
 pycodestyle==2.11.1
 mccabe==0.7.0

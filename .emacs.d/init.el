@@ -301,8 +301,9 @@ c.f. `format-all-region'."
     "Do `consult-find' with `my-misc-last-kill'."
     (interactive)
     (let ((path (s-trim (my-misc-last-kill))))
-      (if (file-directory-p path) (consult-find path)
-        (find-file path))))
+      (cond ((file-directory-p path) (consult-find path))
+            ((file-exists-p path) (find-file path))
+            (t (error "[my-consult-find-from-last-kill] cannot open %s" path)))))
   (my-macro-region-or-at-point-direct consult-line)
   (my-macro-region-or-at-point-direct consult-line-multi)
   (defun my-consult-git-grep (&optional initial dir)

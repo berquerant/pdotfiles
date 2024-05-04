@@ -13,7 +13,7 @@ baseBranches:
   - "master"
 rangeStrategy: "auto"
 internalChecksFilter: "strict" # When and how to filter based on internal checks. All pending releases will be filtered. PRs will be skipped unless a non-pending version is available
-minimumReleaseAge: "7 days"    # Time required before a new release is considered stable
+minimumReleaseAge: "21 days"    # Time required before a new release is considered stable
 digest:
   addLabels:
     - "digest"
