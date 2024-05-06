@@ -10,7 +10,9 @@ fi
 
 target="$1"
 if [ -z "$target" ] ; then
-    echo "target is required"
+    cecho red "target is required"
+    cecho green "available targets:"
+    git ls-files | grep 'ivg/.*.yml$' | xargs -n 1 basename | cut -d "." -f 1
     exit 1
 fi
 
