@@ -1153,6 +1153,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (((python-mode
      ruby-mode
      go-mode
+     rust-mode
      c-mode
      c++-mode) . eglot-ensure)
    (eglot-managed-mode . (lambda () (flymake-mode 0)))
@@ -1227,7 +1228,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
      ;; c++-mode
      php-mode
      svelte-mode
-     rust-mode
+     ;; rust-mode
      clojure-mode
      clojurescript-mode
      clojurec-mode
