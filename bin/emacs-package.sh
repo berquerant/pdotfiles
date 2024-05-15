@@ -66,6 +66,12 @@ render_dependents() {
     list_dependents | __render_deps
 }
 
+histfile_stat() {
+    cat "$EMACS_HISTFILE" |\
+        awk '{s[$2]+=$3}END{for(k in s)print s[k]"\t"k}' |\
+        sort -nk 1
+}
+
 usage() {
     name="${0##*/}"
     cat - <<EOS
@@ -102,6 +108,9 @@ Usage
 
     q|det|dependents
       Render dependents graph.
+
+  ${name} hs|histstat
+    Display hisrory stat.
 EOS
 }
 
@@ -164,6 +173,9 @@ main() {
                     return 1
                     ;;
             esac
+            ;;
+        "hs" | "histstat")
+            histfile_stat
             ;;
         *)
             usage

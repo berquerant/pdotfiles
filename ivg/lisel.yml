@@ -1,0 +1,8 @@
+uri: https://github.com/berquerant/lisel
+branch: main
+locald: repos/lisel
+lock: locks/lisel.lock
+install:
+  - cargo build --release
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/target/release/lisel" /usr/local/bin/lisel
+  - lisel --version
