@@ -1419,6 +1419,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (openai-chat :host github :repo "berquerant/emacs-openai-chat")
   :bind (("M-s M-s M-s" . openai-chat-start))
   :custom
+  (openai-chat-model "gpt-4o")
   (openai-chat-chat-completion-timeout 300) ; 5min
   (openai-chat-history-file (format "%s/history_openai-chat" (my-getenv "EMACSD"))))
 
@@ -1432,7 +1433,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (my-openai-chat-web :type built-in)
   :bind ("M-s M-s M-w" . my-openai-chat-web-start)
   :custom
-  (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh"
+  (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh --chat_model gpt-4o"
                                       (my-getenv "DOTFILES_ROOT"))))
 
 (use-package message-routing

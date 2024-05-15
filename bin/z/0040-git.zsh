@@ -11,10 +11,15 @@ alias c='git checkout'
 alias m='git commit'
 alias o='gswitch'
 alias s='git status'
+alias r='repo'
 
-alias repos='ghq list -p | peco'
-alias repo='cd $(repos)'
-alias repopath='ghq list | peco | cut -d "/" -f 2,3'
+repo() {
+    location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
+    if [ -z "$location" ] ; then
+        return 1
+    fi
+    cd "$location"
+}
 
 gtagpush() {
     if [[ -z "$1" ]] ; then
