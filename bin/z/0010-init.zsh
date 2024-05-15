@@ -42,6 +42,8 @@ alias less='less -R'
 alias ldd='otool -L'
 alias dc='cd'
 alias history='history -t "%F %T"'
+alias l='ls -la'
+alias t='cat'
 if type eza >/dev/null 2>&1 ; then
     alias ls='eza'
     export EXA_COLORS="da=01:37" # date, white

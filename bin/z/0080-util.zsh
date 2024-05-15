@@ -63,10 +63,6 @@ if type gbrowse >/dev/null 2>&1 ; then
     alias gb='gbrowse'
 fi
 
-if type cheat >/dev/null 2>&1 ; then
-    alias c='cheat'
-fi
-
 if [ -x /usr/local/bin/sqlite-csv.sh ] ; then
     alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
 fi
