@@ -74,7 +74,7 @@ histfile_stat() {
 
 usage() {
     name="${0##*/}"
-    cat - <<EOS
+    cat - <<EOS >&2
 ${name} -- package update utilities
 
 Usage

@@ -28,7 +28,7 @@ gen_env_config() {
 
 usage() {
     name="${0##*/}"
-    cat - <<EOS
+    cat - <<EOS >&2
 ${name} -- grdep the repository
 
 Usage

@@ -1,17 +1,27 @@
 #!/bin/bash
 
+select_repos() {
+    repo_regex="$1"
+    ghq list -p | grep -E "$repo_regex"
+}
+
+__ggdo() {
+    dir="$1"
+    shift
+    pushd "$dir" > /dev/null
+    if [ -n "$GGDO_RAW" ] ; then
+        "$@"
+    else
+        bash -c "$@"
+    fi
+    popd > /dev/null
+}
+
 ggdo() {
     repo_regex="$1"
     shift
-    ghq list -p | rg "$repo_regex" | while read line ; do
-        pushd "$line" > /dev/null
-        if [ -n "$GGDO_RAW" ] ; then
-            "$@"
-        else
-            bash -c "$@"
-        fi
-        popd > /dev/null
-    done
+    maxprocs="${GGDO_MAXPROCS:-1}"
+    select_repos "$repo_regex" | xargs -n 1 -P "$maxprocs" -IT "$0" __ggdo T "$@"
 }
 
 __gggrep_run() {
@@ -29,7 +39,7 @@ gggrep() {
 
 usage() {
     name="${0##*/}"
-    cat - <<EOS
+    cat - <<EOS >&2
 ${name} -- run commands on multiple repositories
 
 Usage
@@ -38,6 +48,11 @@ Usage
 
   ${name} grep REPO_REGEX ...
     Grep multiple repositories
+
+Environment variables
+  GGDO_MAXPROCS
+    Maximum number of processes used for execution
+    Default: 1
 EOS
 }
 
@@ -50,6 +65,9 @@ main() {
             ;;
         "grep")
             gggrep "$@"
+            ;;
+        "__ggdo")
+            __ggdo "$@"
             ;;
         *)
             usage

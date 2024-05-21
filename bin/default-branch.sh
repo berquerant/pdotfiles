@@ -5,7 +5,7 @@ default_branch() {
 }
 
 switch_branch() {
-    git switch "$(default_branch)"
+    git switch "$(default_branch)" "$@"
 }
 
 diff_branch() {
@@ -19,13 +19,13 @@ current_branch() {
 switch_pull_branch() {
     cleanup="$1"
     if [ -z "$cleanup" ] ; then
-        switch_branch
+        switch_branch -q
     else
         current="$(current_branch)"
-        switch_branch
+        switch_branch -q
         git branch -D "$current"
     fi
-    git pull
+    git pull -q
 }
 
 usage() {
