@@ -53,7 +53,3 @@ emacs_select_update_package() {
         emacs_package update "$name"
     done
 }
-
-# ld: library not found for -lemutls_w
-# libgccjit.so: error: error invoking gcc driver
-export LIBRARY_PATH="${LIBRARY_PATH}:$(brew --prefix gcc)/lib/gcc/current:$(brew --prefix libgccjit)/lib/gcc/current:$(brew --prefix gcc)/lib/gcc/current/gcc/aarch64-apple-darwin23/13"

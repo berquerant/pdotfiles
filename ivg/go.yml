@@ -6,9 +6,6 @@ shell:
   - "arch"
   - "--arm64e"
   - "/bin/bash"
-setup:
-  # golang.org/x/tools/gopls v0.12.4
-  - brew install gcc@11
 install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $GOENV_ROOT
   - goenv install --skip-existing $GO_VERSION
