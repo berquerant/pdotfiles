@@ -13,6 +13,7 @@ alias o='gdefaultswitch'
 alias s='g s'
 alias r='repo'
 alias v='gdefaultdiff'
+alias p='gdefaultpull'
 
 repo() {
     location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
@@ -24,6 +25,10 @@ repo() {
 
 gdefault() {
     "${DOTFILES_ROOT}/bin/default-branch.sh" "$@"
+}
+
+gdefaultpull() {
+    gdefault pull "$@"
 }
 
 gdefaultswitch() {

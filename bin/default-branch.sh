@@ -12,6 +12,22 @@ diff_branch() {
     git diff "$(default_branch)"
 }
 
+current_branch() {
+    git branch --contains | awk '$1=="*"{print $2}'
+}
+
+switch_pull_branch() {
+    cleanup="$1"
+    if [ -z "$cleanup" ] ; then
+        switch_branch
+    else
+        current="$(current_branch)"
+        switch_branch
+        git branch -D "$current"
+    fi
+    git pull
+}
+
 usage() {
     name="${0##*/}"
     cat - <<EOS >&2
@@ -26,15 +42,24 @@ Usage
 
   ${name} d|diff
     Git diff with default branch
+
+  ${name} p|pull [CLEANUP]
+    Switch to default branch and pull
+    If CLEANUP, delete the branch before switching
 EOS
 }
 
+set -e
 case "$1" in
     "s" | "switch")
         switch_branch
         ;;
     "d" | "diff")
         diff_branch
+        ;;
+    "p" | "pull")
+        shift
+        switch_pull_branch "$@"
         ;;
     "-h" | "--help")
         usage
