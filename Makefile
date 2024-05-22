@@ -81,3 +81,4 @@ renovate.json: renovate.yml ## generate renovate.json
 	yq -ojson $< > $@
 
 cycle: git install-via-git brew-update sub util emacs-check-packages
+recycle: git install-via-git brew-update sub-retry util-retry emacs-check-packages
