@@ -3,7 +3,7 @@
 # initial settings
 ulimit -n 65535
 export LOGD=$TMPD/logs
-export EDITOR='vim'
+export EDITOR='lmacs'
 bindkey -e # emacs
 bindkey -r '^T' # disable C-T
 setopt print_eight_bit # display Japanese file name

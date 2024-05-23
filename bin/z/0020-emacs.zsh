@@ -1,7 +1,10 @@
 #!/bin/zsh
 
 export MIGEMO_DICT="$(brew --prefix cmigemo)/share/migemo/utf-8/migemo-dict"
-export EMACS_HISTFILE=$EMACSD/.history_emacs
+export EMACS_HISTFILE="${EMACSD}/.history_emacs"
+export EMACS_CUI=/usr/local/bin/emacs
+# for emacs-light.sh
+export EMACS_MINIMAL_INIT="${EMACSD}/straight/repos/emacs-minimal-init"
 
 emacs_gui() {
     emacs_app="/Applications/Emacs-GUI.app"
@@ -13,7 +16,7 @@ emacs_gui() {
 }
 
 emacs_cui() {
-    /usr/local/bin/emacs "$@"
+    "$EMACS_CUI" "$@"
 }
 
 emacs_docker() {

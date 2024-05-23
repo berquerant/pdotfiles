@@ -31,12 +31,15 @@ clean: ## uninstall dotfiles
 gitconfig: ## generate .gitconfig
 	@bin/install-gitconfig.sh
 
-git: gitconfig ## install git configurations
+git: gitconfig emacs-light ## install git configurations
 
 fonts: ## install fonts
 	@bin/install-fonts.sh
 
-emacs: fonts emacs-gui emacs-cui ## install emacs
+emacs-light: ## install emacs-light.sh
+	ln -snvf $(DOTFILES_ROOT)/bin/emacs-light.sh /usr/local/bin/lmacs
+
+emacs: fonts emacs-gui emacs-cui emacs-light ## install emacs
 
 emacs-gui: ## install GUI emacs
 	@bin/install-via-git.sh emacs-gui
@@ -44,7 +47,7 @@ emacs-gui: ## install GUI emacs
 emacs-cui: ## install CUI emacs
 	@bin/install-via-git.sh emacs-cui
 
-update-emacs: update-emacs-cui update-emacs-gui
+update-emacs: update-emacs-cui update-emacs-gui emacs-light
 
 update-emacs-gui: ## update GUI emacs
 	@bin/install-via-git.sh emacs-gui --update

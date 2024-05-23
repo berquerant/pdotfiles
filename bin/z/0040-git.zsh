@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-export GIT_EDITOR='vim'
+export GIT_EDITOR='lmacs'
 export GHQ_ROOT=$HOME/go/src
 export GIT_USER=`git config user.name`
 alias g='git'

@@ -16,7 +16,7 @@
 [difftool]
   prompt = false
 [core]
-  editor = vim
+  editor = lmacs
   excludesfile = ~/.gitignore
   ignorecase = false
   quotepath = false
