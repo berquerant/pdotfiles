@@ -32,11 +32,16 @@
   :type 'string
   :group 'my-openai-chat-web)
 
+(defcustom my-openai-chat-web-chat-model "gpt-4o"
+  "Chat model."
+  :type 'string
+  :group 'my-openai-chat-web)
+
 (defun my-openai-chat-web--command ()
   `(,my-openai-chat-web-command
     "chat"
     "--chat_model"
-    "gpt-3.5-turbo"
+    ,my-openai-chat-web-chat-model
     "--language"
     "Japanese"))
 

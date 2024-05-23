@@ -925,6 +925,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (setq py-python-command (format "%s/shims/python" (my-getenv "PYENV_ROOT"))))
 
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq pipenv-projectile-after-switch-function
+        #'pipenv-projectile-after-switch-extended))
+
 (use-package flymake-ruff
   :ensure t
   :straight (flymake-ruff :type git :host github :repo "erickgnavar/flymake-ruff")
@@ -1433,7 +1439,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (my-openai-chat-web :type built-in)
   :bind ("M-s M-s M-w" . my-openai-chat-web-start)
   :custom
-  (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh --chat_model gpt-4o"
+  (my-openai-chat-web-chat-model "gpt-4o")
+  (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh"
                                       (my-getenv "DOTFILES_ROOT"))))
 
 (use-package message-routing

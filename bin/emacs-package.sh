@@ -26,6 +26,10 @@ describe_old_packages() {
         sort -t "," -n -k 2
 }
 
+freeze() {
+    __batch --eval '(my-external-straight-freeze)'
+}
+
 update_package() {
     pkg="$1"
     if [ -z "$pkg" ] ; then
@@ -33,7 +37,7 @@ update_package() {
         return 1
     fi
     __batch --eval "(my-external-straight-update-package \"${pkg}\")" &&\
-        __batch --eval '(my-external-straight-freeze)'
+        freeze
 }
 
 check_all() {
@@ -111,6 +115,9 @@ Usage
 
   ${name} hs|histstat
     Display hisrory stat.
+
+  ${name} f|freeze
+    Save installed packages.
 EOS
 }
 
@@ -176,6 +183,9 @@ main() {
             ;;
         "hs" | "histstat")
             histfile_stat
+            ;;
+        "f" | "freeze")
+            freeze
             ;;
         *)
             usage
