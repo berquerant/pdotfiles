@@ -90,3 +90,7 @@ ysort() {
 edot() {
     "${DOTFILES_ROOT}/bin/dot.sh" $@
 }
+
+unzip_via_ditto() {
+    ditto -V -x -k --sequesterRsrc $1 .
+}

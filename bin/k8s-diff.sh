@@ -101,7 +101,7 @@ helm_diff_between_branches() {
 }
 
 kustomize_sorted() {
-    kubectl kustomize "$@" | sort_yaml
+    kubectl kustomize --enable-helm "$@" | sort_yaml
 }
 
 kustomize_diff() {
@@ -166,16 +166,16 @@ t="$1"
 shift
 case "$t" in
     "hd" | "hdiff" | "helm_diff")
-        helm_diff $@
+        helm_diff "$@"
         ;;
     "hb" | "hbranch" | "helm_diff_between_branches")
-        helm_diff_between_branches $@
+        helm_diff_between_branches "$@"
         ;;
     "kd" | "kdiff" | "kustomize_diff")
-        kustomize_diff $@
+        kustomize_diff "$@"
         ;;
     "kb" | "kbranch" | "kustomize_branches")
-        kustomize_diff_between_branches $@
+        kustomize_diff_between_branches "$@"
         ;;
     *)
         echo "unknown command: ${t}"
