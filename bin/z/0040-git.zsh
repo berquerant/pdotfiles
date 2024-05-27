@@ -12,7 +12,7 @@ alias m='g cm'
 alias o='gdefaultswitch'
 alias s='g s'
 alias r='repo'
-alias v='gdefaultdiff'
+alias b='gdefaultdiff'
 alias p='gdefaultpull'
 
 repo() {

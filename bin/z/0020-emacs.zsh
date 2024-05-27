@@ -27,6 +27,7 @@ alias emacs="emacs_gui"
 alias gmacs="emacs_gui"
 alias cmacs="emacs_cui"
 alias dmacs="emacs_docker"
+alias e='lmacs'
 
 kill_emacs() {
     pkill -KILL "[eE]macs"

@@ -31,6 +31,10 @@ autoload -Uz bashcompinit && bashcompinit
 setopt correct
 zstyle ':completion:*' menu select
 # aliases
+alias_shortest() {
+    alias | rg '^.=' | tr '=' '\t' | sort
+}
+
 alias -s sh=sh
 alias rm='rm -i'
 alias cp='cp -i'
@@ -44,6 +48,8 @@ alias dc='cd'
 alias history='history -t "%F %T"'
 alias l='ls -la'
 alias t='cat'
+alias v='vim'
+alias f='less'
 if type eza >/dev/null 2>&1 ; then
     alias ls='eza'
     export EXA_COLORS="da=01:37" # date, white

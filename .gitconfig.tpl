@@ -62,7 +62,7 @@
   log-num = log --numstat
   log-name = log --name-status
   ps = push origin HEAD
-  pl = pull
+  p = pull
   w = worktree
   rename-branch = branch -m
   fix-comment = commit --ammend
