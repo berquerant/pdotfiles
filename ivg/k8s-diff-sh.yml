@@ -1,0 +1,4 @@
+uri: https://github.com/berquerant/k8s-diff-sh
+branch: main
+locald: repos/k8s-diff-sh
+lock: locks/k8s-diff-sh.lock

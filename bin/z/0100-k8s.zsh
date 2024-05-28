@@ -3,20 +3,35 @@
 alias k='kubectl'
 alias kk='kubectl kustomize'
 
-kustomize_diff() {
-    "${DOTFILES_ROOT}/bin/k8s-diff.sh" kd $@
-}
+kdiff() {
+    target="$1"
+    root="${DOTFILES_ROOT}/ivg/repos/k8s-diff-sh"
+    script=""
+    case "$target" in
+        "h")
+            script="${root}/helm_diff.sh" ;;
+        "hb")
+            script="${root}/helm_diff_between_branches.sh" ;;
+        "k")
+            script="${root}/kustomize_diff.sh" ;;
+        "kb")
+            script="${root}/kustomize_diff_between_branches.sh" ;;
+    esac
 
-kustomize_branch() {
-    "${DOTFILES_ROOT}/bin/k8s-diff.sh" kb $@
-}
+    if [ -z "$script" ] ; then
+        cat - <<EOS > /dev/stderr
+kdiff TARGET [ARGS...]
 
-helm_diff() {
-    "${DOTFILES_ROOT}/bin/k8s-diff.sh" hd $@
-}
+h : helm_diff.sh
+hb: helm_diff_between_branches.sh
+k : kustomize_diff.sh
+kb: kustomize_diff_between_branches.sh
+EOS
+        return 1
+    fi
 
-helm_branch() {
-    "${DOTFILES_ROOT}/bin/k8s-diff.sh" hb $@
+    shift
+    "$script" "$@"
 }
 
 kgetall() {

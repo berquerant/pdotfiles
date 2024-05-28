@@ -16,3 +16,4 @@ grinfo
 zetasqlite
 grdep
 lisel
+k8s-diff-sh
