@@ -34,16 +34,6 @@ kill_emacs() {
 }
 alias ekill='kill_emacs'
 
-if [[ "$INSIDE_EMACS" = 'vterm' ]] \
-    && [[ -n ${EMACS_VTERM_PATH} ]] \
-    && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
-    TMP_PROMPT_COMMAND=$PROMPT_COMMAND
-    TMP_PS1=$PS1
-    source ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
-    PS1=$TMP_PS1
-    PROMPT_COMMAND=$TMP_PROMPT_COMMAND
-fi
-
 emacs_batch() {
     "${DOTFILES_ROOT}/bin/emacs-batch.sh" "$@"
 }
@@ -57,3 +47,26 @@ emacs_select_update_package() {
         emacs_package update "$name"
     done
 }
+
+# vterm https://github.com/akermu/emacs-libvterm
+vterm_printf() {
+    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then
+        # Tell tmux to pass the escape sequences through
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+
+if [[ "$INSIDE_EMACS" = 'vterm' ]] \
+    && [[ -n ${EMACS_VTERM_PATH} ]] \
+    && [[ -f ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh ]]; then
+    TMP_PROMPT_COMMAND=$PROMPT_COMMAND
+    TMP_PS1=$PS1
+    source ${EMACS_VTERM_PATH}/etc/emacs-vterm-bash.sh
+    PS1=$TMP_PS1
+    PROMPT_COMMAND=$TMP_PROMPT_COMMAND
+fi

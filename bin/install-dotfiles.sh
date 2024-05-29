@@ -32,6 +32,7 @@ dotfiles=(
     .aspell.conf
     .rustfmt.toml
     .npmrc
+    .Brewfile
 )
 
 message "Install dotfiles on home directory"

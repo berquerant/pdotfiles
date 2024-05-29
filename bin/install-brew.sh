@@ -30,7 +30,7 @@ brew update
 brew upgrade
 
 message "Install tools"
-brew bundle --file "${d}/.Brewfile"
+brew bundle --global --no-lock
 
 if ! which gettext > /dev/null
 then

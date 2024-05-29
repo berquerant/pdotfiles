@@ -77,6 +77,7 @@ git-global: ## modify global git settings
 
 brew-update: ## update brew packages
 	brew update
+	brew bundle --global --no-lock
 	brew upgrade
 	brew cleanup
 

@@ -16,6 +16,8 @@ kdiff() {
             script="${root}/kustomize_diff.sh" ;;
         "kb")
             script="${root}/kustomize_diff_between_branches.sh" ;;
+        "o")
+            script="${root}/object.sh" ;;
     esac
 
     if [ -z "$script" ] ; then
@@ -26,6 +28,7 @@ h : helm_diff.sh
 hb: helm_diff_between_branches.sh
 k : kustomize_diff.sh
 kb: kustomize_diff_between_branches.sh
+o : object.sh
 EOS
         return 1
     fi
