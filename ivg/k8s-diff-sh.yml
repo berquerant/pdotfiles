@@ -2,3 +2,5 @@ uri: https://github.com/berquerant/k8s-diff-sh
 branch: main
 locald: repos/k8s-diff-sh
 lock: locks/k8s-diff-sh.lock
+install:
+  - ln -snvf "${DOTFILES_ROOT}/bin/kdiff.sh" /usr/local/bin/kdiff
