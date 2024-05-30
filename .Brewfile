@@ -47,7 +47,6 @@ brew "wget"
 brew "tree"
 
 # docker
-cask "docker"
 brew "hadolint"
 
 # kubernetes
@@ -71,7 +70,6 @@ brew "gnu-time"
 brew "gnupg"
 
 # cask
-cask "google-chrome"
 cask "multipass"
 
 # python

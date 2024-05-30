@@ -25,6 +25,7 @@ setopt hist_reduce_blanks
 setopt extended_history
 setopt inc_append_history
 setopt no_tify
+setopt share_history
 # completion
 autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
