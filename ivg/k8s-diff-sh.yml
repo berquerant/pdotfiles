@@ -4,3 +4,4 @@ locald: repos/k8s-diff-sh
 lock: locks/k8s-diff-sh.lock
 install:
   - ln -snvf "${DOTFILES_ROOT}/bin/kdiff.sh" /usr/local/bin/kdiff
+  - pip install pyyaml==6.0.1
