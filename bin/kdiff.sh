@@ -5,13 +5,13 @@ root="${DOTFILES_ROOT}/ivg/repos/k8s-diff-sh"
 script=""
 case "$target" in
     "h")
-        script="${root}/helm_diff.sh" ;;
+        script="${root}/helm.sh" ;;
     "hb")
-        script="${root}/helm_diff_between_branches.sh" ;;
+        script="${root}/helm_branch.sh" ;;
     "k")
-        script="${root}/kustomize_diff.sh" ;;
+        script="${root}/kustomize.sh" ;;
     "kb")
-        script="${root}/kustomize_diff_between_branches.sh" ;;
+        script="${root}/kustomize_branch.sh" ;;
     "o")
         script="${root}/object.sh" ;;
 esac
@@ -21,10 +21,10 @@ if [ -z "$script" ] ; then
     cat - <<EOS > /dev/stderr
 ${name} TARGET [ARGS...]
 
-h : helm_diff.sh
-hb: helm_diff_between_branches.sh
-k : kustomize_diff.sh
-kb: kustomize_diff_between_branches.sh
+h : helm.sh
+hb: helm_branch.sh
+k : kustomize.sh
+kb: kustomize_branch.sh
 o : object.sh
 EOS
     exit 1
