@@ -14,7 +14,7 @@ __grdep() {
 
 gen_env_config() {
     # extract environment variables
-    echo ".envrc .zshrc bin/z/0010-init.zsh bin/z/0020-emacs.zsh" |\
+    echo ".envrc .zshrc $(find bin/z -type f -name "*.zsh" | sort | xargs)" |\
         tr ' ' '\n' |\
         awk -v r="$DOTFILES_ROOT" '{print r"/"$0}' |\
         xargs -n 1 grep -E '^export' |\

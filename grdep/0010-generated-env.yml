@@ -7,6 +7,12 @@ node:
     name: CARGO_HOME
   - category: .*
     matcher:
+      - r: DATETIME_FORMAT
+      - val:
+          - DATETIME_FORMAT
+    name: DATETIME_FORMAT
+  - category: .*
+    matcher:
       - r: DIRENV_ENABLED
       - val:
           - DIRENV_ENABLED
@@ -31,10 +37,34 @@ node:
     name: EMACSD
   - category: .*
     matcher:
+      - r: EMACS_CUI
+      - val:
+          - EMACS_CUI
+    name: EMACS_CUI
+  - category: .*
+    matcher:
       - r: EMACS_HISTFILE
       - val:
           - EMACS_HISTFILE
     name: EMACS_HISTFILE
+  - category: .*
+    matcher:
+      - r: EMACS_MINIMAL_INIT
+      - val:
+          - EMACS_MINIMAL_INIT
+    name: EMACS_MINIMAL_INIT
+  - category: .*
+    matcher:
+      - r: GHQ_ROOT
+      - val:
+          - GHQ_ROOT
+    name: GHQ_ROOT
+  - category: .*
+    matcher:
+      - r: GIT_EDITOR
+      - val:
+          - GIT_EDITOR
+    name: GIT_EDITOR
   - category: .*
     matcher:
       - r: GIT_USER
@@ -85,16 +115,16 @@ node:
     name: HISTSIZE
   - category: .*
     matcher:
+      - r: HOMEBREW_BUNDLE_FILE_GLOBAL
+      - val:
+          - HOMEBREW_BUNDLE_FILE_GLOBAL
+    name: HOMEBREW_BUNDLE_FILE_GLOBAL
+  - category: .*
+    matcher:
       - r: LESSHISTFILE
       - val:
           - LESSHISTFILE
     name: LESSHISTFILE
-  - category: .*
-    matcher:
-      - r: LIBRARY_PATH
-      - val:
-          - LIBRARY_PATH
-    name: LIBRARY_PATH
   - category: .*
     matcher:
       - r: LOGD
@@ -137,6 +167,12 @@ node:
       - val:
           - PJTMP
     name: PJTMP
+  - category: .*
+    matcher:
+      - r: PORT_FORWARD_RECEIVE
+      - val:
+          - PORT_FORWARD_RECEIVE
+    name: PORT_FORWARD_RECEIVE
   - category: .*
     matcher:
       - r: PROJECT
@@ -187,10 +223,22 @@ node:
     name: SAVEHIST
   - category: .*
     matcher:
+      - r: STEPPING_STONE
+      - val:
+          - STEPPING_STONE
+    name: STEPPING_STONE
+  - category: .*
+    matcher:
       - r: TMPD
       - val:
           - TMPD
     name: TMPD
+  - category: .*
+    matcher:
+      - r: TMUX_LAUNCH_PREFIX
+      - val:
+          - TMUX_LAUNCH_PREFIX
+    name: TMUX_LAUNCH_PREFIX
   - category: .*
     matcher:
       - r: ZPLUG_HOME
