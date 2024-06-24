@@ -1,0 +1,4 @@
+uri: https://github.com/berquerant/cache-sh
+branch: main
+locald: repos/cache-sh
+lock: locks/cache-sh.lock

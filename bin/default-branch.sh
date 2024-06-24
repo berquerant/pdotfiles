@@ -3,24 +3,12 @@
 d=$(cd $(dirname $0)/..; pwd)
 . "${d}/bin/cache.sh"
 
-__default_branch_cache="${TMPD}/cache/default_branch"
-mkdir -p "$(dirname $__default_branch_cache)"
-
 __default_branch() {
     git remote show origin | grep -F 'HEAD branch:' | cut -d ':' -f 2 | tr -d ' '
 }
 
 default_branch() {
-    __default_branch_key="$PWD"
-    __default_branch_value="$(cache_get "$__default_branch_cache" "$__default_branch_key")"
-    if [ -n "$__default_branch_value" ] ; then
-        echo "$__default_branch_value"
-        return
-    fi
-    __default_branch_value="$(__default_branch)"
-    # ttl is 1 day
-    cache_set "$__default_branch_cache" "$__default_branch_key" "$__default_branch_value" 86400
-    echo "$__default_branch_value"
+    cache_function __default_branch "$PWD" 86400
 }
 
 switch_branch() {
