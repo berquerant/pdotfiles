@@ -1,6 +1,8 @@
 #!/bin/bash
 
-export CACHE_KV_SEP=' '
-export CACHE_ENCODE='base64'
-export CACHE_DECODE='base64 -d'
+export CACHE_DIR="${TMPD}/.cache-sh/kv/"
 . "${DOTFILES_ROOT}/ivg/repos/cache-sh/cache.sh"
+
+cache_clear() {
+    rm -rf "$CACHE_DIR"
+}

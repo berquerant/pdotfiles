@@ -44,6 +44,7 @@
   force-push = push --force-with-lease --force-if-includes
   g = grep --heading
   l = log
+  ll = log --pretty=oneline
   logs = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   search-commit = log -G
   search-commit-patch = log --patch -G
