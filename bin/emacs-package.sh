@@ -1,17 +1,36 @@
 #!/bin/bash
 
 d=$(cd $(dirname $0)/..; pwd)
+. "${d}/bin/cache.sh"
 
-__batch() {
+__emacs_package_cache_ttl=3600
+
+__emacs_package_batch() {
     "${d}/bin/emacs-batch.sh" "$@"
 }
 
+__emacs_package_batch_eval() {
+    __emacs_package_batch --eval "$(cat -)"
+}
+
+__batch() {
+    echo "$1" | __emacs_package_batch_eval
+}
+
+__batch_cache() {
+    if [ -n "$NO_CACHE" ] ; then
+        echo "$1" | CACHE_FUNCTION_OVERWRITE=1 cache_function_io __emacs_package_batch_eval "$__emacs_package_cache_ttl"
+    else
+        echo "$1" | cache_function_io __emacs_package_batch_eval "$__emacs_package_cache_ttl"
+    fi
+}
+
 list_names() {
-    __batch --eval '(my-external-straight-list-packages)'
+    __batch_cache '(my-external-straight-list-packages)'
 }
 
 list_directories() {
-    __batch --eval '(my-external-straight-list-directories)'
+    __batch_cache '(my-external-straight-list-directories)'
 }
 
 describe_packages() {
@@ -27,7 +46,7 @@ describe_old_packages() {
 }
 
 freeze() {
-    __batch --eval '(my-external-straight-freeze)'
+    __batch_cache '(my-external-straight-freeze)'
 }
 
 update_package() {
@@ -41,15 +60,15 @@ update_package() {
 }
 
 check_all() {
-    __batch --eval '(my-exrernal-straight-check-all)'
+    __batch_cache '(my-exrernal-straight-check-all)'
 }
 
 list_dependencies() {
-    __batch --eval '(my-external-straight-dependencies)'
+    __batch_cache '(my-external-straight-dependencies)'
 }
 
 list_dependents() {
-    __batch --eval '(my-external-straight-dependents)'
+    __batch_cache '(my-external-straight-dependents)'
 }
 
 __render_deps() {
