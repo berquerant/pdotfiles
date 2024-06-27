@@ -18,11 +18,15 @@ __batch() {
 }
 
 __batch_cache() {
-    if [ -n "$NO_CACHE" ] ; then
-        echo "$1" | CACHE_FUNCTION_OVERWRITE=1 cache_function_io __emacs_package_batch_eval "$__emacs_package_cache_ttl"
-    else
-        echo "$1" | cache_function_io __emacs_package_batch_eval "$__emacs_package_cache_ttl"
-    fi
+    echo "$1" | cache_function_io __emacs_package_batch_eval "$__emacs_package_cache_ttl"
+}
+
+__grinfo() {
+    grinfo --worker 8
+}
+
+__grinfo_cache() {
+    cache_function_io __grinfo
 }
 
 list_names() {
@@ -34,7 +38,7 @@ list_directories() {
 }
 
 describe_packages() {
-    list_directories | grinfo --worker 8
+    list_directories | __grinfo_cache
 }
 
 describe_old_packages() {

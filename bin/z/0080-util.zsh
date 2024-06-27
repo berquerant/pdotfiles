@@ -94,3 +94,5 @@ edot() {
 unzip_via_ditto() {
     ditto -V -x -k --sequesterRsrc $1 .
 }
+
+source "${DOTFILES_ROOT}/bin/cache.sh"
