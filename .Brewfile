@@ -71,6 +71,7 @@ brew "gnupg"
 
 # cask
 cask "multipass"
+cask "devtoys"
 
 # python
 brew "pipenv"
