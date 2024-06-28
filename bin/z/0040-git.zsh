@@ -86,5 +86,5 @@ gfreset() {
 }
 
 gi() {
-    "${DOTFILES_ROOT}/bin/git-iter.sh" "$@"
+    GREP='rg' git-iter "$@"
 }

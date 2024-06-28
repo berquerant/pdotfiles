@@ -3,38 +3,28 @@
 d=$(cd $(dirname $0)/..; pwd)
 . "${d}/bin/cache.sh"
 
-__emacs_package_cache_ttl=3600
-
 __emacs_package_batch() {
     "${d}/bin/emacs-batch.sh" "$@"
 }
 
-__emacs_package_batch_eval() {
-    __emacs_package_batch --eval "$(cat -)"
-}
-
 __batch() {
-    echo "$1" | __emacs_package_batch_eval
+    __emacs_package_batch "$@"
 }
 
 __batch_cache() {
-    echo "$1" | cache_function_io __emacs_package_batch_eval "$__emacs_package_cache_ttl"
-}
-
-__grinfo() {
-    grinfo --worker 8
+    cache_function_args __emacs_package_batch "$@"
 }
 
 __grinfo_cache() {
-    cache_function_io __grinfo
+    cache_function_io_args grinfo --worker 8
 }
 
 list_names() {
-    __batch_cache '(my-external-straight-list-packages)'
+    __batch_cache --eval '(my-external-straight-list-packages)'
 }
 
 list_directories() {
-    __batch_cache '(my-external-straight-list-directories)'
+    __batch_cache --eval '(my-external-straight-list-directories)'
 }
 
 describe_packages() {
@@ -50,7 +40,7 @@ describe_old_packages() {
 }
 
 freeze() {
-    __batch_cache '(my-external-straight-freeze)'
+    __batch_cache --eval '(my-external-straight-freeze)'
 }
 
 update_package() {
@@ -59,20 +49,19 @@ update_package() {
         echo "no package specified"
         return 1
     fi
-    __batch --eval "(my-external-straight-update-package \"${pkg}\")" &&\
-        freeze
+    __batch --eval "(my-external-straight-update-package \"${pkg}\")" && freeze
 }
 
 check_all() {
-    __batch_cache '(my-exrernal-straight-check-all)'
+    __batch_cache --eval '(my-exrernal-straight-check-all)'
 }
 
 list_dependencies() {
-    __batch_cache '(my-external-straight-dependencies)'
+    __batch_cache --eval '(my-external-straight-dependencies)'
 }
 
 list_dependents() {
-    __batch_cache '(my-external-straight-dependents)'
+    __batch_cache --eval '(my-external-straight-dependents)'
 }
 
 __render_deps() {
@@ -94,9 +83,7 @@ render_dependents() {
 }
 
 histfile_stat() {
-    cat "$EMACS_HISTFILE" |\
-        awk '{s[$2]+=$3}END{for(k in s)print s[k]"\t"k}' |\
-        sort -nk 1
+    awk '{s[$2]+=$3}END{for(k in s)print s[k]"\t"k}' "$EMACS_HISTFILE" | sort -nk 1
 }
 
 usage() {
@@ -152,18 +139,10 @@ main() {
             cmd="$1"
             shift
             case "$cmd" in
-                "n" | "name" | "names")
-                    list_names
-                    ;;
-                "d" | "dir" | "directories")
-                    list_directories
-                    ;;
-                "p" | "dep" | "dependencies")
-                    list_dependencies
-                    ;;
-                "q" | "det" | "dependents")
-                    list_dependents
-                    ;;
+                "n" | "name" | "names") list_names ;;
+                "d" | "dir" | "directories") list_directories ;;
+                "p" | "dep" | "dependencies") list_dependencies ;;
+                "q" | "det" | "dependents") list_dependents ;;
                 *)
                     usage
                     return 1
@@ -174,42 +153,26 @@ main() {
             cmd="$1"
             shift
             case "$cmd" in
-                "a" | "all")
-                    describe_packages
-                    ;;
-                *)
-                    describe_old_packages "$@"
-                    ;;
+                "a" | "all") describe_packages ;;
+                *) describe_old_packages "$@" ;;
             esac
             ;;
-        "u" | "up" | "update")
-            update_package "$@"
-            ;;
-        "c" | "check")
-            check_all
-            ;;
+        "u" | "up" | "update") update_package "$@" ;;
+        "c" | "check") check_all ;;
         "r" | "render")
             cmd="$1"
             shift
             case "$cmd" in
-                "d" | "dep" | "dependencies")
-                    render_dependencies
-                    ;;
-                "q" | "det" | "dependents")
-                    render_dependents
-                    ;;
+                "d" | "dep" | "dependencies") render_dependencies ;;
+                "q" | "det" | "dependents") render_dependents ;;
                 *)
                     usage
                     return 1
                     ;;
             esac
             ;;
-        "hs" | "histstat")
-            histfile_stat
-            ;;
-        "f" | "freeze")
-            freeze
-            ;;
+        "hs" | "histstat") histfile_stat ;;
+        "f" | "freeze") freeze ;;
         *)
             usage
             return 1

@@ -1,0 +1,6 @@
+uri: https://github.com/berquerant/git-iter-sh
+branch: main
+locald: repos/git-iter-sh
+lock: locks/git-iter-sh.lock
+install:
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/git-iter.sh" /usr/local/bin/git-iter
