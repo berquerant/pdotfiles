@@ -52,19 +52,35 @@ clean_etc() {
     __run rm -rf "$TMPD"
 }
 
-set -e
+run() {
+    case "$1" in
+        "go") clean_go ;;
+        "python") clean_python ;;
+        "ruby") clean_ruby ;;
+        "node") clean_node ;;
+        "brew") clean_brew ;;
+        "docker") clean_docker ;;
+        "etc") clean_etc ;;
+        *) cecho yellow "Unknown target: $1" ;;
+    esac
+}
 
-case "$1" in
-    "go") clean_go ;;
-    "python") clean_python ;;
-    "ruby") clean_ruby ;;
-    "node") clean_node ;;
-    "brew") clean_brew ;;
-    "docker") clean_docker ;;
-    "etc") clean_etc ;;
-    *)
-        cecho green "go|python|ruby|node|brew|docker|etc"
+main() {
+    if [ -z "$1" ] ; then
+        cecho green "${0##*/} TARGET [TARGET...]"
+        cecho green "TARGET: go|python|ruby|node|brew|docker|etc"
         cecho green "dryrun if envvar DEBUG is not empty"
-        exit 1
-        ;;
-esac
+        return 1
+    fi
+
+    args="$*"
+    if [ "$1" = "all" ] ; then
+        args="go python ruby node brew docker etc"
+    fi
+    for arg in $args ; do
+        run "$arg"
+    done
+}
+
+set -e
+main "$@"
