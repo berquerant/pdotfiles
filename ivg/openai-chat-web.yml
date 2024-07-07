@@ -4,3 +4,5 @@ locald: repos/openai-chat-web
 lock: locks/openai-chat-web.lock
 install:
   - pipenv install
+uninstall:
+  - pipenv --rm

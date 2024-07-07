@@ -20,16 +20,6 @@ make help
 make update
 ```
 
-## Ignore specific tools
-
-Use `IVG_SH_IGNORE` like
-
-``` shell
-IVG_SH_IGNORE="mpv-settings" make update
-```
-
-See [install-via-git.sh](bin/install-via-git.sh).
-
 ## Install one by one
 
 ``` shell
@@ -46,4 +36,10 @@ Install language and libraries.
 
 ``` shell
 ./install t ruby
+```
+
+## Uninstall
+
+``` shell
+./uninstall ruby
 ```

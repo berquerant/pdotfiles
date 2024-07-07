@@ -6,3 +6,5 @@ install:
   - make dist/joiny
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/joiny" /usr/local/bin/joiny
   - joiny -h
+uninstall:
+  - rm -f /usr/local/bin/joiny

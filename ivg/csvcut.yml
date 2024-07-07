@@ -6,3 +6,5 @@ install:
   - cargo build --release
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/target/release/csvcut" /usr/local/bin/csvcut
   - csvcut --help
+uninstall:
+  - rm -f /usr/local/bin/csvcut

@@ -6,3 +6,5 @@ install:
   - make dist/gbrowse
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/gbrowse" /usr/local/bin/gbrowse
   - gbrowse -h
+uninstall:
+  - rm -f /usr/local/bin/gbrowse

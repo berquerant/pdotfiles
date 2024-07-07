@@ -56,7 +56,6 @@ exec_or_dry "mkdir -p ${EMACSD}/external-site-lisp"
 message "Install others"
 
 exec_or_dry "ln -snvf $d/etc/peco ~/.config/peco"
-exec_or_dry "ln -snvf $d/etc/bat ~/.config/bat"
 exec_or_dry "ln -snvf $d/.ruff.toml '${HOME}/Library/Application Support/.ruff.toml'"
 
 message "Dotfiles installed!"

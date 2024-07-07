@@ -8,3 +8,5 @@ install:
   - cron2date -h
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/date2cron" /usr/local/bin/date2cron
   - date2cron -h
+uninstall:
+  - rm -f /usr/local/bin/cron2date /usr/local/bin/date2cron

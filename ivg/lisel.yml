@@ -6,3 +6,5 @@ install:
   - cargo build --release
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/target/release/lisel" /usr/local/bin/lisel
   - lisel --version
+uninstall:
+  - rm -f /usr/local/bin/lisel

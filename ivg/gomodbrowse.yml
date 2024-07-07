@@ -5,3 +5,5 @@ lock: locks/gomodbrowse-sh.lock
 install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/gomodbrowse.sh" /usr/local/bin/gomodbrowse
   - gomodbrowse -h
+uninstall:
+  - rm -f /usr/local/bin/gomodbrowse

@@ -10,3 +10,6 @@ install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $GOENV_ROOT
   - goenv install --skip-existing $GO_VERSION
   - goenv local $GO_VERSION
+uninstall:
+  - goenv uninstall $GO_VERSION
+  - rm -f $GOENV_ROOT

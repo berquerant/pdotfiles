@@ -11,13 +11,22 @@
   (message "init time: %s" (emacs-init-time)))
 (add-hook 'after-init-hook 'display-emacs-init-time)
 
+(defun trace-after-load-function (loaded-file)
+  (message "[trace-after-load-function] %s" loaded-file))
+(add-hook 'after-load-functions #'trace-after-load-function)
+
 (setq user-emacs-directory (expand-file-name user-emacs-directory)) ; into absolute path
 ;; install and initialize package manager
-(defvar bootstrap-version)
+
+(add-to-list 'package-archives '("gnu-devel" . "https://elpa.gnu.org/devel/"))
 (defvar native-comp-deferred-compilation-deny-list nil) ; Workaround: Symbol's value as variable is void: native-comp-deferred-compilation-deny-list
+(defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
         (url-retrieve-synchronously
@@ -76,6 +85,9 @@
 
 (use-package my-load-built-in
   :straight (my-load-built-in :type built-in))
+
+(use-package my-theme
+  :straight (my-theme :type built-in))
 
 (use-package vterm ; libvterm libtool
   :bind

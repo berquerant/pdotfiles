@@ -6,3 +6,5 @@ install:
   - make
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/grdep" /usr/local/bin/grdep
   - grdep -h
+uninstall:
+  - rm -f /usr/local/bin/grdep

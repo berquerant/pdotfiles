@@ -11,16 +11,6 @@ if type gsed >/dev/null 2>&1 ; then
     alias sed='gsed'
 fi
 
-if type bat >/dev/null 2>&1 ; then
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'" # colorizing pager for man
-    alias bh='bat --plain --language=help' # colorizing help, e.g. rg --help | bh
-    batdiff() {
-        git diff --name-only --relative --diff-filter=d | xargs bat --diff
-    }
-else
-    alias bat='cat'
-fi
-
 if ! type rg >/dev/null 2>&1 ; then
     alias rg='grep'
 fi

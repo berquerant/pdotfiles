@@ -6,3 +6,5 @@ setup:
   - brew install sqlite
 install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/sqlite-csv.sh" /usr/local/bin/sqlite-csv.sh
+uninstall:
+  - rm -f /usr/local/bin/sqlite-csv.sh

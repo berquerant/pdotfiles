@@ -5,3 +5,5 @@ lock: locks/ip2bin.lock
 install:
   - bundle install
   - bundle binstubs ip2bin --path /usr/local/bin/
+uninstall:
+  - rm -f $(which ip2bin)

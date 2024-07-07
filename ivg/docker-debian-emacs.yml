@@ -5,3 +5,9 @@ lock: locks/docker-debian-emacs.lock
 install:
   - make
   - docker run --rm docker-debian-emacs --version
+uninstall:
+  - |
+    docker images --format json | jq 'select(.Repository=="docker-debian-emacs")' -c | while read line ; do
+      echo "$line" | jq '(.Repository)+":"+(.Tag)' -r | xargs -n 1 docker rmi --force
+      echo "$line" | jq '.ID' -r | xargs -n 1 docker rmi --force
+    done

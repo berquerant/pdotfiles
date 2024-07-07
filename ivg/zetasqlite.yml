@@ -6,3 +6,5 @@ install:
   - make build
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/cmd/zetasqlite-cli/zetasqlite-cli" /usr/local/bin/zetasqlite
   - zetasqlite --help
+uninstall:
+  - rm -f /usr/local/bin/zetasqlite

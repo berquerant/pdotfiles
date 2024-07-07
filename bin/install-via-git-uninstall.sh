@@ -5,4 +5,4 @@ ivg="${d}/bin/install-via-git-base.sh"
 target="$1"
 shift
 set -x
-"$ivg" run "$target" "$@"
+"$ivg" uninstall "$target" "$@"

@@ -49,6 +49,7 @@ alias dc='cd'
 alias history='history -t "%F %T"'
 alias l='ls -la'
 alias t='cat'
+alias y='echo'
 alias v='vim'
 alias f='less'
 if type eza >/dev/null 2>&1 ; then

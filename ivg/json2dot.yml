@@ -6,3 +6,6 @@ install:
   - pipenv sync --dev
   - pip install .
   - json2dot --version
+uninstall:
+  - pipenv uninstall json2dot
+  - pipenv --rm

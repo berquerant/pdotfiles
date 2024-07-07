@@ -52,7 +52,6 @@ exec_or_dry "rm -rf ${EMACSD}/site-lisp"
 message "Remove others"
 
 exec_or_dry "rm -f ~/.config/peco"
-exec_or_dry "rm -rf ~/.config/bat"
 exec_or_dry "rm -f '${HOME}/Library/Application Support/.ruff.toml'"
 
 message "Dotfiles removed!"

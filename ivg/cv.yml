@@ -6,3 +6,5 @@ install:
   - make dist/cv
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/cv" /usr/local/bin/cv
   - cv -h
+uninstall:
+  - rm -f /usr/local/bin/cv

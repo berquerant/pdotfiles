@@ -93,31 +93,6 @@
   (bind-key "M-s 6" 'switch-to-buffer-other-window-scratch)
   (bind-key "M-s 5" 'switch-to-buffer-other-frame-scratch))
 
-(use-package modus-themes
-  :ensure t
-  :init
-  (modus-themes-load-themes)
-  :custom
-  (modus-themes-bold-constructs t)
-  (modus-themes-italic-constructs t)
-  (modus-themes-subtle-line-numbers t)
-  (modus-themes-hl-line  '(accented))
-  (modus-themes-paren-match '(bold))
-  (modus-themes-region '(bg-only no-extend accented))
-  :config
-  (my-macro-ring-hook "my-themes" '(manoj-dark modus-vivendi))
-  (defun my-theme--init-basic-appearance ()
-    (set-cursor-color "green")
-    (setq cursor-type 'box))
-  (defun my-theme--rotate (current-theme next-theme)
-    (disable-theme current-theme)
-    (disable-theme next-theme)
-    (load-theme next-theme t)
-    (my-theme--init-basic-appearance))
-  (add-to-list 'my-themes-ring-hook 'my-theme--rotate)
-  (my-themes-ring-hook-rotate)
-  (bind-key "M-s 1" 'my-themes-ring-hook-rotate))
-
 ;; important utilities
 
 ;; popup window manager

@@ -10,3 +10,6 @@ install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $PYENV_ROOT
   - pyenv install --skip-existing $PY_VERSION
   - pyenv local $PY_VERSION
+uninstall:
+  - pyenv uninstall $PY_VERSION
+  - rm -f $PYENV_ROOT
