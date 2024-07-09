@@ -18,7 +18,6 @@
 (setq user-emacs-directory (expand-file-name user-emacs-directory)) ; into absolute path
 ;; install and initialize package manager
 
-(add-to-list 'package-archives '("gnu-devel" . "https://elpa.gnu.org/devel/"))
 (defvar native-comp-deferred-compilation-deny-list nil) ; Workaround: Symbol's value as variable is void: native-comp-deferred-compilation-deny-list
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -35,6 +34,10 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+(setq package-archives '(("gnu-devel" . "https://elpa.gnu.org/devel/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+
 (straight-use-package 'use-package) ; use-package integration
 
 (defconst my-straight-profile (concat user-emacs-directory "straight-default.el"))
