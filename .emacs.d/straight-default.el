@@ -40,7 +40,7 @@
  ("emacs-little-async" . "29b08b17ff9a5813685bcb51d637e42fc07e3987")
  ("emacs-load-env-vars" . "3808520efaf9492033f6e11a9bffd68eabf02a0f")
  ("emacs-message-routing" . "32df5b22a1dc573063dc9f1830fb32f83c0f36cf")
- ("emacs-minimal-init" . "bf5e39768319d4cb194dd49d5c0409ace159594f")
+ ("emacs-minimal-init" . "ed5d9796925d52a5e2ac18f2709749976fd0609b")
  ("emacs-openai-chat" . "accd5db4af713dc84d5618ab7a21b879a5d63296")
  ("emacs-request" . "01e338c335c07e4407239619e57361944a82cb8a")
  ("emacs-scala-mode" . "4c6d636b86e3bb1d95de819dc48dda92abdfbcf4")

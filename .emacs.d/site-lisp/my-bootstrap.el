@@ -22,6 +22,8 @@
 (use-package minimal-init
   :demand t
   :straight (minimal-init :host github :repo "berquerant/emacs-minimal-init")
+  :custom
+  (minimal-init-font-size 120)
   :config
   (minimal-init-setup))
 
