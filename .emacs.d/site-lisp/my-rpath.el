@@ -23,9 +23,9 @@
                                     args))
                       (my-rpath--category)
                       path)))
-    (message "[my-rpath] %s" cmd)
     (let ((result (shell-command-to-string cmd)))
-      (if (s-blank? result) (message "[my-rpath] failed %s" cmd)
+      (if (s-blank? result) (message "my-rpath: failed %s" cmd)
+        (message "my-rpath: %s -> %s" cmd result)
         (popup-tip result)))))
 
 ;;;###autoload

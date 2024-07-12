@@ -1466,6 +1466,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             ("^DEBUG" . "*routed-debug-log*")
                             ("^my-straight" . "*my-straight*")
                             ("^my-package" . "*my-package*")
+                            ("^my-rpath" . "*my-rpath*")
                             ("^my-macro-advice-add-debug" . "*my-macro-advice-add-debug*")))
   :config
   (message-routing-setup))
