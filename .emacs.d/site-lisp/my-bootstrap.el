@@ -119,6 +119,11 @@
   :bind
   ("M-s 4" . my-git-browse-git-browse))
 
+(use-package my-rpath
+  :straight (my-rpath :type built-in)
+  :bind
+  ("M-s p" . my-rpath-call))
+
 (use-package my-misc
   :straight (my-misc :type built-in)
   :commands (my-misc-delete-window-predicates-add

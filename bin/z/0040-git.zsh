@@ -86,5 +86,5 @@ gfreset() {
 }
 
 gi() {
-    GREP='rg' git-iter "$@"
+    GIT_ITER_MAX_PROCS="${GI_PROCS:-1}" GREP='rg' git-iter "$@"
 }
