@@ -868,7 +868,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :custom
   (gofmt-command "goimports")
   :config
-  (add-hook 'before-save-hook 'gofmt-before-save))
+  (my-macro-thyristor gofmt-before-save)
+  (gofmt-before-save-thyristor-set nil)
+  (add-hook 'before-save-hook 'gofmt-before-save-thyristor))
 
 (use-package flycheck-golangci-lint
   :demand t
@@ -1206,9 +1208,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
               (eq (my-eglot-ring-hook-get-state) 'my-eglot-imports-and-format))
       (call-interactively 'eglot-code-action-organize-imports)))
   (defun my-eglot-format-and-imports ()
-    (unless (eq major-mode 'go-mode) ; use gofmt-before-save
-      (my-eglot-code-action-organize-imports)
-      (my-eglot-format-buffer)))
+    (my-eglot-format-buffer)
+    (my-eglot-code-action-organize-imports))
   (defun my-eglot-before-save-hook ()
     (add-hook 'before-save-hook #'my-eglot-format-and-imports))
   (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd")))
