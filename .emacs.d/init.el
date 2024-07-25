@@ -437,6 +437,8 @@ c.f. `format-all-region'."
   :demand t
   :commands my-project-p
   :diminish (projectile-mode . "P")
+  :bind
+  ("C-c p f" . projectile-find-file)
   :config
   (defun my-project-p ()
     "Check if current directory is a project."

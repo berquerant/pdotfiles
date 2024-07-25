@@ -48,18 +48,28 @@ gtagpush() {
     git push origin "$1"
 }
 
+gcurrentbranch() {
+    git branch | awk '$1=="*"{print $2}'
+}
+
 gfbranch() {
-    if [[ -z "$1" ]] ; then
+    if [[ "$1" == "-h" ]] ; then
         echo "switch branch if remote branch exists else create branch, forcely"
-        echo "gfbranch BRANCH"
+        echo "if BRANCH is empty, delete the current branch and create a new branch with the same name"
+        echo "gfbranch [BRANCH]"
         return 1
     fi
 
-    branch="$1"
-    if git branch | grep -q "$branch" ; then
-        git branch -D "$branch"
+    default_branch="$(gdefault)"
+    current_branch="$(gcurrentbranch)"
+    branch="${1:-$current_branch}"
+    if [[ "$branch" == "$default_branch" ]] ; then
+        return 1
     fi
+    git switch "$default_branch"
+    git branch -D "$branch"
     git fetch
+    git pull
     git switch "$branch" || git checkout -b "$branch"
 }
 
