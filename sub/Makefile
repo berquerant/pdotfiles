@@ -3,9 +3,9 @@ TARGET_BULK := bin/install-target-bulk.sh
 IVG_SH := bin/install-via-git.sh
 
 .PHONY: sub
-sub: sub-target rust ## install sub dependencies
-sub-update: sub-target-update rust-update ## update sub dependencies
-sub-retry: sub-target-retry rust-retry ## retry to install sub dependencies
+sub: rust sub-target ## install sub dependencies
+sub-update: rust-update sub-target-update ## update sub dependencies
+sub-retry: rust-retry sub-target-retry ## retry to install sub dependencies
 
 sub-target: ## install sub targets
 	cat $(SUB_TARGET_LIST) | $(TARGET_BULK)

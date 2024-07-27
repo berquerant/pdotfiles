@@ -36,6 +36,7 @@ next_config="${PJTMP}/.gitconfig"
 backup_config="${PJTMP}/.gitconfig.backup"
 envsubst < "${PROJECT}/.gitconfig.tpl" > "$next_config"
 if [ -f "$current_config" ] ; then
+    config_backup_exist=1
     cp "$current_config" "$backup_config"
 fi
 
@@ -51,6 +52,10 @@ if [ -f "$current_config" ]; then
             cp "$next_config" "$current_config"
         fi
     fi
+fi
+
+if [ -z "$config_backup_exist" ] ; then
+    exit
 fi
 
 cecho green "check git aliases..."

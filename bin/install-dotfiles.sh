@@ -64,3 +64,5 @@ if ${is_dry}
 then
     message "Dry run done."
 fi
+
+sudo chown -R "$(whoami)" /usr/local/bin
