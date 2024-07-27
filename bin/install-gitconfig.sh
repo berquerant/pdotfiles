@@ -35,7 +35,9 @@ current_config="${HOME}/.gitconfig"
 next_config="${PJTMP}/.gitconfig"
 backup_config="${PJTMP}/.gitconfig.backup"
 envsubst < "${PROJECT}/.gitconfig.tpl" > "$next_config"
-cp "$current_config" "$backup_config"
+if [ -f "$current_config" ] ; then
+    cp "$current_config" "$backup_config"
+fi
 
 set +e
 if [ -f "$current_config" ]; then
