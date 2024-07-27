@@ -59,12 +59,12 @@ message "Change shell"
 
 if ! grep -e "bash$" /etc/shells > /dev/null
 then
-    sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'
+    sudo bash -c 'echo /bin/bash >> /etc/shells'
 fi
 if ! grep -e "zsh$" /etc/shells > /dev/null
 then
-    sudo bash -c 'echo /usr/local/bin/zsh >> /etc/shells'
+    sudo bash -c 'echo /bin/zsh >> /etc/shells'
 fi
-chsh -s /usr/local/bin/zsh
+chsh -s /bin/zsh
 
 message "You should activate direnv and zsh"
