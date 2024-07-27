@@ -23,7 +23,13 @@ else
     message "Homebrew found"
 fi
 
-"${d}/bin/brew-eval.sh"
+__arch="$(uname -m)"
+if [ "$__arch" = "arm64" ]; then
+    export PATH="$PATH:/opt/homebrew/bin"
+elif [ "$__arch" = "x86_64" ]; then
+    export PATH="$PATH:/usr/local/bin"
+fi
+
 set +e
 brew doctor
 set -e
