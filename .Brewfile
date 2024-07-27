@@ -75,7 +75,7 @@ brew "pipenv"
 brew "readline" # .pythonrc
 
 # go
-brew "golangci/tap/golangci-lint"
+brew "golangci-lint"
 
 # rust
 brew "rust-analyzer"
