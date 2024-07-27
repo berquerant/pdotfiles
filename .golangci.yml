@@ -44,4 +44,4 @@ linters:
     - tagalign
     - forbidigo
     # deprecated
-    - deadcode
+    - execinquery

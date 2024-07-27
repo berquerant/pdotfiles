@@ -3,7 +3,7 @@ branch: main
 locald: repos/rpath
 lock: locks/rpath.lock
 install:
-  - make dist/rpath
+  - ./xc build
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/rpath" /usr/local/bin/rpath
   - rpath -h
 uninstall:
