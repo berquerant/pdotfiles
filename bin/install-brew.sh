@@ -23,6 +23,8 @@ else
     message "Homebrew found"
 fi
 
+"${d}/bin/brew-eval.sh"
+
 set +e
 brew doctor
 set -e
