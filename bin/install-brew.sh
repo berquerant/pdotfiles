@@ -15,19 +15,19 @@ set +e
 xcode-select --install
 set -e
 
+__arch="$(uname -m)"
+if [ "$__arch" = "arm64" ]; then
+    export PATH="$PATH:/opt/homebrew/bin"
+elif [ "$__arch" = "x86_64" ]; then
+    export PATH="$PATH:/usr/local/bin"
+fi
+
 if ! which brew > /dev/null
 then
     message "Install Homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
     message "Homebrew found"
-fi
-
-__arch="$(uname -m)"
-if [ "$__arch" = "arm64" ]; then
-    export PATH="$PATH:/opt/homebrew/bin"
-elif [ "$__arch" = "x86_64" ]; then
-    export PATH="$PATH:/usr/local/bin"
 fi
 
 set +e
@@ -37,7 +37,11 @@ brew update
 brew upgrade
 
 message "Install tools"
-brew bundle --file "${d}/.Brewfile.init" --no-lock
+if [ -z "$INSTALL_BREW_NO_INIT" ] ; then
+    brew bundle --file "${d}/.Brewfile.init" --no-lock
+fi
+
+export HOMEBREW_BUNDLE_FILE_GLOBAL="${d}/.Brewfile"
 brew bundle --global --no-lock
 
 if ! which gettext > /dev/null
