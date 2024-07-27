@@ -19,15 +19,15 @@ if ! which brew > /dev/null
 then
     message "Install Homebrew"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    __arch="$(uname -m)"
+    if [ "$__arch" = "arm64" ]; then
+        export PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
+        echo 'export PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"' >> ~/.zprofile
+    elif [ "$__arch" = "x86_64" ]; then
+        export PATH="$PATH:/usr/local/bin"
+    fi
 else
     message "Homebrew found"
-fi
-
-__arch="$(uname -m)"
-if [ "$__arch" = "arm64" ]; then
-    export PATH="$PATH:/opt/homebrew/bin"
-elif [ "$__arch" = "x86_64" ]; then
-    export PATH="$PATH:/usr/local/bin"
 fi
 
 set +e
