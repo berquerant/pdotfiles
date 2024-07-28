@@ -3,6 +3,7 @@ branch: main
 locald: repos/ip2bin
 lock: locks/ip2bin.lock
 install:
+  # https://github.com/ruby/bigdecimal/issues/297
   - bundle install
   - bundle binstubs ip2bin --path /usr/local/bin/
 uninstall:

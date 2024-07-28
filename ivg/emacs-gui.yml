@@ -15,8 +15,8 @@ env:
   LIBRARY_PATH: "/opt/homebrew/lib:$LIBRARY_PATH"
   CC: "/usr/bin/clang" # for nextstep AppKit/AppKit.h
 setup:
-  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications
-  - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications
+  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs/31.0.50/lisp
+  - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs
   - |
     if [ -d "$_IVG_APP" ]; then
       rm -rf $_IVG_BACKUP
