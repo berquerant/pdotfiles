@@ -3,6 +3,7 @@ branch: main
 locald: repos/json2dot
 lock: locks/json2dot.lock
 install:
+  - pipenv --rm | echo "First time install"
   - pipenv sync --dev
   - pip install .
   - json2dot --version
