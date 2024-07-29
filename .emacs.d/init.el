@@ -13,7 +13,9 @@
 
 (defun trace-after-load-function (loaded-file)
   (message "[trace-after-load-function] %s" loaded-file))
-(add-hook 'after-load-functions #'trace-after-load-function)
+(let ((debug-trace-after-load (or (getenv "EMACS_DEBUG_TRACE_AFTER_LOAD") "")))
+  (unless (string-equal debug-trace-after-load "")
+    (add-hook 'after-load-functions #'trace-after-load-function)))
 
 (setq user-emacs-directory (expand-file-name user-emacs-directory)) ; into absolute path
 ;; install and initialize package manager
@@ -1457,7 +1459,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (my-openai-chat-web :type built-in)
   :bind ("M-s M-s M-w" . my-openai-chat-web-start)
   :custom
-  (my-openai-chat-web-chat-model "gpt-4o")
+  (my-openai-chat-web-chat-model "gpt-4o-mini")
   (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh"
                                       (my-getenv "DOTFILES_ROOT"))))
 
