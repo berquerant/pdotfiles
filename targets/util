@@ -1,6 +1,5 @@
 openai-chat-web
 gbrowse
-ip2bin
 docker-man
 docker-debian-emacs
 json2dot
@@ -12,3 +11,4 @@ k8s-diff-sh
 cache-sh
 git-iter-sh
 rpath
+ip2bin
