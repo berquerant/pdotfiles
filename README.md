@@ -121,7 +121,7 @@ bin/install-fonts.sh
 Install Emacs with minimal configurations.
 
 ``` shell
-ln -snvf $(DOTFILES_ROOT)/bin/emacs-light.sh /usr/local/bin/lmacs
+ln -snvf "${DOTFILES_ROOT}/bin/emacs-light.sh" /usr/local/bin/lmacs
 ```
 
 ## emacs-gui
