@@ -5,6 +5,6 @@ ivgsh="${d}/bin/install-target.sh"
 
 set -e
 
-while read target ; do
+grep -v -E '^#' | while read target ; do
     "$ivgsh" "$target" "$@"
 done

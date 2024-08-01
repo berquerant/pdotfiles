@@ -34,6 +34,7 @@ dotfiles=(
     .aspell.conf
     .rustfmt.toml
     .npmrc
+    .Brewfile
 )
 
 message "Remove dotfiles on home directory"

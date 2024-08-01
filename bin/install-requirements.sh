@@ -4,34 +4,52 @@ d=$(cd $(dirname $0)/..; pwd)
 target="$1"
 
 req() {
-    echo "${d}/requirements/${1}.txt"
+    echo "${d}/requirements/${1}"
+}
+
+__ignore_comment() {
+    grep -v -E '^#'
+}
+
+__install_from_file() {
+    local target_file="$1"
+    shift
+    local t="$(mktemp)"
+    cat "$target_file" | __ignore_comment  > "$t"
+    "$@" "$t"
+}
+
+__install_from_lines() {
+    local target_file="$1"
+    shift
+    cat "$target_file" | __ignore_comment | while read x ; do "$@" $x ; done
 }
 
 install_python() {
     pip install --upgrade pip setuptools wheel
-    pip install -r "$1"
+    __install_from_file "$1" pip install -r
 }
 
 install_go() {
     set +e
     brew uninstall go
     set -e
-    cat "$1" | while read pkg ; do go install "$pkg" ; done
+    __install_from_lines "$1" go install
 }
 
 install_gem() {
-    cat "$1" | while read line ; do gem install $line ; done
+    __install_from_lines "$1" gem install
 }
 
 install_node() {
     set +e
     npm install -g npm@latest
     set -e
-    cat "$1" | xargs npm install -g
+    __install_from_lines "$1" npm install -g
 }
 
 install_cargo() {
-    cat "$1" | xargs cargo install
+    __install_from_lines "$1" cargo install
 }
 
 install_rustup() {
@@ -40,7 +58,7 @@ install_rustup() {
     rustup override set stable
     rustup update nightly
     rustup toolchain add nightly
-    cat "$1" | xargs rustup component add
+    __install_from_lines "$1" rustup component add
 }
 
 set -ex
@@ -83,6 +101,24 @@ case "${target}" in
         ;;
     *)
         echo "Unknown target ${target}" >&2
+        cat <<EOS >&2
+$0 CATEGORY
+
+install requirements, available categories:
+
+- cargo
+- rustup
+- rust
+- python
+- go
+- gem
+- ruby
+- node
+- all
+
+requirements files are in ${d}/requirements,
+lines with # at the beginning are comments
+EOS
         exit 1
         ;;
 esac
