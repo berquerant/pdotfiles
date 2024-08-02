@@ -1208,12 +1208,7 @@ when (eglot)."
                       ((eq arg-len 2) (append args (list t)))
                       (t args))))
       (apply orig-func new-args)))
-  (defun my-eglot-around-advice (orig-func &rest args)
-    (advice-add 'require-with-check :around #'my-eglot-require-with-check-around-advice)
-    (let ((r (apply orig-func args)))
-      (advice-remove 'require-with-check #'my-eglot-require-with-check-around-advice)
-      r)))
-  (advice-add 'eglot :around #'my-eglot-around-advice)
+  (advice-add 'require-with-check :around #'my-eglot-require-with-check-around-advice)
   :config
   (my-macro-ring-hook "my-eglot" '(my-eglot-imports-and-format
                                    my-eglot-noop
