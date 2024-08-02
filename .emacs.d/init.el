@@ -1195,6 +1195,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("C-x p a" . eglot-code-actions)
    ("C-x p r" . eglot-rename)
    ("M-s M-s M-e" . eglot-shutdown))
+  :init
+  (defun my-eglot-require-with-check-around-advice (orig-func &rest args)
+    "If the 3rd argument is not specified, specify t.
+Workaround for:
+internal-macroexpand-for-load: Eager macro-expansion failure: (error \"Feature provided by other file: project\")
+when (eglot)."
+    (message "DEBUG my-eglot-require-with-check-around-advice: %S" args)
+    (let* ((arg-len (length args))
+           (new-args (cond
+                      ((eq arg-len 1) (append args (list nil t)))
+                      ((eq arg-len 2) (append args (list t)))
+                      (t args))))
+      (apply orig-func new-args)))
+  (defun my-eglot-around-advice (orig-func &rest args)
+    (advice-add 'require-with-check :around #'my-eglot-require-with-check-around-advice)
+    (let ((r (apply orig-func args)))
+      (advice-remove 'require-with-check #'my-eglot-require-with-check-around-advice)
+      r)))
+  (advice-add 'eglot :around #'my-eglot-around-advice)
   :config
   (my-macro-ring-hook "my-eglot" '(my-eglot-imports-and-format
                                    my-eglot-noop
