@@ -14,6 +14,10 @@ case "$target" in
         script="${root}/kustomize_branch.sh" ;;
     "o")
         script="${root}/object.sh" ;;
+    "d")
+        script="${root}/diff.sh" ;;
+    "b")
+        script="${root}/branch.sh" ;;
 esac
 
 if [ -z "$script" ] ; then
@@ -26,6 +30,8 @@ hb: helm_branch.sh
 k : kustomize.sh
 kb: kustomize_branch.sh
 o : object.sh
+d : diff.sh
+b : branch.sh
 EOS
     exit 1
 fi

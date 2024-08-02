@@ -1,10 +1,24 @@
 ;;; init.el --- Initialize Emacs
 
 ;;; Commentary:
+;;
+;; If EMACS_DEBUG_PROFILER is not empty, enable profiler.
+;; If EMACS_DEBUG_TRACE_AFTER_LOAD is not empty, print loaded files.
 
 ;; for macOS
 
 ;;; Code:
+
+(defconst my-profiler-enabled
+  (and (getenv "EMACS_DEBUG_PROFILER") t))
+(when my-profiler-enabled
+  (require 'profiler)
+  (profiler-start 'cpu))
+(defun my-profiler-report ()
+  "Report profiling result when `my-profiler-enabled'."
+  (when my-profiler-enabled
+    (profiler-report)
+    (profiler-stop)))
 
 (defun display-emacs-init-time()
   "Display the elapsed time to initialize."
@@ -72,6 +86,7 @@
    (progn (message (format "[my-getenv] not found %s" arg))
           nil)))
 
+(unbind-key "C-\\")
 ;; for prefix
 (unbind-key "M-s w")
 (unbind-key "M-m")
@@ -185,7 +200,7 @@
   (define-format-all-formatter
    yamlfmt
    (:executable "yamlfmt")
-   (:install "go install github.com/google/yamlfmt/cmd/yamlfmt@v0.12.1")
+   (:install "go install github.com/google/yamlfmt/cmd/yamlfmt@v0.13.0")
    (:languages "YAML")
    (:features)
    (:format
@@ -1532,4 +1547,6 @@ when (eglot)."
   (run-with-idle-timer 30 t #'(lambda () (shut-up (recentf-save-list)))))
 
 (message "init.el loaded.")
+
+(my-profiler-report)
 ;;; init.el ends here

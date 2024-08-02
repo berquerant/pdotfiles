@@ -20,7 +20,7 @@ Install libraries.
 ./install r ruby
 ```
 
-Install language and libraries.
+Install languages and libraries.
 
 ``` shell
 ./install t ruby
