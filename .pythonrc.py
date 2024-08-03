@@ -198,10 +198,7 @@ class dev:
         def wrapper(*args, **kwargs):
             rid = uuid4()
             s = signature(f)
-            bindings = ",".join(
-                "{}={}".format(k, v)
-                for k, v in s.bind(*args, **kwargs).arguments.items()
-            )
+            bindings = ",".join("{}={}".format(k, v) for k, v in s.bind(*args, **kwargs).arguments.items())
             msg = "[{}] call {}{}".format(rid, f.__name__, bindings)
             print(msg)
             r = f(*args, **kwargs)

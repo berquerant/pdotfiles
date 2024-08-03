@@ -76,14 +76,6 @@ packageRules:
       - ".emacs.d/**"
 customManagers:
   - customType: "regex"
-    description: "Manage yamlfmt used for Emacs"
-    fileMatch:
-      - ".emacs.d/init.el"
-    matchStrings:
-      - "github.com/google/yamlfmt/cmd/yamlfmt@(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-    datasourceTemplate: "github-releases"
-    depNameTemplate: "google/yamlfmt"
-  - customType: "regex"
     description: "Manage go dependencies"
     fileMatch:
       - "^requirements/go.txt$"

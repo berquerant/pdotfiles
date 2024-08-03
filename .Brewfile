@@ -25,6 +25,7 @@ brew "zsh"
 brew "tmux"
 brew "zplug"
 brew "shellcheck" # flymake
+brew "shfmt" # formatter
 
 # util
 brew "peco"
@@ -82,7 +83,7 @@ brew "rust-analyzer"
 
 # clang
 brew "llvm"
-brew "clang-format"
+brew "clang-format" # formatter
 
 # clojure
 brew "clojure/tools/clojure"
@@ -98,7 +99,18 @@ brew "terraform-lsp"
 # php
 brew "composer"
 brew "psysh"
+brew "php-cs-fixer" # formatter
 
 # lua
 brew "lua"
 brew "lua-language-server"
+brew "stylua" # formatter
+
+# js, ts
+brew "deno"
+
+# scala
+brew "coursier/formulas/coursier" # for formatter
+
+# toml
+brew "taplo" # formatter

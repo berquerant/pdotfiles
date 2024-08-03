@@ -42,10 +42,11 @@ export NPM_ROOT="$HOME/.npm"
 export CARGO_HOME="$HOME/.cargo"
 
 # go
-export PATH="$GOENV_ROOT/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"
-export PATH="$GOROOT/bin:$PATH"
 eval "$(goenv init -)"
+export PATH="$PATH:$GOENV_ROOT/bin"
+export PATH="$PATH:$(go env GOPATH)/bin"
+export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$GOROOT/bin"
 load_go() {
     goenv shell "$GO_VERSION"
     go version
