@@ -714,28 +714,62 @@
   :bind
   ("M-%" . ez-query-replace))
 
+(use-package my-paren
+  :straight (my-paren :type built-in)
+  :bind
+  ("M-] ]" . my-paren-surround-region)
+  ("M-] ." . my-paren-remove-parens)
+  ("M-] k" . my-paren-kill-sexp))
+
 (use-package smartparens
   :diminish (smartparens-mode . "")
   :demand t
   :after smartrep
   :config
   (smartrep-define-key global-map "C-]"
-    '(("f" . sp-forward-sexp)
-      ("b" . sp-backward-sexp)
-      ("," . sp-backward-barf-sexp)
-      ("." . sp-backward-slurp-sexp)
-      ("n" . sp-up-sexp)
-      ("p" . sp-down-sexp)
+    '(("<" . sp-beginning-of-sexp)
+      (">" . sp-end-of-sexp)
+
+      ("n" . sp-down-sexp)
+      ("p" . sp-up-sexp)
+
+      ("C-n" . sp-backward-down-sexp)
+      ("C-p" . sp-backward-up-sexp)
+
+      ("f" . sp-next-sexp)
+      ("b" . sp-previous-sexp)
+      ("M-f" . sp-forward-sexp)
+      ("M-b" . sp-backward-sexp)
+      ("F" . sp-forward-symbol)
+      ("B" . sp-backward-symbol)
+
+      ("<right>" . sp-forward-slurp-sexp)
+      ("C-<right>" . sp-forward-barf-sexp)
+      ("<left>"  . sp-backward-slurp-sexp)
+      ("C-<left>"  . sp-backward-barf-sexp)
+
+      ("t" . sp-transpose-sexp)
+      ("C-t" . sp-transpose-hybrid-sexp)
+
+      ("C-d" . sp-delete-sexp)
+      ("w" . sp-copy-sexp)
       ("k" . sp-kill-sexp)
-      ("u" . sp-splice-sexp)
-      ("w" . sp-rewrap-sexp)
-      ("s" . sp-split-sexp)
-      ("j" . sp-join-sexp)))
+      ("C-k" . sp-kill-hybrid-sexp)
+      ("M-k" . sp-backward-kill-sexp)
+
+      ("." . sp-unwrap-sexp)
+      ("C-." . sp-backward-unwrap-sexp)
+
+      ("^" . sp-rewrap-sexp)
+
+      ("," . sp-split-sexp)
+      ("C-," . sp-join-sexp)))
   (ad-disable-advice 'delete-backward-char 'before 'sp-delete-pair-advice)
   (ad-activate 'delete-backward-char)
   (sp-local-pair '(emacs-lisp-mode) "'" "'" :actions nil) ; disable right ' completion
   (sp-local-pair '(emacs-lisp-mode) "`" "`" :actions nil) ; disable right ` completion
-  (smartparens-global-mode t))
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode)
