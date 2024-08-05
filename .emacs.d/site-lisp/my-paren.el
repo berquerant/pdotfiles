@@ -2,8 +2,6 @@
 
 ;;; Code:
 
-(provide 'my-paren)
-
 (defun my-paren-surround-region (start end left right)
   "Surround region with specified strings.
 Insert LEFT to the beginning of the region, RIGHT to the end of the region."
