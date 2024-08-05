@@ -225,12 +225,10 @@ bin/install-requirements.sh all
 Update brew and formulae.
 
 interactive: true
+Env: INSTALL_BREW_NO_INIT=1
 
 ``` shell
-brew update
-brew bundle --global --no-lock
-brew upgrade
-brew cleanup
+bin/install-brew.sh
 ```
 
 ## renovate.json

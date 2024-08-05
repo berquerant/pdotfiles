@@ -109,8 +109,11 @@ brew "stylua" # formatter
 # js, ts
 brew "deno"
 
+# java
+brew "openjdk"
+
 # scala
-brew "coursier/formulas/coursier" # for formatter
+brew "coursier" # for formatter
 
 # toml
 brew "taplo" # formatter

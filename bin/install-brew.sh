@@ -53,18 +53,25 @@ fi
 
 brew cleanup -s
 
+if [ ! -L /Library/Java/JavaVirtualMachines/openjdk.jdk ] ; then
+    message "[openjdk] For the system Java wrappers to find this JDK, symlink it"
+    sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+fi
+
 message "Homebrew tools installed!"
 
 message "Change shell"
 
-if ! grep -e "bash$" /etc/shells > /dev/null
+if ! grep -q -e "bash$" /etc/shells
 then
     sudo bash -c 'echo /bin/bash >> /etc/shells'
 fi
-if ! grep -e "zsh$" /etc/shells > /dev/null
+if ! grep -q -e "zsh$" /etc/shells
 then
     sudo bash -c 'echo /bin/zsh >> /etc/shells'
 fi
-chsh -s /bin/zsh
+if [ "$SHELL" != "/bin/zsh" ] ; then
+    chsh -s /bin/zsh
+fi
 
 message "You should activate direnv and zsh"
