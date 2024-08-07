@@ -2,7 +2,8 @@
 
 ```shell
 ./xc init
-./xc deploy
+ZDOTDIR="$PWD" zsh -i
+./xc deploy ""
 ./xc git
 ./xc emacs
 ./xc install

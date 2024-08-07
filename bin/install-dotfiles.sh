@@ -65,4 +65,4 @@ then
     message "Dry run done."
 fi
 
-sudo chown -R "$(whoami)" /usr/local/bin
+exec_or_dry "sudo chown -R \"$(whoami)\" /usr/local/bin"
