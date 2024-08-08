@@ -86,9 +86,9 @@ brew "llvm"
 brew "clang-format" # formatter
 
 # clojure
-brew "closure-compiler"
+brew "clojure-compiler"
 brew "leiningen"
-brew "closure-lsp"
+brew "clojure-lsp"
 
 # terraform
 tap "hashicorp/tap"
