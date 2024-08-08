@@ -1090,8 +1090,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (defalias 'perl-mode 'cperl-mode)
 
-(use-package clojure-mode)
-
 (use-package cider)
 
 (use-package cypher-mode
@@ -1273,9 +1271,6 @@ when (eglot)."
      php-mode
      svelte-mode
      ;; rust-mode
-     clojure-mode
-     clojurescript-mode
-     clojurec-mode
      css-mode
      terraform-mode
      html-mode) . lsp-deferred)
@@ -1320,7 +1315,6 @@ when (eglot)."
   (lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-rust-analyzer-server-display-inlay-hints t)
   (lsp-rust-analyzer-display-chaining-hints t)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t)
   (lsp-rust-analyzer-display-parameter-hints t)

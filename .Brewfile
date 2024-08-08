@@ -85,11 +85,6 @@ brew "rust-analyzer"
 brew "llvm"
 brew "clang-format" # formatter
 
-# clojure
-brew "clojure-compiler"
-brew "leiningen"
-brew "clojure-lsp"
-
 # terraform
 tap "hashicorp/tap"
 brew "tfenv"
