@@ -14,8 +14,9 @@ env:
   # [brew gcc] configure: error: The include files (AppKit/AppKit.h etc)
   CC: "/usr/bin/clang"
 setup:
-  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs/31.0.50/lisp
-  - sudo chown $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs
+  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs/31.0.50/lisp /usr/local/share/emacs/31.0.50/etc
+  - sudo touch /usr/local/share/emacs/31.0.50/etc/publicsuffix.txt
+  - sudo chown -R $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs /usr/local/share/emacs/31.0.50/etc/publicsuffix.txt
   - brew install --build-from-source gcc
   - brew install --build-from-source libgccjit
   - brew install --cask xquartz
