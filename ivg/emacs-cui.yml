@@ -20,10 +20,6 @@ setup:
   - brew install --build-from-source libgccjit
   - brew install --cask xquartz
   - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ zlib gnutls gtk
-  - |
-    if ! grep --quiet "/usr/local/opt/texinfo/bin" ~/.zprofile ; then
-      echo 'export PATH=/usr/local/opt/texinfo/bin:$PATH' >> ~/.zprofile
-    fi
 install:
   - eval $(/opt/homebrew/bin/brew shellenv)
   - export PATH=/usr/local/opt/texinfo/bin:$PATH

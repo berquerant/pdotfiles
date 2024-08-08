@@ -24,6 +24,10 @@ clean_go() {
         cecho yellow "UNINSTALL go ${version}"
         __run goenv uninstall -f "$version"
     done
+    find "$GOPATH" -type d -maxdepth 1 -depth 1 | grep -v -E "(${GO_VERSION}|src)$" | sort | while read x ; do
+        cecho yellow "DELETE ${x}"
+        __run sudo rm -rf "$x"
+    done
 }
 
 clean_python() {

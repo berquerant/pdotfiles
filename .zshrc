@@ -44,7 +44,6 @@ export CARGO_HOME="$HOME/.cargo"
 # go
 eval "$(goenv init -)"
 export PATH="$PATH:$GOENV_ROOT/bin"
-export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:$GOROOT/bin"
 load_go() {
@@ -84,6 +83,8 @@ load_env() {
     load_node
 }
 load_env
+
+export PATH="$PATH:$(go env GOPATH)/bin"
 # zplugins
 ## pure
 PURE_CMD_MAX_EXEC_TIME=10
