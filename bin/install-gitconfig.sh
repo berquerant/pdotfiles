@@ -40,23 +40,21 @@ if [ -f "$current_config" ] ; then
     cp "$current_config" "$backup_config"
 fi
 
+cecho green "${next_config} generated!"
 set +e
-if [ -f "$current_config" ]; then
+if [ -n "$GIT_CONFIG_DRYRUN" ] ; then
+    cecho yellow "No files were copied due to dry run"
+    exit
+fi
+
+if [ -n "$config_backup_exist" ] ; then
     if diff -u "$current_config" "$next_config" ; then
         cecho green "No changes"
-    else
-        cecho green "${next_config} generated!"
-        if [ -n "$GIT_CONFIG_DRYRUN" ] ; then
-            cecho yellow "No files were copied due to dry run"
-        else
-            cp "$next_config" "$current_config"
-        fi
+        exit
     fi
 fi
 
-if [ -z "$config_backup_exist" ] ; then
-    exit
-fi
+cp "$next_config" "$current_config"
 
 cecho green "check git aliases..."
 if git aliases ; then

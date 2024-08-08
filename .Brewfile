@@ -107,8 +107,5 @@ brew "deno"
 # java
 brew "openjdk"
 
-# scala
-brew "coursier" # for formatter
-
 # toml
 brew "taplo" # formatter

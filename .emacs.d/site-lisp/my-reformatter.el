@@ -44,7 +44,6 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
     (cc-mode "clang")
     (c++-mode "clang")
     (c-mode "clang")
-    (scala-mode "scala")
     (rust-mode "rust")
     (java-mode "java")
     (go-mode "go")
@@ -66,7 +65,6 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
     ("python" "python")
     ("lua" "lua")
     ("clang" "clang")
-    ("scala" "scala")
     ("rust" "rust")
     ("java" "java")
     ("go" "go")
@@ -171,13 +169,6 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
   :program "clang-format"
   :args `("--style" "Google")
   :lighter " RFclang")
-
-;; scala
-;; https://scalameta.org/scalafmt/
-(reformatter-define my-reformatter-scala-format
-  :program "scalafmt"
-  :args `("--stdin" "--non-interactive" "--quiet" "--config-str" "'version=3.8.3,runner.dialect=scala3'")
-  :lighter " RFscala")
 
 ;; rust
 ;; https://github.com/rust-lang/rustfmt

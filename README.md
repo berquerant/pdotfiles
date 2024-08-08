@@ -289,7 +289,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: trans, scalafmt, awkfmt
+Requires: trans, awkfmt
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -300,7 +300,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, scalafmt, awkfmt
+Requires: trans, awkfmt
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -311,7 +311,7 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, scalafmt, awkfmt
+Requires: trans, awkfmt
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
@@ -324,15 +324,6 @@ Install `https://github.com/soimort/translate-shell`.
 ``` shell
 mkdir -p "$PJTMP" && cd "$PJTMP" && wget git.io/trans && chmod +x ./trans
 ln -snvf "${PJTMP}/trans" /usr/local/bin/trans
-```
-
-## scalafmt
-
-Install scalafmt.
-
-``` shell
-coursier install scalafmt
-scalafmt --version
 ```
 
 ## awkfmt

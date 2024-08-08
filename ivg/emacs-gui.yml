@@ -21,6 +21,8 @@ setup:
     if [ -d "$_IVG_APP" ]; then
       rm -rf $_IVG_BACKUP
       mv $_IVG_APP $_IVG_BACKUP
+    else
+      echo "First time installation..."
     fi
   - brew install --build-from-source gcc
   - brew install --build-from-source libgccjit

@@ -86,6 +86,3 @@ unzip_via_ditto() {
 }
 
 source "${DOTFILES_ROOT}/bin/cache.sh"
-
-# coursier
-export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
