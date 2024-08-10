@@ -1,6 +1,8 @@
 # Dotfiles for macOS
 
 ```shell
+git clone https://github.com/berquerant/pdotfiles "${HOME}/src/github.com/berquerant/pdotfiles"
+cd "${HOME}/src/github.com/berquerant/pdotfiles"
 ./xc init
 ZDOTDIR="$PWD" zsh -i
 ./xc deploy ""
