@@ -162,14 +162,13 @@
   :hook
   ((prog-mode text-mode) . rainbow-delimiters-mode)
   :custom-face
-  (rainbow-delimiters-depth-1-face ((t (:foreground "Red"))))
-  (rainbow-delimiters-depth-2-face ((t (:foreground "Orange"))))
-  (rainbow-delimiters-depth-3-face ((t (:foreground "Yellow"))))
-  (rainbow-delimiters-depth-4-face ((t (:foreground "Green"))))
-  (rainbow-delimiters-depth-5-face ((t (:foreground "Blue"))))
-  (rainbow-delimiters-depth-6-face ((t (:foreground "Purple"))))
-  (rainbow-delimiters-depth-7-face ((t (:foreground "Magenta"))))
-  (rainbow-delimiters-depth-8-face ((t (:foreground "Brown")))))
+  (rainbow-delimiters-depth-7-face ((t (:foreground "#800080"))))
+  (rainbow-delimiters-depth-6-face ((t (:foreground "#0000ff"))))
+  (rainbow-delimiters-depth-5-face ((t (:foreground "#00ffff"))))
+  (rainbow-delimiters-depth-4-face ((t (:foreground "#008000"))))
+  (rainbow-delimiters-depth-3-face ((t (:foreground "#ffff00"))))
+  (rainbow-delimiters-depth-2-face ((t (:foreground "#ffa500"))))
+  (rainbow-delimiters-depth-1-face ((t (:foreground "#ff0000")))))
 
 ;; highlight focused buffer
 (use-package dimmer
