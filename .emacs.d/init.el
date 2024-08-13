@@ -15,19 +15,19 @@
   (and (getenv "EMACS_DEBUG_PROFILER") t))
 (when my-profiler-enabled
   (require 'profiler)
-  (profiler-start 'cpu))
-(defun my-profiler-report ()
-  "Report profiling result when `my-profiler-enabled'."
-  (when my-profiler-enabled
+  (profiler-start 'cpu)
+  (defun my-profiler-report ()
+    "Report profiling result when `my-profiler-enabled'."
     (profiler-report)
-    (profiler-stop)))
+    (profiler-stop))
+  (add-hook 'emacs-startup-hook 'my-profiler-report))
 
 (setq elp-sort-by-function 'elp-sort-by-average-time)
 
 (defun display-emacs-init-time()
   "Display the elapsed time to initialize."
   (message "init time: %s" (emacs-init-time)))
-(add-hook 'after-init-hook 'display-emacs-init-time)
+(add-hook 'emacs-startup-hook 'display-emacs-init-time)
 
 (defun trace-after-load-function (loaded-file)
   (message "[trace-after-load-function] %s" loaded-file))
@@ -81,6 +81,7 @@
   :demand t
   :custom
   (exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-arguments '("-l"))
   :config
   (exec-path-from-shell-initialize))
 
@@ -615,7 +616,7 @@
   (company-tooltip-common ((t (:foreground "Yellow" :background "DimGray"))))
   (company-tooltip-common-selection ((t (:foreground "Yellow" :background "SteelBlue"))))
   (company-tooltip-selection ((t (:foreground "Yellow" :background "SteelBlue"))))
-  (company-preview-common ((t (:foreground "DimGray" :background nil :underline t))))
+  (company-preview-common ((t (:foreground "DimGray" :background "unspecified" :underline t))))
   (company-scrollbar-fg ((t (:background "Orange"))))
   (company-scrollbar-bg ((t (:background "Gray"))))
   :custom
@@ -1530,8 +1531,4 @@ when (eglot)."
   (run-with-idle-timer 30 t #'(lambda () (shut-up (recentf-save-list)))))
 
 (message "init.el loaded.")
-
-;; profilers result
-(my-profiler-report)
-
 ;;; init.el ends here
