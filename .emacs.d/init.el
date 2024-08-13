@@ -77,6 +77,7 @@
 (use-package diminish) ; diminished mode-line
 (use-package cl-lib)
 (use-package s)
+(use-package f)
 (use-package exec-path-from-shell
   :demand t
   :custom
@@ -93,6 +94,11 @@
    (progn (message (format "[my-getenv] not found %s" arg))
           nil)))
 
+(defun my-getenv-join (arg &optional path)
+  "Get env ARG and join PATH."
+  (let ((p (if path path "")))
+    (f-join (my-getenv arg) p)))
+
 (unbind-key "C-\\")
 ;; for prefix
 (unbind-key "M-s w")
@@ -103,8 +109,8 @@
 (unbind-key "M-j")
 (unbind-key "C-x f")
 
-(add-to-list 'load-path (format "%s/site-lisp" (my-getenv "EMACSD")))
-(add-to-list 'load-path (format "%s/external-site-lisp" (my-getenv "EMACSD")))
+(add-to-list 'load-path (my-getenv-join "EMACSD" "site-lisp"))
+(add-to-list 'load-path (my-getenv-join "EMACSD" "external-site-lisp"))
 
 (use-package my-bootstrap
   :demand t
@@ -253,7 +259,7 @@
   :config
   (prescient-persist-mode t)
   :custom
-  (prescient-save-file (format "%s/prescient-save.el" (my-getenv "EMACSD")))
+  (prescient-save-file (my-getenv-join "EMACSD" "prescient-save.el"))
   (prescient-filter-method '(literal regexp initialism fuzzy)))
 
 (use-package company-prescient
@@ -409,7 +415,7 @@
   ("M-s m" . bm-toggle)
   :custom
   (bm-buffer-persistence t)
-  (bm-repository-file (format "%s/.bm" (my-getenv "EMACSD")))
+  (bm-repository-file (my-getenv-join "EMACSD" ".bm"))
   (bm-cycle-all-buffers t)
   (bm-restore-repository-on-load t))
 
@@ -429,9 +435,9 @@
   (setq projectile-mode-line "")
   (defun my-advice-project-root (orig-func &rest args)
     (let ((r (apply orig-func args)))
-      (if (not (equal r (format "%s/" (my-getenv "HOME"))))
+      (if (not (equal r (format "%s/" (my-getenv-join "HOME"))))
           r
-        (format "%s/" (my-getenv "EMACSD")))))
+        (format "%s/" (my-getenv-join "EMACSD")))))
   (advice-add 'projectile-project-root :around 'my-advice-project-root)
   :custom
   (projectile-use-git-grep t)
@@ -488,8 +494,7 @@
   (my-macro-region-or-at-point my-pipenv-consult-find "Module: ")
   (bind-key "M-s 3" 'my-pipenv-consult-find-region-or-at-point)
   :custom
-  (my-pipenv-get-path-command (format "%s/bin/pipenv_get_path.sh"
-                                      (my-getenv "DOTFILES_ROOT"))))
+  (my-pipenv-get-path-command (my-getenv-join "DOTFILES_ROOT" "bin/pipenv_get_path.sh")))
 
 ;; omit continuous command
 (use-package smartrep
@@ -513,10 +518,10 @@
   :demand t
   :commands deadgrep
   :config
-  (add-to-list 'deadgrep-project-root-overrides `("~/" . ,(concat (my-getenv "DOTFILES_ROOT") "/"))) ; deny searching at the home directory
+  (add-to-list 'deadgrep-project-root-overrides `("~/" . ,(concat (my-getenv-join "DOTFILES_ROOT") "/"))) ; deny searching at the home directory
   (my-macro-thyristor my-deadgrep-specify-path)
   (my-deadgrep-specify-path-thyristor-set nil)
-  (defvar my-deadgrep-specify-path--path (concat (my-getenv "DOTFILES_ROOT") "/"))
+  (defvar my-deadgrep-specify-path--path (concat (my-getenv-join "DOTFILES_ROOT") "/"))
   (defun my-advice-deadgrep--lookup-override (orig-func &rest args)
     (if my-deadgrep-specify-path-thyristor-flag
         (progn
@@ -563,7 +568,7 @@
   (my-macro-fallback-interactively my-project-p xref-find-definitions deadgrep)
   (bind-key "M-g g" 'xref-find-definitions-fallback-to-deadgrep)
   :custom
-  (dumb-jump-default-project (my-getenv "DOTFILES_ROOT"))
+  (dumb-jump-default-project (my-getenv-join "DOTFILES_ROOT"))
   (dumb-jump-selector 'helm)
   (dumb-jump-force-searcher 'rg))
 
@@ -657,7 +662,7 @@
 
 (use-package dabbrev
   :custom
-  (abbrev-file-name (format "%s/abbrev_defs" (my-getenv "EMACSD")))
+  (abbrev-file-name (my-getenv-join "EMACSD" "abbrev_defs"))
   (save-abbrevs t)
   :config
   (quietly-read-abbrev-file))
@@ -681,8 +686,8 @@
   (defun my-deadgrep-junk-files ()
     "Do `deadgrep' junk files."
     (interactive)
-    (my-deadgrep-with-path (concat (my-getenv "EMACSD") "/junk/")))
-  (setq open-junk-file-format (concat (my-getenv "EMACSD") "/junk/%Y-%m%d-%H%M%S.")))
+    (my-deadgrep-with-path (my-getenv-join "EMACSD" "junk/")))
+  (setq open-junk-file-format (my-getenv-join "EMACSD" "junk/%Y-%m%d-%H%M%S.")))
 
 (use-package expand-region
   :after selected
@@ -898,8 +903,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package go-playground
   :init
   (defconst my-go-playground-sh
-    (format "%s/bin/go-playground.sh"
-            (my-getenv "DOTFILES_ROOT")))
+    (my-getenv-join "DOTFILES_ROOT" "bin/go-playground.sh"))
   :bind
   (:map go-playground-mode-map
         ("C-c C-c" . my-go-playground-run))
@@ -909,11 +913,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     (interactive)
     (compile (format "%s run" my-go-playground-sh)))
   :custom
-  (go-playground-basedir (format "%s/github.com/%s/go-playground/"
-                                 (my-getenv "GHQ_ROOT")
-                                 (my-getenv "GIT_USER")))
+  (go-playground-basedir (f-join (my-getenv "GHQ_ROOT") "github.com" (my-getenv "GIT_USER") "go-playground"))
   (go-playground-init-command (format "%s init" my-go-playground-sh)))
-
 
 (use-package tern
   :custom
@@ -952,11 +953,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                    (setq indent-tabs-mode nil)
                    (setq python-indent 4)))
   :init
-  (add-to-list 'exec-path (format "%s/shims" (my-getenv "PYENV_ROOT")))
+  (add-to-list 'exec-path (my-getenv-join "PYENV_ROOT" "shims"))
   :custom
-  (python-shell-interpreter (format "%s/shims/python" (my-getenv "PYENV_ROOT")))
+  (python-shell-interpreter (my-getenv-join "PYENV_ROOT" "shims/python"))
   :config
-  (setq py-python-command (format "%s/shims/python" (my-getenv "PYENV_ROOT"))))
+  (setq py-python-command (my-getenv-join "PYENV_ROOT" "shims/python")))
 
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
@@ -1072,9 +1073,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package rust-playground
   :custom
-  (rust-playground-basedir (format "%s/github.com/%s/rust-playground"
-                                   (my-getenv "GHQ_ROOT")
-                                   (my-getenv "GIT_USER"))))
+  (rust-playground-basedir (f-join (my-getenv "GHQ_ROOT") "github.com" (my-getenv "GIT_USER") "rust-playground")))
 
 (use-package flycheck-haskell
   :after (haskell-mode flycheck)
@@ -1156,7 +1155,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-display-errors-delay 1)
   (flycheck-highlighting-mode 'lines)
   (flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
-  (flycheck-python-flake8-executable (format "%s/shims/python" (my-getenv "PYENV_ROOT")))
+  (flycheck-python-flake8-executable (my-getenv-join "PYENV_ROOT" "shims/python"))
   (flycheck-flake8-maximum-line-length 120)
   :config
   (my-macro-thyristor flycheck-mode)
@@ -1459,7 +1458,7 @@ when (eglot)."
   :custom
   (openai-chat-model "gpt-4o-mini")
   (openai-chat-chat-completion-timeout 300) ; 5min
-  (openai-chat-history-file (format "%s/history_openai-chat" (my-getenv "EMACSD"))))
+  (openai-chat-history-file (my-getenv-join  "EMACSD" "history_openai-chat")))
 
 (use-package thread-buffer
   :straight (thread-buffer :host github :repo "berquerant/emacs-thread-buffer"))
@@ -1472,8 +1471,7 @@ when (eglot)."
   :bind ("M-s M-s M-w" . my-openai-chat-web-start)
   :custom
   (my-openai-chat-web-chat-model "gpt-4o-mini")
-  (my-openai-chat-web-command (format "%s/bin/openai_chat_web.sh"
-                                      (my-getenv "DOTFILES_ROOT"))))
+  (my-openai-chat-web-command (my-getenv-join "DOTFILES_ROOT" "bin/openai_chat_web.sh")))
 
 (use-package message-routing
   :demand t
@@ -1522,7 +1520,7 @@ when (eglot)."
 (use-package shut-up)
 (use-package recentf-ext
   :custom
-  (recentf-save-file (format "%s/.recentf" (my-getenv "EMACSD")))
+  (recentf-save-file (my-getenv-join "EMACSD" ".recentf"))
   (recentf-exclude '(".recentf"))
   (recentf-max-saved-items 100)
   (recentf-auto-cleanup 'never)

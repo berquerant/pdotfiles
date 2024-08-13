@@ -23,6 +23,7 @@
   :demand t
   :straight (minimal-init :host github :repo "berquerant/emacs-minimal-init")
   :custom
+  (minimal-init-quiet t)
   (minimal-init-font-size 120)
   :config
   (minimal-init-setup))
@@ -77,9 +78,9 @@
   :config
   (my-macro-defun-toggle debug-on-error)
   (my-macro-defun-toggle debug-on-quit)
-  (defconst my-init-el (format "%s/init.el" (my-getenv "EMACSD"))
+  (defconst my-init-el (my-getenv-join "EMACSD" "init.el")
     "init.el location.")
-  (defconst my-zshrc (format "%s/.zshrc" (my-getenv "HOME"))
+  (defconst my-zshrc (my-getenv-join "HOME" ".zshrc")
     ".zshrc location.")
   (my-macro-handle-file find-file my-init-el)
   (my-macro-handle-file load-file my-init-el)
