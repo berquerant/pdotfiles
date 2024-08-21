@@ -18,6 +18,8 @@ case "$target" in
         script="${root}/diff.sh" ;;
     "b")
         script="${root}/branch.sh" ;;
+    "i")
+        script="${root}/id.sh" ;;
 esac
 
 if [ -z "$script" ] ; then
@@ -32,6 +34,7 @@ kb: kustomize_branch.sh
 o : object.sh
 d : diff.sh
 b : branch.sh
+i : id.sh
 EOS
     exit 1
 fi
