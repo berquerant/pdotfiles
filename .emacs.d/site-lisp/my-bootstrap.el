@@ -26,7 +26,54 @@
   (minimal-init-quiet t)
   (minimal-init-font-size 120)
   :config
-  (minimal-init-setup))
+  (minimal-init-setup)
+  (line-number-mode -1)
+  (column-number-mode -1)
+  (defun my-minimal-init-calc-mode-line-position ()
+    "Calculate a string for `mode-line-position'.
+
+A: cursor position percentage
+B: line number
+C: max line number
+D: column number
+E: max column number
+F: current chars
+G: max chars
+
+Format is: (A%,B/C,D/E,F/G)"
+    (let* ((pp (point))
+           (pmin (point-min))
+           (pmax (point-max))
+           (phead (progn (move-beginning-of-line 1)
+                         (point)))
+           (ptail (progn (move-end-of-line 1)
+                         (point)))
+           ;; pp: current cursor
+           ;; pmin: beginning of buffer
+           ;; pmax: end of buffer
+           ;; phead: beginning of line
+           ;; ptail: end of line
+
+           ;; (max-line-bytes (string-width (buffer-substring phead ptail)))
+           ;; (current-line-bytes (string-width (buffer-substring phead pp)))
+           ;; (max-bytes (string-width (buffer-substring pmin pmax)))
+           ;; (current-bytes (string-width (buffer-substring pmin pp)))
+           (max-lines (count-lines pmax pmin))
+           (current-lines (count-lines pp pmin))
+           (max-chars pmax)
+           (current-chars pp)
+           (max-line-chars (- ptail phead))
+           (current-line-chars (- pp phead))
+           (pos-pct (* 100 (/ (float current-chars) max-chars))))
+
+      (goto-char pp) ; return cursor to original pos
+      (format "(%d%%%%,%d/%d,%d/%d,%d/%d)"
+              (round pos-pct)
+              current-lines max-lines
+              current-line-chars max-line-chars
+              current-chars max-chars)))
+  (setcar mode-line-position
+          '(:eval (my-minimal-init-calc-mode-line-position))))
 
 (defun other-window-back ()
   "Reverse `other-window'."

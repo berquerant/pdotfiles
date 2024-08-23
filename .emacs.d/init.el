@@ -815,22 +815,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 ;; spell check
 (use-package flyspell
   :diminish (flyspell-mode . "Fs")
-  :bind
-  (:map flyspell-mode-map
-   ("M-s a b" . flyspell-buffer))
+  :hook
+  ((prog-mode . flyspell-prog-mode)
+   ((text-mode markdown-mode gfm-mode) . flyspell-mode))
   :config
   ; for backward-forward
   (unbind-key "C-," flyspell-mode-map)
-  (unbind-key "C-." flyspell-mode-map)
-  (my-macro-thyristor flyspell-mode)
-  (defun flyspell-prog-mode-switch-thyristor ()
-    (flyspell-mode-off)
-    (when flyspell-mode-thyristor-flag
-      (flyspell-prog-mode)))
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode-switch-thyristor)
-  (add-hook 'text-mode-hook 'flyspell-mode-thyristor-2n)
-  (add-hook 'markdown-mode-hook 'flyspell-mode-thyristor-2n)
-  (add-hook 'generic-mode-hook 'flyspell-mode-thyristor-2n))
+  (unbind-key "C-." flyspell-mode-map))
 
 (use-package cc-mode
   :mode
@@ -1142,6 +1133,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     python-mode
     c-mode
     sh-mode
+    text-mode
+    markdown-mode
+    gfm-mode
     emacs-lisp-mode
     dockerfile-mode
     protobuf-mode
@@ -1158,6 +1152,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-python-flake8-executable (my-getenv-join "PYENV_ROOT" "shims/python"))
   (flycheck-flake8-maximum-line-length 120)
   :config
+  (flycheck-define-checker textlint
+    "Linter for text."
+    :modes (text-mode markdown-mode gfm-mode)
+    :command ("textlinter" source) ; $DOTFILES_ROOT/bin/textlint.sh
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ": "
+              (id (one-or-more (not (any " "))))
+              (message (one-or-more not-newline)
+                       (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+              line-end)))
   (my-macro-thyristor flycheck-mode)
   (if (display-graphic-p)
       (flycheck-pos-tip-mode)

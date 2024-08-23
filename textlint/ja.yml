@@ -1,0 +1,19 @@
+plugins:
+  '@textlint/markdown':
+    extensions:
+      - ".mdx"
+rules:
+  # https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing
+  preset-ja-technical-writing:
+    sentence-length:
+      max: 300
+    max-comma:
+      max: 6
+    max-ten:
+      max: 6
+    max-kanji-continuous-len:
+      max: 10
+  # https://github.com/textlint-ja/textlint-rule-preset-ja-spacing
+  # preset-ja-spacing:
+  #   ja-space-around-code: false
+  #   ja-space-around-link: true

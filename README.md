@@ -291,7 +291,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt
+Requires: trans, awkfmt, textlinter
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -302,7 +302,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt
+Requires: trans, awkfmt, textlinter
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -313,10 +313,18 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt
+Requires: trans, awkfmt, textlinter
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
+```
+
+## textlinter
+
+Install [textlint.sh](bin/textlint.sh).
+
+``` shell
+ln -snvf "${DOTFILES_ROOT}/bin/textlint.sh" /usr/local/bin/textlinter
 ```
 
 ## trans

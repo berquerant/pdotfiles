@@ -1,0 +1,13 @@
+plugins:
+  '@textlint/markdown':
+    extensions:
+      - ".mdx"
+rules:
+  # https://github.com/textlint-rule/textlint-rule-alex
+  alex: true
+  # https://github.com/io-monad/textlint-rule-common-misspellings
+  common-misspellings: true
+  # https://github.com/textlint-rule/textlint-rule-write-good
+  write-good: true
+  # https://github.com/textlint-rule/textlint-rule-en-capitalization
+  en-capitalization: true
