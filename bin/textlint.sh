@@ -23,7 +23,8 @@ lang="$(guess_en_or_ja < "$target")"
 config="${DOTFILES_ROOT}/textlint/${lang}.yml"
 
 lint() {
-    textlint --no-color --config "$config" --format unix "$@"
+    textlint --no-color --config "$config" --format json "$@" |\
+        jq -r '.[0] | .filePath as $p | .messages[] | (.message|gsub("\\n";" ")) as $m | "\($p):\(.loc.start.line):\(.loc.start.column):[\(.ruleId)]\($m)"'
 }
 
 # unknown extensions are treated as .txt
