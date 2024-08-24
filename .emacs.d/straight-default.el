@@ -63,6 +63,7 @@
  ("flymake" . "9bb2a002da289a2d749fc445886c1fdebca7cf66")
  ("flymake-diagnostic-at-point" . "379616b1c6f5ebeaf08fbe54ae765008a78b3be7")
  ("flymake-ruff" . "15bf4d3a4ebe899991e385b64901b5cde0daa177")
+ ("flyspell-correct" . "1e7a5a56362dd875dddf848b9a9e25d1395b9d37")
  ("git-complete" . "0249cf55b99f20edada6d3746de650c25db1d9b6")
  ("git-gutter-plus" . "b7726997806d9a2da9fe84ff00ecf21d62b6f975")
  ("gnu-elpa-mirror" . "eb1199591ec3cb8a4d1f1a20bd14ca0e52eafdd0")

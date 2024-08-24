@@ -812,6 +812,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 </script>") ; github-markdown.min.css is applied to .markdown-body
   (markdown-fontify-code-blocks-natively t))
 
+(use-package flyspell-correct
+  :bind
+  (:map flyspell-mode-map
+        ("C-x M-i" . flyspell-correct-wrapper))
+  :after flyspell)
+
+(use-package flyspell-correct-popup
+  :after flyspell)
+
 ;; spell check
 (use-package flyspell
   :diminish (flyspell-mode . "Fs")
@@ -1147,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :custom
   (flycheck-idle-change-delay 5)
   (flycheck-display-errors-delay 1)
-  (flycheck-highlighting-mode 'lines)
+  (flycheck-highlighting-mode 'symbols)
   (flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
   (flycheck-python-flake8-executable (my-getenv-join "PYENV_ROOT" "shims/python"))
   (flycheck-flake8-maximum-line-length 120)
