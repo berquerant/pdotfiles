@@ -1501,11 +1501,21 @@ when (eglot)."
   :custom
   (message-routing-routes '(("^LSP :: Error" . "*routed-lsp-error*")
                             ("^DEBUG" . "*routed-debug-log*")
+                            ("^my-popup-tip" . "*my-tips*")
+                            ("^my-pos-tip" . "*my-tips*")
                             ("^my-straight" . "*my-straight*")
                             ("^my-package" . "*my-package*")
                             ("^my-rpath" . "*my-rpath*")
                             ("^my-macro-advice-add-debug" . "*my-macro-advice-add-debug*")))
   :config
+  (defun my-popup-tip-message-advice (orig-func &rest args)
+    (message "my-popup-tip: %s" (nth 0 args))
+    (apply orig-func args))
+  (advice-add 'popup-tip :around 'my-popup-tip-message-advice)
+  (defun my-pos-tip-show-message-advice (orig-func &rest args)
+    (message "my-pos-tip: %s" (nth 0 args))
+    (apply orig-func args))
+  (advice-add 'pos-tip-show :around 'my-pos-tip-show-message-advice)
   (message-routing-setup))
 
 (use-package my-package
