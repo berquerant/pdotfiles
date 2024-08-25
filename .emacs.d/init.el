@@ -94,9 +94,10 @@
    (progn (message (format "[my-getenv] not found %s" arg))
           nil)))
 
-(defun my-getenv-join (arg &optional path)
+(defun my-getenv-join (arg &rest path)
   "Get env ARG and join PATH."
-  (let ((p (if path path "")))
+  (let ((p (if (null path) ""
+             (apply 'f-join path))))
     (f-join (my-getenv arg) p)))
 
 (unbind-key "C-\\")
@@ -474,6 +475,13 @@
   (setq selected-minor-mode-override t)
   (selected-global-mode 1))
 
+(use-package my-textlinter
+  :straight (my-textlinter :type built-in)
+  :config
+  (push `(,my-textlinter-output-buffer-name :noselect t) popwin:special-display-config)
+  (my-macro-buffer-or-region my-textlinter-do)
+  (bind-key "M-s M-s l" 'my-textlinter-do-buffer-or-region))
+
 (use-package my-trans
   :demand t
   :straight (my-trans :type built-in)
@@ -605,7 +613,7 @@
   :demand t
   :diminish (company-mode . "")
   :bind
-  (("C-x C-i" . company-complete)
+  (("C-^" . company-complete)
    ("TAB" . indent-for-tab-command)
    :map company-active-map
    ("C-n" . company-select-next)
@@ -687,7 +695,7 @@
     "Do `deadgrep' junk files."
     (interactive)
     (my-deadgrep-with-path (my-getenv-join "EMACSD" "junk/")))
-  (setq open-junk-file-format (my-getenv-join "EMACSD" "junk/%Y-%m%d-%H%M%S.")))
+  (setq open-junk-file-format (my-getenv-join "EMACSD" "junk" "%Y-%m%d-%H%M%S.")))
 
 (use-package expand-region
   :after selected
@@ -815,7 +823,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package flyspell-correct
   :bind
   (:map flyspell-mode-map
-        ("C-x M-i" . flyspell-correct-wrapper))
+        ("M-^" . flyspell-correct-wrapper))
   :after flyspell)
 
 (use-package flyspell-correct-popup
@@ -903,7 +911,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package go-playground
   :init
   (defconst my-go-playground-sh
-    (my-getenv-join "DOTFILES_ROOT" "bin/go-playground.sh"))
+    (my-getenv-join "DOTFILES_ROOT" "bin" "go-playground.sh"))
   :bind
   (:map go-playground-mode-map
         ("C-c C-c" . my-go-playground-run))
@@ -955,9 +963,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :init
   (add-to-list 'exec-path (my-getenv-join "PYENV_ROOT" "shims"))
   :custom
-  (python-shell-interpreter (my-getenv-join "PYENV_ROOT" "shims/python"))
+  (python-shell-interpreter (my-getenv-join "PYENV_ROOT" "shims" "python"))
   :config
-  (setq py-python-command (my-getenv-join "PYENV_ROOT" "shims/python")))
+  (setq py-python-command (my-getenv-join "PYENV_ROOT" "shims" "python")))
 
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
@@ -1158,8 +1166,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-display-errors-delay 1)
   (flycheck-highlighting-mode 'symbols)
   (flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
-  (flycheck-python-flake8-executable (my-getenv-join "PYENV_ROOT" "shims/python"))
-  (flycheck-flake8-maximum-line-length 120)
   :config
   (flycheck-define-checker textlint
     "Linter for text."
@@ -1407,9 +1413,10 @@ when (eglot)."
 
 (use-package restclient)
 
+(use-package with-editor)
 (use-package backward-forward
   :demand t
-  :after (consult deadgrep)
+  :after (consult deadgrep with-editor)
   :bind
   ("M-h" . backward-forward-previous-location)
   ("M-l" . backward-forward-next-location)
@@ -1481,10 +1488,12 @@ when (eglot)."
 
 (use-package my-openai-chat-web
   :straight (my-openai-chat-web :type built-in)
-  :bind ("M-s M-s M-w" . my-openai-chat-web-start)
+  :config
+  (my-macro-buffer-or-region my-openai-chat-web-start)
+  (bind-key "M-s M-s M-w" 'my-openai-chat-web-start-buffer-or-region)
   :custom
   (my-openai-chat-web-chat-model "gpt-4o-mini")
-  (my-openai-chat-web-command (my-getenv-join "DOTFILES_ROOT" "bin/openai_chat_web.sh")))
+  (my-openai-chat-web-command (my-getenv-join "DOTFILES_ROOT" "bin" "openai_chat_web.sh")))
 
 (use-package message-routing
   :demand t

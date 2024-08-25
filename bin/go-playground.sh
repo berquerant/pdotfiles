@@ -2,8 +2,8 @@
 
 init() {
     set -ex
-    ghq_root="${GHQ_ROOT}/"
-    repo_root="${PWD#$ghq_root}"
+    local ghq_root="${GHQ_ROOT}/"
+    local repo_root="${PWD#$ghq_root}"
     go mod init "$repo_root"
     go mod tidy
 }

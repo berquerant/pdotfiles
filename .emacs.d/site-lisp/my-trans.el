@@ -6,6 +6,8 @@
 
 ;;; Code:
 
+(require 'little-async)
+
 (defgroup my-trans nil
   "My google translation."
   :prefix "my-trans-")

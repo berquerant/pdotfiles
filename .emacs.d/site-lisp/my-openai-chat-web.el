@@ -46,11 +46,7 @@
     "Japanese"))
 
 (defun my-openai-chat-web-start (txt)
-  "Send whole buffer or region to `my-openai-chat-web-command'."
-  (interactive
-   (list (cond
-          ((use-region-p) (buffer-substring (region-beginning) (region-end)))
-          (t (buffer-substring (point-min) (point-max))))))
+  "Send TXT to `my-openai-chat-web-command'."
   (thread-buffer-chat-start (my-openai-chat-web--command)
                             txt
                             :timeout my-openai-chat-web-timeout

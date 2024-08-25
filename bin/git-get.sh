@@ -11,8 +11,8 @@ uri2dir() {
 }
 
 clone() {
-    uri="$1"
-    dir="$(ghq root)/$(uri2dir $uri)"
+    local uri="$1"
+    local dir="$(ghq root)/$(uri2dir $uri)"
     if echo "$uri" | grep -q 'github.com' ; then
         ghq get "$uri"
     else
@@ -26,7 +26,7 @@ ghq_select() {
 }
 
 select_clone() {
-    uri="$1"
+    local uri="$1"
     if [ -z "$uri" ] ; then
         ghq_select
     else
@@ -35,7 +35,7 @@ select_clone() {
 }
 
 usage() {
-    name="${0##*/}"
+    local name="${0##*/}"
     cat - <<EOS >&2
 ${name} -- clone and change directory
 

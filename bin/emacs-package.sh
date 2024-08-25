@@ -31,8 +31,12 @@ describe_packages() {
     list_directories | __grinfo_cache
 }
 
+read_profile() {
+    __batch_cache --eval '(my-external-straight-read-profile)'
+}
+
 describe_old_packages() {
-    threshold_day="${1:-90}"
+    local threshold_day="${1:-90}"
     describe_packages |\
         jq --arg t "$threshold_day" 'select(.timediff.day > ($t|tonumber))|[.url, .timediff.day]|@csv' -r |\
         tr -d '"' |\
@@ -44,7 +48,7 @@ freeze() {
 }
 
 update_package() {
-    pkg="$1"
+    local pkg="$1"
     if [ -z "$pkg" ] ; then
         echo "no package specified"
         return 1
@@ -86,6 +90,20 @@ histfile_stat() {
     awk '{s[$2]+=$3}END{for(k in s)print s[k]"\t"k}' "$EMACS_HISTFILE" | sort -nk 1
 }
 
+describe_local() {
+    local pkg="$1"
+    if [ -n "$pkg" ] ; then
+        return 1
+    fi
+    read_profile |\
+        jq -c --arg name "$pkg" '{"profiles": [to_entries[] | select(.key | test($name))] | from_entries}'
+    find "${EMACSD}/straight/build" -d 1 -maxdepth 1 -name "*${pkg}*" -type d |\
+        jq -c --raw-input --slurp '{"build": [split("\n")[] | select(. != "")]}'
+    find "${EMACSD}/straight/repos" -d 1 -maxdepth 1 -name "*${pkg}*" -type d |\
+        __grinfo_cache |\
+        jq -c
+}
+
 usage() {
     name="${0##*/}"
     cat - <<EOS >&2
@@ -105,6 +123,9 @@ Usage
   ${name} d|desc|describe ...
     a|all
       List packages details.
+
+    l|local NAME
+      describe_local
 
     DAYS
       List old packages details.
@@ -132,7 +153,7 @@ EOS
 }
 
 main() {
-    cmd="$1"
+    local cmd="$1"
     shift
     case "$cmd" in
         "ls" | "list")
@@ -154,6 +175,7 @@ main() {
             shift
             case "$cmd" in
                 "a" | "all") describe_packages ;;
+                "l" | "local") describe_local "$@" ;;
                 *) describe_old_packages "$@" ;;
             esac
             ;;

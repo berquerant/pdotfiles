@@ -5,3 +5,4 @@ __pycache__/
 .ropeproject/
 repos/
 .python-version
+flycheck_init.el

@@ -14,7 +14,7 @@ repopath() {
 }
 
 add() {
-    branch="$1"
+    local branch="$1"
     if [ -z "$branch" ] ; then
         return 1
     fi
@@ -34,7 +34,7 @@ list() {
 }
 
 usage() {
-    name="${0##*/}"
+    local name="${0##*/}"
     cat - <<EOS >&2
 ${name} -- git worktree wrapper
 

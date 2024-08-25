@@ -26,14 +26,14 @@ EOS
 }
 
 main() {
-    op="$1"
+    local op="$1"
     if [ -z "$1" ] ; then
         __help
         return 1
     fi
 
     shift
-    cmd='curl -s -o /dev/null'
+    local cmd='curl -s -o /dev/null'
     case "$op" in
         "s" | "status")
             cmd="${cmd} -w %{http_code}"

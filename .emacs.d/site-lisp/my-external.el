@@ -28,6 +28,7 @@
            do (my-external-write (format "%s\n" name))))
 
 (defun my-external-straight-update-package (pkg)
+  (straight-pull-recipe-repositories)
   (straight-pull-package-and-deps pkg)
   (straight-rebuild-package pkg))
 
@@ -37,6 +38,9 @@
 
 (defun my-exrernal-straight-check-all ()
   (straight-check-all))
+
+(defun my-external-straight-read-profile ()
+  (my-external-write (json-encode (my-straight-read-profile))))
 
 (provide 'my-external)
 ;;; my-external.el ends here

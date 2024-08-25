@@ -77,7 +77,7 @@ main() {
         return 1
     fi
 
-    args="$*"
+    local args="$*"
     if [ "$1" = "all" ] ; then
         args="go python ruby node brew docker etc"
     fi

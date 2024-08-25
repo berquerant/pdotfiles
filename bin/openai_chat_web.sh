@@ -7,12 +7,12 @@ loc="${DOTFILES_ROOT}/ivg/repos/openai-chat-web"
 command="pipenv run python -m openai_chat_web.cli $@"
 
 write_log() {
-    log_input_file="$1"
-    log_output_file="$2"
-    log_err_file="$3"
+    local log_input_file="$1"
+    local log_output_file="$2"
+    local log_err_file="$3"
 
-    ts=$(date +%s)
-    now=$(date -r "$ts" "+%Y-%m-%d %H:%M:%S")
+    local ts=$(date +%s)
+    local now=$(date -r "$ts" "+%Y-%m-%d %H:%M:%S")
     jq -n -c \
        --arg c "$command" \
        --arg i "$(cat "$log_input_file")" \
@@ -24,9 +24,9 @@ write_log() {
 }
 
 main() {
-    input="$(mktemp)"
-    output="$(mktemp)"
-    err="$(mktemp)"
+    local input="$(mktemp)"
+    local output="$(mktemp)"
+    local err="$(mktemp)"
     cd "$loc"
     tee "$input" | $command > "$output" 2> "$err"
     cat "$output"
