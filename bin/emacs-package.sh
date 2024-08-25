@@ -99,9 +99,7 @@ describe_local() {
         jq -c --arg name "$pkg" '{"profiles": [to_entries[] | select(.key | test($name))] | from_entries}'
     find "${EMACSD}/straight/build" -d 1 -maxdepth 1 -name "*${pkg}*" -type d |\
         jq -c --raw-input --slurp '{"build": [split("\n")[] | select(. != "")]}'
-    find "${EMACSD}/straight/repos" -d 1 -maxdepth 1 -name "*${pkg}*" -type d |\
-        __grinfo_cache |\
-        jq -c
+    find "${EMACSD}/straight/repos" -d 1 -maxdepth 1 -name "*${pkg}*" -type d | __grinfo_cache | jq -c
 }
 
 usage() {
@@ -164,10 +162,7 @@ main() {
                 "d" | "dir" | "directories") list_directories ;;
                 "p" | "dep" | "dependencies") list_dependencies ;;
                 "q" | "det" | "dependents") list_dependents ;;
-                *)
-                    usage
-                    return 1
-                    ;;
+                *) usage ; return 1 ;;
             esac
             ;;
         "d" | "desc" | "describe")
@@ -187,18 +182,12 @@ main() {
             case "$cmd" in
                 "d" | "dep" | "dependencies") render_dependencies ;;
                 "q" | "det" | "dependents") render_dependents ;;
-                *)
-                    usage
-                    return 1
-                    ;;
+                *) usage ; return 1 ;;
             esac
             ;;
         "hs" | "histstat") histfile_stat ;;
         "f" | "freeze") freeze ;;
-        *)
-            usage
-            return 1
-            ;;
+        *) usage ;;
     esac
 }
 
