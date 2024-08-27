@@ -633,7 +633,7 @@
   (company-scrollbar-bg ((t (:background "Gray"))))
   :custom
   (company-tooltip-maximum-width 50)
-  (company-minimum-prefix-length 3)
+  (company-minimum-prefix-length 2)
   (company-idle-delay 0.7)
   (company-require-match nil)
   (company-transformers '(company-sort-by-backend-importance))
