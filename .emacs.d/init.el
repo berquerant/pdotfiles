@@ -1050,7 +1050,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package dockerfile-mode
   :mode
-  ("Dockerfile" . dockerfile-mode))
+  ("Dockerfile" . dockerfile-mode)
+  :config
+  (add-hook 'dockerfile-mode-hook
+            (lambda () (electric-indent-local-mode -1))))
 
 (use-package protobuf-mode
   :mode

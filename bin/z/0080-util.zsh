@@ -86,3 +86,8 @@ unzip_via_ditto() {
 }
 
 source "${DOTFILES_ROOT}/bin/cache.sh"
+
+reload_tmpd() {
+    rm -rf "$TMPD"
+    mkdir -p "$TMPD"
+}
