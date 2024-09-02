@@ -219,7 +219,8 @@
   (treemacs-silent-refresh t)
   (treemacs-show-cursor t)
   (treemacs-silent-filewatch t)
-  (treemacs-tag-follow-delay 0.5)
+  (treemacs-file-event-delay 500)
+  (treemacs-file-follow-delay 0.2)
   :config
   (defun my--revert-buffer--treemacs-refersh-after-advice ()
     (call-interactively 'treemacs-refresh))
@@ -235,6 +236,7 @@
     (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
   (my-misc-other-window-predicates-add 'my-treemacs-other-window-predicate)
 
+  (treemacs-git-commit-diff-mode 1)
   (treemacs-follow-mode t)
   (treemacs-project-follow-mode t)
   (treemacs-filewatch-mode t)

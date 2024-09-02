@@ -91,3 +91,7 @@ reload_tmpd() {
     rm -rf "$TMPD"
     mkdir -p "$TMPD"
 }
+
+checksum() {
+    "${DOTFILES_ROOT}/bin/checksum.sh" "$@"
+}

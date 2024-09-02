@@ -126,6 +126,18 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "Manage install-via-git-go",
+      "fileMatch": [
+        "^bin/install-via-git-go.sh$"
+      ],
+      "matchStrings": [
+        "ref=\"(?<currentValue>.*)\""
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "berquerant/install-via-git-go"
+    },
+    {
+      "customType": "regex",
       "description": "Manage go dependencies",
       "fileMatch": [
         "^requirements/go.txt$"
