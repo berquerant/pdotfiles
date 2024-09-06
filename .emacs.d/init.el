@@ -783,6 +783,7 @@
   (ad-activate 'delete-backward-char)
   (sp-local-pair '(emacs-lisp-mode) "'" "'" :actions nil) ; disable right ' completion
   (sp-local-pair '(emacs-lisp-mode) "`" "`" :actions nil) ; disable right ` completion
+  (sp-local-pair '(plantuml-mode) "'" "'" :actions nil) ; disable right ' completion
   (smartparens-global-mode t)
   (show-smartparens-global-mode t))
 
