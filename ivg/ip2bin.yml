@@ -1,10 +1,10 @@
-uri: https://github.com/berquerant/ip2bin
+uri: https://github.com/berquerant/ip2bin-rust
 branch: main
-locald: repos/ip2bin
+locald: repos/ip2bin-rust
 lock: locks/ip2bin.lock
 install:
-  # https://github.com/ruby/bigdecimal/issues/297
-  - bundle install
-  - bundle binstubs ip2bin --path /usr/local/bin/
+  - cargo build -r
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/target/release/ip2bin" /usr/local/bin/ip2bin
+  - ip2bin -h
 uninstall:
   - rm -f $(which ip2bin)
