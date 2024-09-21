@@ -246,11 +246,17 @@ yq -o json renovate.yml > renovate.json
 
 Install rust.
 
-interactive: true
-
 ``` shell
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ./install r rust
+```
+
+## uninstall-rust
+
+Uninstall rust.
+
+``` shell
+rustup self uninstall -y
 ```
 
 ## sub
