@@ -9,11 +9,13 @@ kgetall() {
 
 kgetevent() {
     # kgetevent [MINUTE] [KUBECTL_OPT...]
-    local minute="${1:-10}"
-    local second="$(($minute*60))"
+    local minute="$1"
     shift
-    kubectl get event --sort-by='.lastTimestamp' $@  -o json |\
-        jq --arg now $(date +%s) \
-           --arg second $second \
-           '.items[] | select((.lastTimestamp | fromdate) > (($now | tonumber) - ($second | tonumber)))' -c
+    local second="$(($minute*60))"
+    local now="$(date +%s)"
+    local threshold="$(($now - $second))"
+    kubectl get event $@  -o json |\
+        jq --arg threshold $threshold \
+           -c \
+           '[.items[] | (.lastTimestamp // (.eventTime | sub("\\.[^Z]+"; ""))) as $t | . + {"t": ($t | fromdate), "tt": $t} | select(.t > ($threshold | tonumber))] | sort_by(.t) | .[]'
 }
