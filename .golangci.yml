@@ -45,3 +45,4 @@ linters:
     - forbidigo
     # deprecated
     - execinquery
+    - exportloopref
