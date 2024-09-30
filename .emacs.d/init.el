@@ -1343,6 +1343,9 @@ when (eglot)."
   (lsp-rust-analyzer-display-parameter-hints t)
   (lsp-rust-analyzer-display-reborrow-hints t)
   (lsp-terraform-enable-logging nil)
+  (lsp-yaml-format-enable nil)
+  (lsp-yaml-print-width 120)
+  (lsp-yaml-prose-wrap 'never)
   :config
   (lsp-register-custom-settings
    '(("gopls.hints" ((assignVariableTypes . t)
