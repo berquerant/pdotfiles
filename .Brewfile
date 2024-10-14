@@ -1,5 +1,4 @@
 brew "git"
-brew "gh"
 brew "glab"
 brew "direnv" # .envrc
 brew "gettext"
