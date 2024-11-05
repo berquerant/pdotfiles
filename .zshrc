@@ -25,11 +25,11 @@ source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 export EMACSD="$HOME/.emacs.d"
 export TMPD="$HOME/tmp"
 
-export GO_VERSION=1.23.1
+export GO_VERSION=1.23.2
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
-export PY_VERSION=3.12.6
+export PY_VERSION=3.13.0
 export PYENV_ROOT="$HOME/.pyenv"
 
 export RB_VERSION=3.2.2
