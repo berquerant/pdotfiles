@@ -11,6 +11,7 @@ case "$1" in
         ;;
     o)
         shift
+        # shellcheck disable=SC2046,SC2001
         flict outbound-candidate $(echo "$*" | sed 's| | AND |g')
         ;;
     *)

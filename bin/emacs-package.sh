@@ -1,6 +1,6 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0)/..; pwd)
+d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 . "${d}/bin/cache.sh"
 
 __emacs_package_batch() {

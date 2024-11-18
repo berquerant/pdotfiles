@@ -2,7 +2,7 @@
 
 set -e
 
-d=$(cd $(dirname $0)/..; pwd)
+d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 . "${d}/bin/common.sh"
 
 message() {
@@ -22,6 +22,7 @@ then
     __arch="$(uname -m)"
     if [ "$__arch" = "arm64" ]; then
         export PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
+        # shellcheck disable=SC2016
         echo 'export PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"' >> ~/.zprofile
     elif [ "$__arch" = "x86_64" ]; then
         export PATH="$PATH:/usr/local/bin"

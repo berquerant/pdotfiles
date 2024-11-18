@@ -1,6 +1,6 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0)/..; pwd)
+d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 target="$1"
 
 req() {
@@ -14,15 +14,16 @@ __ignore_comment() {
 __install_from_file() {
     local target_file="$1"
     shift
-    local t="$(mktemp)"
-    cat "$target_file" | __ignore_comment  > "$t"
+    local t
+    t="$(mktemp)"
+    __ignore_comment  < "$target_file" > "$t"
     "$@" "$t"
 }
 
 __install_from_lines() {
     local target_file="$1"
     shift
-    cat "$target_file" | __ignore_comment | while read x ; do "$@" $x ; done
+    __ignore_comment < "$target_file" | while read -r x ; do "$@" "$x" ; done
 }
 
 install_python() {
@@ -63,7 +64,7 @@ install_rustup() {
 
 set -ex
 
-req_file="$(req $target)"
+req_file="$(req "$target")"
 
 case "${target}" in
     "cargo")

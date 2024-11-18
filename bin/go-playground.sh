@@ -2,8 +2,9 @@
 
 init() {
     set -ex
+    # shellcheck disable=SC2153
     local ghq_root="${GHQ_ROOT}/"
-    local repo_root="${PWD#$ghq_root}"
+    local repo_root="${PWD#"$ghq_root"}"
     go mod init "$repo_root"
     go mod tidy
 }

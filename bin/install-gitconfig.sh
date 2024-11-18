@@ -6,11 +6,13 @@ set -e
 
 ensure_cd "$PJTMP"
 
-export GIT_USER_NAME="$(git config user.name)"
-export GIT_USER_EMAIL="$(git config user.email)"
+GIT_USER_NAME="$(git config user.name)"
+GIT_USER_EMAIL="$(git config user.email)"
+export GIT_USER_NAME
+export GIT_USER_EMAIL
 
 if [ -z "$GIT_USER_NAME" ] ; then
-    read -p "GIT_USER_NAME? > " gun
+    read -r -p "GIT_USER_NAME? > " gun
     if [ -z "$gun" ]
     then
         cecho red "No GIT_USER_NAME!" >&2
@@ -19,7 +21,7 @@ if [ -z "$GIT_USER_NAME" ] ; then
     export GIT_USER_NAME=$gun
 fi
 if [ -z "$GIT_USER_EMAIL" ] ; then
-    read -p "GIT_USER_EMAIL? > " gue
+    read -r -p "GIT_USER_EMAIL? > " gue
     if [ -z "$gue" ]
     then
         cecho red "No GIT_USER_EMAIL!" >&2

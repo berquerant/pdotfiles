@@ -2,7 +2,7 @@
 
 set -e
 
-d=$(cd $(dirname $0)/..; pwd)
+d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 . "${d}/bin/common.sh"
 
 message() {

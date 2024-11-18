@@ -21,3 +21,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Lint
         run: .github/bin/lint.sh
+      - name: Shellcheck
+        run: .github/bin/shellcheck.sh

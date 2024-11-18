@@ -9,6 +9,7 @@ as_json2dot() {
 }
 
 __grdep() {
+    # shellcheck disable=SC2046
     git ls-files | grdep run $(find_config) "$@"
 }
 
@@ -49,7 +50,7 @@ Example
 EOS
 }
 
-cd $DOTFILES_ROOT
+cd "$DOTFILES_ROOT" || exit
 case "$1" in
     "json2dot")
         shift

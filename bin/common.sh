@@ -32,10 +32,10 @@ cname2num() {
 cecho() {
     if echo "$1" | grep -q "/"
     then
-        tput setaf $(cname2num $(echo "$1" | cut -d "/" -f 1))
-        tput setab $(cname2num $(echo "$1" | cut -d "/" -f 2))
+        tput setaf "$(cname2num "$(echo "$1" | cut -d "/" -f 1)")"
+        tput setab "$(cname2num "$(echo "$1" | cut -d "/" -f 2)")"
     else
-        tput setaf $(cname2num "$1")
+        tput setaf "$(cname2num "$1")"
     fi
     echo "$2"
     tput sgr0
@@ -48,7 +48,7 @@ cecho() {
 # $2 : statement when denied.
 exec_query() {
     local yn
-    read -n1 -p "$1 (y/N): " yn
+    read -r -n1 -p "$1 (y/N): " yn
     echo
     if [[ $yn != [yY] ]]
     then
@@ -80,7 +80,7 @@ stopwatch() {
 # $1 : required. directory.
 ensure_cd() {
     mkdir -p "$1"
-    cd "$1"
+    cd "$1" || return 1
 }
 
 # remove extension

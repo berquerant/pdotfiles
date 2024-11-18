@@ -3,7 +3,7 @@
 extension="$1"
 if [ -z "$extension" ] ; then
     echo "extension required"
-    echo "$(basename $0) EXTENSION [DOT_OPTIONS]"
+    echo "$(basename "$0") EXTENSION [DOT_OPTIONS]"
     echo "render graph by dot"
     exit 1
 fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-d=$(cd $(dirname $0)/..; pwd)
+d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 ivg_sh="${d}/bin/install-via-git.sh"
 req_sh="${d}/bin/install-requirements.sh"
 

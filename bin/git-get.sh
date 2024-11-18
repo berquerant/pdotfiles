@@ -12,7 +12,8 @@ uri2dir() {
 
 clone() {
     local uri="$1"
-    local dir="$(ghq root)/$(uri2dir $uri)"
+    local dir
+    dir="$(ghq root)/$(uri2dir "$uri")"
     if echo "$uri" | grep -q 'github.com' ; then
         ghq get "$uri"
     else

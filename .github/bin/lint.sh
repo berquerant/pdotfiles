@@ -1,29 +1,26 @@
 #!/bin/bash
 
-__check_lines() {
-    extension_regex="$1"
-    threshold="$2"
-    git ls-files | sort | grep "$extension_regex" | while read p ; do
-        echo "[check_lines] ${p}"
-        l="$(wc -l $p|awk '{print $1}')"
-        if [ "$l" -gt "$threshold" ] ; then
-            echo "${p} too large, ${l} lines > ${threshold}"
-            return 1
-        fi
+d=$(cd "$(dirname "$0")" || exit; pwd)
+. "${d}/common.sh"
+
+__check() {
+    local file="$1"
+    local threshold="$2"
+    echo "[check] ${1}"
+    local lines
+    lines="$(wc -l "$file" | awk '{print $1}')"
+    if [ "$lines" -gt "$threshold" ] ; then
+       echo "${file} too large, ${lines} lines > ${threshold}"
+       return 1
+    fi
+}
+
+check() {
+    find_by_interpreter "$1" "$2" | while read -r line ; do
+        __check "$line" "$3"
     done
 }
 
-check_zsh_lines() {
-    threshold="$1"
-    __check_lines '\.zsh$' "$threshold"
-}
-
-check_bash_lines() {
-    threshold="$1"
-    __check_lines '\.sh$' "$threshold"
-}
-
-
 set -e
-check_bash_lines "${BASH_LINES_THRESHOLD:-200}"
-check_zsh_lines "${ZSH_LINES_THRESHOLD:-100}"
+check bash sh "${BASH_LINES_THRESHOLD:-200}"
+check zsh zsh "${ZSH_LINES_THRESHOLD:-100}"

@@ -10,12 +10,12 @@ __jmerge() {
     query='.[0]'
     if [ "$#" -gt 1 ] ; then
         m="$(($# - 1))"
-        for i in `seq 1 $m` ; do
+        for i in $(seq 1 "$m") ; do
             query="${query}*.[${i}]"
         done
     fi
 
-    jq --slurp "${query}" $*
+    jq --slurp "${query}" "$@"
 }
 
 __ymerge() {
@@ -26,13 +26,13 @@ __ymerge() {
     fi
 
     m="$(($# - 1))"
-    for i in `seq 0 $m` ; do
+    for i in $(seq 0 "$m") ; do
         f="$(mktemp)"
-        yq -ojson $1 > "$f"
+        yq -ojson "$1" > "$f"
         shift
-        fs[$i]="$f"
+        fs[i]="$f"
     done
-    __jmerge ${fs[@]} | cv json yml
+    __jmerge "${fs[@]}" | cv json yml
 }
 
 
@@ -40,10 +40,10 @@ t="$1"
 shift
 case "$t" in
     y | yml | yaml)
-        __ymerge $@
+        __ymerge "$@"
         ;;
     j | json)
-        __jmerge $@
+        __jmerge "$@"
         ;;
     *)
         echo "unknown command: ${t}"
