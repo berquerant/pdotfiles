@@ -140,7 +140,7 @@
       "customType": "regex",
       "description": "Manage go dependencies",
       "fileMatch": [
-        "^requirements/go.txt$"
+        "^requirements/go$"
       ],
       "matchStrings": [
         "(?<depName>.*)@(?<currentValue>.*)"
@@ -151,7 +151,7 @@
       "customType": "regex",
       "description": "Manage python dependencies",
       "fileMatch": [
-        "^requirements/python.txt$"
+        "^requirements/python$"
       ],
       "matchStrings": [
         "(?<depName>.*)==(?<currentValue>.*)"
@@ -163,7 +163,7 @@
       "customType": "regex",
       "description": "Manage node dependencies",
       "fileMatch": [
-        "^requirements/node.txt$"
+        "^requirements/node$"
       ],
       "matchStrings": [
         "(?<depName>.*)@(?<currentValue>.*)"

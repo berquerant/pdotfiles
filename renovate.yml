@@ -86,14 +86,14 @@ customManagers:
   - customType: "regex"
     description: "Manage go dependencies"
     fileMatch:
-      - "^requirements/go.txt$"
+      - "^requirements/go$"
     matchStrings:
       - "(?<depName>.*)@(?<currentValue>.*)"
     datasourceTemplate: "go"
   - customType: "regex"
     description: "Manage python dependencies"
     fileMatch:
-      - "^requirements/python.txt$"
+      - "^requirements/python$"
     matchStrings:
       - "(?<depName>.*)==(?<currentValue>.*)"
     datasourceTemplate: "pypi"
@@ -101,7 +101,7 @@ customManagers:
   - customType: "regex"
     description: "Manage node dependencies"
     fileMatch:
-      - "^requirements/node.txt$"
+      - "^requirements/node$"
     matchStrings:
       - "(?<depName>.*)@(?<currentValue>.*)"
     datasourceTemplate: "npm"
@@ -109,7 +109,7 @@ customManagers:
   - customType: "regex"
     description: "Manage ruby dependencies"
     fileMatch:
-      - "^requirements/gem.txt$"
+      - "^requirements/gem$"
     matchStrings:
       - "(?<depName>.*) -v (?<currentValue>\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "rubygems"
