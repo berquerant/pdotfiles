@@ -35,7 +35,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export RB_VERSION=3.2.2
 export RBENV_ROOT="$HOME/.rbenv"
 
-export NODE_VERSION=v22.9.0
+export NODE_VERSION=v23.1.0
 export NVM_DIR="$HOME/.nvm"
 export NPM_ROOT="$HOME/.npm"
 

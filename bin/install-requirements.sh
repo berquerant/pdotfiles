@@ -23,7 +23,8 @@ __install_from_file() {
 __install_from_lines() {
     local target_file="$1"
     shift
-    __ignore_comment < "$target_file" | while read -r x ; do "$@" "$x" ; done
+    # shellcheck disable=SC2086
+    __ignore_comment < "$target_file" | while read -r x ; do "$@" $x ; done
 }
 
 install_python() {
