@@ -98,3 +98,7 @@ gfreset() {
 gi() {
     GIT_ITER_MAX_PROCS="${GI_PROCS:-1}" GREP='rg' git-iter "$@"
 }
+
+groot() {
+    cd "$(git rev-parse --show-toplevel)"
+}

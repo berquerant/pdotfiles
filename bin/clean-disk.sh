@@ -50,6 +50,8 @@ clean_node() {
         cecho yellow "UNINSTALL node ${version}"
         __run nvm uninstall "$version"
     done
+    # clean $NPM_ROOT/_cacache
+    npm cache verify
 }
 
 clean_etc() {
