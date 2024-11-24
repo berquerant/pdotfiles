@@ -8,11 +8,8 @@ alias d='g d'
 alias a='g a'
 alias c='g c'
 alias m='g cm'
-alias o='gdefaultswitch'
 alias s='g s'
 alias r='repo'
-alias b='gdefaultdiff'
-alias p='gdefaultpull'
 
 repo() {
     location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
@@ -24,18 +21,6 @@ repo() {
 
 gdefault() {
     "${DOTFILES_ROOT}/bin/default-branch.sh" "$@"
-}
-
-gdefaultpull() {
-    gdefault pull "$@"
-}
-
-gdefaultswitch() {
-    gdefault switch
-}
-
-gdefaultdiff() {
-    gdefault diff
 }
 
 gtagpush() {
