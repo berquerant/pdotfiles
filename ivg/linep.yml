@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/linep
+branch: main
+locald: repos/linep
+lock: locks/linep.lock
+install:
+  - ./task build
+  - ln -snvf "${DOTFILES_ROOT}/bin/linep.sh" /usr/local/bin/linep
+  - linep -h
+uninstall:
+  - rm -f /usr/local/bin/linep
