@@ -126,6 +126,17 @@
   "customManagers": [
     {
       "customType": "regex",
+      "description": "Manage xc version",
+      "fileMatch": "^xc$",
+      "matchStrings": [
+        "ref=(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "joerdav/xc",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "customType": "regex",
       "description": "Manage install-via-git-go",
       "fileMatch": [
         "^bin/install-via-git-go.sh$"
@@ -175,7 +186,7 @@
       "customType": "regex",
       "description": "Manage ruby dependencies",
       "fileMatch": [
-        "^requirements/gem.txt$"
+        "^requirements/gem$"
       ],
       "matchStrings": [
         "(?<depName>.*) -v (?<currentValue>\\d+\\.\\d+\\.\\d+)"

@@ -76,6 +76,14 @@ packageRules:
       - ".emacs.d/**"
 customManagers:
   - customType: "regex"
+    description: "Manage xc version"
+    fileMatch: "^xc$"
+    matchStrings:
+      - 'ref=(?<currentValue>.*)'
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "joerdav/xc"
+    extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
+  - customType: "regex"
     description: "Manage install-via-git-go"
     fileMatch:
       - "^bin/install-via-git-go.sh$"
