@@ -4,7 +4,7 @@ typescript@5.6.3
 typescript-eslint@8.13.0
 typescript-language-server@4.3.3
 ts-node@10.9.2
-renovate@39.5.0
+renovate@39.7.4
 textlint@14.3.0
 textlint-rule-preset-ja-technical-writing@10.0.1
 textlint-rule-preset-ja-spacing@2.4.3

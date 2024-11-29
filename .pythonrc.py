@@ -1,6 +1,4 @@
-import atexit
 import os
-import readline
 from enum import Enum
 from functools import wraps
 from inspect import (
@@ -17,19 +15,50 @@ from inspect import (
 from pprint import pprint
 from pyclbr import readmodule_ex
 from uuid import uuid4
-
-readline.parse_and_bind("tab: complete")
-histfile = os.path.join(os.environ["PYTHONHISTORY"])
-try:
-    readline.read_history_file(histfile)
-    readline.set_history_length(1000)
-except IOError:
-    pass
-atexit.register(readline.write_history_file, histfile)
+import json
+import yaml
+from fractions import Fraction
+from decimal import Decimal
+from pathlib import Path
 
 
 class devutil:
     """Utilities for dev."""
+
+    @classmethod
+    def dump_yaml(cls, x) -> str:
+        return yaml.dump(cls.dumpable(x), allow_unicode=True, indent=2)
+
+    @classmethod
+    def dump_json(cls, x, indent=False) -> str:
+        args = {
+            "obj": cls.dumpable(x),
+            "ensure_ascii": False,
+            "sort_keys": True,
+        }
+        if indent:
+            args["indent"] = 2
+        else:
+            args["separators"] = (",", ":")
+        return json.dumps(**args)
+
+    @classmethod
+    def dumpable(cls, x):
+        match x:
+            case list() | tuple() | set() | frozenset():
+                return [cls.dumpable(a) for a in x]
+            case dict():
+                return {cls.dumpable(k): cls.dumpable(v) for k, v in x.items()}
+            case bytearray():
+                return cls.dumpable(bytes(x))
+            case bytes():
+                return x.decode()
+            case str() | int() | float() | bool():
+                return x
+            case Decimal():
+                return float(x)
+            case _:
+                return str(x)
 
     class color(Enum):
         end = "\033[0m"
@@ -79,6 +108,18 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
+    def j(x, indent=False):
+        """Print json string."""
+        print(devutil.dump_json(x, indent=indent))
+
+    @staticmethod
+    @devutil.ignore_exception
+    def y(x):
+        """Print yaml string."""
+        print(devutil.dump_yaml(x))
+
+    @staticmethod
+    @devutil.ignore_exception
     def c(x):
         """Print source of x."""
         print(getsource(x))
@@ -86,10 +127,7 @@ class dev:
     @classmethod
     @devutil.ignore_exception
     def cb(cls, module):
-        """
-        Print class browser of module.
-        :param: module str
-        """
+        """Print class browser of module(str)."""
         for v in readmodule_ex(module).values():
             cls.pp(vars(v))
 
@@ -159,10 +197,8 @@ class dev:
 
         @property
         def all(self):
-            """
-            Get all members.
-            :return: dict
-            """
+            """Get all members.
+            :return: dict"""
             return self.members
 
         @property
@@ -176,10 +212,7 @@ class dev:
 
     @classmethod
     def hashable(cls, x):
-        """
-        Get hashable.
-        :return: Hasable
-        """
+        """Get hashable."""
         match x:
             case list() | tuple() | set() | frozenset():
                 return tuple(cls.hashable(z) for z in x)
@@ -209,5 +242,4 @@ class dev:
         return wrapper
 
 
-del histfile, atexit, readline
 print(devutil.color.green.add(dev.__doc__))

@@ -53,7 +53,6 @@ load_go() {
 # python
 export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/pyenv/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
-export PYTHONHISTORY="$HOME/.python.history"
 eval "$(pyenv init -)"
 load_python() {
     pyenv shell "$PY_VERSION"

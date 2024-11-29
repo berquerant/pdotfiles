@@ -187,12 +187,6 @@ node:
     name: PYENV_ROOT
   - category: .*
     matcher:
-      - r: PYTHONHISTORY
-      - val:
-          - PYTHONHISTORY
-    name: PYTHONHISTORY
-  - category: .*
-    matcher:
       - r: PYTHONSTARTUP
       - val:
           - PYTHONSTARTUP
