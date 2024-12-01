@@ -165,13 +165,25 @@ class dev:
 
     @staticmethod
     @devutil.ignore_exception
-    def f(x, n=False):
-        """Less source of x. Display line number if n is True."""
-        cmd = ["less"]
+    def f(x, n=False, just=False, dry=False):
+        """Less source of x.
+        Display line number if n is True.
+        Display only the code part of an object if just is True.
+        Do not execute command if dry is True."""
+        less_args = ["less"]
         if n:
-            cmd.append("-N")
-        cmd.append(getfile(x))
-        os.system(" ".join(cmd))
+            less_args.append("-N")
+        filename = getfile(x)
+        lines, start_linum = getsourcelines(x)
+        if just:
+            args = ["tail", f"+{start_linum}", filename, "|", "head", "-n", len(lines), "|", *less_args]
+        else:
+            args = [*less_args, f"+{start_linum}", filename]
+        cmd = " ".join(str(x) for x in args)
+        if dry:
+            print(cmd)
+            return
+        os.system(cmd)
 
     @staticmethod
     @devutil.ignore_exception
@@ -198,19 +210,6 @@ class dev:
     def t(x):
         """Get class tree."""
         return getclasstree([type(x)])
-
-    @classmethod
-    def hashable(cls, x):
-        """Get hashable."""
-        match x:
-            case list() | tuple() | set() | frozenset():
-                return tuple(cls.hashable(z) for z in x)
-            case dict():
-                return tuple((k, cls.hashable(x[k])) for k in sorted(x))
-            case bytearray():
-                return bytes(x)
-            case _:
-                return x
 
     @staticmethod
     def w(f):
