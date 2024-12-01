@@ -1,4 +1,6 @@
+import json
 import os
+from decimal import Decimal
 from enum import Enum
 from functools import wraps
 from inspect import (
@@ -15,11 +17,8 @@ from inspect import (
 from pprint import pprint
 from pyclbr import readmodule_ex
 from uuid import uuid4
-import json
+
 import yaml
-from fractions import Fraction
-from decimal import Decimal
-from pathlib import Path
 
 
 class devutil:
@@ -65,7 +64,7 @@ class devutil:
         red = "\033[31m"
         green = "\033[32m"
 
-        def add(self, s):
+        def add(self, s: str) -> str:
             """Add color to the string."""
             return self.value + s + self.end.value
 
@@ -78,7 +77,7 @@ class devutil:
             try:
                 return f(*args, **kwargs)
             except Exception as e:
-                msg = "{}({}, {}) caused {}".format(f.__name__, args, kwargs, e)
+                msg = f"{f.__name__}({args}, {kwargs}) caused {e}"
                 print(cls.color.red.add(msg))
                 return None
 
@@ -88,7 +87,7 @@ class devutil:
     def describe_function_or_method(cls, x):
         """Describe x's methods or functions."""
         for _, member in sorted(getmembers(x, isfunction) + getmembers(x, ismethod)):
-            msg = "{}{}".format(member.__name__, signature(member))
+            msg = f"{member.__name__}{signature(member)}"
             print(cls.color.green.add(msg))
             if member.__doc__:
                 print("  " + member.__doc__)
@@ -144,7 +143,7 @@ class dev:
         srcfile = getfile(x)
         lines, start_linum = getsourcelines(x)
         end_linum = start_linum + len(lines) - 1
-        msg = "file {} line {} to {}".format(srcfile, start_linum, end_linum)
+        msg = f"file {srcfile} line {start_linum} to {end_linum}"
         print(msg)
 
     @staticmethod
@@ -173,7 +172,7 @@ class dev:
     @devutil.ignore_exception
     def s(x):
         """Print signature of x."""
-        msg = "{}{}".format(x.__name__, signature(x))
+        msg = f"{x.__name__}{signature(x)}"
         print(devutil.color.green.add(msg))
 
     @staticmethod
@@ -230,14 +229,17 @@ class dev:
         @wraps(f)
         def wrapper(*args, **kwargs):
             rid = uuid4()
+            name = f.__name__
             s = signature(f)
-            bindings = ",".join("{}={}".format(k, v) for k, v in s.bind(*args, **kwargs).arguments.items())
-            msg = "[{}] call {}{}".format(rid, f.__name__, bindings)
-            print(msg)
-            r = f(*args, **kwargs)
-            msg = "[{}] Returned {}".format(rid, r)
-            print(msg)
-            return r
+            bindings = ",".join(f"{k}={v}" for k, v in s.bind(*args, **kwargs).arguments.items())
+            print(f"[{rid}] call {name}({bindings})")
+            try:
+                r = f(*args, **kwargs)
+                print(f"[{rid}] returned({r})")
+                return r
+            except Exception as e:
+                print(f"[{rid}] exception({e})")
+                raise e
 
         return wrapper
 

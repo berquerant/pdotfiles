@@ -80,7 +80,7 @@ customManagers:
     fileMatch: "^xc$"
     matchStrings:
       - 'ref=(?<currentValue>.*)'
-    datasourceTemplate: "github-tags"
+    datasourceTemplate: "github-releases"
     depNameTemplate: "joerdav/xc"
     extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
   - customType: "regex"

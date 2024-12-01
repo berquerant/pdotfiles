@@ -131,7 +131,7 @@
       "matchStrings": [
         "ref=(?<currentValue>.*)"
       ],
-      "datasourceTemplate": "github-tags",
+      "datasourceTemplate": "github-releases",
       "depNameTemplate": "joerdav/xc",
       "extractVersionTemplate": "^v(?<version>.*)$"
     },

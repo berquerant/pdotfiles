@@ -5,7 +5,7 @@ pycodestyle==2.12.1
 mccabe==0.7.0
 pyls-memestra==0.0.16
 python-lsp-server==1.12.0
-debugpy==1.8.7
+debugpy==1.8.8
 python-lsp-ruff==2.2.2
 sqlfluff==3.2.5
 langdetect==1.0.9
