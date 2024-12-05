@@ -23,7 +23,7 @@ gen_env_config() {
         cut -d " " -f 2 |\
         sort -u |\
         jq --slurp --raw-input '{node:[split("\n")[:-1][]|{name: ., category: ".*", matcher: [{r: .}, {val: [.]}]}]}' |\
-        cv json yaml |\
+        linep py 'print(yaml.dump(json.loads(x), allow_unicode=True, indent=2))' --import 'json|yaml' |\
         yq --prettyPrint 'sort_keys(..)'
 }
 

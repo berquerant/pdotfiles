@@ -1,8 +1,0 @@
-uri: https://github.com/berquerant/makedepdump
-branch: main
-locald: repos/makedepdump
-lock: locks/makedepdump
-install:
-  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/makedepdump.sh" /usr/local/bin/makedepdump
-uninstall:
-  - rm -f /usr/local/bin/makedepdump

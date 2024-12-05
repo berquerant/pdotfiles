@@ -32,7 +32,7 @@ __ymerge() {
         shift
         fs[i]="$f"
     done
-    __jmerge "${fs[@]}" | cv json yml
+    __jmerge "${fs[@]}" | linep py 'print(yaml.dump(json.loads(x), allow_unicode=True, indent=2))' --import 'json|yaml'
 }
 
 

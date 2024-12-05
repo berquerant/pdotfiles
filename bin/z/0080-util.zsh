@@ -53,10 +53,6 @@ if type gbrowse >/dev/null 2>&1 ; then
     alias gb='gbrowse'
 fi
 
-if [ -x /usr/local/bin/sqlite-csv.sh ] ; then
-    alias sqlite-csv='/usr/local/bin/sqlite-csv.sh'
-fi
-
 hurl() {
     "${DOTFILES_ROOT}/bin/hurl.sh" $@
 }
