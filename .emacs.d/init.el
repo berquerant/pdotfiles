@@ -1419,6 +1419,12 @@ when (eglot)."
         ("C-c t c" . lsp-treemacs-call-hierarchy)
         ("C-c t t" . lsp-treemacs-type-hierarchy)))
 
+(use-package dsvn
+  :commands (svn-status svn-update)
+  :config
+  (require 'vc-svn)
+  (setq svn-program (my-getenv-join "DOTFILES_ROOT" "bin" "dsvn.sh")))
+
 (use-package restclient)
 
 (use-package with-editor)

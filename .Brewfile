@@ -49,6 +49,8 @@ brew "hadolint"
 # kubernetes
 brew "kind"
 brew "helm"
+brew "derailed/k9s/k9s"
+brew "stern"
 
 # GNU tools
 brew "coreutils"
@@ -108,3 +110,6 @@ brew "openjdk"
 
 # toml
 brew "taplo" # formatter
+
+# subversion
+brew "subversion"
