@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/fflist
+branch: main
+locald: repos/fflist
+lock: locks/fflist.lock
+install:
+  - ./task build
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/fflist" /usr/local/bin/fflist
+  - fflist -h
+uninstall:
+  - rm -f /usr/local/bin/fflist

@@ -5,6 +5,12 @@ lock: locks/mpv-settings.lock
 env:
   MUSIC_ROOT: "${MUSIC_ROOT}"
   YTDL_ROOT: "${HOME}/ytdl"
+check:
+  - |
+    if [ -z "$MUSIC_ROOT" ] ; then
+      echo "Please set MUSIC_ROOT" > /dev/stderr
+      exit 1
+    fi
 setup:
   - brew install mpv
 install:
