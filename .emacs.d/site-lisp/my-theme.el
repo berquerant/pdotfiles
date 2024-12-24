@@ -10,8 +10,6 @@
 (use-package modus-themes
   :straight (modus-themes :host gitlab :repo "protesilaos/modus-themes")
   :ensure t
-  :init
-  (modus-themes-load-themes)
   :custom
   (modus-themes-bold-constructs t)
   (modus-themes-italic-constructs t)

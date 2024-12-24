@@ -1,5 +1,6 @@
 brew "git"
 brew "glab"
+brew "gh"
 brew "direnv" # .envrc
 brew "gettext"
 brew "nkf"
@@ -42,6 +43,7 @@ brew "nmap"
 brew "graphviz"
 brew "wget"
 brew "tree"
+brew "actionlint" # github action
 
 # docker
 brew "hadolint"
@@ -69,7 +71,6 @@ brew "gnu-time"
 brew "gnupg"
 
 # cask
-cask "multipass"
 cask "devtoys"
 
 # python

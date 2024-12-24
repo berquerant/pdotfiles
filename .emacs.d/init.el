@@ -56,10 +56,17 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-(setq package-archives '(("gnu-devel" . "https://elpa.gnu.org/devel/")
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("stable" . "https://stable.melpa.org/packages/")
+                         ("gnu-devel" . "https://elpa.gnu.org/devel/")
                          ("gnu" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-
+(customize-set-variable 'package-archive-priorities
+                        '(("melpa" . 100)
+                          ("stable" . 90)
+                          ("gnu" . 80)
+                          ("gnu-devel" . 70)
+                          ("nongnu" . 60)))
 (straight-use-package 'use-package) ; use-package integration
 
 (defconst my-straight-profile (concat user-emacs-directory "straight-default.el"))
@@ -582,33 +589,12 @@
   (dumb-jump-selector 'helm)
   (dumb-jump-force-searcher 'rg))
 
-(use-package git-gutter+
-  :demand t
-  :after (projectile backward-forward)
-  :diminish ((global-git-gutter+-mode . "")
-             (git-gutter+-mode . ""))
-  :bind
-  ("M-s g" . git-gutter+-show-hunk)
-  :custom
-  (git-gutter+:update-commands nil)
-  (git-gutter+:update-windows-commands nil)
-  (git-gutter+:update-hooks '(after-save-hook
-                             after-revert-hook))
-  :custom-face
-  (git-gutter+-added ((t (:foreground "green"))))
-  (git-gutter+-deleted ((t (:foreground "red"))))
-  (git-gutter+-modified ((t (:foreground "yellow"))))
-  :config
-  (global-git-gutter+-mode t))
-
 (use-package goto-chg
   :demand t
-  :after (projectile git-gutter+)
+  :after projectile
   :config
-  (my-macro-fallback-interactively my-project-p git-gutter+-next-hunk goto-last-change)
-  (my-macro-fallback-interactively my-project-p git-gutter+-previous-hunk goto-last-change-reverse)
-  (bind-key "M-," 'git-gutter+-next-hunk-fallback-to-goto-last-change)
-  (bind-key "M-." 'git-gutter+-previous-hunk-fallback-to-goto-last-change-reverse))
+  (bind-key "M-," 'goto-last-change)
+  (bind-key "M-." 'goto-last-change-reverse))
 
 ;; completions
 (use-package company
@@ -1400,6 +1386,16 @@ when (eglot)."
           (lsp-ui-doc--hide-frame))
         (lsp-ui-doc-mode 1))))
 
+(use-package dap-mode
+  :config
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (tooltip-mode 1)
+  (dap-ui-controls-mode 1)
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy)
+  (require 'dap-dlv-go))
+
 (use-package consult-lsp
   :ensure t
   :bind
@@ -1426,6 +1422,14 @@ when (eglot)."
   (setq svn-program (my-getenv-join "DOTFILES_ROOT" "bin" "dsvn.sh")))
 
 (use-package restclient)
+
+(use-package diff-hl
+  :diminish
+  :init
+  (global-diff-hl-mode)
+  :config
+  (diff-hl-mode)
+  (diff-hl-flydiff-mode))
 
 (use-package with-editor)
 (use-package backward-forward
@@ -1465,8 +1469,6 @@ when (eglot)."
                       end-of-buffer
                       isearch-forward
                       isearch-backward
-                      git-gutter+-next-hunk
-                      git-gutter+-previous-hunk
                       xref-go-back
                       xref-find-references
                       xref-find-definitions)
