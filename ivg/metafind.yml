@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/metafind
+branch: main
+locald: repos/metafind
+lock: locks/metafind.lock
+install:
+  - ./task build
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/mf" /usr/local/bin/mf
+  - mf -h
+uninstall:
+  - rm -f /usr/local/bin/mf

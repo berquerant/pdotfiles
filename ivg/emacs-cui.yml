@@ -13,6 +13,7 @@ env:
   LIBRARY_PATH: "/opt/homebrew/lib:$LIBRARY_PATH"
   # [brew gcc] configure: error: The include files (AppKit/AppKit.h etc)
   CC: "/usr/bin/clang"
+  EMACSD: "$CMACSD"
 setup:
   - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs/31.0.50/lisp /usr/local/share/emacs/31.0.50/etc
   - sudo touch /usr/local/share/emacs/31.0.50/etc/publicsuffix.txt /usr/local/share/info/dir

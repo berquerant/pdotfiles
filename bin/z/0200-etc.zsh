@@ -14,10 +14,9 @@ if __mpv_installed ; then
     load_mpv
 fi
 
-if which fflist > /dev/null 2>&1 && [ -n "$MUSIC_ROOT" ]; then
+if which mf > /dev/null 2>&1 && [ -n "$MUSIC_ROOT" ]; then
     ffquery() {
-        # ffquery QUERY... | mpv-play
-        fflist query -r "$MUSIC_ROOT" "$@"
+        mf --config "${DOTFILES_ROOT}/.mf.yml" "$@"
     }
 fi
 

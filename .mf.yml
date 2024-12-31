@@ -1,0 +1,5 @@
+root:
+  - "$MUSIC_ROOT"
+probe:
+  - |
+    ffprobe -v error -hide_banner -show_entries format -of json=c=1 @ARG

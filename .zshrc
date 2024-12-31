@@ -23,13 +23,14 @@ source "${DOTFILES_ROOT}/bin/common.sh"
 source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 
 export EMACSD="$HOME/.emacs.d"
+export CMACSD="$HOME/.cmacs.d"
 export TMPD="$HOME/tmp"
 
-export GO_VERSION=1.23.3
+export GO_VERSION=1.23.4
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
-export PY_VERSION=3.13.0
+export PY_VERSION=3.13.1
 export PYENV_ROOT="$HOME/.pyenv"
 
 export RB_VERSION=3.2.2

@@ -525,12 +525,6 @@
       ("/" . winner-undo)
       ("_" . winner-redo))))
 
-(use-package string-inflection
-  :after smartrep
-  :config
-  (smartrep-define-key global-map "M-s a"
-    '(("a" . string-inflection-all-cycle))))
-
 (use-package deadgrep
   :demand t
   :commands deadgrep
@@ -1023,46 +1017,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (:map yaml-mode-map
         ("C-m" . newline-and-indent)))
 
-(use-package haml-mode
-  :mode
-  (("\\.haml\\'" . haml-mode)))
-
-(use-package sass-mode
-  :mode
-  (("\\.sass\\'" . sass-mode)))
-
-(use-package scss-mode
-  :mode
-  (("\\.scss\\'" . scss-mode))
-  :config
-  (setq scss-compile-at-save nil))
-
 (use-package dockerfile-mode
   :mode
   ("Dockerfile" . dockerfile-mode)
   :config
   (add-hook 'dockerfile-mode-hook
             (lambda () (electric-indent-local-mode -1))))
-
-(use-package protobuf-mode
-  :mode
-  ("\\.proto\\'" . protobuf-mode)
-  :config
-  (defconst my-protobuf-style
-    '((c-basic-offset . 2)
-      (indent-tabs-mode . nil)))
-  (add-hook 'protobuf-mode-hook
-    (lambda () (c-add-style "my-style" my-protobuf-style t))))
-
-(use-package emmet-mode
-  :hook
-  ((web-mode . emmet-mode)
-   (html-mode . emmet-mode)
-   (css-mode . emmet-mode)
-   (sgml-mode . emmet-mode))
-  :config
-  (unbind-key "C-j" emmet-mode-keymap)
-  (bind-key "C-c :" 'emmet-expand-line emmet-mode-keymap))
 
 (use-package rust-mode
   :hook
@@ -1084,20 +1044,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :mode
   ("\\.hs$" . haskell-mode))
 
-(use-package nix-mode
-  :mode "\\.nix\\'")
-
 (defalias 'perl-mode 'cperl-mode)
-
-(use-package cider)
-
-(use-package cypher-mode
-  :mode (("\\.cql\\'" . cypher-mode)))
 
 (use-package terraform-mode
   :hook (terraform-mode . terraform-format-on-save-mode))
-
-(use-package svelte-mode)
 
 (use-package plantuml-mode
   :init

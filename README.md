@@ -134,6 +134,7 @@ Install GUI Emacs.
 interactive: true
 
 ``` shell
+./bin/install-emacs.sh
 ./install emacs-gui
 ```
 
@@ -144,6 +145,7 @@ Install CUI Emacs.
 interactive: true
 
 ``` shell
+EMACSD="$CMACSD" ./bin/install-emacs.sh
 ./install emacs-cui
 ```
 

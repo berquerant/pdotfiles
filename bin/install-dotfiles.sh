@@ -42,16 +42,8 @@ do
     exec_or_dry "ln -snvf ${d}/${df} ~/"
 done
 
-message "Install emacs configurations"
-
-exec_or_dry "mkdir -p ${EMACSD}"
-exec_or_dry "ln -snvf $d/.emacs.d/init.el ${EMACSD}/"
-exec_or_dry "ln -snvf $d/.emacs.d/straight-default.el ${EMACSD}/straight-default.el"
-exec_or_dry "ln -snvf $d/.emacs.d/site-lisp ${EMACSD}/site-lisp"
-exec_or_dry "mkdir -p ${EMACSD}/snippets"
-exec_or_dry "mkdir -p ${EMACSD}/junk"
-exec_or_dry "touch ${EMACSD}/abbrev_defs"
-exec_or_dry "mkdir -p ${EMACSD}/external-site-lisp"
+"${d}/bin/install-emacs.sh" "$@"
+EMACSD="$CMACSD" "${d}/bin/install-emacs.sh" "$@"
 
 message "Install others"
 

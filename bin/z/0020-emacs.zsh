@@ -15,8 +15,12 @@ emacs_gui() {
     fi
 }
 
+etoggle() {
+    EMACSD="$CMACSD" "$@"
+}
+
 emacs_cui() {
-    "$EMACS_CUI" "$@"
+    etoggle "$EMACS_CUI" --init-directory="$CMACSD" "$@"
 }
 
 emacs_docker() {
@@ -35,11 +39,11 @@ kill_emacs() {
 alias ekill='kill_emacs'
 
 emacs_batch() {
-    "${DOTFILES_ROOT}/bin/emacs-batch.sh" "$@"
+    etoggle "${DOTFILES_ROOT}/bin/emacs-batch.sh" "$@"
 }
 
 emacs_package() {
-    "${DOTFILES_ROOT}/bin/emacs-package.sh" "$@"
+    etoggle "${DOTFILES_ROOT}/bin/emacs-package.sh" "$@"
 }
 
 emacs_select_update_package() {
