@@ -15,8 +15,16 @@ if __mpv_installed ; then
 fi
 
 if which mf > /dev/null 2>&1 && [ -n "$MUSIC_ROOT" ]; then
+    export MF_CONFIG="${DOTFILES_ROOT}/.mf.yml"
+    export MF_INDEX="${TMPD}/.mf.index.json"
+    ffindex() {
+        mf --config "${DOTFILES_ROOT}/.mf.yml" -v > "$MF_INDEX"
+    }
     ffquery() {
-        mf --config "${DOTFILES_ROOT}/.mf.yml" "$@"
+        if [ ! -f "$MF_INDEX" ] ; then
+            ffindex
+        fi
+        mf -i "$MF_INDEX" "$@"
     }
 fi
 

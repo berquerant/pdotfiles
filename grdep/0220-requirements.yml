@@ -1,7 +1,0 @@
-node:
-  - name: "requirements"
-    category: "requirements/"
-    matcher:
-      - sh: "cut -d ' ' -f 1"
-      - sh: "cut -d '@' -f 1"
-      - sh: "cut -d '=' -f 1"

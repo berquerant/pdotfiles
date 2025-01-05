@@ -6,7 +6,6 @@ json2dot
 gomodbrowse
 cron2date
 grinfo
-grdep
 k8s-diff-sh
 cache-sh
 git-iter-sh

@@ -2,4 +2,6 @@ root:
   - "$MUSIC_ROOT"
 probe:
   - |
-    ffprobe -v error -hide_banner -show_entries format -of json=c=1 @ARG
+    ffprobe -v error -hide_banner -show_entries format -of json=c=1 @ARG | jq .format.tags -c
+pname:
+  - ffp
