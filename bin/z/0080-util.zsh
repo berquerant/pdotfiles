@@ -78,7 +78,7 @@ edot() {
 }
 
 unzip_via_ditto() {
-    ditto -V -x -k --sequesterRsrc $1 .
+    ditto -V -x -k --sequesterRsrc "$@"
 }
 
 source "${DOTFILES_ROOT}/bin/cache.sh"
