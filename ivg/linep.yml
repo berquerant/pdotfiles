@@ -4,7 +4,7 @@ locald: repos/linep
 lock: locks/linep.lock
 install:
   - ./task build
-  - ln -snvf "${DOTFILES_ROOT}/bin/linep.sh" /usr/local/bin/linep
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/linep" /usr/local/bin/linep
   - linep -h
 uninstall:
   - rm -f /usr/local/bin/linep
