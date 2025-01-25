@@ -49,6 +49,7 @@ message "Install others"
 
 exec_or_dry "ln -snvf $d/etc/peco ~/.config/peco"
 exec_or_dry "ln -snvf $d/.ruff.toml '${HOME}/Library/Application Support/.ruff.toml'"
+exec_or_dry "ln -snvf $d/.subversion '${HOME}/.subversion/config'"
 
 message "Dotfiles installed!"
 message "Please make gitconfig to install .gitconfig"

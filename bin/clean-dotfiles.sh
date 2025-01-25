@@ -54,6 +54,7 @@ message "Remove others"
 
 exec_or_dry "rm -f ~/.config/peco"
 exec_or_dry "rm -f '${HOME}/Library/Application Support/.ruff.toml'"
+exec_or_dry "rm -f '${HOME}/.subversion/config'"
 
 message "Dotfiles removed!"
 if ${is_dry}

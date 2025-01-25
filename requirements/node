@@ -1,12 +1,12 @@
 eslint@9.17.0
 csslint@1.0.5
 typescript@5.7.2
-typescript-eslint@8.18.1
+typescript-eslint@8.19.0
 typescript-language-server@4.3.3
 ts-node@10.9.2
-renovate@39.79.1
-textlint@14.4.0
-textlint-rule-preset-ja-technical-writing@10.0.1
+renovate@39.90.2
+textlint@14.4.2
+textlint-rule-preset-ja-technical-writing@12.0.2
 textlint-rule-preset-ja-spacing@2.4.3
 textlint-rule-alex@5.0.0
 textlint-rule-common-misspellings@1.0.1

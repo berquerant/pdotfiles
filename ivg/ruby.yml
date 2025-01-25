@@ -29,5 +29,5 @@ install:
 uninstall:
   - eval "$(${RBENV_ROOT}/bin/rbenv init - bash)"
   - eval "$(/opt/homebrew/bin/brew shellenv)"
-  - rbenv uninstall $RB_VERSION
+  - rbenv uninstall --force $RB_VERSION
   - rm -f $RBENV_ROOT

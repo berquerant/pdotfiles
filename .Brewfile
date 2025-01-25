@@ -114,3 +114,4 @@ brew "taplo" # formatter
 
 # subversion
 brew "subversion"
+brew "colordiff"

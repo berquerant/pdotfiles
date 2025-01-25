@@ -11,3 +11,4 @@ cargo-binutils
 cargo-make
 cargo-audit
 cargo-deny
+cargo-generate
