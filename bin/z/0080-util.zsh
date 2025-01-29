@@ -91,3 +91,7 @@ reload_tmpd() {
 checksum() {
     "${DOTFILES_ROOT}/bin/checksum.sh" "$@"
 }
+
+hman() {
+    "${DOTFILES_ROOT}/bin/hman.sh" "$@"
+}

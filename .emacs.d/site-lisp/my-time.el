@@ -18,6 +18,13 @@ default TIME is now, ZONE is here."
                       (or zone (current-time-zone))))
 
 ;;;###autoload
+(defun my-time-message (format-string &rest args)
+  "Call `message' with current time string."
+  (message "%s %s"
+           (my-time-datetime)
+           (apply 'format format-string args)))
+
+;;;###autoload
 (defun my-time-display-datetime (&optional time)
   "Display TIME (timestamp) as string.
 default time is now.
