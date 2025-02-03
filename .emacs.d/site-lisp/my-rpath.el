@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 's)
+(require 'idle-timer)
 
 (defun my-rpath--category ()
   (case major-mode
@@ -40,6 +41,16 @@ Requires https://github.com/berquerant/rpath"
   (my-rpath--call (case arg
                     (4 t)
                     (t nil))))
+
+(defun my-rpath-run ()
+  (my-rpath--call))
+
+(idle-timer-define-minor-mode my-rpath-run 3)
+;;;###autoload
+(defun my-rpath-mode-toggle ()
+  (interactive)
+  (if my-rpath-run-idle-timer-mode (my-rpath-run-idle-timer-mode -1)
+    (my-rpath-run-idle-timer-mode 1)))
 
 (provide 'my-rpath)
 ;;; my-rpath.el ends here

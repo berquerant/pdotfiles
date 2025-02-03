@@ -35,6 +35,7 @@
  ("emacs-backward-forward" . "58489957a62a0da25dfb5df902624d2548d800b4")
  ("emacs-command-log" . "7a55847cc3012e9f699f83586cd1af8ad4e49f00")
  ("emacs-google-this" . "8a2e3ca5da6a8c89bfe99a21486c6c7db125dc84")
+ ("emacs-idle-timer" . "8fb4c0ceaf6c57760c70e8320470a086151f7287")
  ("emacs-libvterm" . "99c1f5e76ac927825775c887c93e46036fac7327")
  ("emacs-little-async" . "29b08b17ff9a5813685bcb51d637e42fc07e3987")
  ("emacs-load-env-vars" . "3808520efaf9492033f6e11a9bffd68eabf02a0f")

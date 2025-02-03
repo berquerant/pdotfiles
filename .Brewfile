@@ -53,6 +53,7 @@ brew "kind"
 brew "helm"
 brew "derailed/k9s/k9s"
 brew "stern"
+brew "ctop"
 
 # GNU tools
 brew "coreutils"
