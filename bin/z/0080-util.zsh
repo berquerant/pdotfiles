@@ -95,3 +95,11 @@ checksum() {
 hman() {
     "${DOTFILES_ROOT}/bin/hman.sh" "$@"
 }
+
+dman() {
+    dmanraw debian "$@"
+}
+
+dmanraw() {
+    "${DOTFILES_ROOT}/bin/dman.sh" "$@"
+}

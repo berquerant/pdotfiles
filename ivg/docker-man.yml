@@ -1,0 +1,9 @@
+uri: https://github.com/berquerant/docker-man
+branch: main
+locald: repos/docker-man
+lock: locks/docker-man.lock
+install:
+  - make build
+uninstall:
+  - docker rmi docker-man:debian
+  - docker rmi docker-man:ubuntu
