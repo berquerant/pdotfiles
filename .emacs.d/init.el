@@ -1461,6 +1461,14 @@ when (eglot)."
   (my-openai-chat-web-chat-model "gpt-4o-mini")
   (my-openai-chat-web-command (my-getenv-join "DOTFILES_ROOT" "bin" "openai_chat_web.sh")))
 
+(use-package my-man
+  :straight (my-man :type built-in)
+  :config
+  (my-macro-region-or-at-point my-man-dman "dman> ")
+  (my-macro-region-or-at-point my-man-hman "hamn> ")
+  (bind-key "M-s M-s d" 'my-man-dman-region-or-at-point)
+  (bind-key "M-s M-s h" 'my-man-hman-region-or-at-point))
+
 (use-package message-routing
   :demand t
   :straight (message-routing :host github :repo "berquerant/emacs-message-routing")
