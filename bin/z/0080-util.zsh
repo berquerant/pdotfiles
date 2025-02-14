@@ -103,3 +103,7 @@ dman() {
 dmanraw() {
     "${DOTFILES_ROOT}/bin/dman.sh" "$@"
 }
+
+mln() {
+    "${DOTFILES_ROOT}/bin/mln.sh" "$@"
+}
