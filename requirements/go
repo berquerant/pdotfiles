@@ -1,6 +1,6 @@
 golang.org/x/tools/gopls@v0.17.1
-golang.org/x/tools/cmd/goimports@v0.29.0
+golang.org/x/tools/cmd/goimports@v0.30.0
 github.com/go-delve/delve/cmd/dlv@v1.24.0
 github.com/google/gops@v0.3.28
-golang.org/x/tools/cmd/eg@v0.29.0
+golang.org/x/tools/cmd/eg@v0.30.0
 golang.org/x/pkgsite/cmd/pkgsite@latest

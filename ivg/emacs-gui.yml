@@ -44,8 +44,8 @@ install:
   - ./configure --with-native-compilation --without-xwidgets --without-jpeg --without-webp --without-sound --without-pop --with-gif=ifavailable --with-tiff=ifavailable --with-xpm=ifavailable --without-x --without-x-toolkit || echo "bad configure"
   # skip make bootstrap to avoid:
   #     ELC      emacs-lisp/eieio.elc
-  # desired fingerprint: 3c66c7a2f2052f9f288dcdbc16fe40b2628f3b6f0e330de6305ef04739e48c19
-  # found fingerprint: 0c975e85f206dcf1e5c155a90885e9c14e8a6cb574f2a70944d770d05636b606
+  # fingerprint mismatch: emacs.pdmp, not built for this Emacs executable
+  # but make bootstrap may work in some case...
   # - make -j"$_IVG_CONCURRENTCY" bootstrap
   - make -j"$_IVG_CONCURRENTCY"
   - make -j"$_IVG_CONCURRENTCY" install

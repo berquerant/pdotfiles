@@ -26,7 +26,7 @@ export EMACSD="$HOME/.emacs.d"
 export CMACSD="$HOME/.cmacs.d"
 export TMPD="$HOME/tmp"
 
-export GO_VERSION=1.23.4
+export GO_VERSION=1.24.0
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
