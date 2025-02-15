@@ -181,6 +181,9 @@ Format is: (A%,B/C,D/E,F/G)"
   :commands (my-misc-delete-window-predicates-add
              my-misc-other-window-predicates-add)
   :bind
+  ("M-s M-s 0" . delete-frame)
+  ("M-s M-s 1" . my-misc-delete-other-frames)
+  ("M-s M-s 2" . clone-frame)
   ("C-t" . my-misc-other-window)
   ("C-M-t" . my-misc-other-window-reverse)
   ("C-x 1" . my-misc-delete-other-windows)

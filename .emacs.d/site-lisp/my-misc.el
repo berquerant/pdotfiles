@@ -112,6 +112,18 @@ When a predicate is called, selected window will be the window of the argument."
   (interactive)
   (my-misc--delete-other-windows (or window (get-buffer-window))))
 
+(defun my-misc--delete-other-frames (&optional frame)
+  (cl-loop for f in (frame-list)
+           when (not (eq f frame))
+           do (delete-frame f))
+  (select-frame frame))
+
+;;;###autoload
+(defun my-misc-delete-other-frames (&optional frame)
+  "`delete-frame' except FRAME."
+  (interactive)
+  (my-misc--delete-other-frames (or frame (selected-frame))))
+
 (defun my-misc-approx-collect-symbols (buffer-or-name)
   "Experimental: Collect symbols in the BUFFER-OR-NAME."
   (let (symbols)

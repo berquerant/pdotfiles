@@ -35,7 +35,7 @@ install:
   # ignore gdk/gdkx.h by --without-x-toolkit
   # without-jpeg : image.c:8492:11: fatal error: 'jpeglib.h' file not found
   - ./configure --with-native-compilation --without-xwidgets --without-jpeg --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils --without-x --without-x-toolkit || echo "bad configure"
-  - make bootstrap
+  - make -j"$_IVG_CONCURRENTCY" bootstrap
   - make -j"$_IVG_CONCURRENTCY"
-  - make install
+  - make -j"$_IVG_CONCURRENTCY" install
   - /usr/local/bin/emacs --version

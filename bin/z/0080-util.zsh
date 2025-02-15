@@ -53,33 +53,13 @@ if type gbrowse >/dev/null 2>&1 ; then
     alias gb='gbrowse'
 fi
 
-hurl() {
-    "${DOTFILES_ROOT}/bin/hurl.sh" $@
-}
-
-jmerge() {
-    "${DOTFILES_ROOT}/bin/merge.sh" j $@
-}
-
-ymerge() {
-    "${DOTFILES_ROOT}/bin/merge.sh" y $@
-}
-
-jsort() {
-    jq --sort-keys
-}
-
-ysort() {
-    yq --prettyPrint 'sort_keys(..)'
-}
-
-edot() {
-    "${DOTFILES_ROOT}/bin/dot.sh" $@
-}
-
-unzip_via_ditto() {
-    ditto -V -x -k --sequesterRsrc "$@"
-}
+alias hurl='${DOTFILES_ROOT}/bin/hurl.sh'
+alias jmerge='${DOTFILES_ROOT}/bin/merge.sh j'
+alias ymerge='${DOTFILES_ROOT}/bin/merge.sh y'
+alias jsort='jq --sort-keys'
+alias ysort='yq --prettyPrint "sort_keys(..)"'
+alias edot='${DOTFILES_ROOT}/bin/dot.sh'
+alias unzip_via_ditto='ditto -V -x -k --sequesterRsrc'
 
 source "${DOTFILES_ROOT}/bin/cache.sh"
 
@@ -88,22 +68,8 @@ reload_tmpd() {
     mkdir -p "$TMPD"
 }
 
-checksum() {
-    "${DOTFILES_ROOT}/bin/checksum.sh" "$@"
-}
-
-hman() {
-    "${DOTFILES_ROOT}/bin/hman.sh" "$@"
-}
-
-dman() {
-    dmanraw debian "$@"
-}
-
-dmanraw() {
-    "${DOTFILES_ROOT}/bin/dman.sh" "$@"
-}
-
-mln() {
-    "${DOTFILES_ROOT}/bin/mln.sh" "$@"
-}
+alias checksum='${DOTFILES_ROOT}/bin/checksum.sh'
+alias hman='${DOTFILES_ROOT}/bin/hman.sh'
+alias dmanraw='${DOTFILES_ROOT}/bin/dman.sh'
+alias dman='dmanraw debian'
+alias mln='${DOTFILES_ROOT}/bin/mln.sh'

@@ -19,9 +19,7 @@ repo() {
     cd "$location"
 }
 
-gdefault() {
-    "${DOTFILES_ROOT}/bin/default-branch.sh" "$@"
-}
+alias gdefault='${DOTFILES_ROOT}/bin/default-branch.sh'
 
 gtagpush() {
     if [[ -z "$1" ]] ; then
@@ -58,9 +56,7 @@ gfbranch() {
     git switch "$branch" || git checkout -b "$branch"
 }
 
-gworktree() {
-    "${DOTFILES_ROOT}/bin/git-worktree.sh" "$@"
-}
+alias gworktree='${DOTFILES_ROOT}/bin/git-worktree.sh'
 
 gsubremove() {
     if [[ -z "$1" ]] ; then
