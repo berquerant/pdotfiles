@@ -46,7 +46,7 @@ install:
   #     ELC      emacs-lisp/eieio.elc
   # fingerprint mismatch: emacs.pdmp, not built for this Emacs executable
   # but make bootstrap may work in some case...
-  # - make -j"$_IVG_CONCURRENTCY" bootstrap
+  - make -j"$_IVG_CONCURRENTCY" bootstrap
   - make -j"$_IVG_CONCURRENTCY"
   - make -j"$_IVG_CONCURRENTCY" install
   - mv nextstep/Emacs.app $_IVG_APP

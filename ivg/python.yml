@@ -6,6 +6,9 @@ shell:
   - "arch"
   - "--arm64e"
   - "/bin/bash"
+setup:
+  # python-tk: Missing the Tk toolkit?
+  - brew install python-tk
 install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $PYENV_ROOT
   - pyenv install --skip-existing $PY_VERSION

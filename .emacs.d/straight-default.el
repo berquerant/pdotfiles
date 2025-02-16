@@ -136,7 +136,7 @@
  ("treemacs" . "4364a660447fa5f322c172f6b310115bbc091d12")
  ("typescript.el" . "fc3a4f3b275e8cf6cf41aa0c9ef42e25ef908feb")
  ("use-package" . "fc8449bb593de8fce0a8bdd4ee2cb78219cf8c76")
- ("vertico" . "6ef99c9219b55b7618d111d352caf795ba07bc54")
+ ("vertico" . "1def56a1e678ff9a8eeafafda9c474a5fbb097c4")
  ("web-mode" . "005aa62d6f41fbf9bc045cac3b3b772716ee8ba7")
  ("with-editor" . "77cb2403158cfea9d8bfb8adad81b84d1d6d7c6a")
  ("xref" . "53c4abbc26febcd45be79dea43b7dc56d12112de")
