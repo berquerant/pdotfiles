@@ -20,7 +20,7 @@ delete_straight_package() {
         set +x
     else
         set -x
-        rm -rf "${_sd}/build/{$_pkg}" "${_sd}/modified/${_pkg}" "${_sd}/repos/${_pkg}"
+        rm -rf "${_sd}/build/${_pkg}" "${_sd}/modified/${_pkg}" "${_sd}/repos/${_pkg}"
         set +x
     fi
 }

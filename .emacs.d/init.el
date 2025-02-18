@@ -134,7 +134,22 @@
   :bind
   ("M-s s" . vterm)
   :custom
-  (vterm-keymap-exceptions '("C-c" "C-x" "C-u" "C-g" "C-l" "M-x" "C-v" "M-v" "C-y" "M-y" "M-s" "C-t" "M-j"))
+  (vterm-keymap-exceptions
+   '("C-@" ; set mark
+     "C-c" ; prefix
+     "C-x" ; prefix
+     "C-u" ; universal argument
+     "C-g" ; cancel
+     "C-l" ; recenter
+     "M-x" ; exec command
+     "C-v" ; scroll
+     "M-v" ; scroll
+     "C-y" ; yank
+     "M-y" ; yank
+     "M-s" ; prefix
+     "C-t" ; other window
+     "M-j" ; prefix
+     ))
   (vterm-max-scrollback 10000)
   (vterm-always-compile-module t))
 
