@@ -234,7 +234,15 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
 (use-package little-async
   :demand t
   :commands little-async-start-process
-  :straight (emacs-little-async :host github :repo "berquerant/emacs-little-async"))
+  :straight (emacs-little-async :host github :repo "berquerant/emacs-little-async")
+  :config
+  (defun my-open-link (arg)
+    "Open ARG as a link."
+    (little-async-start-process `("open" ,arg)
+                                :process-name "my-open-link"
+                                :buffer-name "*my-open-link*"))
+  (my-macro-region-or-at-point my-open-link "open-link> ")
+  (bind-key "M-s M-s o" 'my-open-link-region-or-at-point))
 
 (use-package scroll-util
   :straight (emacs-scroll-util :host github :repo "berquerant/emacs-scroll-util")
