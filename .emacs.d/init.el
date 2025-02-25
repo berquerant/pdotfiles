@@ -937,7 +937,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                (setq tab-width 2)))
   :mode
   (("\\.js\\'" . js2-mode)
-   ("\\.jsx$" . web-mode)))
+   ("\\.jsx$" . web-mode)
+   ("\\.qml$" . js2-mode)))
 
 (use-package typescript-mode
   :ensure t
