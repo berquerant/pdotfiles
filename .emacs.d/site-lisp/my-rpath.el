@@ -8,7 +8,7 @@
 (require 'idle-timer)
 
 (defun my-rpath--category ()
-  (case major-mode
+  (cl-case major-mode
     ('yaml-mode "yaml")
     ('json-mode "json")))
 
@@ -38,7 +38,7 @@ C-u   : verbose output
 
 Requires https://github.com/berquerant/rpath"
   (interactive "p")
-  (my-rpath--call (case arg
+  (my-rpath--call (cl-case arg
                     (4 t)
                     (t nil))))
 

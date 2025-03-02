@@ -11,7 +11,7 @@ readonly repo="https://github.com/berquerant/install-via-git-go.git"
 readonly reponame="install-via-git-go"
 readonly repod="${PJTMP}/${reponame}"
 readonly location="/usr/local/bin/install-via-git"
-readonly ref="v0.14.0"
+readonly ref="v0.15.0"
 
 if [ ! -d "$repod" ] ; then
     git clone "$repo" "$repod"

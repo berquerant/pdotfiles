@@ -10,7 +10,8 @@ select_container() {
 
 commit_container() {
     local -r container_id="$(select_container)"
-    read "image_name?name>"
+    read -r "image_name?name>"
+    # shellcheck disable=SC2154
     docker commit "$container_id" "$image_name"
 }
 
