@@ -2,16 +2,16 @@
 
 export MIGEMO_DICT="$(brew --prefix cmigemo)/share/migemo/utf-8/migemo-dict"
 export EMACS_HISTFILE="${EMACSD}/.history_emacs"
-export EMACS_CUI=/usr/local/bin/emacs
+export EMACS_CUI="/usr/local/bin/emacs"
+export EMACS_GUI="/Applications/Emacs-GUI.app"
 # for emacs-light.sh
 export EMACS_MINIMAL_INIT="${EMACSD}/straight/repos/emacs-minimal-init"
 
 emacs_gui() {
-    emacs_app="/Applications/Emacs-GUI.app"
     if [[ -z "$1" ]] ; then
-        open -a "$emacs_app"
+        open -a "$EMACS_GUI"
     else
-        open -a "$emacs_app" --args "$@"
+        open -a "$EMACS_GUI" --args "$@"
     fi
 }
 
