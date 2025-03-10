@@ -10,6 +10,7 @@ alias c='g c'
 alias m='g cm'
 alias s='g s'
 alias r='repo'
+alias gg='g g'
 
 repo() {
     location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
