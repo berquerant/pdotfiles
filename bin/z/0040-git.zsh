@@ -21,6 +21,7 @@ repo() {
 }
 
 alias gdefault='${DOTFILES_ROOT}/bin/default-branch.sh'
+alias gdpull='${DOTFILES_ROOT}/bin/default-branch.sh pull true'
 
 gtagpush() {
     if [[ -z "$1" ]] ; then

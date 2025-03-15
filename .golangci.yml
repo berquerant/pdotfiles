@@ -27,7 +27,6 @@ linters:
   disable:
     - wsl
     - nlreturn
-    - gomnd
     - gofumpt
     - ireturn
     - wastedassign
@@ -44,5 +43,4 @@ linters:
     - tagalign
     - forbidigo
     # deprecated
-    - execinquery
-    - exportloopref
+    - tenv

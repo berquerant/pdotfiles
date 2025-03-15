@@ -46,8 +46,5 @@ ffquery() {
 fflist() {
     local -r tmp="$(mktemp)"
     linep py 'acc=[]' 'acc.append(f"({x})")' 'print(" or ".join(acc))' > "$tmp"
-    ffquery -e "$(cat "$tmp")" "$@"
-    # while read -r line ; do
-    #     ffquery -e "$line" "$@"
-    # done
+    ffquery -e "@${tmp}" "$@"
 }

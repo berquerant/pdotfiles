@@ -1458,7 +1458,7 @@ when (eglot)."
   :straight (openai-chat :host github :repo "berquerant/emacs-openai-chat")
   :bind (("M-s M-s M-s" . openai-chat-start))
   :custom
-  (openai-chat-model "gpt-4o-mini")
+  (openai-chat-model "gpt-4o-mini-search-preview")
   (openai-chat-chat-completion-timeout 300) ; 5min
   (openai-chat-history-file (my-getenv-join  "EMACSD" "history_openai-chat")))
 

@@ -41,7 +41,7 @@
  ("emacs-load-env-vars" . "3808520efaf9492033f6e11a9bffd68eabf02a0f")
  ("emacs-message-routing" . "32df5b22a1dc573063dc9f1830fb32f83c0f36cf")
  ("emacs-minimal-init" . "54eb16dbe12f764c5ebb2b67f19a13a2c9504261")
- ("emacs-openai-chat" . "accd5db4af713dc84d5618ab7a21b879a5d63296")
+ ("emacs-openai-chat" . "026df036e64636583afae5d14394b762a3503572")
  ("emacs-reformatter" . "f2cb59466b1c3f85a8c960f7d4b7b7ead015bedc")
  ("emacs-request" . "01e338c335c07e4407239619e57361944a82cb8a")
  ("emacs-scala-mode" . "4c6d636b86e3bb1d95de819dc48dda92abdfbcf4")
