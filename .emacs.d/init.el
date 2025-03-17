@@ -1468,15 +1468,6 @@ when (eglot)."
 (use-package thread-buffer-chat
   :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
 
-(use-package my-openai-chat-web
-  :straight (my-openai-chat-web :type built-in)
-  :config
-  (my-macro-buffer-or-region my-openai-chat-web-start)
-  (bind-key "M-s M-s M-w" 'my-openai-chat-web-start-buffer-or-region)
-  :custom
-  (my-openai-chat-web-chat-model "gpt-4o-mini")
-  (my-openai-chat-web-command (my-getenv-join "DOTFILES_ROOT" "bin" "openai_chat_web.sh")))
-
 (use-package my-man
   :straight (my-man :type built-in)
   :config
