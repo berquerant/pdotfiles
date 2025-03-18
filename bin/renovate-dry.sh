@@ -20,7 +20,7 @@ docker run --rm -it \
        -w "/app/src" \
        renovate/renovate \
        renovate \
-       --dry-run \
+       --dry-run=full \
        --schedule= \
        --require-config=ignored \
        --token "$GITHUB_TOKEN" \
