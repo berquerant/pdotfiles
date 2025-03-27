@@ -299,7 +299,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter
+Requires: trans, awkfmt, textlinter, golangci-lint
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -310,7 +310,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter
+Requires: trans, awkfmt, textlinter, golangci-lint
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -321,10 +321,23 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter
+Requires: trans, awkfmt, textlinter, golangci-lint
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
+```
+
+## golangci-lint
+
+Install [golangci-lint](https://github.com/golangci/golangci-lint).
+
+``` shell
+set -e
+mkdir -p "${PJTMP}"
+cd "${PJTMP}"
+wget -O "golangci-lint.tar.gz" "https://github.com/golangci/golangci-lint/releases/download/v1.64.8/golangci-lint-1.64.8-darwin-arm64.tar.gz"
+tar xvzf "golangci-lint.tar.gz"
+ln -snvf "${PJTMP}/golangci-lint-1.64.8-darwin-arm64/golangci-lint" /usr/local/bin/golangci-lint
 ```
 
 ## textlinter
