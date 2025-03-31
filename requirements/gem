@@ -1,7 +1,7 @@
 bundler -v 2.6.5
 solargraph -v 0.52.0
-rubocop -v 1.73.1
+rubocop -v 1.73.2
 steep -v 1.9.4
 rufo -v 0.18.1
 github-markup -v 5.0.1
-commonmarker -v 2.1.1
+commonmarker -v 2.2.0

@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/ai-roundtable
+branch: main
+locald: repos/ai-roundtable
+lock: locks/ai-roundtable.lock
+install:
+  - pipenv --rm | echo "First time install"
+  - pipenv sync
+uninstall:
+  - pipenv uninstall ai_roundtable
+  - pipenv --rm

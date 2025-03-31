@@ -1468,6 +1468,16 @@ when (eglot)."
 (use-package thread-buffer-chat
   :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
 
+(use-package my-ai-roundtable
+  :straight (my-ai-roundtable :type built-in)
+  :config
+  (my-macro-buffer-or-region my-ai-roundtable-start)
+  (bind-key "M-s M-s M-w" 'my-ai-roundtable-start-buffer-or-region)
+  :custom
+  (my-ai-roundtable-timeout 1000000)
+  (my-ai-roundtable-config (my-getenv-join "DOTFILES_ROOT" "tmp" "ai-roundtable.yml"))
+  (my-ai-roundtable-command (my-getenv-join "DOTFILES_ROOT" "bin" "ai-roundtable.sh")))
+
 (use-package my-man
   :straight (my-man :type built-in)
   :config
