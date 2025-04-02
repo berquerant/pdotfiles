@@ -34,7 +34,6 @@ brew "eza"
 brew "procs"
 brew "hexyl"
 brew "fd"
-brew "jq"
 brew "yq"
 brew "htop"
 brew "ghq"
@@ -43,7 +42,9 @@ brew "nmap"
 brew "graphviz"
 brew "wget"
 brew "tree"
+brew "pstree"
 brew "actionlint" # github action
+brew "osv-scanner"
 
 # docker
 brew "hadolint"
@@ -116,3 +117,8 @@ brew "taplo" # formatter
 # subversion
 brew "subversion"
 brew "colordiff"
+
+# json
+brew "jq"
+brew "fx"
+brew "gron"
