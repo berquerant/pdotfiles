@@ -52,6 +52,7 @@ alias t='cat'
 alias y='echo'
 alias v='vim'
 alias f='less'
+alias fn='less -N'
 if type eza >/dev/null 2>&1 ; then
     alias ls='eza'
     export EXA_COLORS="da=01:37" # date, white

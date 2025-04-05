@@ -24,3 +24,7 @@ histfile_stat() {
         uniq -c |\
         sort -nk 1
 }
+
+kill_mdworkers() {
+    sudo mdutil -a -i off
+}
