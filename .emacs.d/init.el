@@ -1485,7 +1485,8 @@ when (eglot)."
   (bind-key "M-s M-s M-d" 'my-ai-agent-start-buffer-or-region)
   :custom
   (my-ai-agent-tools (cl-loop for name in '("current_local_time"
-                                            "fetch_from_web")
+                                            "fetch_from_web"
+                                            "search_web")
                               collect (my-getenv-join "DOTFILES_ROOT"
                                                       "tmp"
                                                       "my-ai-agent"

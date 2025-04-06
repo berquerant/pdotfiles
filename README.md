@@ -301,7 +301,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter, golangci-lint
+Requires: trans, awkfmt, textlinter, golangci-lint, unstructured
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -312,7 +312,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter, golangci-lint
+Requires: trans, awkfmt, textlinter, golangci-lint, unstructured
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -323,10 +323,21 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter, golangci-lint
+Requires: trans, awkfmt, textlinter, golangci-lint, unstructured
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
+```
+
+## unstructured
+
+Install [Unstructured](https://docs.unstructured.io/open-source/installation/full-installation).
+
+``` shell
+brew install libmagic pandoc tesseract poppler cmake onnx
+pip install --upgrade pip setuptools
+pip install --upgrade "unstructured[local-inference]"
+pip install --upgrade "unstructured[pdf]"
 ```
 
 ## golangci-lint

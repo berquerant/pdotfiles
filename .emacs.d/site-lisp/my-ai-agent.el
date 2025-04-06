@@ -48,7 +48,7 @@
   "timeout seconds."
   :type 'number)
 
-(defcustom my-ai-agent-tool-timeout 60
+(defcustom my-ai-agent-tool-timeout 300
   "tool timeout seconds."
   :type 'number)
 
