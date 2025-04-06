@@ -6,17 +6,12 @@
 #
 
 readonly loc="${DOTFILES_ROOT}/ivg/repos/ai-roundtable"
-readonly logd="${EMACSD}/history_ai-roundtable"
-mkdir -p "$logd"
-readonly stdout_log="${logd}/stdout"  # thread and evaluation
-readonly stderr_log="${logd}/stderr"  # ai-roundtable logs
-
 readonly eval_out="$(mktemp)"
 
 run() {
     cd "$loc" || return 1
-    pipenv run python -m ai_roundtable.cli "$@" --eval_out "$eval_out" > >(tee -a "$stdout_log" >&1) 2> >(tee -a "$stderr_log" >&2)
-    tee -a "$stdout_log" < "$eval_out" >&2
+    pipenv run python -m ai_roundtable.cli "$@" --eval_out "$eval_out"
+    cat "$eval_out" >&2
 }
 
 start() {
@@ -40,3 +35,4 @@ case "$cmd" in
         exit 1
         ;;
 esac
+sleep 2

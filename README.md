@@ -6,6 +6,8 @@ cd "${HOME}/src/github.com/berquerant/pdotfiles"
 ./xc init
 ZDOTDIR="$PWD" zsh -i
 ./xc deploy ""
+git config --global user.name "$USERNAME"
+git config --global user.email "$USEREMAIL"
 ./xc git
 ./xc emacs
 ./xc install

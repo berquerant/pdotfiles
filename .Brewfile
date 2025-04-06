@@ -122,3 +122,6 @@ brew "colordiff"
 brew "jq"
 brew "fx"
 brew "gron"
+
+# Unstructured
+brew "libmagic"

@@ -1472,11 +1472,37 @@ when (eglot)."
   :straight (my-ai-roundtable :type built-in)
   :config
   (my-macro-buffer-or-region my-ai-roundtable-start)
-  (bind-key "M-s M-s M-w" 'my-ai-roundtable-start-buffer-or-region)
+  (bind-key "M-s M-s M-r" 'my-ai-roundtable-start-buffer-or-region)
   :custom
   (my-ai-roundtable-timeout 1000000)
   (my-ai-roundtable-config (my-getenv-join "DOTFILES_ROOT" "tmp" "ai-roundtable.yml"))
   (my-ai-roundtable-command (my-getenv-join "DOTFILES_ROOT" "bin" "ai-roundtable.sh")))
+
+(use-package my-ai-agent
+  :straight (my-ai-agent :type built-in)
+  :config
+  (my-macro-buffer-or-region my-ai-agent-start)
+  (bind-key "M-s M-s M-d" 'my-ai-agent-start-buffer-or-region)
+  :custom
+  (my-ai-agent-tools (cl-loop for name in '("current_local_time"
+                                            "fetch_from_web")
+                              collect (my-getenv-join "DOTFILES_ROOT"
+                                                      "tmp"
+                                                      "my-ai-agent"
+                                                      (format "%s.sh" name))))
+  (my-ai-agent-command (my-getenv-join "DOTFILES_ROOT" "bin" "my-ai-agent.sh")))
+
+(defun my-ai-set-external (external)
+  "Set EXTERNAL to ai external flags."
+  (setq my-ai-roundtable-use-external external
+        my-ai-agent-use-external external))
+(my-ai-set-external nil)
+(defun my-ai-use-internal ()
+  (interactive)
+  (my-ai-set-external nil))
+(defun my-ai-use-external ()
+  (interactive)
+  (my-ai-set-external t))
 
 (use-package my-man
   :straight (my-man :type built-in)
