@@ -10,6 +10,7 @@ from unstructured.partition.auto import partition
 import requests
 from tempfile import NamedTemporaryFile
 
+
 class Base(ABC):
     @abstractmethod
     def name(self) -> str: ...
