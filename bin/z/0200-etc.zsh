@@ -28,6 +28,3 @@ histfile_stat() {
 kill_mdworkers() {
     sudo mdutil -a -i off
 }
-
-# ollama
-export OLLAMA_HOST="127.0.0.1:11434"

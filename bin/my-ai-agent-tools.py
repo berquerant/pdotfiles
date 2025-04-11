@@ -70,7 +70,6 @@ class CurrentLocalTime(Base):
         self.dumps({"time": now.strftime("%Y-%m-%d %H:%M:%S")})
         return 0
 
-
 class FetchFromWeb(Base):
     def name(self) -> str:
         return "fetch_from_web"

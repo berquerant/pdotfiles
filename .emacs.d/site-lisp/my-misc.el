@@ -167,5 +167,13 @@ Maybe more useful to search from https://www.gnu.org/software/emacs/news/"
   "Return last killed string."
   (current-kill 0 t))
 
+(defun my-misc-read-lines (filepath)
+  "Read FILEPATH and split lines."
+  (if (file-exists-p filepath)
+      (with-temp-buffer
+        (insert-file-contents filepath)
+        (s-split "\n" (buffer-string) t))
+    (error "File %s is not found" path)))
+
 (provide 'my-misc)
 ;;; my-misc.el ends here

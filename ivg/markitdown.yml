@@ -1,0 +1,9 @@
+uri: https://github.com/microsoft/markitdown
+branch: main
+locald: repos/markitdown
+lock: locks/markitdown.lock
+install:
+  - docker build -t markitdown-mcp-local packages/markitdown-mcp
+  - pip install -e packages/markitdown[all]
+uninstall:
+  - docker rmi markitdown-mcp-local

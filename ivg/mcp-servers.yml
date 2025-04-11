@@ -1,0 +1,15 @@
+uri: https://github.com/modelcontextprotocol/servers
+branch: main
+locald: repos/mcp-servers
+lock: locks/mcp-servers.lock
+install:
+  - docker build -t mcp-memory-local -f src/memory/Dockerfile .
+  - |
+    cd ${IVG_WORKD}/${IVG_LOCALD}/src/time
+    docker build -t mcp-time-local .
+    cd ${IVG_WORKD}/${IVG_LOCALD}
+  - docker build -t mcp-sequentialthinking-local -f src/sequentialthinking/Dockerfile .
+uninstall:
+  - docker rmi mcp-memory-local
+  - docker rmi mcp-time-local
+  - docker rmi mcp-sequentialthinking-local

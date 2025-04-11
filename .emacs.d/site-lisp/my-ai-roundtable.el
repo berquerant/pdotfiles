@@ -6,11 +6,7 @@
 
 ;;; Code:
 
-(require 'thread-buffer-chat) ; https://github.com/berquerant/emacs-thread-buffer-chat
-
-(defgroup my-ai-roundtable nil
-  "My ai-roundtable integration."
-  :prefix "my-ai-roundtable-")
+(my-macro-template-thread-buffer-chat "my-ai-roundtable")
 
 (defcustom my-ai-roundtable-command "ai_roundtable"
   "ai-roundtable command."
@@ -50,10 +46,6 @@
   "skip_eval."
   :type 'number)
 
-(defcustom my-ai-roundtable-timeout 300
-  "reply timeout."
-  :type 'number)
-
 (defcustom my-ai-roundtable-internal-base-url (concat "http://" (my-getenv "OLLAMA_HOST") "/v1")
   "base url of internal API."
   :type 'string)
@@ -63,18 +55,6 @@
   (if my-ai-roundtable-use-external
       nil
     my-ai-roundtable-internal-base-url))
-
-(defcustom my-ai-roundtable-buffer-template "*ai-roundtable-%d*"
-  "Buffer name template."
-  :type 'string)
-
-(defcustom my-ai-roundtable-buffer-regex "\\*ai-roundtable-[0-9]+\\*"
-  "Buffer name regex."
-  :type 'string)
-
-(defcustom my-ai-roundtable-err-buffer "*ai-roundtable-err*"
-  "Buffer name for stderr."
-  :type 'string)
 
 (defun my-ai-roundtable--rerun? ()
   (string-match-p my-ai-roundtable-buffer-regex (buffer-name)))
@@ -88,7 +68,7 @@
       (setq args (append (list "--base_url" (my-ai-roundtable-base-url)) args)))
     args))
 
-(defun my-ai-roundtable--command ()
+(defun my-ai-roundtable--command (txt)
   (append `(,my-ai-roundtable-command
             ,(my-ai-roundtable--subcommand)
             "--debug"
@@ -99,14 +79,7 @@
             "--skip_eval" ,(number-to-string my-ai-roundtable-skip-eval))
           (my-ai-roundtable--additional-args)))
 
-(defun my-ai-roundtable-start (txt)
-  "Send TXT to `my-ai-roundtable-command'."
-  (thread-buffer-chat-start (my-ai-roundtable--command)
-                            txt
-                            :timeout my-ai-roundtable-timeout
-                            :stderr my-ai-roundtable-err-buffer
-                            :buffer-template my-ai-roundtable-buffer-template
-                            :buffer-regex my-ai-roundtable-buffer-regex))
+(defun my-ai-roundtable--input (txt) txt)
 
 (provide 'my-ai-roundtable)
 ;;; my-ai-roundtable.el ends here
