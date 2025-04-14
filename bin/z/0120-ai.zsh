@@ -18,6 +18,6 @@ ai-open() {
     open "${OPEN_WEBUI_URL}"
 }
 readonly obsidian_vault="${HOME}/Documents/Obsidian Vault"
-readonly obsidian_vault_link="/usr/local/var/obsidian/vault"
+readonly obsidian_vault_link="${DOTFILES_ROOT}/tmp/obsidian/vault"
 mkdir -p "$(dirname "$obsidian_vault_link")" "${obsidian_vault}"
 ln -sf "${obsidian_vault}" "${obsidian_vault_link}"
