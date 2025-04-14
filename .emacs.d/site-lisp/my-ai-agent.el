@@ -52,10 +52,6 @@
   "instructions."
   :type 'string)
 
-(defcustom my-ai-agent-mcp nil
-  "MCP settings."
-  :type 'string)
-
 (defun my-ai-agent--gen-arg-when-value (key value)
   (when value (list key value)))
 
@@ -65,7 +61,6 @@
 
 (defun my-ai-agent--additional-args ()
   (append (my-ai-agent--gen-arg-when-value "--base_url" (my-ai-agent-base-url))
-          (my-ai-agent--gen-arg-when-value "--mcp" my-ai-agent-mcp)
           (my-ai-agent--gen-arg-when-value "--instructions" my-ai-agent-instructions)
           (my-ai-agent--tool-args)))
 

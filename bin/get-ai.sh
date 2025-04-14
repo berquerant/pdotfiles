@@ -10,7 +10,7 @@ cat > "$tmp"  # instructions from stdin
 cat <<EOS >> "$tmp"
 --------------------below is the content of ${url}--------------------
 EOS
-curl -s -L "$url" | markitdown >> "$tmp"
+"${DOTFILES_ROOT}/bin/url2markdown.sh" "$url" >> "$tmp"
 
 cmd="${DOTFILES_ROOT}/bin/my-ai-agent.sh --debug --model ${model}"
 if [ -n "$base_url" ] ; then

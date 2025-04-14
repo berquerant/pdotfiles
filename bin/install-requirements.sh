@@ -43,11 +43,22 @@ install_gem() {
     __install_from_lines "$1" gem install
 }
 
+__install_node() {
+    local -r _version="$(echo "$1" | cut -d "@" -f 2)"
+    if [ "x${_version}" != "x$(__get_node_pkg_version "$1")" ] ; then
+        npm install -g "$1"
+    fi
+}
+
+__get_node_pkg_version() {
+    npm ls -g --depth=0 --json "$1" | jq -r ".dependencies[\"$(echo "$1" | cut -d "@" -f 1)\"].version // empty"
+}
+
 install_node() {
     set +e
     npm install -g npm@latest
     set -e
-    __install_from_lines "$1" npm install -g
+    __install_from_lines "$1" __install_node
 }
 
 install_cargo() {

@@ -1487,7 +1487,6 @@ when (eglot)."
   (bind-key "M-s M-s M-d" 'my-ai-agent-start-buffer-or-region)
   :custom
   (my-ai-agent-timeout 600)
-  (my-ai-agent-mcp (format "@%s" (my-getenv-join "DOTFILES_ROOT" "bin" "my-ai-agent-mcp.json")))
   (my-ai-agent-external-model (my-getenv "EXTERNAL_AI_MODEL"))
   (my-ai-agent-internal-model (my-getenv "INTERNAL_AI_MODEL"))
   (my-ai-agent-tools (my-misc-read-lines (my-getenv-join "DOTFILES_ROOT" "bin" "my-ai-agent-tools.txt")))
@@ -1502,7 +1501,7 @@ when (eglot)."
   (my-get-ai-command (my-getenv-join "DOTFILES_ROOT" "bin" "get-ai.sh"))
   (my-get-ai-timeout 600)
   (my-get-ai-external-model (my-getenv "EXTERNAL_AI_MODEL"))
-  (my-get-ai-internal-model (my-getenv "INTERNAL_ANALYSIS_AI_MODEL")))
+  (my-get-ai-internal-model (my-getenv "INTERNAL_AI_MODEL")))
 
 (defun my-ai-set-external (external)
   "Set EXTERNAL to ai external flags."

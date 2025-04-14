@@ -1,6 +1,6 @@
 services:
   # To enable tools, add http://mcpo:8000/markitdown to tools in admin panel
-  mpco:
+  mcpo:
     build:
       context: mcpo
       dockerfile: Dockerfile
@@ -16,7 +16,7 @@ services:
 
   ollama:
     volumes:
-      - ollama:/root/.ollama
+      - "${OPEN_WEBUI_VOLUMES_ROOT}/ollama:/root/.ollama"
     container_name: ollama
     pull_policy: always
     tty: true
@@ -36,7 +36,7 @@ services:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
     container_name: open-webui
     volumes:
-      - open-webui:/app/backend/data
+      - "${OPEN_WEBUI_VOLUMES_ROOT}/open-webui:/app/backend/data"
     depends_on:
       - ollama
     ports:
@@ -47,10 +47,8 @@ services:
       - 'ENABLE_RAG_WEB_SEARCH=true'
       - 'RAG_WEB_SEARCH_ENGINE=tavily'
       - 'TAVILY_API_KEY=${TAVILY_API_KEY}'
+      - 'ENABLE_OPENAI_API=true'
+      - 'OPENAI_API_KEY=${OPENAI_API_KEY}'
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
-
-volumes:
-  ollama: {}
-  open-webui: {}

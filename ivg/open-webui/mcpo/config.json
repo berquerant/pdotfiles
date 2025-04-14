@@ -37,6 +37,18 @@
         "-i",
         "mcp-sequentialthinking-local"
       ]
+    },
+    "obsidian": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "-v",
+        "/usr/local/var/obsidian/vault:/data/obsidian-vault:ro",
+        "mcp-obsidian-local",
+        "/data/obsidian-vault"
+      ]
     }
   }
 }

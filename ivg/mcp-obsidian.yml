@@ -1,0 +1,16 @@
+uri: https://github.com/smithery-ai/mcp-obsidian
+branch: main
+locald: repos/mcp-obsidian
+lock: locks/mcp-obsidian.lock
+install:
+  - |
+    cat <<EOS > Dockerfile
+    FROM node:23
+    WORKDIR /workspace
+    COPY index.ts package.json package-lock.json tsconfig.json .
+    RUN npm ci
+    ENTRYPOINT ["node", "index.ts"]
+    EOS
+  - docker build -t mcp-obsidian-local .
+uninstall:
+  - docker rmi mcp-obsidian-local

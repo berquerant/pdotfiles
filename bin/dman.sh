@@ -13,7 +13,7 @@ compose() {
 
 health_check() {
     local -r _os="$1"
-    curl -s -o /dev/null "http://localhost:$(__os2port "$__os")/"
+    "${DOTFILES_ROOT}/bin/healthcheck.sh" "http://localhost:$(__os2port "$__os")/"
 }
 
 build_url() {
@@ -80,7 +80,8 @@ case "$1" in
         readonly __os="$1"
         readonly __page_or_section="$2"
         readonly __page="$3"
-        health_check "$__os" || compose up -d
+        compose up -d
+        health_check "$__os"
         readonly __url="$(build_url "$__os" "$__page_or_section" "$__page")"
         open "$__url"
 esac
