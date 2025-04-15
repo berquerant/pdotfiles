@@ -40,14 +40,6 @@
       nil
     my-ai-agent-internal-base-url))
 
-(defcustom my-ai-agent-tool-timeout 300
-  "tool timeout seconds."
-  :type 'number)
-
-(defcustom my-ai-agent-tools nil
-  "external tool executables."
-  :type '(list string))
-
 (defcustom my-ai-agent-instructions nil
   "instructions."
   :type 'string)
@@ -55,20 +47,14 @@
 (defun my-ai-agent--gen-arg-when-value (key value)
   (when value (list key value)))
 
-(defun my-ai-agent--tool-args ()
-  (when my-ai-agent-tools
-    (append (list "--tool") my-ai-agent-tools)))
-
 (defun my-ai-agent--additional-args ()
   (append (my-ai-agent--gen-arg-when-value "--base_url" (my-ai-agent-base-url))
-          (my-ai-agent--gen-arg-when-value "--instructions" my-ai-agent-instructions)
-          (my-ai-agent--tool-args)))
+          (my-ai-agent--gen-arg-when-value "--instructions" my-ai-agent-instructions)))
 
 (defun my-ai-agent--command (txt)
   (append `(,my-ai-agent-command
             "--debug"
-            "--model" ,(my-ai-agent-model)
-            "--tool_timeout" ,(number-to-string my-ai-agent-tool-timeout))
+            "--model" ,(my-ai-agent-model))
           (my-ai-agent--additional-args)))
 
 (defun my-ai-agent--input (txt) txt)

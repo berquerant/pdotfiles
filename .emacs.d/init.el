@@ -1454,14 +1454,6 @@ when (eglot)."
   :config
   (command-log-setup))
 
-(use-package openai-chat
-  :straight (openai-chat :host github :repo "berquerant/emacs-openai-chat")
-  :bind (("M-s M-s M-s" . openai-chat-start))
-  :custom
-  (openai-chat-model (my-getenv "EXTERNAL_AI_MODEL"))
-  (openai-chat-chat-completion-timeout 300) ; 5min
-  (openai-chat-history-file (my-getenv-join  "EMACSD" "history_openai-chat")))
-
 (use-package thread-buffer
   :straight (thread-buffer :host github :repo "berquerant/emacs-thread-buffer"))
 
@@ -1484,30 +1476,17 @@ when (eglot)."
   :straight (my-ai-agent :type built-in)
   :config
   (my-macro-buffer-or-region my-ai-agent-start)
-  (bind-key "M-s M-s M-d" 'my-ai-agent-start-buffer-or-region)
+  (bind-key "M-s M-s M-s" 'my-ai-agent-start-buffer-or-region)
   :custom
   (my-ai-agent-timeout 600)
   (my-ai-agent-external-model (my-getenv "EXTERNAL_AI_MODEL"))
   (my-ai-agent-internal-model (my-getenv "INTERNAL_AI_MODEL"))
-  (my-ai-agent-tools (my-misc-read-lines (my-getenv-join "DOTFILES_ROOT" "bin" "my-ai-agent-tools.txt")))
   (my-ai-agent-command (my-getenv-join "DOTFILES_ROOT" "bin" "my-ai-agent.sh")))
-
-(use-package my-get-ai
-  :straight (my-get-ai :type built-in)
-  :config
-  (my-macro-buffer-or-region my-get-ai-start)
-  (bind-key "M-s M-s M-f" 'my-get-ai-start-buffer-or-region)
-  :custom
-  (my-get-ai-command (my-getenv-join "DOTFILES_ROOT" "bin" "get-ai.sh"))
-  (my-get-ai-timeout 600)
-  (my-get-ai-external-model (my-getenv "EXTERNAL_AI_MODEL"))
-  (my-get-ai-internal-model (my-getenv "INTERNAL_AI_MODEL")))
 
 (defun my-ai-set-external (external)
   "Set EXTERNAL to ai external flags."
   (setq my-ai-roundtable-use-external external
-        my-ai-agent-use-external external
-        my-get-ai-use-external external))
+        my-ai-agent-use-external external))
 (my-ai-set-external nil)
 (defun my-ai-use-internal ()
   (interactive)
