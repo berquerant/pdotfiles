@@ -806,7 +806,8 @@
   (markdown-preview-state-hook-generator xwidget-webkit-browse-url)
   (bind-key "C-c C-c C-p" 'markdown-preview-state-hook-xwidget-webkit-browse-url gfm-mode-map)
   :custom
-  (markdown-command "github-markup")
+  (markdown-command '("pandoc" "--from=markdown" "--to=html5" "--standalone=true" "--ascii=false"))
+  (markdown-indent-on-enter 'indent-and-new-item)
   (markdown-command-needs-filename t)
   (markdown-content-type "application/xhtml+xml")
   (markdown-css-paths '("https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css"))

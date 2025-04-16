@@ -20,7 +20,7 @@ OP:
     response headers as a json
 
 Envs:
-  HURL_DRY:
+  DRY:
     dry run if set
 EOS
 }
@@ -56,7 +56,7 @@ main() {
             ;;
     esac
     cmd="${cmd} $*"
-    if [ -n "$HURL_DRY" ] ; then
+    if [ -n "$DRY" ] ; then
         echo "$cmd"
     else
         $cmd

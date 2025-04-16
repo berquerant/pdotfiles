@@ -241,8 +241,30 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
     (little-async-start-process `("open" ,arg)
                                 :process-name "my-open-link"
                                 :buffer-name "*my-open-link*"))
+  (defun my-url2markdown--output-filter (p output)
+    (with-current-buffer (get-buffer-create "*my-url2markdown-output*")
+      (goto-char (point-max))
+      (insert output)))
+  (defun my-url2markdown (arg)
+    "Open ARG as a markdown."
+    (little-async-start-process (list (my-getenv-join "DOTFILES_ROOT" "bin" "url2markdown.sh") arg)
+                                :process-name "my-url2markdown"
+                                :buffer-name "*my-url2markdown*"
+                                :filter 'my-url2markdown--output-filter
+                                :timeout (* 300 1000)))
+  (defun my-url2markdown-links (arg)
+    "Open ARG as a markdown and extract links."
+    (little-async-start-process (list (my-getenv-join "DOTFILES_ROOT" "bin" "url2markdown.sh") arg "links")
+                                :process-name "my-url2markdown"
+                                :buffer-name "*my-url2markdown*"
+                                :filter 'my-url2markdown--output-filter
+                                :timeout (* 300 1000)))
   (my-macro-region-or-at-point my-open-link "open-link> ")
-  (bind-key "M-s M-s o" 'my-open-link-region-or-at-point))
+  (my-macro-region-or-at-point my-url2markdown "url2markdown> ")
+  (my-macro-region-or-at-point my-url2markdown-links "url2markdown-links> ")
+  (bind-key "M-s M-s o" 'my-open-link-region-or-at-point)
+  (bind-key "M-s M-s m" 'my-url2markdown-region-or-at-point)
+  (bind-key "M-s M-s M" 'my-url2markdown-links-region-or-at-point))
 
 (use-package scroll-util
   :straight (emacs-scroll-util :host github :repo "berquerant/emacs-scroll-util")
