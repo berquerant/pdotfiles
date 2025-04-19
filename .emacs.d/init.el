@@ -1461,40 +1461,33 @@ when (eglot)."
 (use-package thread-buffer-chat
   :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
 
-(use-package my-ai-roundtable
-  :straight (my-ai-roundtable :type built-in)
+(use-package llm
   :config
-  (my-macro-buffer-or-region my-ai-roundtable-start)
-  (bind-key "M-s M-s M-r" 'my-ai-roundtable-start-buffer-or-region)
-  :custom
-  (my-ai-roundtable-external-model (my-getenv "EXTERNAL_AI_MODEL"))
-  (my-ai-roundtable-internal-model (my-getenv "INTERNAL_AI_MODEL"))
-  (my-ai-roundtable-timeout 1000000)
-  (my-ai-roundtable-config (my-getenv-join "DOTFILES_ROOT" "tmp" "ai-roundtable.yml"))
-  (my-ai-roundtable-command (my-getenv-join "DOTFILES_ROOT" "bin" "ai-roundtable.sh")))
+  (require 'llm-ollama))
 
-(use-package my-ai-agent
-  :straight (my-ai-agent :type built-in)
-  :config
-  (my-macro-buffer-or-region my-ai-agent-start)
-  (bind-key "M-s M-s M-s" 'my-ai-agent-start-buffer-or-region)
+(use-package ellama
+  :bind
+  ("M-s M-s M-s" . ellama)
   :custom
-  (my-ai-agent-timeout 600)
-  (my-ai-agent-external-model (my-getenv "EXTERNAL_AI_MODEL"))
-  (my-ai-agent-internal-model (my-getenv "INTERNAL_AI_MODEL"))
-  (my-ai-agent-command (my-getenv-join "DOTFILES_ROOT" "bin" "my-ai-agent.sh")))
-
-(defun my-ai-set-external (external)
-  "Set EXTERNAL to ai external flags."
-  (setq my-ai-roundtable-use-external external
-        my-ai-agent-use-external external))
-(my-ai-set-external nil)
-(defun my-ai-use-internal ()
-  (interactive)
-  (my-ai-set-external nil))
-(defun my-ai-use-external ()
-  (interactive)
-  (my-ai-set-external t))
+  (ellama-major-mode 'text-mode)
+  (ellama-language "Japanese")
+  (ellama-chat-translation-enable t)
+  (ellama-auto-scroll t)
+  (ellama-naming-scheme 'ellama-generate-name-by-llm)
+  (ellama-provider
+   (make-llm-ollama
+    :chat-model "gemma3:4b"
+    :embedding-model "nomic-embed-text"))
+  (ellama-coding-provider
+   (make-llm-ollama
+    :chat-model "codegemma:2b"
+    :embedding-model "nomic-embed-text"))
+  (ellama-translation-provider
+   (make-llm-ollama
+    :chat-model "aya:8b"
+    :embedding-model "nomic-embed-text"))
+  (ellama-providers '(("gpt-4o-mini" . (make-llm-ollama :chat-model "gpt-4o-mini"
+                                                        :embedding-model "nomic-embed-text")))))
 
 (use-package my-man
   :straight (my-man :type built-in)
