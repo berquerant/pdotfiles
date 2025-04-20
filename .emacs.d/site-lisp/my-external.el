@@ -27,6 +27,10 @@
   (cl-loop for name in (my-straight-list-package-directories)
            do (my-external-write (format "%s\n" name))))
 
+(defun my-external-straight-update-packages (&rest pkgs)
+  (cl-loop for pkg in pkgs
+           do (my-external-straight-update-package pkg)))
+
 (defun my-external-straight-update-package (pkg)
   (straight-pull-recipe-repositories)
   (straight-pull-package-and-deps pkg)

@@ -3,24 +3,22 @@
 d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 . "${d}/bin/cache.sh"
 
-__emacs_package_batch() {
+readonly OLD_THRESHOLD_DAY="${OLD_THRESHOLD_DAY:-90}"
+
+__batch() {
     "${d}/bin/emacs-batch.sh" "$@"
 }
 
-__batch() {
-    __emacs_package_batch "$@"
-}
-
 __batch_cache() {
-    cache_function_args __emacs_package_batch "$@"
+    cache_function_args __batch "$@"
 }
 
 __grinfo_cache() {
     cache_function_io_args grinfo --worker 8
 }
 
-list_names() {
-    __batch_cache --eval '(my-external-straight-list-packages)'
+list_use_packages() {
+    git grep -o "use-package [^) ]+" "${DOTFILES_ROOT}/.emacs.d" | grep "use-package" | cut -d " " -f 2 | sort
 }
 
 list_directories() {
@@ -36,7 +34,7 @@ read_profile() {
 }
 
 describe_old_packages() {
-    local threshold_day="${1:-90}"
+    local -r threshold_day="${1:-${OLD_THRESHOLD_DAY}}"
     describe_packages |\
         jq --arg t "$threshold_day" 'select(.timediff.day > ($t|tonumber))|[.url, .timediff.day]|@csv' -r |\
         tr -d '"' |\
@@ -44,16 +42,19 @@ describe_old_packages() {
 }
 
 freeze() {
-    __batch_cache --eval '(my-external-straight-freeze)'
+    __batch --eval '(my-external-straight-freeze)'
 }
 
-update_package() {
-    local pkg="$1"
-    if [ -z "$pkg" ] ; then
+update_packages() {
+    if [ -z "$1" ] ; then
         echo "no package specified"
         return 1
     fi
-    __batch --eval "(my-external-straight-update-package \"${pkg}\")" && freeze
+    pkgs=""
+    for pkg in "$@" ; do
+        pkgs="${pkgs} \"${pkg}\""
+    done
+    __batch --eval "(my-external-straight-update-packages ${pkgs})" && freeze
 }
 
 check_all() {
@@ -92,7 +93,7 @@ histfile_stat() {
 
 describe_local() {
     local pkg="$1"
-    if [ -n "$pkg" ] ; then
+    if [ -z "$pkg" ] ; then
         return 1
     fi
     read_profile |\
@@ -109,14 +110,14 @@ ${name} -- package update utilities
 
 Usage
   ${name} ls|list ...
-    n|name|names
-      List packages names.
-
     d|dir|directories
       List package directories.
 
     p|dep|dependencies
       List package dependencies.
+
+    u|use
+      List use-packages.
 
   ${name} d|desc|describe ...
     a|all
@@ -129,7 +130,7 @@ Usage
       List old packages details.
       DAYS is an integer, threshold for considering a package old.
 
-  ${name} u|up|update PACKAGE
+  ${name} u|up|update PACKAGE [PACKAGE...]
       Update package.
 
   ${name} c|check
@@ -158,10 +159,10 @@ main() {
             cmd="$1"
             shift
             case "$cmd" in
-                "n" | "name" | "names") list_names ;;
                 "d" | "dir" | "directories") list_directories ;;
                 "p" | "dep" | "dependencies") list_dependencies ;;
                 "q" | "det" | "dependents") list_dependents ;;
+                "u" | "use") list_use_packages ;;
                 *) usage ; return 1 ;;
             esac
             ;;
@@ -174,7 +175,7 @@ main() {
                 *) describe_old_packages "$@" ;;
             esac
             ;;
-        "u" | "up" | "update") update_package "$@" ;;
+        "u" | "up" | "update") update_packages "$@" ;;
         "c" | "check") check_all ;;
         "r" | "render")
             cmd="$1"

@@ -211,17 +211,6 @@
   :config
   (dimmer-mode))
 
-(use-package google-this
-  :demand t
-  :bind
-  ("M-j j" . google-this)
-  :config
-  (my-macro-state-hook google-this browse-url-browser-function browse-url-default-browser)
-  (google-this-state-hook-generator eww-browse-url)
-  (google-this-state-hook-generator xwidget-webkit-browse-url)
-  (bind-key "M-j e" 'google-this-state-hook-eww-browse-url)
-  (bind-key "M-j w" 'google-this-state-hook-xwidget-webkit-browse-url))
-
 (use-package reformatter
   :bind
   ("M-s f" . my-reformatter-format)
@@ -498,13 +487,6 @@
       (shell-command-on-region (region-beginning) (region-end) command t t)))
   (setq selected-minor-mode-override t)
   (selected-global-mode 1))
-
-(use-package my-textlinter
-  :straight (my-textlinter :type built-in)
-  :config
-  (push `(,my-textlinter-output-buffer-name :noselect t) popwin:special-display-config)
-  (my-macro-buffer-or-region my-textlinter-do)
-  (bind-key "M-s M-s l" 'my-textlinter-do-buffer-or-region))
 
 (use-package my-trans
   :demand t
@@ -1274,7 +1256,7 @@ when (eglot)."
   (lsp-trace nil)
   (lsp-restart 'ignore)
   (lsp-idle-delay 0.7)
-  (lsp-file-watch-threshold 50)
+  (lsp-file-watch-threshold 100)
   (lsp-enable-snippet t)
   (lsp-enable-xref t)
   (lsp-enable-indentation nil)
@@ -1362,13 +1344,6 @@ when (eglot)."
   (require 'dap-python)
   (setq dap-python-debugger 'debugpy)
   (require 'dap-dlv-go))
-
-(use-package consult-lsp
-  :ensure t
-  :bind
-  (:map lsp-mode-map
-        ("C-c p o" . consult-lsp-symbols))
-  :after (consult lsp-mode))
 
 (use-package lsp-treemacs
   :config
@@ -1506,7 +1481,6 @@ when (eglot)."
                             ("^my-popup-tip" . "*my-tips*")
                             ("^my-pos-tip" . "*my-tips*")
                             ("^my-straight" . "*my-straight*")
-                            ("^my-package" . "*my-package*")
                             ("^my-rpath" . "*my-rpath*")
                             ("^my-macro-advice-add-debug" . "*my-macro-advice-add-debug*")))
   :config
@@ -1519,28 +1493,6 @@ when (eglot)."
     (apply orig-func args))
   (advice-add 'pos-tip-show :around 'my-pos-tip-show-message-advice)
   (message-routing-setup))
-
-(use-package my-package
-  :straight (my-package :type built-in)
-  :config
-  (defun my-straight-update-all ()
-    (interactive)
-    (dolist (f (straight-pull-all
-                straight-rebuild-all
-                straight-freeze-versions))
-      (message "my-package: %s" (symbol-name f))
-      (unless my-package-dryrun
-        (call-interactively f))))
-  (defun my-new-backup-straight-remove-origin ()
-    (interactive)
-    (my-new-backup--straight t))
-  (defun my-new-backup-straight ()
-    (interactive)
-    (my-new-backup--straight))
-  (defun my-new-backup--straight (&optional remove-origin)
-    (dolist (target `(,my-straight-profile
-                      ,my-straight-directory))
-      (my-package-new-backup target remove-origin))))
 
 (use-package my-straight
   :straight (my-straight :type built-in)
