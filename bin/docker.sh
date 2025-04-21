@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 latest_container() {
     docker ps --latest --format json | jq -r .ID
