@@ -26,7 +26,7 @@ export EMACSD="$HOME/.emacs.d"
 export CMACSD="$HOME/.cmacs.d"
 export TMPD="$HOME/tmp"
 
-export GO_VERSION=1.24.1
+export GO_VERSION=1.24.2
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
@@ -36,7 +36,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export RB_VERSION=3.2.2
 export RBENV_ROOT="$HOME/.rbenv"
 
-export NODE_VERSION=v23.10.0
+export NODE_VERSION=v23.11.0
 export NVM_DIR="$HOME/.nvm"
 export NPM_ROOT="$HOME/.npm"
 

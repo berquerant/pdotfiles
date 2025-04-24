@@ -1,13 +1,13 @@
 pylsp-mypy==0.7.0
 python-lsp-black==2.0.0
 pylsp-rope==0.1.17
-pycodestyle==2.12.1
+pycodestyle==2.13.0
 mccabe==0.7.0
 pyls-memestra==0.0.16
 python-lsp-server==1.12.2
-debugpy==1.8.13
+debugpy==1.8.14
 python-lsp-ruff==2.2.2
-sqlfluff==3.3.1
+sqlfluff==3.4.0
 langdetect==1.0.9
 flict==1.3.0
 pyyaml==6.0.2

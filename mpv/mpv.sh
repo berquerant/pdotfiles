@@ -28,15 +28,11 @@ ffreload() {
     ffnormalize
 }
 
-ffraw() {
+ffquery() {
     if [ ! -f "$MF_INDEX" ] ; then
         ffreload
     fi
     mf -i "$MF_INDEX_NORMALIZED" "$@"
-}
-
-ffquery() {
-    ffraw "$@"
 }
 
 # name matches "xxx"
@@ -47,4 +43,56 @@ fflist() {
     local -r tmp="$(mktemp)"
     linep py 'acc=[]' 'acc.append(f"({x})")' 'print(" or ".join(acc))' > "$tmp"
     ffquery -e "@${tmp}" "$@"
+}
+
+# ffshuffle [-n HEAD_COUNT] [--dry] [GREP_ARGS...] [-- FFLIST_ARGS...] < PLAYLIST
+ffshuffle() {
+    local grep_args=()
+    local head_count=1000
+    local dry=""
+    local toggle_arg=""
+    local list_args=()
+
+    __ffshuffle() {
+        fflist "${list_args[@]}" | rg "${grep_args[@]}" | shuf -n "$head_count"
+    }
+
+    while [[ $# -gt 0 ]] ; do
+        case "$1" in
+            "--dry")
+                dry="true"
+                shift
+                ;;
+            "-n")
+                if [[ -z "$2" ]] ; then
+                    echo >&2 '-n requires an argment'
+                    return 1
+                fi
+                head_count="$2"
+                shift 2
+                ;;
+            "--")
+                toggle_arg="true"
+                shift
+                ;;
+            *)
+                if [[ "${toggle_arg}" = "true" ]] ; then
+                    list_args+=("$1")
+                else
+                    grep_args+=("$1")
+                fi
+                shift
+                ;;
+        esac
+    done
+
+    if [[ -z "${grep_args[*]}" ]] ; then
+        grep_args=(".*")
+    fi
+
+    if [[ "${dry}" = "true" ]] ; then
+        __ffshuffle
+    else
+        __ffshuffle | mpv_play
+    fi
 }
