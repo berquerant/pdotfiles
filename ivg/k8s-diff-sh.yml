@@ -3,6 +3,12 @@ branch: main
 locald: repos/k8s-diff-sh
 lock: locks/k8s-diff-sh.lock
 install:
-  - ln -snvf "${DOTFILES_ROOT}/bin/kdiff.sh" /usr/local/bin/kdiff
+  - |
+    cat <<EOS > /usr/local/bin/kdiff
+    #!/bin/bash
+    set -e
+    ${IVG_WORKD}/${IVG_LOCALD}/k8s_diff.sh "\$@"
+    EOS
+  - chmod +x /usr/local/bin/kdiff
 uninstall:
   - rm -f /usr/local/bin/kdiff

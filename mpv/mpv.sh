@@ -45,12 +45,12 @@ fflist() {
     ffquery -e "@${tmp}" "$@"
 }
 
-# ffshuffle [-n HEAD_COUNT] [--dry] [GREP_ARGS...] [-- FFLIST_ARGS...] < PLAYLIST
+# ffshuffle [-n HEAD_COUNT] [--dry] [--loop] [GREP_ARGS...] [-- FFLIST_ARGS...] < PLAYLIST
 ffshuffle() {
     local grep_args=()
     local head_count=1000
     local dry=""
-    local toggle_arg=""
+    local loop="no"
     local list_args=()
 
     __ffshuffle() {
@@ -71,16 +71,17 @@ ffshuffle() {
                 head_count="$2"
                 shift 2
                 ;;
-            "--")
-                toggle_arg="true"
+            "--loop")
+                loop="yes"
                 shift
                 ;;
+            "--")
+                shift
+                list_args=("$@")
+                break
+                ;;
             *)
-                if [[ "${toggle_arg}" = "true" ]] ; then
-                    list_args+=("$1")
-                else
-                    grep_args+=("$1")
-                fi
+                grep_args+=("$1")
                 shift
                 ;;
         esac
@@ -93,6 +94,6 @@ ffshuffle() {
     if [[ "${dry}" = "true" ]] ; then
         __ffshuffle
     else
-        __ffshuffle | mpv_play
+        __ffshuffle | mpv_play music "--loop-playlist=${loop}"
     fi
 }

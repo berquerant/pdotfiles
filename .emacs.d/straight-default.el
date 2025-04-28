@@ -92,7 +92,6 @@
  ("multiple-cursors.el" . "89f1a8df9b1fc721b1672b4c7b6d3ab451e7e3ef")
  ("mwim.el" . "b4f3edb4c0fb8f8b71cecbf8095c2c25a8ffbf85")
  ("nongnu-elpa" . "d141240b3c2cf746396f8b328bb92116e844b1dd")
- ("open-junk-file" . "558bec7372b0fed4c4cb6074ab906535fae615bd")
  ("orderless" . "2b7a1688f24cc8ef5a3c3a6dab8e00d833bcda59")
  ("pfuture" . "19b53aebbc0f2da31de6326c495038901bffb73c")
  ("php-eldoc" . "df05064146b884d9081e10657e32dc480f070cfe")

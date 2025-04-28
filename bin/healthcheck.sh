@@ -1,12 +1,18 @@
 #!/bin/bash
 
 readonly url="$1"
-if [ -z "$url" ] ; then
-   echo >&2 'no url!'
-   exit 1
-fi
 readonly interval_seconds="${2:-3}"
 readonly try_count_limit="${3:-20}"
+
+if [ -z "$url" ] ; then
+    echo >&2 'no URL!'
+    readonly name="${0##*/}"
+    cat <<EOS
+${name} URL [INTERVAL_SECOND] [RETRY_LIMIT]
+EOS
+    exit 1
+fi
+
 
 check() {
     curl -s -o /dev/null "$url"

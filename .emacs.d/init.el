@@ -15,11 +15,11 @@
   (and (getenv "EMACS_DEBUG_PROFILER") t))
 (when my-profiler-enabled
   (require 'profiler)
-  (profiler-start 'cpu)
+  (profiler-start 'cpu+mem)
   (defun my-profiler-report ()
     "Report profiling result when `my-profiler-enabled'."
-    (profiler-report)
-    (profiler-stop))
+    (profiler-stop)
+    (profiler-report))
   (add-hook 'emacs-startup-hook 'my-profiler-report))
 
 (setq elp-sort-by-function 'elp-sort-by-average-time)
@@ -161,15 +161,12 @@
 (use-package comment-dwim-2
   :bind
   ("M-;" . comment-dwim-2)
-  :config
-  (setq comment-dwim-2--inline-comment-behavior 'reindent-comment))
+  :custom
+  (comment-dwim-2-inline-comment-behavior 'reindent-comment))
 
 (use-package which-key
   :demand t
   :diminish (which-key-mode . "")
-  :bind
-  ("M-s w k" . which-key-show-full-keymap)
-  ("M-s w t" . which-key-show-top-level)
   :custom
   (which-key-idle-delay 1)
   (which-key-idle-secondary-delay 0.05)
@@ -663,19 +660,6 @@
   :config
   (avy-migemo-mode t))
 
-;; memo
-(use-package open-junk-file
-  :after deadgrep
-  :bind
-  (("C-x j o" . open-junk-file)
-   ("C-x j a" . my-deadgrep-junk-files))
-  :config
-  (defun my-deadgrep-junk-files ()
-    "Do `deadgrep' junk files."
-    (interactive)
-    (my-deadgrep-with-path (my-getenv-join "EMACSD" "junk/")))
-  (setq open-junk-file-format (my-getenv-join "EMACSD" "junk" "%Y-%m%d-%H%M%S.")))
-
 (use-package expand-region
   :after selected
   :bind
@@ -687,8 +671,8 @@
 
 (use-package multiple-cursors
   :config
-  (unbind-key "M-r")
-  (smartrep-define-key global-map "M-r"
+  (unbind-key "M-^")
+  (smartrep-define-key global-map "M-^"
       '(("." . mc/edit-lines)
         (">" . mc/mark-next-like-this)
         ("<" . mc/mark-previous-like-this))))
@@ -804,7 +788,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package flyspell-correct
   :bind
   (:map flyspell-mode-map
-        ("M-^" . flyspell-correct-wrapper))
+        ("C-;" . flyspell-correct-wrapper))
   :after flyspell)
 
 (use-package flyspell-correct-popup
@@ -857,19 +841,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (defun web-mode-indent (n)
     "Set variables for `web-mode' to set indent tab width."
       (interactive "nTab-width: ")
-      (setq web-mode-markup-indent-offset n)
-      (setq web-mode-css-indent-offset n)
-      (setq web-mode-style-padding n)
-      (setq web-mode-code-indent-offset n)
-      (setq web-mode-script-padding n)
-      (setq web-mode-javascript-indentation n)
-      (setq web-mode-block-padding n))
-  (setq web-mode-enable-auto-pairing nil) ; due to smartparens
-  (setq web-mode-enable-auto-quoting nil)
-  (setq web-mode-tag-auto-close-style t)
-  (setq web-mode-enable-css-colorization t)
-  (setq web-mode-enable-current-element-highlight t)
-  (setq web-mode-enable-current-column-highlight t)
+      (setq web-mode-markup-indent-offset n
+            web-mode-css-indent-offset n
+            web-mode-style-padding n
+            web-mode-code-indent-offset n
+            web-mode-script-padding n
+            web-mode-javascript-indentation n
+            web-mode-block-padding n))
+  (setq web-mode-enable-auto-pairing nil ; due to smartparens
+        web-mode-enable-auto-quoting nil
+        web-mode-tag-auto-close-style t
+        web-mode-enable-css-colorization t
+        web-mode-enable-current-element-highlight t
+        web-mode-enable-current-column-highlight t)
   (web-mode-indent 2)
   (flycheck-add-mode 'javascript-eslint 'web-mode)
   (flycheck-add-mode 'css-csslint 'web-mode))
@@ -913,11 +897,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :hook
   (js-mode . (lambda ()
                (make-local-variable 'js-indent-level)
-               (setq js-indent-level 2)
-               (setq indent-tabs-mode nil)
-               (setq c-basic-offset 2)
-               (setq js2-basic-offset 2)
-               (setq tab-width 2)))
+               (setq js-indent-level 2
+                     indent-tabs-mode nil
+                     c-basic-offset 2
+                     js2-basic-offset 2
+                     tab-width 2)))
   :mode
   (("\\.js\\'" . js2-mode)
    ("\\.jsx$" . web-mode)
@@ -927,8 +911,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :ensure t
   :hook
   (typescript-mode . (lambda ()
-                       (setq typescript-indent-level 2)
-                       (setq flycheck-check-syntax-automatically '(save mode-enabled))))
+                       (setq typescript-indent-level 2
+                             flycheck-check-syntax-automatically '(save mode-enabled))))
   :mode
   ("\\.ts\\'" . typescript-mode)
   :init
@@ -952,8 +936,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
   :init
-  (setq pipenv-projectile-after-switch-function
-        #'pipenv-projectile-after-switch-extended))
+  (setq pipenv-projectile-after-switch-function #'pipenv-projectile-after-switch-extended))
 
 (use-package flymake-ruff
   :ensure t
