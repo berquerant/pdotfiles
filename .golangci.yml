@@ -1,46 +1,26 @@
+version: "2"
+
+linters:
+  settings:
+    godox:
+      keywords:
+        - NOTE
+        - TODO
+        - FIXME
+        - BUG
+        - DEPRECATED
+        - Deprecated
+  exclusions:
+    paths:
+      - ".*generated.*"
+      - ".*\\.pb\\.go$"
+      - ".*/tmp/.*"
+
+issues:
+  max-issues-per-linter: 10
+
 run:
   concurrency: 4
   timeout: 30s
   allow-parallel-runners: true
   tests: false
-
-issues:
-  max-issues-per-linter: 10
-  exclude-dirs:
-    - tmp/
-  exclude-files:
-    - ".*generated.*"
-    - ".*\\.pb\\.go$"
-
-linter-settings:
-  godox:
-    keywords:
-      - NOTE
-      - TODO
-      - FIXME
-      - BUG
-      - DEPRECATED
-      - Deprecated
-
-linters:
-  enable-all: true
-  disable:
-    - wsl
-    - nlreturn
-    - gofumpt
-    - ireturn
-    - wastedassign
-    - rowserrcheck
-    - depguard
-    - exhaustruct
-    - nonamedreturns
-    - wrapcheck
-    - tagliatelle
-    - varnamelen
-    - gosmopolitan
-    - godot
-    - perfsprint
-    - tagalign
-    - forbidigo
-    # deprecated
-    - tenv

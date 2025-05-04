@@ -347,6 +347,7 @@
    ("C-x b" . consult-buffer) ; switch-to-buffer
    ("M-g i" . consult-imenu)
    ("M-g M-i" . consult-imenu-multi)
+   ("M-s u" . consult-flycheck)
    :map isearch-mode-map
    ("C-l" . consult-isearch-history)
    ("C-o" . consult-line)
@@ -484,16 +485,6 @@
       (shell-command-on-region (region-beginning) (region-end) command t t)))
   (setq selected-minor-mode-override t)
   (selected-global-mode 1))
-
-(use-package my-trans
-  :demand t
-  :straight (my-trans :type built-in)
-  :config
-  (push `(,my-trans-output-buffer-name :noselect t) popwin:special-display-config)
-  (my-macro-region-or-at-point my-trans-into-ja "To ja: ")
-  (my-macro-region-or-at-point my-trans-into-en "To en: ")
-  (bind-key "M-j t j" 'my-trans-into-ja-region-or-at-point)
-  (bind-key "M-j t e" 'my-trans-into-en-region-or-at-point))
 
 (use-package my-pipenv
   :demand t
@@ -866,12 +857,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (gofmt-before-save-thyristor-set nil)
   (add-hook 'before-save-hook 'gofmt-before-save-thyristor))
 
-(use-package flycheck-golangci-lint
-  :demand t
+(use-package my-flycheck-golangci-lint
+  :straight (my-flycheck-golangci-lint :type built-in)
   :after (go-mode flycheck)
-  :hook (go-mode . flycheck-golangci-lint-setup)
-  :custom
-  (flycheck-golangci-lint-deadline nil))
+  :hook (go-mode . my-flycheck-golangci-lint-setup))
 
 (use-package go-playground
   :init
@@ -1038,8 +1027,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (defun add-plantuml-local-hook ()
     (add-hook 'before-save-hook 'my-plantuml-local-hook nil t))
   (add-hook 'plantuml-mode 'add-plantuml-local-hook)
-  :bind
-  ("M-s u" . plantuml-preview)
   :config
   (setq plantuml-output-type "png")
   :custom

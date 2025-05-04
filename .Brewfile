@@ -68,13 +68,11 @@ brew "gnu-tar"
 brew "grep"
 brew "gzip"
 brew "pandoc"
-brew "wget"
 brew "unzip"
 brew "gnu-time"
 brew "gnupg"
 
 # cask
-cask "devtoys"
 
 # python
 brew "pipenv"

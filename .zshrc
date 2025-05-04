@@ -30,7 +30,7 @@ export GO_VERSION=1.24.2
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
-export PY_VERSION=3.13.2
+export PY_VERSION=3.13.3
 export PYENV_ROOT="$HOME/.pyenv"
 
 export RB_VERSION=3.2.2

@@ -301,7 +301,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter, golangci-lint
+Requires: awkfmt, textlinter, golangci-lint, uv
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -312,7 +312,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter, golangci-lint
+Requires: awkfmt, textlinter, golangci-lint, uv
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -323,10 +323,18 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: trans, awkfmt, textlinter, golangci-lint
+Requires: awkfmt, textlinter, golangci-lint, uv
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
+```
+
+## uv
+
+Install [uv](https://github.com/astral-sh/uv).
+
+``` shell
+curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 ```
 
 ## golangci-lint
@@ -336,10 +344,27 @@ Install [golangci-lint](https://github.com/golangci/golangci-lint).
 ``` shell
 set -e
 mkdir -p "${PJTMP}"
-cd "${PJTMP}"
-wget -O "golangci-lint.tar.gz" "https://github.com/golangci/golangci-lint/releases/download/v1.64.8/golangci-lint-1.64.8-darwin-arm64.tar.gz"
+pushd "${PJTMP}"
+checksums="golangci-lint-checksums.txt"
+wget -O "$checksums" "https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION}/golangci-lint-${GOLANGCI_LINT_VERSION}-checksums.txt"
+
+os="darwin"
+arch="arm64"
+# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
+if [ -n "$CI" ] ; then
+  os="linux"
+  arch="amd64"
+fi
+wget -O "golangci-lint.tar.gz" "https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION}/golangci-lint-${GOLANGCI_LINT_VERSION}-${os}-${arch}.tar.gz"
+grep "$(sha256sum "golangci-lint.tar.gz" | cut -d ' ' -f 1)" "$checksums"
 tar xvzf "golangci-lint.tar.gz"
-ln -snvf "${PJTMP}/golangci-lint-1.64.8-darwin-arm64/golangci-lint" /usr/local/bin/golangci-lint
+bin="${PJTMP}/golangci-lint-${GOLANGCI_LINT_VERSION}-${os}-${arch}/golangci-lint"
+if [ -n "$CI" ] ; then
+  popd
+  mv "$bin" .
+else
+  ln -snvf "$bin" /usr/local/bin/golangci-lint
+fi
 ```
 
 ## textlinter
@@ -348,15 +373,6 @@ Install [textlint.sh](bin/textlint.sh).
 
 ``` shell
 ln -snvf "${DOTFILES_ROOT}/bin/textlint.sh" /usr/local/bin/textlinter
-```
-
-## trans
-
-Install `https://github.com/soimort/translate-shell`.
-
-``` shell
-mkdir -p "$PJTMP" && cd "$PJTMP" && wget git.io/trans && chmod +x ./trans
-ln -snvf "${PJTMP}/trans" /usr/local/bin/trans
 ```
 
 ## awkfmt
@@ -396,25 +412,6 @@ interactive: true
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/other
-```
-
-## gdbinit
-
-Install gdbinit for Python.
-
-``` shell
-wget -P ~ https://git.io/.gdbinit
-```
-
-## devtoys-cli
-
-Install devtoys CLI.
-
-``` shell
-dest="${PJTMP}/devtoys-cli"
-rm -rf "$dest"
-mkdir -p "$dest" && cd "$dest" && wget -O devtoys-cli.zip https://github.com/DevToys-app/DevToys/releases/download/v2.0.3.0/devtoys.cli_osx_arm64.zip && unzip devtoys-cli.zip
-ln -snvf "${dest}/DevToys.CLI" /usr/local/bin/devtoys-cli
 ```
 
 ## additional

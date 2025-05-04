@@ -13,6 +13,10 @@ on:
       - main
       - master
 
+env:
+  GOLANGCI_LINT_VERSION: "2.1.5"
+  PJTMP: "tmp"
+
 jobs:
   check:
     timeout-minutes: 5
@@ -27,3 +31,7 @@ jobs:
         run: |
           .github/bin/shellcheck.sh
           echo "::remove-matcher owner=shellcheck-matcher::"
+      - name: Verify golangci-lint config
+        run: |
+          ./xc golangci-lint
+          ./golangci-lint config verify -v

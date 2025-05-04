@@ -36,6 +36,10 @@ run_with_pwd() {
     docker run --rm -v "${PWD}:/usr/src/app" -w "/usr/src/app" "$@"
 }
 
+layers() {
+    docker history --no-trunc --format json "$@"
+}
+
 usage() {
     local -r name="${0##*/}"
     cat <<EOS >&2
@@ -52,6 +56,8 @@ Usage
     Execute command in container
   ${name} (r|run) [RUN_ARGS]
     Run container with bind mount PWD
+  ${name} (l|layer) IMAGE
+    Display image layers
 EOS
 }
 
@@ -63,6 +69,7 @@ case "$1" in
     c|commit) cmd="commit_container" ;;
     x|exec) cmd="exec_container" ;;
     r|run) cmd="run_with_pwd" ;;
+    l|layer) cmd="layers" ;;
     *)
         usage
         exit 1

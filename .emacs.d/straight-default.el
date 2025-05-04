@@ -54,7 +54,6 @@
  ("ez-query-replace" . "2b68472f4007a73908c3b242e83ac5a7587967ff")
  ("f.el" . "931b6d0667fe03e7bf1c6c282d6d8d7006143c52")
  ("flycheck" . "ebaf48359b3e21879c8f6f3c1b5d0221b345035e")
- ("flycheck-golangci-lint" . "91c59b128aa6f719069cfb3e5df77588691a3e14")
  ("flycheck-haskell" . "b7c4861aa754220b7d0cfc05aa0895bb35665683")
  ("flycheck-popup-tip" . "ef86aad907f27ca076859d8d9416f4f7727619c6")
  ("flycheck-pos-tip" . "dc57beac0e59669926ad720c7af38b27c3a30467")
