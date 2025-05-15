@@ -11,6 +11,7 @@ export MCPO_URL="http://localhost:${MCPO_PORT}/docs"
 export OPEN_WEBUI_VOLUMES_ROOT="${DOTFILES_ROOT}/tmp/open_webui/volumes"
 mkdir -p "${OPEN_WEBUI_VOLUMES_ROOT}"
 ai-open() {
+    echo 'NOTE: ollama on host is required'
     open-webui up -d
     "${DOTFILES_ROOT}/bin/healthcheck.sh" "${MCPO_URL}" &&\
         "${DOTFILES_ROOT}/bin/healthcheck.sh" "${OPEN_WEBUI_URL}" || return 1

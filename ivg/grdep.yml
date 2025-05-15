@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/grdep
+branch: main
+locald: repos/grdep
+lock: locks/grdep.lock
+install:
+  - make
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/grdep" /usr/local/bin/grdep
+  - grdep -h
+uninstall:
+  - rm -f /usr/local/bin/grdep

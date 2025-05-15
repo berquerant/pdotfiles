@@ -46,6 +46,7 @@ brew "pstree"
 brew "actionlint" # github action
 brew "osv-scanner"
 brew "duckdb"
+brew "ollama"
 
 # docker
 brew "hadolint"
