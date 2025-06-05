@@ -12,6 +12,11 @@ alias m='g cm'
 alias s='g s'
 alias r='repo'
 alias gg='g g'
+alias gdefault='${DOTFILES_ROOT}/bin/default-branch.sh'
+alias gdpull='${DOTFILES_ROOT}/bin/default-branch.sh pull true false'
+alias gpullback='${DOTFILES_ROOT}/bin/default-branch.sh pull false true'
+alias gfbranch='${DOTFILES_ROOT}/bin/default-branch.sh branch'
+alias gworktree='${DOTFILES_ROOT}/bin/git-worktree.sh'
 
 repo() {
     location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
@@ -21,68 +26,10 @@ repo() {
     cd "$location"
 }
 
-alias gdefault='${DOTFILES_ROOT}/bin/default-branch.sh'
-alias gdpull='${DOTFILES_ROOT}/bin/default-branch.sh pull true'
-
-gtagpush() {
-    if [[ -z "$1" ]] ; then
-        echo "create tag and push it"
-        echo "gtagpush TAG"
-        return 1
-    fi
-    git tag "$1"
-    git push origin "$1"
-}
-
-gcurrentbranch() {
-    git branch | awk '$1=="*"{print $2}'
-}
-
-gfbranch() {
-    if [[ "$1" == "-h" ]] ; then
-        echo "switch branch if remote branch exists else create branch, forcely"
-        echo "if BRANCH is empty, delete the current branch and create a new branch with the same name"
-        echo "gfbranch [BRANCH]"
-        return 1
-    fi
-
-    default_branch="$(gdefault)"
-    current_branch="$(gcurrentbranch)"
-    branch="${1:-$current_branch}"
-    if [[ "$branch" == "$default_branch" ]] ; then
-        return 1
-    fi
-    git switch "$default_branch"
-    git branch -D "$branch"
-    git fetch
-    git pull
-    git switch "$branch" || git checkout -b "$branch"
-}
-
-alias gworktree='${DOTFILES_ROOT}/bin/git-worktree.sh'
-
-gsubremove() {
-    if [[ -z "$1" ]] ; then
-        echo "remove submodule"
-        echo "gsubremove MODULE"
-        return 1
-    fi
-    git submodule deinit -f "$1" && git rm -f "$1" && rm -rf .git/modules/ "$1"
-}
-
-gfreset() {
-    if [[ -z "$1" ]] ; then
-        echo "sync to remote branch"
-        echo "gfreset BRANCH"
-        return 1
-    fi
-    git fetch && git reset --hard "origin/$1"
-}
-
 gi() {
     GIT_ITER_MAX_PROCS="${GI_PROCS:-1}" GREP='rg' git-iter "$@"
 }
 
 groot() {
-    cd "$(git rev-parse --show-toplevel)"
+    cd "$(git root)"
 }

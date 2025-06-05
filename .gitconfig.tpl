@@ -29,6 +29,8 @@
   prune = true
 [pull]
   ff = only
+[http]
+  postBuffer = 104857600
 [alias]
   a = add
   aliases = !git config --list | grep -E '^alias' | cut -d '.' -f 2- | sort
@@ -70,3 +72,9 @@
   which-branch = branch --contains
   default-branch = !git remote show origin | grep -F 'HEAD branch:' | cut -d ':' -f 2 | tr -d ' '
   force-remove-untracked = clean -d -f
+  prev-branch = checkout -
+  clone-latest-only = clone --depth 1
+  tag-push = !"f(){ if [ -z \"$1\" ]; then echo 'Usage: git tag-push TAG'; return 1; fi; git tag \"$1\" && git push origin \"$1\"; }; f"
+  current-branch = "!git branch --contains | awk '$1==\"*\"{print $2}'"
+  default-branch = "!git remote show origin | grep -F 'HEAD branch:' | cut -d ':' -f 2 | tr -d ' '"
+  force-reset = !"f(){ if [ -z \"$1\" ]; then echo 'Usage: git force-reset BRANCH'; return 1; fi; git fetch && git reset --hard \"origin/$1\"; }; f"

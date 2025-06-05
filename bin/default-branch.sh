@@ -4,7 +4,7 @@ d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
 . "${d}/bin/cache.sh"
 
 __default_branch() {
-    git remote show origin | grep -F 'HEAD branch:' | cut -d ':' -f 2 | tr -d ' '
+    git default-branch
 }
 
 default_branch() {
@@ -12,32 +12,39 @@ default_branch() {
 }
 
 switch_branch() {
-    if [ "$(default_branch)" = "$(current_branch)" ] ; then
+    if [ "$(default_branch)" = "$(git current-branch)" ] ; then
         return
     fi
     git switch "$(default_branch)" "$@"
 }
 
-diff_branch() {
-    git diff "$(default_branch)"
-}
-
-current_branch() {
-    git branch --contains | awk '$1=="*"{print $2}'
-}
-
 switch_pull_branch() {
-    cleanup="$1"
-    if [ -z "$cleanup" ] ; then
-        switch_branch -q
-    else
-        current="$(current_branch)"
-        switch_branch -q
-        if [ "$(default_branch)" != "$current" ] ; then
-            git branch -D "$current"
-        fi
+    local -r cleanup="$1"
+    local -r switch_back="$2"
+    local current
+    current="$(git current-branch)"
+    switch_branch -q
+    if [[ "$cleanup" == "true" && "$(default_branch)" != "$current" ]] ; then
+        git branch -D "$current"
     fi
-    git pull -q
+    git pull
+    if [[ "$switch_back" == "true" && "$(default_branch)" != "$current" ]] ; then
+        git switch -
+    fi
+}
+
+force_branch() {
+    local current
+    current="$(git current-branch)"
+    local -r branch="${1:-$current}"
+    if [[ "$branch" == "$(default_branch)" ]] ; then
+        return 1
+    fi
+    git switch "$(default_branch)"
+    git branch -D "$branch" || true
+    git fetch
+    git pull
+    git switch "$branch" || git checkout -b "$branch"
 }
 
 usage() {
@@ -55,29 +62,23 @@ Usage
   ${name} d|diff
     Git diff with default branch
 
-  ${name} p|pull [CLEANUP]
+  ${name} p|pull [CLEANUP] [SWITCH_BACK]
     Switch to default branch and pull
-    If CLEANUP, delete the branch before switching
+    If CLEANUP is true, delete the branch before switching
+    If SWITCH_BACK is true, switch back to the previous branch
+
+  ${name} b|branch [BRANCH]
+    Switch branch if remote branch exists else create forcely
+    If BRANCH is empty, delete the current branch and create a new branch
 EOS
 }
 
 set -e
 case "$1" in
-    "s" | "switch")
-        switch_branch
-        ;;
-    "d" | "diff")
-        diff_branch
-        ;;
-    "p" | "pull")
-        shift
-        switch_pull_branch "$@"
-        ;;
-    "-h" | "--help")
-        usage
-        exit 1
-        ;;
-    *)
-        default_branch
-        ;;
+    "s" | "switch") switch_branch ;;
+    "d" | "diff") git diff "$(default_branch)" ;;
+    "p" | "pull") shift ; switch_pull_branch "$@" ;;
+    "b" | "branch") shift ; force_branch "$@" ;;
+    "-h" | "--help") usage ; exit 1 ;;
+    *) default_branch ;;
 esac
