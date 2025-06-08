@@ -1421,7 +1421,7 @@ when (eglot)."
   (ellama-language "Japanese")
   (ellama-chat-translation-enable t)
   (ellama-auto-scroll t)
-  (ellama-naming-scheme 'ellama-generate-name-by-llm)
+  (ellama-naming-scheme 'ellama-generate-name-by-time)
   ;;
   ;; override templates
   ;;
@@ -1580,9 +1580,9 @@ Topic:
     :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 128)))))
   (ellama-coding-provider
    (make-llm-ollama
-    :chat-model "codegemma:2b"
+    :chat-model "qwen2.5-coder:3b"
     :embedding-model "nomic-embed-text"
-    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 8)))))
+    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 32)))))
   (ellama-translation-provider
    (make-llm-ollama
     :chat-model "aya:8b"

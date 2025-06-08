@@ -1,8 +1,8 @@
 golang.org/x/tools/gopls@v0.18.1
-golang.org/x/tools/cmd/goimports@v0.33.0
+golang.org/x/tools/cmd/goimports@v0.34.0
 github.com/go-delve/delve/cmd/dlv@v1.24.2
 github.com/google/gops@v0.3.28
-golang.org/x/tools/cmd/eg@v0.33.0
+golang.org/x/tools/cmd/eg@v0.34.0
 golang.org/x/pkgsite/cmd/pkgsite@latest
-golang.org/x/tools/cmd/callgraph@v0.33.0
-golang.org/x/tools/cmd/digraph@v0.33.0
+golang.org/x/tools/cmd/callgraph@v0.34.0
+golang.org/x/tools/cmd/digraph@v0.34.0
