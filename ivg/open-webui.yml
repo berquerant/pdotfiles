@@ -5,7 +5,7 @@ lock: locks/open-webui.lock
 env:
   OPEN_WEBUI_UTILS: "${DOTFILES_ROOT}/ivg/open-webui"
 install:
-  - rm -rf mcpo nginx
+  - git clean -d -f
   - cp -fr "${OPEN_WEBUI_UTILS}/mcpo" mcpo
   - cp -fr "${OPEN_WEBUI_UTILS}/nginx" nginx
   # FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory

@@ -3,6 +3,7 @@ branch: main
 locald: repos/mcp-obsidian
 lock: locks/mcp-obsidian.lock
 install:
+  - git clean -d -f
   - |
     cat <<EOS > Dockerfile
     FROM node:23
