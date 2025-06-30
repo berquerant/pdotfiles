@@ -75,6 +75,15 @@ Format is: (A%,B/C,D/E,F/G)"
   (setcar mode-line-position
           '(:eval (my-minimal-init-calc-mode-line-position))))
 
+(use-package dictionary
+  :straight (dictionary :type built-in)
+  :bind
+  ("M-s d" . dictionary-search)
+  :custom
+  ;(dictionary-search-interface 'help)
+  (dictionary-default-strategy "prefix")
+  (dictionary-server "dict.org"))
+
 (defun other-window-back ()
   "Reverse `other-window'."
   (interactive)

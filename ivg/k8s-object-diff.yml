@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/k8s-object-diff-go
+branch: main
+locald: repos/k8s-object-diff
+lock: locks/k8s-object-diff.lock
+install:
+  - make
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/objdiff" /usr/local/bin/kd
+  - kd -h
+uninstall:
+  - rm -f /usr/local/bin/kd
