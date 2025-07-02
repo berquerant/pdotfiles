@@ -18,7 +18,3 @@ ai-open() {
     open "${MCPO_URL}"
     open "${OPEN_WEBUI_URL}"
 }
-readonly obsidian_vault="${HOME}/Documents/Obsidian Vault"
-readonly obsidian_vault_link="${DOTFILES_ROOT}/tmp/obsidian/vault"
-mkdir -p "$(dirname "$obsidian_vault_link")" "${obsidian_vault}"
-ln -sf "${obsidian_vault}" "${obsidian_vault_link}"

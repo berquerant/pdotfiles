@@ -2,6 +2,7 @@
 
 alias k='kubectl'
 alias kk='kubectl kustomize'
+alias ksdiff='${DOTFILES_ROOT}/bin/k8s-sync-diff.sh'
 
 kgetall() {
     kubectl get "$(kubectl api-resources --namespaced=true --verbs=list --output=name | xargs | tr ' ' ',')" $@

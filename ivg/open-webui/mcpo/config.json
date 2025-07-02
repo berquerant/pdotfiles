@@ -8,47 +8,6 @@
         "-i",
         "markitdown-mcp-local"
       ]
-    },
-    "memory": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "-v",
-        "claude-memory:/app/dist",
-        "mcp-memory-local"
-      ]
-    },
-    "time": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "mcp-time-local"
-      ]
-    },
-    "sequentialthinking": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "mcp-sequentialthinking-local"
-      ]
-    },
-    "obsidian": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "-v",
-        "/usr/local/var/obsidian/vault:/data/obsidian-vault:ro",
-        "mcp-obsidian-local",
-        "/data/obsidian-vault"
-      ]
     }
   }
 }
