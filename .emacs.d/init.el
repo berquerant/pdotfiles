@@ -998,7 +998,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package rust-mode
   :hook
   (rust-mode . flycheck-rust-setup)
-  (rust-mode . (lambda () (setq indent-tabs-mode nil)))
+  (rust-mode . (lambda ()
+                 (setq indent-tabs-mode nil)
+                 (global-display-line-numbers-mode 1)))
   :custom
   (rust-format-on-save t))
 

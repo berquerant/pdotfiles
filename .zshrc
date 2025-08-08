@@ -30,13 +30,13 @@ export GO_VERSION=1.24.4
 export GOENV_ROOT="$HOME/.goenv"
 export GOPATH="$HOME/go"
 
-export PY_VERSION=3.13.4
+export PY_VERSION=3.13.5
 export PYENV_ROOT="$HOME/.pyenv"
 
 export RB_VERSION=3.2.2
 export RBENV_ROOT="$HOME/.rbenv"
 
-export NODE_VERSION=v24.2.0
+export NODE_VERSION=v24.4.0
 export NVM_DIR="$HOME/.nvm"
 export NPM_ROOT="$HOME/.npm"
 

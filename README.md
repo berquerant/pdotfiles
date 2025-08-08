@@ -301,7 +301,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: awkfmt, textlinter, golangci-lint, uv
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -312,7 +312,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: awkfmt, textlinter, golangci-lint, uv
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -323,10 +323,20 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: awkfmt, textlinter, golangci-lint, uv
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
+```
+
+## objdiff
+
+Install
+
+``` shell
+curl -L -o "${PJTMP}/objdiff" https://github.com/berquerant/k8s-object-diff-go/releases/download/v${OBJDIFF_VERSION}/objdiff_${OBJDIFF_VERSION}_darwin_arm64
+chmod +x "${PJTMP}/objdiff"
+ln -snvf "${PJTMP}/objdiff" /usr/local/bin/kd
 ```
 
 ## uv

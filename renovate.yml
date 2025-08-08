@@ -87,6 +87,15 @@ customManagers:
       - "GOLANGCI_LINT_VERSION: \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
     extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
   - customType: "regex"
+    description: "Manage objdiff version"
+    fileMatch:
+      - "^.envrc$"
+    datasourceTemplate: "github-releases"
+    depNameTemplate: "berquerant/k8s-object-diff-go"
+    matchStrings:
+      - "export OBJDIFF_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+    extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
+  - customType: "regex"
     description: "Manage uv version"
     fileMatch:
       - "^.envrc$"
