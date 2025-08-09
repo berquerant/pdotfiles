@@ -184,8 +184,9 @@
       "matchStrings": [
         "ref=\"(?<currentValue>.*)\""
       ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "berquerant/install-via-git-go"
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "berquerant/install-via-git-go",
+      "extractVersionTemplate": "^v(?<version>.*)$"
     },
     {
       "customType": "regex",

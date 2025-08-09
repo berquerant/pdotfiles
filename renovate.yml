@@ -117,8 +117,9 @@ customManagers:
       - "^bin/install-via-git-go.sh$"
     matchStrings:
       - 'ref="(?<currentValue>.*)"'
-    datasourceTemplate: "github-tags"
+    datasourceTemplate: "github-releases"
     depNameTemplate: "berquerant/install-via-git-go"
+    extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
   - customType: "regex"
     description: "Manage go dependencies"
     fileMatch:
