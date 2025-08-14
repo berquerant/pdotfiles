@@ -8,7 +8,6 @@ __mpv_installed() {
 
 load_mpv() {
     . "$MPV_SETTINGS_SH"
-    . "${DOTFILES_ROOT}/mpv/mpv.sh"
 }
 
 if __mpv_installed ; then

@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/local-jukebox
+branch: main
+locald: repos/local-jukebox
+lock: locks/local-jukebox.lock
+install:
+  - make
+  - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}/dist/jukebox" /usr/local/bin/jukebox
+  - jukebox --help
+uninstall:
+  - rm -f /usr/local/bin/jukebox

@@ -15,6 +15,5 @@ ai-open() {
     open-webui up -d
     "${DOTFILES_ROOT}/bin/healthcheck.sh" "${MCPO_URL}" &&\
         "${DOTFILES_ROOT}/bin/healthcheck.sh" "${OPEN_WEBUI_URL}" || return 1
-    open "${MCPO_URL}"
     open "${OPEN_WEBUI_URL}"
 }
