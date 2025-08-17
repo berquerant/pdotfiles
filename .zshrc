@@ -22,26 +22,6 @@ zplug load
 source "${DOTFILES_ROOT}/bin/common.sh"
 source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 
-export EMACSD="$HOME/.emacs.d"
-export CMACSD="$HOME/.cmacs.d"
-export TMPD="$HOME/tmp"
-
-export GO_VERSION=1.24.4
-export GOENV_ROOT="$HOME/.goenv"
-export GOPATH="$HOME/go"
-
-export PY_VERSION=3.13.5
-export PYENV_ROOT="$HOME/.pyenv"
-
-export RB_VERSION=3.2.2
-export RBENV_ROOT="$HOME/.rbenv"
-
-export NODE_VERSION=v24.4.0
-export NVM_DIR="$HOME/.nvm"
-export NPM_ROOT="$HOME/.npm"
-
-export CARGO_HOME="$HOME/.cargo"
-
 # go
 eval "$(goenv init -)"
 export PATH="$PATH:$GOENV_ROOT/bin"

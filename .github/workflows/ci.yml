@@ -14,7 +14,6 @@ on:
       - master
 
 env:
-  GOLANGCI_LINT_VERSION: "2.2.2"
   PJTMP: "tmp"
 
 jobs:
@@ -23,6 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set env
+        run: |
+          cat "./.env" >> "$GITHUB_ENV"
       - name: Lint
         run: .github/bin/lint.sh
       - name: Enable Shellcheck problem matcher
@@ -31,7 +33,3 @@ jobs:
         run: |
           .github/bin/shellcheck.sh
           echo "::remove-matcher owner=shellcheck-matcher::"
-      - name: Verify golangci-lint config
-        run: |
-          ./xc golangci-lint
-          ./golangci-lint config verify -v

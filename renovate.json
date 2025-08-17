@@ -126,42 +126,50 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Manage golangci-lint version",
+      "description": "Manage local-jukebox version",
       "fileMatch": [
-        "^.envrc$",
-        "^.github/workflows/ci.yml"
+        "^.env$"
       ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "golangci/golangci-lint",
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "berquerant/local-jukebox",
       "matchStrings": [
-        "export GOLANGCI_LINT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "GOLANGCI_LINT_VERSION: \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
-      ],
-      "extractVersionTemplate": "^v(?<version>.*)$"
+        "LOCAL_JUKEBOX_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ]
     },
     {
       "customType": "regex",
-      "description": "Manage objdiff version",
+      "description": "Manage metafind version",
       "fileMatch": [
-        "^.envrc$"
+        "^.env$"
       ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "berquerant/k8s-object-diff-go",
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "berquerant/metafind",
       "matchStrings": [
-        "export OBJDIFF_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "METAFIND_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ]
+    },
+    {
+      "customType": "regex",
+      "description": "Manage ip2bin version",
+      "fileMatch": [
+        "^.env$"
       ],
-      "extractVersionTemplate": "^v(?<version>.*)$"
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "berquerant/ip2bin-rust",
+      "matchStrings": [
+        "IP2BIN_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ]
     },
     {
       "customType": "regex",
       "description": "Manage uv version",
       "fileMatch": [
-        "^.envrc$"
+        "^.env$"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv",
       "matchStrings": [
-        "export UV_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "UV_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ]
     },
     {
@@ -239,8 +247,7 @@
       "customType": "regex",
       "description": "Manage node verssion",
       "fileMatch": [
-        "^.zshrc$",
-        "^.envrc$"
+        "^.env$"
       ],
       "matchStrings": [
         "export NODE_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
@@ -252,8 +259,7 @@
       "customType": "regex",
       "description": "Manage go version",
       "fileMatch": [
-        "^.zshrc$",
-        "^.envrc$"
+        "^.env$"
       ],
       "matchStrings": [
         "export GO_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
@@ -266,8 +272,7 @@
       "customType": "regex",
       "description": "Manage ruby version",
       "fileMatch": [
-        "^.zshrc$",
-        "^.envrc$"
+        "^.env$"
       ],
       "matchStrings": [
         "export RB_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
@@ -279,8 +284,7 @@
       "customType": "regex",
       "description": "Manage python version",
       "fileMatch": [
-        "^.zshrc$",
-        "^.envrc$"
+        "^.env$"
       ],
       "matchStrings": [
         "export PY_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"

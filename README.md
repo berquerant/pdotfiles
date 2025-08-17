@@ -301,7 +301,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 Install util dependencies.
 
 interactive: true
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff
+Requires: util-tools
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/util
@@ -312,7 +312,7 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff
+Requires: util-tools
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/util
@@ -323,20 +323,30 @@ bin/install-via-git-bulk.sh --update < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff
+Requires: util-tools
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/util
 ```
 
-## objdiff
+## util-tools
 
-Install
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin
+
+## ip2bin
+
+Install [rpath](https://github.com/berquerant/ip2bin).
 
 ``` shell
-curl -L -o "${PJTMP}/objdiff" https://github.com/berquerant/k8s-object-diff-go/releases/download/v${OBJDIFF_VERSION}/objdiff_${OBJDIFF_VERSION}_darwin_arm64
-chmod +x "${PJTMP}/objdiff"
-ln -snvf "${PJTMP}/objdiff" /usr/local/bin/kd
+cargo install --git https://github.com/berquerant/ip2bin-rust --tag ${IP2BIN_VERSION}
+```
+
+## objdiff
+
+Install [objdiff](https://github.com/berquerant/k8s-object-diff-g).
+
+``` shell
+ln -snvf "$(which objdiff)" /usr/local/bin/kd
 ```
 
 ## uv
@@ -349,32 +359,10 @@ curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
 ## golangci-lint
 
-Install [golangci-lint](https://github.com/golangci/golangci-lint).
+Verify [golangci-lint](https://github.com/golangci/golangci-lint).
 
 ``` shell
-set -e
-mkdir -p "${PJTMP}"
-pushd "${PJTMP}"
-checksums="golangci-lint-checksums.txt"
-wget -O "$checksums" "https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION}/golangci-lint-${GOLANGCI_LINT_VERSION}-checksums.txt"
-
-os="darwin"
-arch="arm64"
-# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables#default-environment-variables
-if [ -n "$CI" ] ; then
-  os="linux"
-  arch="amd64"
-fi
-wget -O "golangci-lint.tar.gz" "https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION}/golangci-lint-${GOLANGCI_LINT_VERSION}-${os}-${arch}.tar.gz"
-grep "$(sha256sum "golangci-lint.tar.gz" | cut -d ' ' -f 1)" "$checksums"
-tar xvzf "golangci-lint.tar.gz"
-bin="${PJTMP}/golangci-lint-${GOLANGCI_LINT_VERSION}-${os}-${arch}/golangci-lint"
-if [ -n "$CI" ] ; then
-  popd
-  mv "$bin" .
-else
-  ln -snvf "$bin" /usr/local/bin/golangci-lint
-fi
+golangci-lint config verify -v
 ```
 
 ## textlinter
@@ -392,7 +380,6 @@ Install awkfmt.
 ``` shell
 ln -snvf "${DOTFILES_ROOT}/bin/awkfmt.sh" /usr/local/bin/awkfmt
 ```
-
 
 ## other
 
@@ -429,6 +416,7 @@ bin/install-via-git-bulk.sh --retry < targets/other
 Install additional dependencies.
 
 interactive: true
+Requires: additional-tools
 
 ``` shell
 bin/install-via-git-bulk.sh < targets/additional
@@ -439,6 +427,7 @@ bin/install-via-git-bulk.sh < targets/additional
 Install additional dependencies.
 
 interactive: true
+Requires: additional-tools
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/additional
@@ -449,7 +438,28 @@ bin/install-via-git-bulk.sh --update < targets/additional
 Install additional dependencies.
 
 interactive: true
+Requires: additional-tools
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/additional
+```
+
+## additional-tools
+
+Requires: metafind, local-jukebox
+
+## metafind
+
+Install [metafind](https://github.com/berquerant/metafind).
+
+``` shell
+go install "github.com/berquerant/metafind/cmd/mf@${METAFIND_VERSION}"
+```
+
+## local-jukebox
+
+Install [local-jukebox](https://github.com/berquerant/local-jukebox).
+
+``` shell
+go install "github.com/berquerant/local-jukebox/cmd/jukebox@${LOCAL_JUKEBOX_VERSION}"
 ```

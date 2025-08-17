@@ -76,33 +76,37 @@ packageRules:
       - ".emacs.d/**"
 customManagers:
   - customType: "regex"
-    description: "Manage golangci-lint version"
+    description: "Manage local-jukebox version"
     fileMatch:
-      - "^.envrc$"
-      - "^.github/workflows/ci.yml"
-    datasourceTemplate: "github-releases"
-    depNameTemplate: "golangci/golangci-lint"
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/local-jukebox"
     matchStrings:
-      - "export GOLANGCI_LINT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      - "GOLANGCI_LINT_VERSION: \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
-    extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
+      - "LOCAL_JUKEBOX_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
   - customType: "regex"
-    description: "Manage objdiff version"
+    description: "Manage metafind version"
     fileMatch:
-      - "^.envrc$"
-    datasourceTemplate: "github-releases"
-    depNameTemplate: "berquerant/k8s-object-diff-go"
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/metafind"
     matchStrings:
-      - "export OBJDIFF_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-    extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
+      - "METAFIND_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+  - customType: "regex"
+    description: "Manage ip2bin version"
+    fileMatch:
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/ip2bin-rust"
+    matchStrings:
+      - "IP2BIN_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
   - customType: "regex"
     description: "Manage uv version"
     fileMatch:
-      - "^.envrc$"
+      - "^.env$"
     datasourceTemplate: "github-releases"
     depNameTemplate: "astral-sh/uv"
     matchStrings:
-      - "export UV_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      - "UV_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
   - customType: "regex"
     description: "Manage xc version"
     fileMatch: "^xc$"
@@ -154,8 +158,7 @@ customManagers:
   - customType: "regex"
     description: "Manage node verssion"
     fileMatch: &envFiles
-      - "^.zshrc$"
-      - "^.envrc$"
+      - "^.env$"
     matchStrings:
       - "export NODE_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "github-tags"
