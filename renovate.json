@@ -43,6 +43,15 @@
   },
   "packageRules": [
     {
+      "groupName": "crate",
+      "addLabels": [
+        "crate"
+      ],
+      "matchDatasources": [
+        "crate"
+      ]
+    },
+    {
       "groupName": "go",
       "addLabels": [
         "go"
@@ -198,6 +207,17 @@
     },
     {
       "customType": "regex",
+      "description": "Manage rust dependencies",
+      "fileMatch": [
+        "^requirements/cargo$"
+      ],
+      "matchStrings": [
+        "(?<depName>.*)@(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "crate"
+    },
+    {
+      "customType": "regex",
       "description": "Manage go dependencies",
       "fileMatch": [
         "^requirements/go$"
@@ -245,7 +265,7 @@
     },
     {
       "customType": "regex",
-      "description": "Manage node verssion",
+      "description": "Manage node version",
       "fileMatch": [
         "^.env$"
       ],

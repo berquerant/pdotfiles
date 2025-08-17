@@ -30,6 +30,11 @@ major:
   addLabels:
     - "major"
 packageRules:
+  - groupName: "crate"
+    addLabels:
+      - "crate"
+    matchDatasources:
+      - "crate"
   - groupName: "go"
     addLabels:
       - "go"
@@ -125,6 +130,13 @@ customManagers:
     depNameTemplate: "berquerant/install-via-git-go"
     extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
   - customType: "regex"
+    description: "Manage rust dependencies"
+    fileMatch:
+      - "^requirements/cargo$"
+    matchStrings:
+      - "(?<depName>.*)@(?<currentValue>.*)"
+    datasourceTemplate: "crate"
+  - customType: "regex"
     description: "Manage go dependencies"
     fileMatch:
       - "^requirements/go$"
@@ -156,7 +168,7 @@ customManagers:
     datasourceTemplate: "rubygems"
     versioningTemplate: "semver"
   - customType: "regex"
-    description: "Manage node verssion"
+    description: "Manage node version"
     fileMatch: &envFiles
       - "^.env$"
     matchStrings:
