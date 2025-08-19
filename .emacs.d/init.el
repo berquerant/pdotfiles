@@ -1054,7 +1054,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package flycheck
   :demand t
-  :commands (flycheck-mode flycheck-mode-thyristor-2n)
+  :commands
+  (flycheck-mode
+   flycheck-mode-thyristor-2n
+   my-flycheck-mode-thyristor-switch)
   :hook
   ((go-mode
     dart-mode
@@ -1080,6 +1083,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-highlighting-mode 'symbols)
   (flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
   :config
+  (defun my-flycheck-mode-thyristor-switch ()
+    "Call `flycheck-mode-thyristor-toggle' and enable/disable `flycheck-mode'."
+    (interactive)
+    (flycheck-mode-thyristor-toggle)
+    (flycheck-mode (if flycheck-mode-thyristor-flag 1 0)))
   (flycheck-define-checker textlint
     "Linter for text."
     :modes (text-mode markdown-mode gfm-mode)
