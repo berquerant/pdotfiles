@@ -27,7 +27,7 @@ install:
   - export PATH=/usr/local/opt/texinfo/bin:$PATH
   - find . -name "*.pdmp" -type f -delete
   - find . -name "*.elc" -type f -delete
-  - rm -rf "${EMACSD}/eln-cache"
+  - sudo rm -rf "${EMACSD}/eln-cache"
   - make distclean
   - make extraclean
   - git clean -fdx

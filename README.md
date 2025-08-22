@@ -343,7 +343,7 @@ cargo install --git https://github.com/berquerant/ip2bin-rust --tag ${IP2BIN_VER
 
 ## objdiff
 
-Install [objdiff](https://github.com/berquerant/k8s-object-diff-g).
+Install [objdiff](https://github.com/berquerant/k8s-object-diff-go).
 
 ``` shell
 ln -snvf "$(which objdiff)" /usr/local/bin/kd
