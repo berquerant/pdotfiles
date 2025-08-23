@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CACHE_DIR="${TMPD}/.cache-sh"
+export CACHE_DIR="${TMPD:-$HOME}/.cache-sh"
 . "${DOTFILES_ROOT}/ivg/repos/cache-sh/cache.sh"
 
 cache_clear() {
