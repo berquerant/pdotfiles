@@ -12,6 +12,6 @@ check:
       exit 1
     fi
 setup:
-  - brew install mpv
+  - arch -arm64 brew install mpv
 install:
   - ./install.sh
