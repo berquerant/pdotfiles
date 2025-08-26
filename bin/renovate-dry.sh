@@ -1,6 +1,7 @@
 #!/bin/bash
 
-config="${1:-renovate.json}"
+readonly config="${CONFIG:-renovate.json}"
+readonly token="$TOKEN"
 
 target_repopath() {
     git config --get remote.origin.url |\
@@ -13,15 +14,20 @@ target_repopath() {
         cut -d '/' -f 2-
 }
 
-docker run --rm -it \
-       -e LOG_LEVEL=debug \
-       -e RENOVATE_CONFIG_FILE="$config" \
-       -v "$PWD:/app/src" \
-       -w "/app/src" \
-       renovate/renovate \
-       renovate \
-       --dry-run=full \
-       --schedule= \
-       --require-config=ignored \
-       --token "$GITHUB_TOKEN" \
-       "$(target_repopath)"
+run() {
+    docker run --rm -it \
+           -e LOG_LEVEL=debug \
+           -e RENOVATE_CONFIG_FILE="$config" \
+           -v "$PWD:/app/src" \
+           -w "/app/src" \
+           renovate/renovate \
+           renovate \
+           --dry-run=full \
+           --schedule= \
+           --require-config=ignored \
+           --token "$token" \
+           "$(target_repopath)" \
+           "$@"
+}
+
+run "$@"

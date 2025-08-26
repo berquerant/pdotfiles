@@ -49,10 +49,7 @@ csg(){
     echo "$@" | tr " " "\n" | awk '{print tolower($0)}' | xargs | sed "s^ ^${sep}^g"
 }
 
-if type gbrowse >/dev/null 2>&1 ; then
-    alias gb='gbrowse'
-fi
-
+alias gb='gbrowse'
 alias hurl='${DOTFILES_ROOT}/bin/hurl.sh'
 alias jmerge='${DOTFILES_ROOT}/bin/merge.sh j'
 alias ymerge='${DOTFILES_ROOT}/bin/merge.sh y'
