@@ -1,6 +1,7 @@
 #!/bin/bash
 
 readonly config="${CONFIG:-renovate.json}"
+# shellcheck disable=SC2153
 readonly token="$TOKEN"
 
 target_repopath() {
