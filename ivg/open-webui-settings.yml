@@ -1,0 +1,23 @@
+uri: https://github.com/berquerant/open-webui-settings
+branch: main
+locald: repos/open-webui-settings
+lock: locks/open-webui-settings.lock
+setup:
+  - |
+    if [ -d "${IVG_WORKD}/${IVG_LOCALD}" ] ; then
+      cd "${IVG_WORKD}/${IVG_LOCALD}"
+      make clean
+    fi
+install:
+  - make init
+  - |
+    cat <<EOS > /usr/local/bin/open-webui
+    #!/bin/bash
+    set -e
+    cd "${IVG_WORKD}/${IVG_LOCALD}"
+    make "\$@"
+    EOS
+  - chmod +x /usr/local/bin/open-webui
+uninstall:
+  - make destroy
+  - rm -f /usr/local/bin/open-webui
