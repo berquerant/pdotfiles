@@ -7,6 +7,7 @@ extends:
   - ":timezone(Asia/Tokyo)"
   # - ":rebaseStalePrs"         # Rebase existing PRs any time the base branch has been updated
   - "schedule:nonOfficeHours" # Schedule for typical non-office hours (night time and weekends)
+  - "helpers:pinGitHubActionDigests"
 automerge: false
 baseBranches:
   - "main"

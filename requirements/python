@@ -5,11 +5,11 @@ pycodestyle==2.14.0
 mccabe==0.7.0
 pyls-memestra==0.0.16
 python-lsp-server==1.13.0
-debugpy==1.8.15
+debugpy==1.8.16
 python-lsp-ruff==2.2.2
 sqlfluff==3.4.2
 langdetect==1.0.9
 flict==1.3.0
 pyyaml==6.0.2
-requests==2.32.4
+requests==2.32.5
 python-call-graph==2.1.4
