@@ -6,7 +6,7 @@
     ":prConcurrentLimit10",
     ":prHourlyLimitNone",
     ":timezone(Asia/Tokyo)",
-    "schedule:nonOfficeHours",
+    "schedule:daily",
     "helpers:pinGitHubActionDigests"
   ],
   "automerge": false,

@@ -6,7 +6,7 @@ extends:
   - ":prHourlyLimitNone"      # Removes rate limit for PR creation per hour
   - ":timezone(Asia/Tokyo)"
   # - ":rebaseStalePrs"         # Rebase existing PRs any time the base branch has been updated
-  - "schedule:nonOfficeHours" # Schedule for typical non-office hours (night time and weekends)
+  - "schedule:daily"          # Schedule daily before 4 AM
   - "helpers:pinGitHubActionDigests"
 automerge: false
 baseBranches:

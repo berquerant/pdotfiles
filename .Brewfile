@@ -43,10 +43,14 @@ brew "graphviz"
 brew "wget"
 brew "tree"
 brew "pstree"
-brew "actionlint" # github action
 brew "osv-scanner"
 brew "duckdb"
 brew "ollama"
+
+# github actions
+brew "pinact"
+brew "actionlint"
+brew "ghalint"
 
 # docker
 brew "hadolint"
