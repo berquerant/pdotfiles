@@ -331,11 +331,19 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin, semv
+
+## semv
+
+Install [semv](https://github.com/berquerant/semv).
+
+``` shell
+cargo install --git https://github.com/berquerant/semv --tag ${SEMV_VERSION}
+```
 
 ## ip2bin
 
-Install [rpath](https://github.com/berquerant/ip2bin).
+Install [ip2bin](https://github.com/berquerant/ip2bin-rust).
 
 ``` shell
 cargo install --git https://github.com/berquerant/ip2bin-rust --tag ${IP2BIN_VERSION}

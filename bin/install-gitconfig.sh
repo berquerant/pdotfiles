@@ -50,7 +50,7 @@ if [ -n "$GIT_CONFIG_DRYRUN" ] ; then
 fi
 
 if [ -n "$config_backup_exist" ] ; then
-    if diff -u "$current_config" "$next_config" ; then
+    if diff -u --color=always "$current_config" "$next_config" ; then
         cecho green "No changes"
         exit
     fi

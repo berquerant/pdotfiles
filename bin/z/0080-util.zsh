@@ -51,8 +51,6 @@ csg(){
 
 alias gb='gbrowse'
 alias hurl='${DOTFILES_ROOT}/bin/hurl.sh'
-alias jmerge='${DOTFILES_ROOT}/bin/merge.sh j'
-alias ymerge='${DOTFILES_ROOT}/bin/merge.sh y'
 alias jsort='jq --sort-keys'
 alias ysort='yq --prettyPrint "sort_keys(..)"'
 alias edot='${DOTFILES_ROOT}/bin/dot.sh'

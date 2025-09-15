@@ -36,7 +36,7 @@ read_profile() {
 describe_old_packages() {
     local -r threshold_day="${1:-${OLD_THRESHOLD_DAY}}"
     describe_packages |\
-        jq --arg t "$threshold_day" 'select(.timediff.day > ($t|tonumber))|[.url, .timediff.day]|@csv' -r |\
+        jq --arg t "$threshold_day" 'select(.remote.timediff.day > ($t|tonumber))|[.url, .timediff.day]|@csv' -r |\
         tr -d '"' |\
         sort -t "," -n -k 2
 }

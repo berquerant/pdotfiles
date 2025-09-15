@@ -34,7 +34,6 @@ brew "eza"
 brew "procs"
 brew "hexyl"
 brew "fd"
-brew "yq"
 brew "htop"
 brew "ghq"
 brew "watch"
@@ -122,7 +121,9 @@ brew "taplo" # formatter
 brew "subversion"
 brew "colordiff"
 
-# json
+# data transform
 brew "jq"
+brew "yq"
 brew "fx"
 brew "gron"
+brew "dasel"

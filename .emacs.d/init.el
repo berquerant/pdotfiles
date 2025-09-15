@@ -118,7 +118,6 @@
 (unbind-key "C-x f")
 
 (add-to-list 'load-path (my-getenv-join "EMACSD" "site-lisp"))
-(add-to-list 'load-path (my-getenv-join "EMACSD" "external-site-lisp"))
 
 (use-package my-bootstrap
   :demand t
@@ -635,13 +634,6 @@
   (git-complete-enable-autopair t)
   (git-complete-ignore-case t))
 
-(use-package dabbrev
-  :custom
-  (abbrev-file-name (my-getenv-join "EMACSD" "abbrev_defs"))
-  (save-abbrevs t)
-  :config
-  (quietly-read-abbrev-file))
-
 (use-package avy-migemo
   :demand t
   :bind
@@ -932,15 +924,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (flymake-ruff :type git :host github :repo "erickgnavar/flymake-ruff")
   :hook (python-mode . flymake-ruff-load))
 
+(use-package pet
+  :config
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
+
 (use-package ruby-mode
   :mode ("\\.rb\\'" . ruby-mode)
   :interpreter ("ruby" . ruby-mode)
   :custom
   (ruby-deep-indent-paren-style nil)
   (ruby-indent-tabs-mode nil))
-
-(use-package rbs-mode
-  :mode ("\\.rbs\\'" . rbs-mode))
 
 (use-package rubocop
   :hook (ruby-mode . rubocop-mode))
@@ -953,11 +946,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (php-enable-default-coding-style)
   (subword-mode 1))
-
-(use-package php-eldoc
-  :after php-mode
-  :hook
-  (php-mode . php-eldoc-enable))
 
 (use-package flycheck-phpstan
   :after (php-mode flycheck))
@@ -997,12 +985,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package rust-mode
   :hook
-  (rust-mode . flycheck-rust-setup)
   (rust-mode . (lambda ()
                  (setq indent-tabs-mode nil)
+                 (smartparens-mode 1)
                  (global-display-line-numbers-mode 1)))
   :custom
   (rust-format-on-save t))
+
+(use-package flycheck-rust
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 (use-package rust-playground
   :custom
@@ -1353,7 +1345,6 @@ when (eglot)."
   (diff-hl-mode)
   (diff-hl-flydiff-mode))
 
-(use-package with-editor)
 (use-package backward-forward
   :demand t
   :after (consult deadgrep with-editor)
@@ -1639,16 +1630,6 @@ Topic:
 
 (use-package my-external
   :straight (my-external :type built-in))
-
-(use-package shut-up)
-(use-package recentf-ext
-  :custom
-  (recentf-save-file (my-getenv-join "EMACSD" ".recentf"))
-  (recentf-exclude '(".recentf"))
-  (recentf-max-saved-items 100)
-  (recentf-auto-cleanup 'never)
-  :config
-  (run-with-idle-timer 30 t #'(lambda () (shut-up (recentf-save-list)))))
 
 (message "init.el loaded.")
 ;;; init.el ends here

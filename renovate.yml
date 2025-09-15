@@ -99,6 +99,14 @@ customManagers:
     matchStrings:
       - "METAFIND_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
   - customType: "regex"
+    description: "Manage semv version"
+    fileMatch:
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/semv"
+    matchStrings:
+      - "SEMV_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+  - customType: "regex"
     description: "Manage ip2bin version"
     fileMatch:
       - "^.env$"
