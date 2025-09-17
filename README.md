@@ -262,6 +262,23 @@ Apply [renovate.lock](.emacs.d/renovate.lock). to [straight-default.el](.emacs.d
 bin/emacs-renovate.sh lock
 ```
 
+## emacs-clean
+
+interactive: true
+Requires: emacs-clean-cache, emacs-clean-straight
+
+## emacs-clean-cache
+
+``` shell
+bin/clean-emacs.sh cache
+```
+
+## emacs-clean-straight
+
+``` shell
+bin/clean-emacs.sh straight
+```
+
 ## rust
 
 Install rust.

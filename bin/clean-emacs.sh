@@ -2,7 +2,7 @@
 
 delete_cache() {
     local -r _d="$EMACSD"
-    rm -rf "${_d}/eln-cache" "${_d}/.cache"
+    rm -rf "${_d}/eln-cache" "${_d}/.cache" "${_d}/elpa"
     find "$_d" -name "*.elc" -delete
     find "$_d" -name "*.eln" -delete
 }

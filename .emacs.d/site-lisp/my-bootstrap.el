@@ -301,5 +301,11 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
   :config
   (my-command-repeated-setup))
 
+
+(bind-key "C-x w h" 'shrink-window-horizontally)
+(bind-key "C-x w j" 'shrink-window)
+(bind-key "C-x w k" 'enlarge-window)
+(bind-key "C-x w l" 'enlarge-window-horizontally)
+
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

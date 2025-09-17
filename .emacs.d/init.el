@@ -195,18 +195,6 @@
   (rainbow-delimiters-depth-2-face ((t (:foreground "#ffa500"))))
   (rainbow-delimiters-depth-1-face ((t (:foreground "#ff0000")))))
 
-;; highlight focused buffer
-(use-package dimmer
-  :custom
-  (dimmer-fraction 0.10)
-  (dimmer-exclusion-regexp-list '("^\\*scratch"
-                                  "^\\*[hH]elm"
-                                  "^\\which-key"
-                                  "^\\*Minibuf"
-                                  "^\\*Echo"))
-  :config
-  (dimmer-mode))
-
 (use-package reformatter
   :bind
   ("M-s f" . my-reformatter-format)
@@ -497,18 +485,6 @@
   :custom
   (my-pipenv-get-path-command (my-getenv-join "DOTFILES_ROOT" "bin/pipenv_get_path.sh")))
 
-;; omit continuous command
-(use-package smartrep
-  :demand t
-  :config
-  (smartrep-define-key global-map "C-x w"
-    '(("h" . shrink-window-horizontally)
-      ("j" . shrink-window)
-      ("k" . enlarge-window)
-      ("l" . enlarge-window-horizontally)
-      ("/" . winner-undo)
-      ("_" . winner-redo))))
-
 (use-package deadgrep
   :demand t
   :commands deadgrep
@@ -655,10 +631,9 @@
 (use-package multiple-cursors
   :config
   (unbind-key "M-^")
-  (smartrep-define-key global-map "M-^"
-      '(("." . mc/edit-lines)
-        (">" . mc/mark-next-like-this)
-        ("<" . mc/mark-previous-like-this))))
+  (bind-key "M-^ ." 'mc/edit-lines)
+  (bind-key "M-^ >" 'mc/mark-next-like-this)
+  (bind-key "M-^ <" 'mc/mark-previous-like-this))
 
 ;; search assist
 (use-package anzu
@@ -683,46 +658,7 @@
 (use-package smartparens
   :diminish (smartparens-mode . "")
   :demand t
-  :after smartrep
   :config
-  (smartrep-define-key global-map "C-]"
-    '(("<" . sp-beginning-of-sexp)
-      (">" . sp-end-of-sexp)
-
-      ("n" . sp-down-sexp)
-      ("p" . sp-up-sexp)
-
-      ("C-n" . sp-backward-down-sexp)
-      ("C-p" . sp-backward-up-sexp)
-
-      ("f" . sp-next-sexp)
-      ("b" . sp-previous-sexp)
-      ("M-f" . sp-forward-sexp)
-      ("M-b" . sp-backward-sexp)
-      ("F" . sp-forward-symbol)
-      ("B" . sp-backward-symbol)
-
-      ("<right>" . sp-forward-slurp-sexp)
-      ("C-<right>" . sp-forward-barf-sexp)
-      ("<left>"  . sp-backward-slurp-sexp)
-      ("C-<left>"  . sp-backward-barf-sexp)
-
-      ("t" . sp-transpose-sexp)
-      ("C-t" . sp-transpose-hybrid-sexp)
-
-      ("C-d" . sp-delete-sexp)
-      ("w" . sp-copy-sexp)
-      ("k" . sp-kill-sexp)
-      ("C-k" . sp-kill-hybrid-sexp)
-      ("M-k" . sp-backward-kill-sexp)
-
-      ("." . sp-unwrap-sexp)
-      ("C-." . sp-backward-unwrap-sexp)
-
-      ("^" . sp-rewrap-sexp)
-
-      ("," . sp-split-sexp)
-      ("C-," . sp-join-sexp)))
   (ad-disable-advice 'delete-backward-char 'before 'sp-delete-pair-advice)
   (ad-activate 'delete-backward-char)
   (sp-local-pair '(emacs-lisp-mode) "'" "'" :actions nil) ; disable right ' completion
