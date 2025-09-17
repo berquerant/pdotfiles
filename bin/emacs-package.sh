@@ -87,10 +87,6 @@ render_dependents() {
     list_dependents | __render_deps
 }
 
-histfile_stat() {
-    awk '{s[$2]+=$3}END{for(k in s)print s[k]"\t"k}' "$EMACS_HISTFILE" | sort -nk 1
-}
-
 describe_local() {
     local pkg="$1"
     if [ -z "$pkg" ] ; then
@@ -143,9 +139,6 @@ Usage
     q|det|dependents
       Render dependents graph.
 
-  ${name} hs|histstat
-    Display hisrory stat.
-
   ${name} f|freeze
     Save installed packages.
 EOS
@@ -186,7 +179,6 @@ main() {
                 *) usage ; return 1 ;;
             esac
             ;;
-        "hs" | "histstat") histfile_stat ;;
         "f" | "freeze") freeze ;;
         *) usage ;;
     esac

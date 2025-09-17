@@ -246,6 +246,22 @@ Generate [renovate.json](renovate.json) from [renovate.yml](renovate.yml).
 yq -o json renovate.yml > renovate.json
 ```
 
+## emacs-renovate
+
+Generate [renovate.lock](.emacs.d/renovate.lock).
+
+``` shell
+bin/emacs-renovate.sh renovate
+```
+
+## emacs-lock
+
+Apply [renovate.lock](.emacs.d/renovate.lock). to [straight-default.el](.emacs.d/straight-default.el).
+
+``` shell
+bin/emacs-renovate.sh lock
+```
+
 ## rust
 
 Install rust.
@@ -331,7 +347,15 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin, semv
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin, semv, emacs-straight-renovate
+
+## emacs-straight-renovate
+
+Install [emacs-straight-renovate](https://github.com/berquerant/emacs-straight-renovate).
+
+``` shell
+pip install git+https://github.com/berquerant/emacs-straight-renovate.git@${EMACS_STRAIGHT_RENOVATE_VERSION}
+```
 
 ## semv
 
