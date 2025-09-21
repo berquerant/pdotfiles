@@ -1,5 +1,4 @@
 docker-debian-emacs
-json2dot
 gomodbrowse
 k8s-diff-sh
 cache-sh

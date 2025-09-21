@@ -88,6 +88,22 @@ packageRules:
       - ".emacs.d/renovate.lock"
 customManagers:
   - customType: "regex"
+    description: "Manage json2dot version"
+    fileMatch:
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/json2dot"
+    matchStrings:
+      - "JSON2DOT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+  - customType: "regex"
+    description: "Manage rnv version"
+    fileMatch:
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/rnv"
+    matchStrings:
+      - "RNV_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+  - customType: "regex"
     description: "Manage emacs-straight-renovate version"
     fileMatch:
       - "^.env$"

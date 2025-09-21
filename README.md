@@ -364,7 +364,23 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin, semv, emacs-straight-renovate
+Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin, semv, emacs-straight-renovate, rnv, json2dot
+
+## json2dot
+
+Install [json2dot](https://github.com/berquerant/json2dot).
+
+``` shell
+pip install git+https://github.com/berquerant/json2dot.git@${JSON2DOT_VERSION}
+```
+
+## rnv
+
+Install [rnv](https://github.com/berquerant/rnv).
+
+``` shell
+cargo install --git https://github.com/berquerant/rnv --tag ${RNV_VERSION}
+```
 
 ## emacs-straight-renovate
 
