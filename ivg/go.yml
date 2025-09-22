@@ -1,7 +1,7 @@
 uri: https://github.com/syndbg/goenv.git
 branch: master
 locald: repos/goenv
-lock: locks/go.lock
+lock: locks/goenv.lock
 shell:
   - "arch"
   - "--arm64e"

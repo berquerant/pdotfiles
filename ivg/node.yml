@@ -1,7 +1,7 @@
 uri: https://github.com/nvm-sh/nvm.git
 branch: master
 locald: repos/nvm
-lock: locks/node.lock
+lock: locks/nvm.lock
 install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $NVM_DIR
   - . $NVM_DIR/nvm.sh

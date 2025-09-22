@@ -246,6 +246,22 @@ Generate [renovate.json](renovate.json) from [renovate.yml](renovate.yml).
 yq -o json renovate.yml > renovate.json
 ```
 
+## ivg-renovate
+
+Generate [renovate.lock](ivg/renovate.lock).
+
+``` shell
+bin/renovate-ivg.sh gen
+```
+
+## ivg-lock
+
+Apply [renovate.lock](ivg/renovate.lock).
+
+``` shell
+bin/renovate-ivg.sh lock
+```
+
 ## emacs-renovate
 
 Generate [renovate.lock](.emacs.d/renovate.lock).
@@ -256,7 +272,7 @@ bin/emacs-renovate.sh renovate
 
 ## emacs-lock
 
-Apply [renovate.lock](.emacs.d/renovate.lock). to [straight-default.el](.emacs.d/straight-default.el).
+Apply [renovate.lock](.emacs.d/renovate.lock) to [straight-default.el](.emacs.d/straight-default.el).
 
 ``` shell
 bin/emacs-renovate.sh lock

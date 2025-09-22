@@ -1,4 +1,4 @@
-uri: git://git.sv.gnu.org/emacs.git
+uri: https://github.com/emacs-mirror/emacs.git
 branch: master
 locald: repos/emacs-gui
 lock: locks/emacs-gui.lock

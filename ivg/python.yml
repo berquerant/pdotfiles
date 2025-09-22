@@ -1,7 +1,7 @@
 uri: https://github.com/pyenv/pyenv.git
 branch: master
 locald: repos/pyenv
-lock: locks/python.lock
+lock: locks/pyenv.lock
 shell:
   - "arch"
   - "--arm64e"
