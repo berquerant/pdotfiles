@@ -246,7 +246,7 @@ Generate [renovate.json](renovate.json) from [renovate.yml](renovate.yml).
 yq -o json renovate.yml > renovate.json
 ```
 
-## ivg-renovate
+## ivg-gen
 
 Generate [renovate.lock](ivg/renovate.lock).
 
@@ -262,21 +262,23 @@ Apply [renovate.lock](ivg/renovate.lock).
 bin/renovate-ivg.sh lock
 ```
 
-## emacs-renovate
+## emacs-renovate-gen
 
-Generate [renovate.lock](.emacs.d/renovate.lock).
+After `straight-freeze-versions`, generate [renovate.lock](.emacs.d/renovate.lock).
 
 ``` shell
-bin/emacs-renovate.sh renovate
+bin/emacs-renovate.sh gen
 ```
 
-## emacs-lock
+## emacs-straight-lock
 
 Apply [renovate.lock](.emacs.d/renovate.lock) to [straight-default.el](.emacs.d/straight-default.el).
 
 ``` shell
 bin/emacs-renovate.sh lock
 ```
+
+then, `straight-thaw-versions`.
 
 ## emacs-clean
 
@@ -300,7 +302,11 @@ bin/clean-emacs.sh straight
 Install rust.
 
 ``` shell
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+if which rustup > /dev/null ; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+else
+  rustup self update
+fi
 ./install r rust
 ```
 

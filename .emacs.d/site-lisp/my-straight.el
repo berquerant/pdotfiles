@@ -17,22 +17,6 @@
   "Straight directory."
   :type 'string)
 
-(defcustom my-straight-grinfo "grinfo"
-  "grinfo command.
-https://github.com/berquerant/grinfo"
-  :type 'string)
-
-(defcustom my-straight-grinfo-worker 8
-  "grinfo worker num."
-  :type 'number)
-
-(defcustom my-straight-grinfo-buffer 200
-  "grinfo input/output buffer size."
-  :type 'number)
-
-(defun my-straight--message (fmt &rest args)
-  (message (format "my-straight: %s" (apply 'format fmt args))))
-
 (defun my-straight-read-profile ()
   "Read `my-straight-profile-path'."
     (with-temp-buffer
@@ -47,23 +31,24 @@ https://github.com/berquerant/grinfo"
   (cl-loop for name in (my-straight-list-packages)
            collect (format "%s/repos/%s" my-straight-dir-path name)))
 
-(defun my-straight-display-profile-command ()
-  `(,my-straight-grinfo
-    "-worker"
-    ,(number-to-string my-straight-grinfo-worker)
-    "-buffer"
-    ,(number-to-string my-straight-grinfo-buffer)))
+(defun my-straight-dependencies ()
+  (let ((h (make-hash-table)))
+    (cl-loop for name in (my-straight-list-packages)
+             do (puthash name (straight-dependencies name) h))
+    h))
 
-(defun my-straight-display-profile ()
-  "Display installed package git info."
-  (interactive)
-  (let ((directories (s-join "\n" (my-straight-list-package-directories))))
-    (little-async-start-process (my-straight-display-profile-command)
-                                :process-name "grinfo"
-                                :buffer-name "*my-straight-display-profile*"
-                                :stderr "*my-straight-display-profile-err*"
-                                :timeout (* 300 1000) ; 300 seconds
-                                :input directories)))
+(defun my-straight-dependents ()
+  (let ((h (make-hash-table)))
+    (cl-loop for name in (my-straight-list-packages)
+             do (puthash name (straight-dependents name) h))
+    h))
+
+(defun my-straight-info ()
+  `(("profile" . ,(my-straight-read-profile))
+    ("packages" . ,(my-straight-list-packages))
+    ("directories" . ,(my-straight-list-package-directories))
+    ("dependencies" . ,(my-straight-dependencies))
+    ("dependents" . ,(my-straight-dependents))))
 
 (provide 'my-straight)
 ;;; my-straight.el ends here
