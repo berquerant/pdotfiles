@@ -307,5 +307,15 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
 (bind-key "C-x w k" 'enlarge-window)
 (bind-key "C-x w l" 'enlarge-window-horizontally)
 
+(use-package goto-addr
+  :demand t
+  :straight (goto-addr :type built-in)
+  :bind
+  (:map goto-address-highlight-keymap
+        ("C-c ." . goto-address-at-point))
+  :config
+  (unbind-key "C-c RET" goto-address-highlight-keymap)
+  (global-goto-address-mode))
+
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.
