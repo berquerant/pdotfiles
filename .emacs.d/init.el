@@ -1564,6 +1564,13 @@ Topic:
   (my-straight-profile-path my-straight-profile)
   (my-straight-dir-path my-straight-directory))
 
+(use-package my-open-file
+  :straight (my-open-file :type built-in)
+  :bind
+  ("M-$" . my-open-file-find)
+  :custom
+  (my-open-file-target (my-getenv "EMACS_OPEN_FILE_TARGET")))
+
 (use-package my-external
   :straight (my-external :type built-in))
 

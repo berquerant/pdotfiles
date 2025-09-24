@@ -6,6 +6,8 @@ export EMACS_CUI="/usr/local/bin/emacs"
 export EMACS_GUI="/Applications/Emacs-GUI.app"
 # for emacs-light.sh
 export EMACS_MINIMAL_INIT="${EMACSD}/straight/repos/emacs-minimal-init"
+# for my-open-file.el, emacs-open.sh
+export EMACS_OPEN_FILE_TARGET="${TMPD}/.emacs-open-file-target"
 
 emacs_gui() {
     if [[ -z "$1" ]] ; then
@@ -27,11 +29,16 @@ emacs_docker() {
     "${DOTFILES_ROOT}/bin/docker.sh" run -it "$@" docker-debian-emacs
 }
 
+emacs_open() {
+    "${DOTFILES_ROOT}/bin/emacs-open.sh" "$@"
+}
+
 alias emacs="emacs_gui"
 alias gmacs="emacs_gui"
 alias cmacs="emacs_cui"
 alias dmacs="emacs_docker"
 alias e='lmacs'
+alias o='emacs_open'
 
 kill_emacs() {
     pkill -KILL "[eE]macs"
@@ -44,12 +51,6 @@ emacs_batch() {
 
 emacs_package() {
     etoggle "${DOTFILES_ROOT}/bin/emacs-package.sh" "$@"
-}
-
-emacs_select_update_package() {
-    emacs_package ls name | peco | while read name ; do
-        emacs_package update "$name"
-    done
 }
 
 # vterm https://github.com/akermu/emacs-libvterm
