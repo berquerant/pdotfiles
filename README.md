@@ -178,14 +178,6 @@ interactive: true
 ./install emacs-cui --update
 ```
 
-## emacs-check-packages
-
-Rebuild any packages that have been modified.
-
-``` shell
-bin/emacs-package.sh check
-```
-
 ## install
 
 Install tools except Emacs.
@@ -210,12 +202,12 @@ Requires: install-via-git, retry-sub, retry-util
 ## cycle
 
 interactive: true
-Requires: git, install-via-git, update-brew, sub, util, emacs-check-packages
+Requires: git, install-via-git, update-brew, sub, util
 
 ## recycle
 
 interactive: true
-Requires: git, install-via-git, update-brew, retry-sub, retry-util, emacs-check-packages
+Requires: git, install-via-git, update-brew, retry-sub, retry-util
 
 ## requirements
 
