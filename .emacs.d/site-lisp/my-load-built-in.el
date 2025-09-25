@@ -4,20 +4,6 @@
 
 ;;; Code:
 
-(use-package eww
-  :straight (eww :type built-in)
-  :bind
-  (:map eww-mode-map
-        ("b" . eww-back-url)
-        ("f" . eww-forward-url)
-        ("r" . eww-reload)
-        ("w" . eww-copy-page-url)
-        ("s" . eww-search-words)
-        ("v" . eww-view-source)
-        ("&" . eww-browse-with-external-browser))
-  :custom
-  (eww-search-prefix "https://google.com/search?q="))
-
 (use-package browse-url
   :straight (browse-url :type built-in)
   :bind

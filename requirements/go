@@ -14,6 +14,6 @@ github.com/berquerant/k8s-object-diff-go/cmd/objdiff@v0.5.1
 github.com/berquerant/rpath/cmd/rpath@v0.2.1
 github.com/berquerant/grinfo/cmd/grinfo@v0.4.0
 github.com/berquerant/grdep/cmd/grdep@v0.3.0
-github.com/berquerant/gbrowse/cmd/gbrowse@v0.11.0
+github.com/berquerant/gbrowse/cmd/gbrowse@v0.12.0
 github.com/berquerant/cron2date/cmd/cron2date@v0.3.0
 github.com/berquerant/cron2date/cmd/date2cron@v0.3.0

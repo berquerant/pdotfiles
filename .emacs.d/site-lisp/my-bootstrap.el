@@ -162,19 +162,20 @@ Format is: (A%,B/C,D/E,F/G)"
   (setq special-display-function 'popwin:special-display-popup-window)
   (setq display-buffer-function 'popwin:display-buffer))
 
-(use-package my-path
-  :straight (my-path :type built-in)
-  :bind
-  ("M-s p p" . my-path-current-path))
-
 (use-package my-proc
   :straight (my-proc :type built-in)
   :commands (my-proc-call-process))
 
+(use-package my-path
+  :straight (my-path :type built-in)
+  :bind
+  ("M-'" . my-path-current-path)
+  ("M-(" . my-path-git-relative-path))
+
 (use-package my-git-browse
   :straight (my-git-browse :type built-in)
   :bind
-  ("M-s 4" . my-git-browse-git-browse))
+  ("M-&" . my-git-browse-git-browse))
 
 (use-package idle-timer
   :demand t
