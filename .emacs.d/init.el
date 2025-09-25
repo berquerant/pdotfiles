@@ -671,25 +671,24 @@
   :mode ("\\.md\\'" . gfm-mode)
   :bind
   (:map markdown-mode-map
-        ("C-c ." . markdown-follow-thing-at-point)
+        ("M-#" . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
         ("C-c -" . markdown-demote)
         ("M-n" . scroll-util-scroll-up-relationally)
         ("M-p" . scroll-util-scroll-down-relationally)
    :map gfm-mode-map
-        ("C-c ." . markdown-follow-thing-at-point)
+        ("M-#" . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
         ("C-c -" . markdown-demote)
         ("M-n" . scroll-util-scroll-up-relationally)
         ("M-p" . scroll-util-scroll-down-relationally))
   :config
+  (add-hook 'gfm-mode-hook (lambda () (goto-address-mode -1)))
+  (add-hook 'markdown-mode-hook (lambda () (goto-address-mode -1)))
   (defun markdown-mode-before-save-hook ()
     "Disable `delete-trailing-whitespace' if `major-mode' is `markdown-mode' or `gfm-mode'."
     (delete-trailing-whitespace-thyristor-set (not (memq major-mode '(markdown-mode gfm-mode)))))
   (add-hook 'before-save-hook 'markdown-mode-before-save-hook)
-  (my-macro-state-hook markdown-preview browse-url-browser-function browse-url-default-browser)
-  (markdown-preview-state-hook-generator xwidget-webkit-browse-url)
-  (bind-key "C-c C-c C-p" 'markdown-preview-state-hook-xwidget-webkit-browse-url gfm-mode-map)
   :custom
   (markdown-command '("pandoc" "--from=markdown" "--to=html5" "--standalone=true" "--ascii=false"))
   (markdown-indent-on-enter 'indent-and-new-item)

@@ -18,35 +18,20 @@
   :custom
   (eww-search-prefix "https://google.com/search?q="))
 
-(use-package xwidget
-  :straight (xwidget :type built-in)
-  :bind
-  (:map xwidget-webkit-mode-map
-        ("b" . xwidget-webkit-back)
-        ("f" . xwidget-webkit-forward)
-        ("r" . xwidget-webkit-reload)
-        ("w" . xwidget-webkit-current-url)
-        ("+" . xwidget-webkit-zoom-in)
-        ("-" . xwidget-webkit-zoom-out)
-        ("0" . xwidget-webkit-adjust-size-dispatch))
-  :config
-  (defun my-xwidget-search-words (word)
-    "Search WORD by `xwidget-webkit-browse-url'."
-    (interactive (list (read-string "Search: ")))
-    (xwidget-webkit-browse-url (format "https://google.com/search?q=%s"
-                                       (url-hexify-string word))))
-  (bind-key "s" 'my-xwidget-search-words xwidget-webkit-mode-map))
-
 (use-package browse-url
   :straight (browse-url :type built-in)
   :bind
-  ("M-j f j" . browse-url-at-point)
+  ("M-#" . browse-url-at-point))
+
+(use-package goto-addr
+  :demand t
+  :straight (goto-addr :type built-in)
+  :bind
+  (:map goto-address-highlight-keymap
+        ("M-#" . goto-address-at-point))
   :config
-  (my-macro-state-hook browse-url-at-point browse-url-browser-function browse-url-default-browser)
-  (browse-url-at-point-state-hook-generator eww-browse-url)
-  (browse-url-at-point-state-hook-generator xwidget-webkit-browse-url)
-  (bind-key "M-j f e" 'browse-url-at-point-state-hook-eww-browse-url)
-  (bind-key "M-j f w" 'browse-url-at-point-state-hook-xwidget-webkit-browse-url))
+  (unbind-key "C-c RET" goto-address-highlight-keymap)
+  (global-goto-address-mode))
 
 (use-package ediff
   :straight (ediff :type built-in)
