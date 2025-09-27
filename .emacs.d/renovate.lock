@@ -88,7 +88,6 @@ straight=rust-playground depName=grafov/rust-playground datasource=github-tags v
 straight=s.el depName=magnars/s.el datasource=github-tags value=1.13.0
 straight=smartparens depName=Fuco1/smartparens datasource=github-tags value=1.11.0
 straight=solarized-emacs depName=bbatsov/solarized-emacs datasource=github-tags value=v2.0.5
-straight=switch-buffer-functions-el depName=10sr/switch-buffer-functions-el datasource=github-tags value=v0.0.1
 straight=tern depName=ternjs/tern datasource=github-tags value=0.24.3
 straight=terraform-mode depName=hcl-emacs/terraform-mode datasource=github-tags value=1.1.0
 straight=transient depName=magit/transient datasource=github-tags value=v0.9.4

@@ -32,7 +32,6 @@ dotfiles=(
     .tmux.conf
     .golangci.yml
     .aspell.conf
-    .rustfmt.toml
     .npmrc
     .Brewfile
 )
@@ -52,7 +51,6 @@ exec_or_dry "rm -rf ${EMACSD}/site-lisp"
 
 message "Remove others"
 
-exec_or_dry "rm -f ~/.config/peco"
 exec_or_dry "rm -f '${HOME}/Library/Application Support/.ruff.toml'"
 exec_or_dry "rm -f '${HOME}/.subversion/config'"
 

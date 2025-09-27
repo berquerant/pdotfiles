@@ -7,14 +7,14 @@
 (use-package browse-url
   :straight (browse-url :type built-in)
   :bind
-  ("M-#" . browse-url-at-point))
+  ("M-g M-b" . browse-url-at-point))
 
 (use-package goto-addr
   :demand t
   :straight (goto-addr :type built-in)
   :bind
   (:map goto-address-highlight-keymap
-        ("M-#" . goto-address-at-point))
+        ("M-g M-b" . goto-address-at-point))
   :config
   (unbind-key "C-c RET" goto-address-highlight-keymap)
   (global-goto-address-mode))
@@ -107,9 +107,7 @@
 
 (use-package dired-x
   :after dired
-  :straight (dired-x :type built-in)
-  :bind
-  ("C-x j d" . dired-jump))
+  :straight (dired-x :type built-in))
 
 (provide 'my-load-built-in)
 ;;; my-load-built-in.el ends here

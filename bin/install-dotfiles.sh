@@ -30,7 +30,6 @@ dotfiles=(
     .tmux.conf
     .golangci.yml
     .aspell.conf
-    .rustfmt.toml
     .npmrc
     .Brewfile
 )
@@ -47,7 +46,6 @@ EMACSD="$CMACSD" "${d}/bin/install-emacs.sh" "$@"
 
 message "Install others"
 
-exec_or_dry "ln -snvf $d/etc/peco ~/.config/peco"
 exec_or_dry "ln -snvf $d/.ruff.toml '${HOME}/Library/Application Support/.ruff.toml'"
 exec_or_dry "ln -snvf $d/.subversion '${HOME}/.subversion/config'"
 

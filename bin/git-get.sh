@@ -23,7 +23,7 @@ clone() {
 }
 
 ghq_select() {
-    ghq list -p | peco
+    ghq list -p | "${DOTFILES_ROOT}/bin/fzf.sh"
 }
 
 select_clone() {

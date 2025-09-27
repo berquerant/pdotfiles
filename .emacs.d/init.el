@@ -123,6 +123,8 @@
   :demand t
   :straight (my-bootstrap :type built-in))
 
+(my-macro-advice-add-debug straight-vc)
+
 (use-package my-load-built-in
   :straight (my-load-built-in :type built-in))
 
@@ -671,13 +673,13 @@
   :mode ("\\.md\\'" . gfm-mode)
   :bind
   (:map markdown-mode-map
-        ("M-#" . markdown-follow-thing-at-point)
+        ("M-g M-b" . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
         ("C-c -" . markdown-demote)
         ("M-n" . scroll-util-scroll-up-relationally)
         ("M-p" . scroll-util-scroll-down-relationally)
    :map gfm-mode-map
-        ("M-#" . markdown-follow-thing-at-point)
+        ("M-g M-b" . markdown-follow-thing-at-point)
         ("C-c +" . markdown-promote)
         ("C-c -" . markdown-demote)
         ("M-n" . scroll-util-scroll-up-relationally)
@@ -925,6 +927,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                  (smartparens-mode 1)
                  (global-display-line-numbers-mode 1)))
   :custom
+  (rust-rustfmt-switches '("--config" "edition=2024"))
   (rust-format-on-save t))
 
 (use-package flycheck-rust
@@ -1566,7 +1569,7 @@ Topic:
 (use-package my-open-file
   :straight (my-open-file :type built-in)
   :bind
-  ("M-$" . my-open-file-find)
+  ("M-g f" . my-open-file-find)
   :custom
   (my-open-file-target (my-getenv "EMACS_OPEN_FILE_TARGET")))
 

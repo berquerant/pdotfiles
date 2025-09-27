@@ -125,9 +125,6 @@ Format is: (A%,B/C,D/E,F/G)"
            ("M-z" . repeat)
            ("M-s q" . text-scale-adjust))
 
-(use-package my-uuid
-  :straight (my-uuid :type built-in))
-
 (use-package my-macro
   :demand t
   :straight (my-macro :type built-in)
@@ -169,13 +166,13 @@ Format is: (A%,B/C,D/E,F/G)"
 (use-package my-path
   :straight (my-path :type built-in)
   :bind
-  ("M-'" . my-path-current-path)
-  ("M-(" . my-path-git-relative-path))
+  ("M-s M-s x" . my-path-current-path)
+  ("M-s M-s M-x" . my-path-git-relative-path))
 
 (use-package my-git-browse
   :straight (my-git-browse :type built-in)
   :bind
-  ("M-&" . my-git-browse-git-browse))
+  ("M-g G" . my-git-browse-git-browse))
 
 (use-package idle-timer
   :demand t
@@ -195,7 +192,7 @@ Format is: (A%,B/C,D/E,F/G)"
   ("M-s M-s 1" . my-misc-delete-other-frames)
   ("M-s M-s 2" . clone-frame)
   ("C-t" . my-misc-other-window)
-  ("C-M-t" . my-misc-other-window-reverse)
+  ("C-T" . my-misc-other-window-reverse)
   ("C-x 1" . my-misc-delete-other-windows)
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)
@@ -212,34 +209,21 @@ Format is: (A%,B/C,D/E,F/G)"
   :bind
   ("M-s M-t" . my-sticky-buffer-mode))
 
-(use-package switch-buffer-functions
-  :bind
-  ("M-s C-r" . read-only-mode-thyristor-toggle)
+(use-package my-buffer-change
+  :demand t
+  :straight (my-buffer-change :type built-in)
   :config
-  (defun my-kick-out-fundamental-mode-hook (&rest args)
+  (defun my-kick-out-fundamental-mode-hook ()
     "Disable `fundamental-mode' at all times and enable `text-mode' instead."
     (when (eq major-mode 'fundamental-mode)
       (text-mode)))
-  (add-hook 'after-change-major-mode-hook 'my-kick-out-fundamental-mode-hook)
-
-  (defun my-switch-buffer-functions--flexible-window-size-hook (prev cur)
+  (defun my-switch-buffer-functions--flexible-window-size-hook ()
     "Make window size flexible."
     (setq window-size-fixed nil))
-
-  (my-macro-thyristor read-only-mode)
-  (read-only-mode-thyristor-set nil)
-  (defvar my-read-only-hook-exclude-regex
-    "Minibuf")
-  (defun my-switch-buffer-functions--read-only-hook (prev cur)
-    "Enable `read-only-mode' when buffer switched.
-Disable the function by setting `read-only-mode-thyristor-flag' to nil."
-    (unless (string-match-p my-read-only-hook-exclude-regex (buffer-name cur))
-      (read-only-mode-thyristor)))
-
   (dolist (f '(my-switch-buffer-functions--flexible-window-size-hook
-               my-switch-buffer-functions--read-only-hook
                my-kick-out-fundamental-mode-hook))
-    (add-to-list 'switch-buffer-functions f)))
+    (add-to-list 'my-buffer-change-hook f))
+  (my-buffer-change-setup))
 
 (use-package little-async
   :demand t
@@ -279,10 +263,10 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
   (my-macro-region-or-at-point my-url2markdown "url2markdown> ")
   (my-macro-region-or-at-point my-url2markdown-links "url2markdown-links> ")
   (my-macro-region-or-at-point my-google-this "google> ")
-  (bind-key "M-s M-s o" 'my-open-link-region-or-at-point)
+  (bind-key "M-g 0" 'my-open-link-region-or-at-point)
   (bind-key "M-s M-s m" 'my-url2markdown-region-or-at-point)
   (bind-key "M-s M-s M" 'my-url2markdown-links-region-or-at-point)
-  (bind-key "M-s M-s g" 'my-google-this-region-or-at-point))
+  (bind-key "M-g M-0" 'my-google-this-region-or-at-point))
 
 (use-package scroll-util
   :straight (emacs-scroll-util :host github :repo "berquerant/emacs-scroll-util")
@@ -296,12 +280,6 @@ Disable the function by setting `read-only-mode-thyristor-flag' to nil."
 
 (use-package my-time
   :straight (my-time :type built-in))
-
-(use-package my-command-repeated
-  :straight (my-command-repeated :type built-in)
-  :config
-  (my-command-repeated-setup))
-
 
 (bind-key "C-x w h" 'shrink-window-horizontally)
 (bind-key "C-x w j" 'shrink-window)

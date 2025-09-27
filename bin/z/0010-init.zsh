@@ -60,6 +60,12 @@ fi
 if type hexyl >/dev/null 2>&1 ; then
     alias od='hexyl'
 fi
+if type zoxide >/dev/null 2>&1 ; then
+    eval "$(zoxide init zsh)"
+fi
+if type fzf >/dev/null 2>&1 ; then
+    alias ff='${DOTFILES_ROOT}/bin/fzf.sh'
+fi
 
 export DIRENV_ENABLED=0
 direnv-on() {

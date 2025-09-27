@@ -17,39 +17,25 @@
 (defconst my-git-browse-gomod-browse-buffer-name "*gomod-browse*"
   "Buffer to gomod browse output.")
 
-(defun my-git-browse--git-browse (&optional phases)
+(defun my-git-browse--git-browse ()
   "Open the current file committed to git in browser.
 Requires https://github.com/berquerant/gbrowse"
     (let* ((path (file-name-nondirectory (buffer-file-name)))
            (linum (line-number-at-pos))
-           (location (format "%s:%s" path linum))
-           (phase (if phases (format "-phase %s" (s-join "," phases))
-                    ""))
-           (gbrowse-args (if (s-blank? phase) `("gbrowse" ,location)
-                           `("gbrowse" ,phase ,location))))
+           (location (format "%s:%s" path linum)))
       (little-async-start-process `("gomodbrowse" ,location)
                                   :process-name "gomod-browse"
                                   :buffer-name my-git-browse-gomod-browse-buffer-name)
-      (little-async-start-process gbrowse-args
+      (little-async-start-process `("gbrowse" ,location)
                                   :process-name "git-browse"
                                   :buffer-name my-git-browse-git-browse-buffer-name)))
 
 ;;;###autoload
-(defun my-git-browse-git-browse (arg)
+(defun my-git-browse-git-browse ()
   "Open the current file committed to git in browser.
-
-phases:
-
-C-u C-u : default_branch
-C-u     : tag,branch
-(nil)   : (empty)
-
 Requires https://github.com/berquerant/gbrowse"
-  (interactive "p")
-  (my-git-browse--git-browse (cl-case arg
-                               (16 '("default_branch"))
-                               (4 '("tag" "branch"))
-                               (t nil))))
+  (interactive)
+  (my-git-browse--git-browse))
 
 (provide 'my-git-browse)
 ;;; my-git-browse.el ends here

@@ -5,7 +5,7 @@ latest_container() {
 }
 
 select_container() {
-    docker ps | awk 'NR>1' | peco | cut -d' ' -f1
+    docker ps | awk 'NR>1' | "${DOTFILES_ROOT}/bin/fzf.sh" | cut -d' ' -f1
 }
 
 commit_container() {

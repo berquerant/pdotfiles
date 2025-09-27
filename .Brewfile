@@ -1,6 +1,3 @@
-brew "git"
-brew "glab"
-brew "gh"
 brew "direnv" # .envrc
 brew "gettext"
 brew "nkf"
@@ -13,6 +10,10 @@ brew "automake"
 brew "gcc"
 brew "cmake"
 brew "libtool"
+
+# git
+brew "git"
+brew "ghq"
 
 # emacs
 brew "libvterm"
@@ -28,14 +29,16 @@ brew "shellcheck" # flymake
 brew "shfmt" # formatter
 
 # util
+brew "fastfetch"
+brew "btop"
+brew "zoxide"
+brew "fzf"
 brew "peco"
 brew "ripgrep"
 brew "eza"
 brew "procs"
 brew "hexyl"
 brew "fd"
-brew "htop"
-brew "ghq"
 brew "watch"
 brew "nmap"
 brew "graphviz"
@@ -46,20 +49,21 @@ brew "osv-scanner"
 brew "duckdb"
 brew "ollama"
 
-# github actions
+# github
+brew "gh"
 brew "pinact"
 brew "actionlint"
 brew "ghalint"
 
 # docker
 brew "hadolint"
+brew "lazydocker"
 
 # kubernetes
 brew "kind"
 brew "helm"
 brew "derailed/k9s/k9s"
 brew "stern"
-brew "ctop"
 
 # GNU tools
 brew "coreutils"
@@ -114,9 +118,6 @@ brew "deno"
 # java
 brew "openjdk"
 
-# toml
-brew "taplo" # formatter
-
 # subversion
 brew "subversion"
 brew "colordiff"
@@ -126,4 +127,4 @@ brew "jq"
 brew "yq"
 brew "fx"
 brew "gron"
-brew "dasel"
+brew "taplo" # formatter

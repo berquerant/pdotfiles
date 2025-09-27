@@ -8,7 +8,7 @@
 
 (require 'cl-lib)
 (require 's)
-(require 'my-uuid)
+(require 'my-time)
 
 (defmacro my-macro-advice-add-const (f &optional ret)
   "Disable F calls and return const RET."
@@ -25,10 +25,10 @@
          (advice-name (format "my-macro-advice-add-debug-around-%s" fname)))
     `(progn
        (defun ,(read advice-name) (orig-func &rest args)
-         (let ((uuid (my-uuid-gen)))
-           (message "%s: [%s] start %s" ,advice-name uuid args)
+         (let ((time (my-time-timestamp)))
+           (message "%s: [%s] start %s" ,advice-name (my-time-datetime time) args)
            (let ((ret (apply orig-func args)))
-             (message "%s: [%s] end %s" ,advice-name uuid ret)
+             (message "%s: [%s+%d] end %s" ,advice-name (my-time-datetime time) (- (my-time-timestamp) time) ret)
              ret)))
        (advice-add ',(read fname) :around ',(read advice-name)))))
 

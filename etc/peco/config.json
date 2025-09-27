@@ -1,9 +1,0 @@
-{
-  "Keymap": {
-    "C-x,C-h": "peco.SelectAll",
-    "C-x,C-v": "peco.SelectVisible",
-    "C-[": "peco.ToggleRangeMode",
-    "C-]": "peco.CancelRangeMode"
-  },
-  "InitialFilter": "Regexp"
-}
