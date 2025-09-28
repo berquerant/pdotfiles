@@ -286,7 +286,7 @@
   :init
   (vertico-mode)
   :custom
-  (vertico-count 20)
+  (vertico-count 30)
   (vertico-resize t)
   (vertico-cycle t)
   (vertico-scroll-margin 0))
@@ -331,7 +331,7 @@
    ("M-g k" . consult-mark)
    ("M-g K" . consult-global-mark)
    ("M-g M-g" . consult-goto-line) ; goto-line
-   ("M-s y" . consult-complex-command) ; repeat-complex-command
+   ("M-z" . consult-complex-command) ; repeat-complex-command
    ("M-y" . consult-yank-pop) ; yank
    ("C-x b" . consult-buffer) ; switch-to-buffer
    ("M-g i" . consult-imenu)
@@ -370,10 +370,6 @@
 
 (use-package marginalia
   :ensure t
-  :bind
-  (("M-A" . marginalia-cycle)
-   :map minibuffer-local-map
-   ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
 
@@ -602,12 +598,12 @@
   :hook
   (company-mode . company-quickhelp-mode)
   :custom
-  (company-quickhelp-max-lines 10))
+  (company-quickhelp-max-lines 20))
 
 (use-package git-complete
   :straight (git-complete :host github :repo "zk-phi/git-complete")
   :bind
-  ("M-q" . git-complete)
+  ("M-s ;" . git-complete)
   :custom
   (git-complete-enable-autopair t)
   (git-complete-ignore-case t))
@@ -708,7 +704,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 (use-package flyspell-correct
   :bind
   (:map flyspell-mode-map
-        ("C-;" . flyspell-correct-wrapper))
+        ("M-s :" . flyspell-correct-wrapper))
   :after flyspell)
 
 (use-package flyspell-correct-popup
@@ -1060,7 +1056,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :bind
   (("M-s M-s M-e" . eglot)
    :map eglot-mode-map
-   ("C-c p !" . eglot-inlay-hints-mode)
    ("C-x p m r" . eglot-reconnect)
    ("C-x p f" . eglot-format-buffer)
    ("C-x p a" . eglot-code-actions)
@@ -1147,7 +1142,6 @@ when (eglot)."
   (("M-s M-s M-l" . lsp)
    :map lsp-mode-map
    ("M-s M-s M-l" . lsp-disconnect)
-   ("C-c p !" . lsp-inlay-hints-mode)
    ("C-c p w" . lsp-workspace-folders-add)
    ("M-s M-s l" . lsp-workspace-restart)
    ("C-c p C-w" . lsp-workspace-shutdown)
@@ -1287,8 +1281,8 @@ when (eglot)."
   :demand t
   :after (consult deadgrep with-editor)
   :bind
-  ("M-h" . backward-forward-previous-location)
-  ("M-l" . backward-forward-next-location)
+  ("C-," . backward-forward-previous-location)
+  ("C-." . backward-forward-next-location)
   :config
   (defun my-backward-forward-clear-mark-ring ()
     (interactive)

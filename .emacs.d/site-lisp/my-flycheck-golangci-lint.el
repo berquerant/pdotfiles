@@ -21,7 +21,6 @@
 
 ;;;###autoload
 (defun my-flycheck-golangci-lint-setup ()
-  (interactive)
   (add-to-list 'flycheck-checkers 'my-golangci-lint))
 
 (provide 'my-flycheck-golangci-lint)

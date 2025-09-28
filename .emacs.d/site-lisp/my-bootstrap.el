@@ -78,7 +78,7 @@ Format is: (A%,B/C,D/E,F/G)"
 (use-package dictionary
   :straight (dictionary :type built-in)
   :bind
-  ("M-s d" . dictionary-search)
+  ("M-g d" . dictionary-search)
   :custom
   ;(dictionary-search-interface 'help)
   (dictionary-default-strategy "prefix")
@@ -104,8 +104,7 @@ Format is: (A%,B/C,D/E,F/G)"
            ([?\M-¥] . [?\M-\\])
            ([?\C-\M-¥] . [?\C-\M-\\])
            ("M-s z" . my-revert-buffer)
-           ("C-M-s" . isearch-forward-thing-at-point)
-           ("C-s" . isearch-forward)
+           ("C-s" . isearch-forward-thing-at-point)
            ("C-<tab>" . tab-next)
            ("C-S-<tab>" . tab-previous)
            ;; TODO: find workaround. delete-frame crashes emacs. (delete-frame (selected-frame) nil) too
@@ -114,16 +113,11 @@ Format is: (A%,B/C,D/E,F/G)"
            ;; ("C-x f 1" . delete-other-frames)
            ("C-x C-t" . toggle-truncate-lines)
            ("C-x C-r" . read-only-mode)
-           ("C-x w w" . overwrite-mode)
            ("M-SPC" . cycle-spacing) ; space conversions
            ("M-s e" . shell-command)
            ("C-h o" . describe-symbol)
-           ("M-s x" . repeat)
-           ("M-s y" . repeat-complex-command)
            ("M-s c" . compile)
-           ("M-g ." . eldoc)
-           ("M-z" . repeat)
-           ("M-s q" . text-scale-adjust))
+           ("M-g ." . eldoc))
 
 (use-package my-macro
   :demand t
