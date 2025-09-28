@@ -267,7 +267,7 @@ bin/emacs-renovate.sh gen
 Apply [renovate.lock](.emacs.d/renovate.lock) to [straight-default.el](.emacs.d/straight-default.el).
 
 ``` shell
-bin/emacs-renovate.sh lock
+bin/emacs-renovate.sh lock -c
 ```
 
 then, `straight-thaw-versions`.
