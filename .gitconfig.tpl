@@ -42,6 +42,7 @@
   d = diff
   dt = difftool
   dw = diff --color-words
+  ds = diff --name-status
   merged = branch --merged
   force-push = push --force-with-lease --force-if-includes
   g = grep --heading
