@@ -2,40 +2,84 @@ uri: https://github.com/emacs-mirror/emacs.git
 branch: master
 locald: repos/emacs-cui
 lock: locks/emacs-cui.lock
+# emacs-30.1
 shell:
   - "arch"
   - "--arm64e"
   - "/bin/bash"
 env:
-  _IVG_CONCURRENCY: 2
-  LDFLAGS: "-I/opt/homebrew/include:$LDFLAGS"
-  LIBS: "-L/opt/homebrew/lib:$LIBS"
-  LIBRARY_PATH: "/opt/homebrew/lib:$LIBRARY_PATH"
-  # [brew gcc] configure: error: The include files (AppKit/AppKit.h etc)
-  CC: "/usr/bin/clang"
+  CFLAGS: >-
+    -I/opt/homebrew/opt/llvm/lib/clang/21/include
+    -I/opt/homebew/include
+    -O2
+    -DFD_SETSIZE=10000
+    -DDARWIN_UNLIMITED_SELECT
+    -I/opt/homebrew/opt/sqlite/include
+    -I/opt/homebrew/opt/libgccjit/include
+    -I/opt/homebrew/opt/ncurses/include
+  LDFLAGS: >-
+    -L/opt/homebrew/opt/llvm/lib/clang/21/lib/darwin
+    -L/opt/homebrew/lib
+    -L/opt/homebrew/opt/sqlite/lib
+    -I/opt/homebrew/opt/libgccjit/include
+    -L/opt/homebrew/opt/ncurses/lib
+  CC: >-
+    /opt/homebrew/opt/llvm/bin/clang
+    -std=c23
   EMACSD: "$CMACSD"
 setup:
-  - sudo mkdir -p /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs/31.0.50/lisp /usr/local/share/emacs/31.0.50/etc
-  - sudo touch /usr/local/share/emacs/31.0.50/etc/publicsuffix.txt /usr/local/share/info/dir
-  - sudo chown -R $(whoami) /usr/local/share/info /usr/local/lib/systemd/user /usr/local/include /usr/local/lib/emacs /usr/local/libexec/emacs /usr/local/share/info/dir /usr/local/share/man /usr/local/share/applications /usr/local/share/metainfo /usr/local/share/icons /usr/local/share/emacs /usr/local/share/emacs/31.0.50/etc/publicsuffix.txt
   - brew install --build-from-source gcc
   - brew install --build-from-source libgccjit
-  - brew install --cask xquartz
-  - brew install flann cmigemo texinfo autoconf automake jpeg gtk+ zlib gnutls gtk
+  - >-
+    brew install
+    llvm
+    ncurses
+    make
+    autoconf
+    gnu-sed
+    gnu-tar
+    grep
+    awk
+    coreutils
+    pkg-config
+    texinfo
+    xz
+    m4
+    tree-sitter
+    cmigemo
+    gnutls
+    zlib
 install:
-  - eval $(/opt/homebrew/bin/brew shellenv)
-  - export PATH=/usr/local/opt/texinfo/bin:$PATH
-  - find . -name "*.pdmp" -type f -delete
-  - find . -name "*.elc" -type f -delete
-  - sudo rm -rf "${EMACSD}/eln-cache"
-  - make distclean
-  - make extraclean
-  - git clean -fdx
   - ./autogen.sh
-  # ignore gdk/gdkx.h by --without-x-toolkit
-  # without-jpeg : image.c:8492:11: fatal error: 'jpeglib.h' file not found
-  - ./configure --with-native-compilation --without-xwidgets --without-jpeg --without-webp --without-sound --without-pop --without-ns --with-gif=ifavailable --with-tiff=ifavailable --without-dbus --without-gconf --without-gsettings --without-xaw3d --without-gpm --without-mailutils --without-x --without-x-toolkit || echo "bad configure"
-  - make -j"$_IVG_CONCURRENTCY" bootstrap
-  - make -j"$_IVG_CONCURRENTCY"
-  - make -j"$_IVG_CONCURRENTCY" install
+  - >-
+    ./configure
+    --infodir=$EMACSD/info
+    --with-native-compilation=aot
+    --with-gnutls
+    --with-tree-sitter
+    --without-compress-install
+    --without-jpeg
+    --without-webp
+    --without-sound
+    --without-pop
+    --without-ns
+    --without-gif
+    --without-tiff
+    --without-dbus
+    --without-gconf
+    --without-gsettings
+    --without-xaw3d
+    --without-gpm
+    --without-libgmp
+    --without-mailutils
+    --without-x
+    --without-x-toolkit
+    --without-sqlite3
+    --without-lcms2
+    --without-cairo
+    --without-imagemagick
+    --disable-silent-rules
+  - gmake V=1 -j3 bootstrap
+  - gmake V=1 -j3
+  - gmake V=1 -j3 install
   - /usr/local/bin/emacs --version
