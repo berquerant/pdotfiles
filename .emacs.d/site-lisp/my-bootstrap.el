@@ -105,6 +105,8 @@ Format is: (A%,B/C,D/E,F/G)"
            ([?\C-\M-¥] . [?\C-\M-\\])
            ("M-s z" . my-revert-buffer)
            ("C-s" . isearch-forward-thing-at-point)
+           ("C-M-s" . isearch-forward)
+           ("C-r" . isearch-backward)
            ("C-<tab>" . tab-next)
            ("C-S-<tab>" . tab-previous)
            ;; TODO: find workaround. delete-frame crashes emacs. (delete-frame (selected-frame) nil) too

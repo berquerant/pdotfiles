@@ -53,7 +53,6 @@ setup:
     texinfo
     xz
     m4
-    tree-sitter
     cmigemo
     gnutls
     gmp
@@ -71,7 +70,7 @@ install:
     --with-xft
     --with-pgtk
     --with-native-compilation=aot
-    --with-tree-sitter
+    --without-tree-sitter
     --with-gnutls
     --without-compress-install
     --without-jpeg

@@ -45,7 +45,6 @@ setup:
     texinfo
     xz
     m4
-    tree-sitter
     cmigemo
     gnutls
     zlib
@@ -56,7 +55,7 @@ install:
     --infodir=$EMACSD/info
     --with-native-compilation=aot
     --with-gnutls
-    --with-tree-sitter
+    --without-tree-sitter
     --without-compress-install
     --without-jpeg
     --without-webp

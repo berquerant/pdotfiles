@@ -85,9 +85,6 @@ brew "gnupg"
 brew "pipenv"
 brew "readline" # .pythonrc
 
-# go
-# brew "golangci-lint"
-
 # rust
 brew "rust-analyzer"
 

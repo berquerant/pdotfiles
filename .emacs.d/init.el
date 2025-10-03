@@ -187,15 +187,7 @@
 
 (use-package rainbow-delimiters
   :hook
-  ((prog-mode text-mode) . rainbow-delimiters-mode)
-  :custom-face
-  (rainbow-delimiters-depth-7-face ((t (:foreground "#800080"))))
-  (rainbow-delimiters-depth-6-face ((t (:foreground "#0000ff"))))
-  (rainbow-delimiters-depth-5-face ((t (:foreground "#00ffff"))))
-  (rainbow-delimiters-depth-4-face ((t (:foreground "#008000"))))
-  (rainbow-delimiters-depth-3-face ((t (:foreground "#ffff00"))))
-  (rainbow-delimiters-depth-2-face ((t (:foreground "#ffa500"))))
-  (rainbow-delimiters-depth-1-face ((t (:foreground "#ff0000")))))
+  ((prog-mode text-mode) . rainbow-delimiters-mode))
 
 (use-package reformatter
   :bind
