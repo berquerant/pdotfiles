@@ -1,36 +1,9 @@
 $schema: "https://docs.renovatebot.com/renovate-schema.json"
 extends:
-  - "config:recommended"      # https://docs.renovatebot.com/presets-config/#configrecommended
-  - ":label(renovate)"        # Add label `renovate` to every PRs
-  - ":prConcurrentLimit10"    # Limit to maximum 10 open PRs at any time
-  - ":prHourlyLimitNone"      # Removes rate limit for PR creation per hour
-  - ":timezone(Asia/Tokyo)"
-  # - ":rebaseStalePrs"         # Rebase existing PRs any time the base branch has been updated
-  - "schedule:daily"          # Schedule daily before 4 AM
-  - "helpers:pinGitHubActionDigests"
-automerge: false
+  - "github>berquerant/renovate-config#v0.0.1"
 baseBranches:
   - "main"
   - "master"
-rangeStrategy: "auto"
-fetchChangeLogs: "off"         # Disable changelogs fetching
-internalChecksFilter: "strict" # When and how to filter based on internal checks. All pending releases will be filtered. PRs will be skipped unless a non-pending version is available
-minimumReleaseAge: "21 days"    # Time required before a new release is considered stable
-digest:
-  addLabels:
-    - "digest"
-pin:
-  addLabels:
-    - "pin"
-patch:
-  addLabels:
-    - "patch"
-minor:
-  addLabels:
-    - "minor"
-major:
-  addLabels:
-    - "major"
 packageRules:
   - groupName: "crate"
     addLabels:

@@ -1,48 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    ":label(renovate)",
-    ":prConcurrentLimit10",
-    ":prHourlyLimitNone",
-    ":timezone(Asia/Tokyo)",
-    "schedule:daily",
-    "helpers:pinGitHubActionDigests"
+    "github>berquerant/renovate-config#v0.0.1"
   ],
-  "automerge": false,
   "baseBranches": [
     "main",
     "master"
   ],
-  "rangeStrategy": "auto",
-  "fetchChangeLogs": "off",
-  "internalChecksFilter": "strict",
-  "minimumReleaseAge": "21 days",
-  "digest": {
-    "addLabels": [
-      "digest"
-    ]
-  },
-  "pin": {
-    "addLabels": [
-      "pin"
-    ]
-  },
-  "patch": {
-    "addLabels": [
-      "patch"
-    ]
-  },
-  "minor": {
-    "addLabels": [
-      "minor"
-    ]
-  },
-  "major": {
-    "addLabels": [
-      "major"
-    ]
-  },
   "packageRules": [
     {
       "groupName": "crate",
