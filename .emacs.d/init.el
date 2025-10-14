@@ -93,6 +93,13 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package tramp
+  :straight (tramp :type built-in)
+  :config
+  ;; for devcontainer (golang)
+  (add-to-list 'tramp-remote-path "/go/bin")
+  (add-to-list 'tramp-remote-path "/usr/local/go/bin"))
+
 (defun my-getenv (&optional arg)
   "Get environment variable ARG or $HOME."
   (or

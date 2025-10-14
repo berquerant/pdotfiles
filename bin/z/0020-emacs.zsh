@@ -29,12 +29,17 @@ emacs_docker() {
     "${DOTFILES_ROOT}/bin/docker.sh" run -it "$@" docker-debian-emacs
 }
 
+emacs_open_raw() {
+    RAW=true "${DOTFILES_ROOT}/bin/emacs-open.sh" "$@"
+}
+
 alias emacs="emacs_gui"
 alias gmacs="emacs_gui"
 alias cmacs="emacs_cui"
 alias dmacs="emacs_docker"
 alias e='lmacs'
 alias o='${DOTFILES_ROOT}/bin/emacs-open.sh'
+alias oo='emacs_open_raw'
 alias emacs_keys='${DOTFILES_ROOT}/bin/emacs-key-conflict.sh'
 
 kill_emacs() {

@@ -26,8 +26,8 @@
              (apply 'call-process program nil my-proc-call-process-buffer nil args))))
   nil)
 
-(defun my-proc-shell-command-to-string (command)
-  (s-chomp (shell-command-to-string command)))
+(defun my-proc-shell-command-to-string-secure (&rest args)
+  (s-chomp (shell-command-to-string (mapconcat #'shell-quote-argument args " "))))
 
 (provide 'my-proc)
 ;;; my-proc.el ends here

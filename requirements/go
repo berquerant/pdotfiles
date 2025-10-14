@@ -17,3 +17,4 @@ github.com/berquerant/grdep/cmd/grdep@v0.3.0
 github.com/berquerant/gbrowse/cmd/gbrowse@v0.12.0
 github.com/berquerant/cron2date/cmd/cron2date@v0.3.0
 github.com/berquerant/cron2date/cmd/date2cron@v0.3.0
+github.com/google/go-licenses/v2@v2.0.1

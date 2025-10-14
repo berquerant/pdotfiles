@@ -17,9 +17,7 @@
 ;;;###autoload
 (defun my-pipenv-get-path (target)
   "Get path of TARGET module."
-  (my-proc-shell-command-to-string (format "%s %s"
-                                           my-pipenv-get-path-command
-                                           target)))
+  (my-proc-shell-command-to-string-secure my-pipenv-get-path-command target))
 
 (provide 'my-pipenv)
 ;;; my-pipenv.el ends here

@@ -30,7 +30,7 @@
 (defun my-path--git-relative-path ()
   (let ((p (my-path--buffer-file-name)))
     (cond ((not p) (message "Not visiting file.") nil)
-          (t (my-proc-shell-command-to-string (format "git ls-files --full-name %s" p))))))
+          (t (my-proc-shell-command-to-string-secure "git" "ls-files" "--full-name" p)))))
 
 ;;;###autoload
 (defun my-path-git-relative-path ()
