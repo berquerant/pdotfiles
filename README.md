@@ -378,7 +378,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, objdiff, ip2bin, semv, emacs-straight-renovate, rnv, json2dot
+Requires: awkfmt, textlinter, golangci-lint, uv, ip2bin, semv, emacs-straight-renovate, rnv, json2dot
 
 ## json2dot
 
@@ -418,14 +418,6 @@ Install [ip2bin](https://github.com/berquerant/ip2bin-rust).
 
 ``` shell
 cargo install --git https://github.com/berquerant/ip2bin-rust --tag ${IP2BIN_VERSION}
-```
-
-## objdiff
-
-Install [objdiff](https://github.com/berquerant/k8s-object-diff-go).
-
-``` shell
-ln -snvf "$(which objdiff)" /usr/local/bin/kd
 ```
 
 ## uv

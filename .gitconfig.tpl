@@ -49,6 +49,7 @@
   l = log
   ll = log --pretty=oneline
   logs = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  logj = !"f(){ git log --pretty=format:'{\"hash\":\"%H\",\"tree\":\"%T\",\"parents\":\"%P\",\"author\":{\"name\":\"%an\",\"email\":\"%ae\",\"date\":\"%ad\",\"date_relative\":\"%ar\"},\"committer\":{\"name\":\"%cn\",\"email\":\"%ce\",\"date\":\"%cd\",\"date_relative\":\"%cr\"},\"subject\":\"%s\",\"body\":\"%b\"}' --date=format:'%Y-%m-%d %H:%M:%S' \"$@\" | tr '\\n' ' ' | jq -c '.parents = (.parents | split(\" \"))' ; }; f"
   search-commit = log -G
   search-commit-patch = log --patch -G
   search-commit-patch-first = log --pickaxe-regex --patch -S

@@ -8,7 +8,7 @@ install:
     #!/bin/bash
     set -e
     # k8s-object-diff-go
-    DIFF='kd -c' ${IVG_WORKD}/${IVG_LOCALD}/k8s_diff.sh "\$@"
+    DIFF='objdiff -c' ${IVG_WORKD}/${IVG_LOCALD}/k8s_diff.sh "\$@"
     EOS
   - chmod +x /usr/local/bin/kdiff
 uninstall:

@@ -98,7 +98,9 @@
   :config
   ;; for devcontainer (golang)
   (add-to-list 'tramp-remote-path "/go/bin")
-  (add-to-list 'tramp-remote-path "/usr/local/go/bin"))
+  (add-to-list 'tramp-remote-path "/usr/local/go/bin")
+  ;; for devcontainer (rust)
+  (add-to-list 'tramp-remote-path "/usr/local/cargo/bin"))
 
 (defun my-getenv (&optional arg)
   "Get environment variable ARG or $HOME."
