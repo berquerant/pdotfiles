@@ -1,3 +1,4 @@
+line-length = 120
 exclude = [
   ".direnv",
   ".eggs",
@@ -36,7 +37,6 @@ ignore = [
   "D212",  # Multi-line docstring summary should start at the first line
   "I001",  # Import block is un-sorted or un-formatted
 ]
-line-length = 120
 
 [lint.per-file-ignores]
 "__init__.py" = [

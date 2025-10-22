@@ -18,6 +18,7 @@ alias gdpull='${DOTFILES_ROOT}/bin/default-branch.sh pull true false'
 alias gpullback='${DOTFILES_ROOT}/bin/default-branch.sh pull false true'
 alias gfbranch='${DOTFILES_ROOT}/bin/default-branch.sh branch'
 alias gworktree='${DOTFILES_ROOT}/bin/git-worktree.sh'
+alias glogj='${DOTFILES_ROOT}/bin/git-log-json.sh'
 
 repo() {
     location="$($DOTFILES_ROOT/bin/git-get.sh $@)"

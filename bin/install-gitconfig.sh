@@ -64,6 +64,7 @@ if git aliases ; then
     cecho green "Backup: ${backup_config}"
 else
     cecho red "git aliases failed! check ${current_config}"
-    cecho red "Backup: ${backup_config}"
+    cecho red "Restore backup: ${backup_config}"
+    cp -f "$backup_config" "$current_config"
     exit 1
 fi

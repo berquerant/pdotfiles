@@ -2,7 +2,7 @@
 
 diffcmd() {
     # default: k8s-object-diff-go
-    ${DIFF:-kd -c} "$@"
+    ${DIFF:-objdiff -c} "$@"
 }
 
 rootd() {
