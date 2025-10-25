@@ -1,7 +1,10 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 readonly root="${DOTFILES_ROOT}/ivg"
-readonly repo="${root}/repos"
+readonly repos="${root}/repos"
 readonly locks="${root}/locks"
 readonly lock_file="${root}/renovate.lock"
 
@@ -13,10 +16,8 @@ generate() {
 apply() {
     local id
     local commit
-    rnv "$repo" batch lock < "$lock_file" | while read -r line ; do
-        id="$(echo "$line" | cut -d ' ' -f 1)"
-        commit="$(echo "$line" | cut -d ' ' -f 2)"
-        echo "$commit" > "${locks}/${id}.lock"
+    cat "$lock_file" | cut -d " " -f 1 | cut -d "=" -f 2 | while read -r id ; do
+        rnv "${repos}/${id}" lock < "$lock_file" > "${locks}/${id}.lock"
     done
 }
 
