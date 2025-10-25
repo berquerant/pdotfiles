@@ -10,13 +10,11 @@ readonly lock_file="${root}/renovate.lock"
 
 
 generate() {
-    rnv "$repo" batch gen > "$lock_file"
+    rnv "$repos" batch gen > "$lock_file"
 }
 
 apply() {
-    local id
-    local commit
-    cat "$lock_file" | cut -d " " -f 1 | cut -d "=" -f 2 | while read -r id ; do
+    cut -d " " -f 1 "$lock_file" | cut -d "=" -f 2 | while read -r id ; do
         rnv "${repos}/${id}" lock < "$lock_file" > "${locks}/${id}.lock"
     done
 }
