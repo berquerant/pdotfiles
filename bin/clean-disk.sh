@@ -35,6 +35,11 @@ clean_python() {
         cecho yellow "UNINSTALL python ${version}"
         __run pyenv uninstall -f "$version"
     done
+    local -r venvs="${HOME}/.local/share/virtualenvs"
+    find "$venvs" -depth 1 -delete | while read -r x ; do
+        __run rm -rf "$x"
+    done
+    __run uv cache prune
 }
 
 clean_ruby() {

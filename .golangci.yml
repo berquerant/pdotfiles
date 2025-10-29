@@ -1,7 +1,51 @@
 version: "2"
 
 linters:
+  default: none
+  enable:
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - copyloopvar
+    - cyclop
+    - dupl
+    - durationcheck
+    - errcheck
+    - forcetypeassert
+    - ginkgolinter
+    - gocheckcompilerdirectives
+    - gochecknoinits
+    - gochecksumtype
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    - godoclint
+    - godox
+    - gosec
+    - govet
+    - ineffassign
+    - iotamixing
+    - lll
+    - misspell
+    - nakedret
+    - nestif
+    - prealloc
+    - predeclared
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
   settings:
+    cyclop:
+      max-complexity: 20
+    gocognit:
+      min-complexity: 20
+    revive:
+      rules:
+        - name: exported
+          disabled: true
     godox:
       keywords:
         - NOTE
@@ -17,10 +61,17 @@ linters:
       - ".*/tmp/.*"
 
 issues:
-  max-issues-per-linter: 10
+  max-issues-per-linter: 5
 
 run:
   concurrency: 4
   timeout: 30s
   allow-parallel-runners: true
   tests: false
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  exclusions:
+    generated: lax
