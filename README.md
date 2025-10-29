@@ -127,6 +127,7 @@ Install Emacs with minimal configurations.
 
 ``` shell
 ln -snvf "${DOTFILES_ROOT}/bin/emacs-light.sh" /usr/local/bin/lmacs
+ln -snvf "${DOTFILES_ROOT}/bin/emacs-less.sh" /usr/local/bin/umacs
 ```
 
 ## emacs-gui

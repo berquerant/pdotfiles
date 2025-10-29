@@ -299,31 +299,71 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   :config
-  (defun my-consult-find-from-last-kill ()
-    "Do `consult-find' with `my-misc-last-kill'."
-    (interactive)
-    (let ((path (s-trim (my-misc-last-kill))))
-      (cond ((file-directory-p path) (consult-find path))
-            ((file-exists-p path) (find-file path))
-            (t (error "[my-consult-find-from-last-kill] cannot open %s" path)))))
+  (defvar my-consult--git-find-history
+    nil
+    "History of `my-consult-git-find'.")
+  (defun my-consult--git-find (prompt builder initial)
+    "Run git-find.sh in current directory.
+
+The function returns the selected file.
+The filename at point is added to the future history.
+
+BUILDER is the command line builder function.
+PROMPT is the prompt.
+INITIAL is initial input."
+    (consult--read
+     (consult--process-collection builder
+       :highlight t :file-handler t)
+     :prompt prompt
+     :sort nil
+     :require-match t
+     :initial initial
+     :add-history (thing-at-point 'filename)
+     :category 'file
+     :history '(:input my-consult--git-find-history)))
+  (defvar my-consult--git-find-args
+    (my-getenv-join "DOTFILES_ROOT" "bin" "git-find.sh")
+    "Command line arguments for find.")
+  (defun my-consult--git-find-make-builder (paths)
+    "Build find command line, finding across PATHS."
+    (let* ((cmd (seq-mapcat (lambda (x)
+                              (if (equal x ".") paths (list x)))
+                            (consult--build-args my-consult--git-find-args))))
+      (lambda (input)
+        (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+                     (`(,re . ,hl) (consult--compile-regexp arg 'basic t)))
+          (when re
+            (cons (append cmd re opts) hl))))))
+  (defun my-consult-git-find (&optional dir initial)
+    "Search for files with `git-find.sh' in DIR.
+The file names must match the input regexp.  INITIAL is the
+initial minibuffer input.  See `consult-grep' for details
+regarding the asynchronous search and the arguments."
+    (interactive "P")
+    (pcase-let* ((`(,prompt ,paths ,dir) (consult--directory-prompt "Git-find" dir))
+                 (default-directory dir)
+                 (builder (my-consult--git-find-make-builder paths)))
+      (find-file (my-consult--git-find prompt builder initial))))
+
+  (my-macro-region-or-at-point-direct my-consult-git-find)
   (my-macro-region-or-at-point-direct consult-line)
   (my-macro-region-or-at-point-direct consult-line-multi)
   (defun my-consult-git-grep (&optional initial dir)
     (interactive "P")
     (consult-git-grep dir initial))
   (my-macro-region-or-at-point-direct my-consult-git-grep)
-  (defun my-consult-find (&optional initial dir)
+  (defun my-consult-fd (&optional initial dir)
     (interactive "P")
-    (consult-find dir initial))
-  (my-macro-region-or-at-point-direct my-consult-find)
+    (consult-fd dir initial))
+  (my-macro-region-or-at-point-direct my-consult-fd)
   (bind-key* "C-x o" 'consult-line-region-or-at-point)
   (bind-key* "C-x C-o" 'consult-line-multi-region-or-at-point)
   (bind-key* "C-x g g" 'my-consult-git-grep-region-or-at-point)
-  (bind-key* "C-x C-g C-g" 'my-consult-find-region-or-at-point)
-  (bind-key* "C-x f" 'consult-find)
+  (bind-key* "C-x C-g C-g" 'my-consult-git-find-region-or-at-point)
+  (bind-key* "C-x f" 'my-consult-fd-region-or-at-point)
+  (bind-key* "C-x r g" 'consult-ripgrep)
   :bind
   (("C-x g f" . consult-project-buffer) ; find file in project
-   ("M-s -" . my-consult-find-from-last-kill)
    ("M-g X" . consult-register)
    ("M-g M-x" . consult-register-store)
    ("M-g x" . consult-register-load)

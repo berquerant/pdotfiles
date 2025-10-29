@@ -70,7 +70,7 @@
   p = pull
   w = worktree
   rename-branch = branch -m
-  fix-comment = commit --ammend
+  fix-comment = commit --amend
   which-branch = branch --contains
   default-branch = !git remote show origin | grep -F 'HEAD branch:' | cut -d ':' -f 2 | tr -d ' '
   force-remove-untracked = clean -d -f

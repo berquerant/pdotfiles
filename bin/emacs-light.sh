@@ -14,7 +14,7 @@ if [ -n "$EMACS_MINIMAL_INIT" ] ; then
     emacs --load "${EMACS_MINIMAL_INIT}/minimal-init.el" \
           --eval "(setq minimal-init-quiet t)" \
           --funcall minimal-init-setup \
-          "$@"
+          "$@" < /dev/tty
 else
-    emacs "$@"
+    emacs "$@" < /dev/tty
 fi

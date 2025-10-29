@@ -38,6 +38,7 @@ alias gmacs="emacs_gui"
 alias cmacs="emacs_cui"
 alias dmacs="emacs_docker"
 alias e='lmacs'
+alias u='umacs'
 alias o='${DOTFILES_ROOT}/bin/emacs-open.sh'
 alias oo='emacs_open_raw'
 alias emacs_keys='${DOTFILES_ROOT}/bin/emacs-key-conflict.sh'
