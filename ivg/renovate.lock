@@ -11,5 +11,5 @@ straight=cache-sh depName=berquerant/cache-sh datasource=github-tags value=v0.1.
 straight=emacs-gui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.1
 straight=docker-man depName=berquerant/docker-man datasource=github-tags value=v0.3.0
 straight=docker-debian-emacs depName=berquerant/docker-debian-emacs datasource=github-tags value=v0.3.0
-straight=k8s-diff-sh depName=berquerant/k8s-diff-sh datasource=github-tags value=v0.1.0
+straight=k8s-diff-sh depName=berquerant/k8s-diff-sh datasource=github-tags value=v0.2.0
 straight=rbenv depName=rbenv/rbenv datasource=github-tags value=v1.3.2
