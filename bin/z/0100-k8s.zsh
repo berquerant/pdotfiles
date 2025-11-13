@@ -5,6 +5,7 @@ alias kk='kubectl kustomize'
 alias kapi='${DOTFILES_ROOT}/bin/k8s-api.sh'
 alias kr='kubectl get --raw'
 alias kv='kubectl -v=8'
+alias helm-compute-values='${DOTFILES_ROOT}/bin/k8s-helm-compute-values.sh'
 
 kgetall() {
     kubectl get "$(kubectl api-resources --namespaced=true --verbs=list --output=name | xargs | tr ' ' ',')" $@
