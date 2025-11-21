@@ -41,7 +41,7 @@
  ("emacs-message-routing" . "32df5b22a1dc573063dc9f1830fb32f83c0f36cf")
  ("emacs-minimal-init" . "54eb16dbe12f764c5ebb2b67f19a13a2c9504261")
  ("emacs-pet" . "6b62cf5f7e968c8137d8818b58638b2f0e64d02b")
- ("emacs-reformatter" . "bfe3f1c6ece952d39921db16f601123bdd1748ab")
+ ("emacs-reformatter" . "c52e91d5438b9bf16b77b4384822e254f10a6b0a")
  ("emacs-scala-mode" . "46bb948345f165ebffe6ff3116e36a3b8a3f219d")
  ("emacs-scroll-util" . "337ae328ea1d7b8f2a0a9e86d8adf8940e8c9f55")
  ("emacs-thread-buffer" . "793794db2b400fd31967d19e8c6b3af714a79d3b")

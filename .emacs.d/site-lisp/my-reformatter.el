@@ -26,7 +26,7 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
   "Get interactive function to format region or buffer."
   (let* ((lang (cadr (assoc major-mode-sym my-reformatter-formatter-major-mode2lang)))
          (name (cadr (assoc lang my-reformatter-formatter-lang2names)))
-         (fname (format "my-reformatter-%s-format-%s" lang (if for-region "region" "buffer")))
+         (fname (format "my-reformatter-%s-format-%s" name (if for-region "region" "buffer")))
          (fsym (intern fname)))
     (if (fboundp fsym) fsym
       (error "Function %s is not defined" fname))))
@@ -34,7 +34,10 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
 (defconst my-reformatter-formatter-major-mode2lang
   '((php-mode "php")
     (typescript-mode "typescript")
+    (typescript-tsx-mode "typescript")
+    (tsx-ts-mode "tsx")
     (js2-mode "javascript")
+    (js-jsx-mode "jsx")
     (markdown-mode "markdown")
     (gfm-mode "markdown")
     (sh-mode "shell")
@@ -58,6 +61,8 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
   '(("php" "php")
     ("typescript" "ts")
     ("javascript" "js")
+    ("tsx" "ts")
+    ("jsx" "js")
     ("markdown" "md")
     ("shell" "sh")
     ("awk" "awk")

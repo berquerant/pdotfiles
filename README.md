@@ -327,10 +327,11 @@ bin/install-target-bulk.sh < targets/sub
 Install sub dependencies.
 
 interactive: true
-Requires: rust
+Requires: rust, ivg-lock
 
 ``` shell
-bin/install-target-bulk.sh --update < targets/sub
+# bin/install-target-bulk.sh --update < targets/sub
+bin/install-target-bulk.sh --retry < targets/sub
 ```
 
 ## retry-sub
@@ -360,10 +361,11 @@ bin/install-via-git-bulk.sh < targets/util
 Install util dependencies.
 
 interactive: true
-Requires: util-tools
+Requires: util-tools, ivg-lock
 
 ``` shell
-bin/install-via-git-bulk.sh --update < targets/util
+# bin/install-via-git-bulk.sh --update < targets/util
+bin/install-via-git-bulk.sh --retry < targets/util
 ```
 
 ## retry-util

@@ -7,7 +7,7 @@ pyls-memestra==0.0.16
 python-lsp-server==1.13.1
 debugpy==1.8.17
 python-lsp-ruff==2.3.0
-sqlfluff==3.4.2
+sqlfluff==3.5.0
 langdetect==1.0.9
 pyyaml==6.0.3
 requests==2.32.5

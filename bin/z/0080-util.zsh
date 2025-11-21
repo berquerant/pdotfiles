@@ -65,8 +65,6 @@ reload_tmpd() {
 
 alias checksum='${DOTFILES_ROOT}/bin/checksum.sh'
 alias hman='${DOTFILES_ROOT}/bin/hman.sh'
-alias dmanraw='${DOTFILES_ROOT}/bin/dman.sh'
-alias dman='dmanraw debian'
 alias mln='${DOTFILES_ROOT}/bin/mln.sh'
 alias drun='${DOTFILES_ROOT}/bin/docker.sh'
 alias svnlog='${DOTFILES_ROOT}/bin/svnlog.sh'

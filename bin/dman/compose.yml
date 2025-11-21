@@ -1,9 +1,0 @@
-services:
-  debian:
-    image: docker-man:debian
-    ports:
-      - "${DOCKER_MAN_DEBIAN_PORT}:80"
-  ubuntu:
-    image: docker-man:ubuntu
-    ports:
-      - "${DOCKER_MAN_UBUNTU_PORT}:80"

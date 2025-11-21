@@ -1386,9 +1386,7 @@ when (eglot)."
 (use-package my-man
   :straight (my-man :type built-in)
   :config
-  (my-macro-region-or-at-point my-man-dman "dman> ")
   (my-macro-region-or-at-point my-man-hman "hamn> ")
-  (bind-key "M-s M-s d" 'my-man-dman-region-or-at-point)
   (bind-key "M-s M-s h" 'my-man-hman-region-or-at-point))
 
 (use-package message-routing
