@@ -858,7 +858,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                      js2-basic-offset 2
                      tab-width 2)))
   :mode
-  (("\\.js\\'" . js2-mode)
+  (("\\.m?js\\'" . js2-mode)
    ("\\.jsx$" . web-mode)
    ("\\.qml$" . js2-mode)))
 
