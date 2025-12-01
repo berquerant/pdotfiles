@@ -25,7 +25,7 @@ straight=dockerfile-mode depName=spotify/dockerfile-mode datasource=github-tags 
 straight=dumb-jump depName=jacktasia/dumb-jump datasource=github-tags value=v0.5.4
 straight=el-get depName=dimitri/el-get datasource=github-tags value=5.1
 straight=elisp-tree-sitter depName=emacs-tree-sitter/elisp-tree-sitter datasource=github-tags value=0.18.0
-straight=ellama depName=s-kostyaev/ellama datasource=github-tags value=1.8.2
+straight=ellama depName=s-kostyaev/ellama datasource=github-tags value=1.8.7
 straight=emacs-command-log depName=berquerant/emacs-command-log datasource=github-tags value=v0.1.2
 straight=emacs-idle-timer depName=berquerant/emacs-idle-timer datasource=github-tags value=v0.1.0
 straight=emacs-little-async depName=berquerant/emacs-little-async datasource=github-tags value=v0.2.0
@@ -94,12 +94,12 @@ straight=smartparens depName=Fuco1/smartparens datasource=github-tags value=1.11
 straight=solarized-emacs depName=bbatsov/solarized-emacs datasource=github-tags value=v2.0.5
 straight=tern depName=ternjs/tern datasource=github-tags value=0.24.3
 straight=terraform-mode depName=hcl-emacs/terraform-mode datasource=github-tags value=1.1.0
-straight=transient depName=magit/transient datasource=github-tags value=v0.9.4
-straight=tree-sitter-langs depName=emacs-tree-sitter/tree-sitter-langs datasource=github-tags value=0.12.301
+straight=transient depName=magit/transient datasource=github-tags value=v0.10.1
+straight=tree-sitter-langs depName=emacs-tree-sitter/tree-sitter-langs datasource=github-tags value=0.12.316
 straight=treemacs depName=Alexander-Miller/treemacs datasource=github-tags value=3.2
 straight=typescript.el depName=emacs-typescript/typescript.el datasource=github-tags value=v0.4
 straight=vertico depName=minad/vertico datasource=github-tags value=2.4
 straight=web-mode depName=fxbois/web-mode datasource=github-tags value=v17.3.20
 straight=yaml-mode depName=yoshiki/yaml-mode datasource=github-tags value=0.0.16
-straight=yaml.el depName=zkry/yaml.el datasource=github-tags value=v1.2.0
+straight=yaml.el depName=zkry/yaml.el datasource=github-tags value=v1.2.1
 straight=yasnippet depName=joaotavora/yasnippet datasource=github-tags value=0.14.0
