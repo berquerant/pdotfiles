@@ -1,7 +1,7 @@
 straight=pyenv depName=pyenv/pyenv datasource=github-tags value=v2.6.12
 straight=gomodbrowse-sh depName=berquerant/gomodbrowse-sh datasource=github-tags value=v0.1.0
 straight=git-iter-sh depName=berquerant/git-iter-sh datasource=github-tags value=v0.1.0
-straight=goenv depName=syndbg/goenv datasource=github-tags value=2.2.32
+straight=goenv depName=syndbg/goenv datasource=github-tags value=2.2.34
 straight=markitdown depName=microsoft/markitdown datasource=github-tags value=v0.1.3
 straight=mpv-settings depName=berquerant/mpv-settings datasource=github-tags value=v0.1.0
 straight=nvm depName=nvm-sh/nvm datasource=github-tags value=v0.40.3
@@ -9,7 +9,6 @@ straight=open-webui-settings depName=berquerant/open-webui-settings datasource=g
 straight=emacs-cui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.1
 straight=cache-sh depName=berquerant/cache-sh datasource=github-tags value=v0.1.0
 straight=emacs-gui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.1
-straight=docker-man depName=berquerant/docker-man datasource=github-tags value=v0.3.0
 straight=docker-debian-emacs depName=berquerant/docker-debian-emacs datasource=github-tags value=v0.3.0
 straight=k8s-diff-sh depName=berquerant/k8s-diff-sh datasource=github-tags value=v0.2.0
 straight=rbenv depName=rbenv/rbenv datasource=github-tags value=v1.3.2
