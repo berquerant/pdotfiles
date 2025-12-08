@@ -1,4 +1,4 @@
-straight=pyenv depName=pyenv/pyenv datasource=github-tags value=v2.6.12
+straight=pyenv depName=pyenv/pyenv datasource=github-tags value=v2.6.16
 straight=gomodbrowse-sh depName=berquerant/gomodbrowse-sh datasource=github-tags value=v0.1.0
 straight=git-iter-sh depName=berquerant/git-iter-sh datasource=github-tags value=v0.1.0
 straight=goenv depName=syndbg/goenv datasource=github-tags value=2.2.34

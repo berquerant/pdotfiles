@@ -57,6 +57,8 @@ brew "ghalint"
 # docker
 brew "hadolint"
 brew "lazydocker"
+brew "dive"
+brew "crane"
 
 # kubernetes
 brew "kind"

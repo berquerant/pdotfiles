@@ -45,7 +45,7 @@ install_gem() {
 
 __install_node() {
     local -r _version="$(echo "$1" | cut -d "@" -f 2)"
-    if [ "x${_version}" != "x$(__get_node_pkg_version "$1")" ] ; then
+    if [ "${_version}" != "$(__get_node_pkg_version "$1")" ] ; then
         npm install -g "$1"
     fi
 }

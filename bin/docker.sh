@@ -40,6 +40,30 @@ layers() {
     docker history --no-trunc --format json "$@"
 }
 
+__cmdcomp() {
+    cmdcomp -x 'diff -u --color=always' "$@"
+}
+__cmdcomp_jq() {
+    local -r __cmd="$1"
+    local -r __left="$2"
+    local -r __right="$3"
+    shift 3
+    # shellcheck disable=SC2086
+    __cmdcomp -p 'jq .' "$@" -- $__cmd -- "$__left" -- "$__right"
+}
+manifest_diff() {
+    __cmdcomp_jq "crane manifest" "$@"
+}
+config_diff() {
+    __cmdcomp_jq "crane config" "$@"
+}
+file_diff() {
+    local -r __left="$1"
+    local -r __right="$2"
+    shift 2
+    __cmdcomp -p 'tar -tvf -' -p 'sort' "$@" -- crane export -- "$__left" -- "$__right"
+}
+
 usage() {
     local -r name="${0##*/}"
     cat <<EOS >&2
@@ -58,9 +82,14 @@ Usage
     Run container with bind mount PWD
   ${name} (l|layer) IMAGE
     Display image layers
+  ${name} (md|mdiff) IMAGE1 IMAGE2 [CMD_COMP_OPT...]
+    Display manifest diff
+  ${name} (cd|cdiff) IMAGE1 IMAGE2 [CMD_COMP_OPT...]
+    Display config diff
+  ${name} (fd|fdiff) IMAGE1 IMAGE2 [CMD_COMP_OPT...]
+    Display file diff
 EOS
 }
-
 
 cmd=""
 case "$1" in
@@ -70,12 +99,11 @@ case "$1" in
     x|exec) cmd="exec_container" ;;
     r|run) cmd="run_with_pwd" ;;
     l|layer) cmd="layers" ;;
-    *)
-        usage
-        exit 1
-        ;;
+    md|mdiff) cmd="manifest_diff" ;;
+    cd|cdiff) cmd="config_diff" ;;
+    fd|fdiff) cmd="file_diff" ;;
+    *) usage ; exit 1 ;;
 esac
 shift
-
 set -e
 "$cmd" "$@"
