@@ -7,12 +7,7 @@
 (flycheck-define-checker my-golangci-lint
   "golangci-lint."
   :command
-  ("golangci-lint"
-   "run"
-   "--output.checkstyle.path=stdout"
-   "--output.text.path=stderr"
-   "--path-mode=abs"
-   ".")
+  ("flycheck-golangci-lint.sh")
   :error-parser flycheck-parse-checkstyle
   :error-patterns
   ((error line-start (file-name) ":" line ":" column ": " (message) line-end)
