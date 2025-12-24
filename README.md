@@ -437,7 +437,7 @@ Verify [golangci-lint](https://github.com/golangci/golangci-lint).
 
 ``` shell
 golangci-lint config verify -v
-ln -s "${DOTFILES_ROOT}/bin/flycheck-golangci-lint.sh" /usr/local/bin/flycheck-golangci-lint.sh
+ln -snvf "${DOTFILES_ROOT}/bin/flycheck-golangci-lint.sh" /usr/local/bin/flycheck-golangci-lint.sh
 ```
 
 ## textlinter

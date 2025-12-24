@@ -1,8 +1,0 @@
-uri: https://github.com/microsoft/markitdown
-branch: main
-locald: repos/markitdown
-lock: locks/markitdown.lock
-install:
-  - pip install -e packages/markitdown[all]
-uninstall:
-  - pip uninstall -e packages/markitdown[all]
