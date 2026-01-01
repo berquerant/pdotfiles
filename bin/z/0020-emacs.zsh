@@ -1,7 +1,6 @@
 #!/bin/zsh
 
 export MIGEMO_DICT="$(brew --prefix cmigemo)/share/migemo/utf-8/migemo-dict"
-export EMACS_HISTFILE="${EMACSD}/.history_emacs"
 export EMACS_CUI="/usr/local/bin/emacs"
 export EMACS_GUI="/Applications/Emacs-GUI.app"
 # for emacs-light.sh

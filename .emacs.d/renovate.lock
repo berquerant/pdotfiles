@@ -5,7 +5,6 @@ straight=anzu depName=emacsorphanage/anzu datasource=github-tags value=0.67
 straight=avy depName=abo-abo/avy datasource=github-tags value=0.5.0
 straight=avy-migemo depName=momomo5717/avy-migemo datasource=github-tags value=0.3.2
 straight=bm depName=joodland/bm datasource=github-tags value=202506
-straight=bui.el depName=alezost/bui.el datasource=github-tags value=v1.2.1
 straight=cfrs depName=Alexander-Miller/cfrs datasource=github-tags value=1.7.0
 straight=comment-dwim-2 depName=remyferre/comment-dwim-2 datasource=github-tags value=v1.5.0
 straight=company-mode depName=company-mode/company-mode datasource=github-tags value=1.0.2
@@ -15,7 +14,6 @@ straight=consult-dir depName=karthink/consult-dir datasource=github-tags value=v
 straight=consult-eglot depName=mohkale/consult-eglot datasource=github-tags value=v0.5.0
 straight=consult-flycheck depName=minad/consult-flycheck datasource=github-tags value=1.0
 straight=consult-ghq depName=tomoya/consult-ghq datasource=github-tags value=0.0.5
-straight=dap-mode depName=emacs-lsp/dap-mode datasource=github-tags value=0.8
 straight=dash.el depName=magnars/dash.el datasource=github-tags value=2.20.0
 straight=deadgrep depName=Wilfred/deadgrep datasource=github-tags value=0.13
 straight=deflate depName=skuro/deflate datasource=github-tags value=0.0.5
@@ -24,15 +22,12 @@ straight=diminish.el depName=myrjola/diminish.el datasource=github-tags value=v0
 straight=dockerfile-mode depName=spotify/dockerfile-mode datasource=github-tags value=v1.9
 straight=dumb-jump depName=jacktasia/dumb-jump datasource=github-tags value=v0.5.4
 straight=el-get depName=dimitri/el-get datasource=github-tags value=5.1
-straight=elisp-tree-sitter depName=emacs-tree-sitter/elisp-tree-sitter datasource=github-tags value=0.18.0
-straight=ellama depName=s-kostyaev/ellama datasource=github-tags value=1.8.7
-straight=emacs-command-log depName=berquerant/emacs-command-log datasource=github-tags value=v0.1.2
+straight=ellama depName=s-kostyaev/ellama datasource=github-tags value=1.10.0
 straight=emacs-idle-timer depName=berquerant/emacs-idle-timer datasource=github-tags value=v0.1.0
 straight=emacs-little-async depName=berquerant/emacs-little-async datasource=github-tags value=v0.2.0
 straight=emacs-message-routing depName=berquerant/emacs-message-routing datasource=github-tags value=0.2.3
-straight=emacs-minimal-init depName=berquerant/emacs-minimal-init datasource=github-tags value=0.2.4
+straight=emacs-minimal-init depName=berquerant/emacs-minimal-init datasource=github-tags value=0.2.5
 straight=emacs-pet depName=wyuenho/emacs-pet datasource=github-tags value=v4.0.0
-straight=emacs-reformatter depName=purcell/emacs-reformatter datasource=github-tags value=0.7
 straight=emacs-scala-mode depName=hvesalai/emacs-scala-mode datasource=github-tags value=v1.1.0
 straight=emacs-scroll-util depName=berquerant/emacs-scroll-util datasource=github-tags value=v0.1.0
 straight=emacs-thread-buffer depName=berquerant/emacs-thread-buffer datasource=github-tags value=0.1.0
@@ -49,7 +44,6 @@ straight=flycheck-popup-tip depName=flycheck/flycheck-popup-tip datasource=githu
 straight=flycheck-pos-tip depName=flycheck/flycheck-pos-tip datasource=github-tags value=0.3
 straight=flycheck-rust depName=flycheck/flycheck-rust datasource=github-tags value=1.1
 straight=flymake-diagnostic-at-point depName=meqif/flymake-diagnostic-at-point datasource=github-tags value=v1.2.0
-straight=flyspell-correct depName=d12frosted/flyspell-correct datasource=github-tags value=v0.6.1
 straight=go-mode.el depName=dominikh/go-mode.el datasource=github-tags value=v1.6.0
 straight=go-playground depName=grafov/go-playground datasource=github-tags value=v1.10.0
 straight=gotest.el depName=nlamirault/gotest.el datasource=github-tags value=v0.16.0
@@ -62,7 +56,6 @@ straight=indent-guide depName=zk-phi/indent-guide datasource=github-tags value=2
 straight=js2-mode depName=mooz/js2-mode datasource=github-tags value=20231224
 straight=json-mode depName=json-emacs/json-mode datasource=github-tags value=v1.9.2
 straight=json-snatcher depName=Sterlingg/json-snatcher datasource=github-tags value=1.0.0
-straight=lsp-docker depName=emacs-lsp/lsp-docker datasource=github-tags value=1.0.0
 straight=lsp-mode depName=emacs-lsp/lsp-mode datasource=github-tags value=9.0.0
 straight=lsp-treemacs depName=emacs-lsp/lsp-treemacs datasource=github-tags value=0.5
 straight=lsp-ui depName=emacs-lsp/lsp-ui datasource=github-tags value=9.0.0
@@ -70,6 +63,7 @@ straight=lua-mode depName=immerrr/lua-mode datasource=github-tags value=v2021080
 straight=marginalia depName=minad/marginalia datasource=github-tags value=2.2
 straight=markdown-mode depName=jrblevin/markdown-mode datasource=github-tags value=v2.7
 straight=migemo depName=emacs-jp/migemo datasource=github-tags value=1.9.2
+straight=modus-themes depName=protesilaos/modus-themes datasource=github-tags value=4.7.0
 straight=multiple-cursors.el depName=magnars/multiple-cursors.el datasource=github-tags value=1.5.0
 straight=mwim.el depName=alezost/mwim.el datasource=github-tags value=v0.4
 straight=orderless depName=oantolin/orderless datasource=github-tags value=1.5
@@ -84,7 +78,6 @@ straight=pos-tip depName=pitkali/pos-tip datasource=github-tags value=0.4.7
 straight=posframe depName=tumashu/posframe datasource=github-tags value=v1.4.4
 straight=prescient.el depName=radian-software/prescient.el datasource=github-tags value=v6.3.2
 straight=projectile depName=bbatsov/projectile datasource=github-tags value=v2.9.1
-straight=pyvenv depName=jorgenschaefer/pyvenv datasource=github-tags value=v1.21
 straight=rainbow-delimiters depName=Fanael/rainbow-delimiters datasource=github-tags value=2.1.5
 straight=rubocop-emacs depName=rubocop/rubocop-emacs datasource=github-tags value=v0.6.0
 straight=rust-mode depName=rust-lang/rust-mode datasource=github-tags value=1.0.6
@@ -95,11 +88,9 @@ straight=solarized-emacs depName=bbatsov/solarized-emacs datasource=github-tags 
 straight=tern depName=ternjs/tern datasource=github-tags value=0.24.3
 straight=terraform-mode depName=hcl-emacs/terraform-mode datasource=github-tags value=1.1.0
 straight=transient depName=magit/transient datasource=github-tags value=v0.10.1
-straight=tree-sitter-langs depName=emacs-tree-sitter/tree-sitter-langs datasource=github-tags value=0.12.316
 straight=treemacs depName=Alexander-Miller/treemacs datasource=github-tags value=3.2
 straight=typescript.el depName=emacs-typescript/typescript.el datasource=github-tags value=v0.4
 straight=vertico depName=minad/vertico datasource=github-tags value=2.4
 straight=web-mode depName=fxbois/web-mode datasource=github-tags value=v17.3.20
 straight=yaml-mode depName=yoshiki/yaml-mode datasource=github-tags value=0.0.16
-straight=yaml.el depName=zkry/yaml.el datasource=github-tags value=v1.2.1
 straight=yasnippet depName=joaotavora/yasnippet datasource=github-tags value=0.14.0

@@ -9,8 +9,6 @@
 
 ;;; Code:
 
-(setq inhibit-default-init t) ; ignore default.el
-(repeat-mode t)
 (setq-default ispell-program-name "aspell")
 (setq default-frame-alist
       '((width . 180)
@@ -24,56 +22,8 @@
   :straight (minimal-init :host github :repo "berquerant/emacs-minimal-init")
   :custom
   (minimal-init-quiet t)
-  (minimal-init-font-size 120)
   :config
-  (minimal-init-setup)
-  (line-number-mode -1)
-  (column-number-mode -1)
-  (defun my-minimal-init-calc-mode-line-position ()
-    "Calculate a string for `mode-line-position'.
-
-A: cursor position percentage
-B: line number
-C: max line number
-D: column number
-E: max column number
-F: current chars
-G: max chars
-
-Format is: (A%,B/C,D/E,F/G)"
-    (let* ((pp (point))
-           (pmin (point-min))
-           (pmax (point-max))
-           (phead (progn (move-beginning-of-line 1)
-                         (point)))
-           (ptail (progn (move-end-of-line 1)
-                         (point)))
-           ;; pp: current cursor
-           ;; pmin: beginning of buffer
-           ;; pmax: end of buffer
-           ;; phead: beginning of line
-           ;; ptail: end of line
-
-           ;; (max-line-bytes (string-width (buffer-substring phead ptail)))
-           ;; (current-line-bytes (string-width (buffer-substring phead pp)))
-           ;; (max-bytes (string-width (buffer-substring pmin pmax)))
-           ;; (current-bytes (string-width (buffer-substring pmin pp)))
-           (max-lines (count-lines pmax pmin))
-           (current-lines (count-lines pp pmin))
-           (max-chars pmax)
-           (current-chars pp)
-           (max-line-chars (- ptail phead))
-           (current-line-chars (- pp phead))
-           (pos-pct (* 100 (/ (float current-chars) max-chars))))
-
-      (goto-char pp) ; return cursor to original pos
-      (format "(%d%%%%,%d/%d,%d/%d,%d/%d)"
-              (round pos-pct)
-              current-lines max-lines
-              current-line-chars max-line-chars
-              current-chars max-chars)))
-  (setcar mode-line-position
-          '(:eval (my-minimal-init-calc-mode-line-position))))
+  (minimal-init-setup))
 
 (use-package dictionary
   :straight (dictionary :type built-in)
@@ -131,15 +81,19 @@ Format is: (A%,B/C,D/E,F/G)"
     "init.el location.")
   (defconst my-zshrc (my-getenv-join "HOME" ".zshrc")
     ".zshrc location.")
+  (defconst my-zshrc2 (my-getenv-join "HOME" ".zshrc2")
+    ".zshrc2 location.")
   (my-macro-handle-file find-file my-init-el)
   (my-macro-handle-file load-file my-init-el)
   (my-macro-handle-file find-file my-zshrc)
+  (my-macro-handle-file find-file my-zshrc2)
   (my-macro-handle-buffer switch-to-buffer "*scratch*")
   (my-macro-handle-buffer switch-to-buffer-other-window "*scratch*")
   (my-macro-handle-buffer switch-to-buffer-other-tab "*scratch*")
   (my-macro-handle-buffer switch-to-buffer-other-frame "*scratch*")
   (bind-key "M-s 0" 'find-file-initel)
-  (bind-key "M-s 9" 'find-file-zshrc)
+  (bind-key "M-s 9 0" 'find-file-zshrc)
+  (bind-key "M-s 9 1" 'find-file-zshrc2)
   (bind-key "M-s 8" 'switch-to-buffer-scratch)
   (bind-key "M-s 7" 'switch-to-buffer-other-tab-scratch)
   (bind-key "M-s 6" 'switch-to-buffer-other-window-scratch)

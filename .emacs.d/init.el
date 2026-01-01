@@ -205,8 +205,11 @@
   (require 'my-reformatter))
 
 (use-package treemacs
+  :commands my-treemacs-select-window
   :bind
-  (("M-t" . treemacs-select-window)
+  (("M-t" . my-treemacs-select-window)
+   ("C-x t t" . treemacs-add-and-display-current-project)
+   ("C-x t 1" . treemacs-add-and-display-current-project-exclusively)
    :map treemacs-mode-map
    ("M-t" . delete-window) ; delete treemacs window
    ([mouse-1] . treemacs-single-click-expand-action))
@@ -219,7 +222,13 @@
   (treemacs-silent-filewatch t)
   (treemacs-file-event-delay 500)
   (treemacs-file-follow-delay 0.2)
+  (treemacs-deferred-git-apply-delay 0.5)
   :config
+  (defun my-treemacs-select-window ()
+    (interactive)
+    (when (eq (treemacs-current-visibility) 'visible)
+      (call-interactively 'treemacs-find-file))
+    (call-interactively 'treemacs-select-window))
   (defun my--revert-buffer--treemacs-refersh-after-advice ()
     (call-interactively 'treemacs-refresh))
   (advice-add #'my--revert-buffer :after #'my--revert-buffer--treemacs-refersh-after-advice)
@@ -235,8 +244,8 @@
   (my-misc-other-window-predicates-add 'my-treemacs-other-window-predicate)
 
   (treemacs-git-commit-diff-mode 1)
-  (treemacs-follow-mode t)
-  (treemacs-project-follow-mode t)
+  (treemacs-follow-mode -1)
+  (treemacs-tag-follow-mode -1)
   (treemacs-filewatch-mode t)
   (treemacs-git-mode 'deferred)
   (treemacs-hide-gitignored-files-mode nil)
@@ -512,18 +521,6 @@ regarding the asynchronous search and the arguments."
   (setq selected-minor-mode-override t)
   (selected-global-mode 1))
 
-(use-package my-pipenv
-  :demand t
-  :after consult
-  :straight (my-pipenv :type built-in)
-  :config
-  (defun my-pipenv-consult-find (module)
-    (consult-find (my-pipenv-get-path module)))
-  (my-macro-region-or-at-point my-pipenv-consult-find "Module: ")
-  (bind-key "M-s 3" 'my-pipenv-consult-find-region-or-at-point)
-  :custom
-  (my-pipenv-get-path-command (my-getenv-join "DOTFILES_ROOT" "bin/pipenv_get_path.sh")))
-
 (use-package deadgrep
   :demand t
   :commands deadgrep
@@ -644,7 +641,7 @@ regarding the asynchronous search and the arguments."
 (use-package git-complete
   :straight (git-complete :host github :repo "zk-phi/git-complete")
   :bind
-  ("M-s ;" . git-complete)
+  ("M-c" . git-complete)
   :custom
   (git-complete-enable-autopair t)
   (git-complete-ignore-case t))
@@ -741,15 +738,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 </script>") ; github-markdown.min.css is applied to .markdown-body
   (markdown-fontify-code-blocks-natively t))
-
-(use-package flyspell-correct
-  :bind
-  (:map flyspell-mode-map
-        ("M-s :" . flyspell-correct-wrapper))
-  :after flyspell)
-
-(use-package flyspell-correct-popup
-  :after flyspell)
 
 ;; spell check
 (use-package flyspell
@@ -888,11 +876,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :config
   (setq py-python-command (my-getenv-join "PYENV_ROOT" "shims" "python")))
 
-(use-package pipenv
-  :hook (python-mode . pipenv-mode)
-  :init
-  (setq pipenv-projectile-after-switch-function #'pipenv-projectile-after-switch-extended))
-
 (use-package flymake-ruff
   :ensure t
   :straight (flymake-ruff :type git :host github :repo "erickgnavar/flymake-ruff")
@@ -934,9 +917,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package json-mode
   :mode ("\\.json\\'" . json-mode)
-  :bind
-  (:map json-mode-map
-        ("M-s f" . json-mode-beautify))
   :config
   (unbind-key "C-c :" json-mode-map)
   (unbind-key "C-c C-r" json-mode-map))
@@ -945,10 +925,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :mode
   (("\\.yaml\\'" . yaml-mode)
    ("\\.yml\\'" . yaml-mode)
-   ("\\.dig\\'" . yaml-mode))
-  :bind
-  (:map yaml-mode-map
-        ("C-m" . newline-and-indent)))
+   ("\\.dig\\'" . yaml-mode)))
 
 (use-package dockerfile-mode
   :mode
@@ -1069,19 +1046,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (if (display-graphic-p)
       (flycheck-pos-tip-mode)
     (flycheck-popup-tip-mode)))
-
-;; syntax highlighting
-(use-package tree-sitter-langs)
-(use-package tree-sitter
-  :diminish  (tree-sitter-mode . "")
-  :after tree-sitter-langs
-  :demand t
-  :config
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
-  (tree-sitter-require 'tsx)
-  (add-to-list 'tree-sitter-major-mode-language-alist
-               '(typescript-tsx-mode . tsx)))
 
 (use-package eglot
   :hook
@@ -1280,16 +1244,6 @@ when (eglot)."
           (lsp-ui-doc--hide-frame))
         (lsp-ui-doc-mode 1))))
 
-(use-package dap-mode
-  :config
-  (dap-ui-mode 1)
-  (dap-tooltip-mode 1)
-  (tooltip-mode 1)
-  (dap-ui-controls-mode 1)
-  (require 'dap-python)
-  (setq dap-python-debugger 'debugpy)
-  (require 'dap-dlv-go))
-
 (use-package lsp-treemacs
   :config
   (lsp-treemacs-sync-mode 1)
@@ -1366,13 +1320,6 @@ when (eglot)."
   (indent-guide-delay 0.4)
   :config
   (indent-guide-global-mode))
-
-(use-package command-log
-  :straight (command-log :host github :repo "berquerant/emacs-command-log")
-  :custom
-  (command-log-histfile (my-getenv "EMACS_HISTFILE"))
-  :config
-  (command-log-setup))
 
 (use-package thread-buffer
   :straight (thread-buffer :host github :repo "berquerant/emacs-thread-buffer"))

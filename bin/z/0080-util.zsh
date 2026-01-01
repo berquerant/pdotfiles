@@ -50,7 +50,6 @@ csg(){
 }
 
 alias gb='gbrowse'
-alias hurl='${DOTFILES_ROOT}/bin/hurl.sh'
 alias jsort='jq --sort-keys'
 alias ysort='yq --prettyPrint "sort_keys(..)"'
 alias edot='${DOTFILES_ROOT}/bin/dot.sh'
@@ -67,6 +66,5 @@ alias checksum='${DOTFILES_ROOT}/bin/checksum.sh'
 alias hman='${DOTFILES_ROOT}/bin/hman.sh'
 alias mln='${DOTFILES_ROOT}/bin/mln.sh'
 alias drun='${DOTFILES_ROOT}/bin/docker.sh'
-alias svnlog='${DOTFILES_ROOT}/bin/svnlog.sh'
 alias rrg='rg --hidden'
 alias dc='${DOTFILES_ROOT}/bin/devcontainer.sh'

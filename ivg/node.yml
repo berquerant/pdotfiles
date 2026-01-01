@@ -6,6 +6,7 @@ install:
   - ln -snvf "${IVG_WORKD}/${IVG_LOCALD}" $NVM_DIR
   - . $NVM_DIR/nvm.sh
   - nvm install $NODE_VERSION --latest-npm
+  - brew install pnpm
   - echo "reload if version updated"
 uninstall:
   - . $NVM_DIR/nvm.sh

@@ -39,6 +39,10 @@ The file names in [requirements](targets) can be specified as [./install r](inst
 
 Lines in target and requirements files can be commented out with leading '#'.
 
+## microdotfiles
+
+For minimal setup, use [microdotfiles](https://github.com/berquerant/microdotfiles).
+
 ## Uninstall
 
 ``` shell
@@ -54,6 +58,7 @@ Install tools using homebrew.
 interactive: true
 
 ``` shell
+git submodule update --init
 bin/install-brew.sh
 ```
 
@@ -73,6 +78,10 @@ Inputs: DRYRUN
 interactive: true
 
 ``` shell
+if ! grep -q 'EDITOR_EMACS' "${HOME}/.zprofile" ; then
+  echo 'export EDITOR_EMACS=lmacs' >> "${HOME}/.zprofile"
+fi
+DRY=$DRYRUN make -C sh-minimal-init
 bin/install-dotfiles.sh $DRYRUN
 ```
 
@@ -84,6 +93,7 @@ Inputs: DRYRUN
 interactive: true
 
 ``` shell
+DRY=$DRYRUN make -C sh-minimal-init uninstall
 bin/clean-dotfiles.sh $DRYRUN
 ```
 
@@ -94,7 +104,7 @@ Generate .gitconfig.
 interactive: true
 
 ``` shell
-bin/install-gitconfig.sh
+make -C sh-minimal-init gitconfig
 ```
 
 ## git
@@ -191,7 +201,7 @@ Requires: install-via-git, sub, util
 Update tools except Emacs.
 
 interactive: true
-Requires: install-via-git, update-brew, update-sub, update-util
+Requires: update-submodules, install-via-git, update-brew, update-sub, update-util
 
 ## retry
 
@@ -218,6 +228,16 @@ interactive: true
 
 ``` shell
 bin/install-requirements.sh all
+```
+
+## update-submodules
+
+Update git submodules.
+
+interactive: true
+
+``` shell
+git submodule update --remote
 ```
 
 ## update-brew

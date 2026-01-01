@@ -84,7 +84,6 @@ brew "gnupg"
 # cask
 
 # python
-brew "pipenv"
 brew "readline" # .pythonrc
 
 # rust
@@ -118,7 +117,6 @@ brew "openjdk"
 
 # subversion
 brew "subversion"
-brew "colordiff"
 
 # data transform
 brew "jq"
@@ -126,3 +124,4 @@ brew "yq"
 brew "fx"
 brew "gron"
 brew "taplo" # formatter
+brew "dasel"

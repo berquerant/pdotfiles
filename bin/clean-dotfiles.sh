@@ -25,11 +25,10 @@ message "Remove symbolic links to this repository root on home directory"
 exec_query "Are you sure?" "Bye!"
 
 exec_or_dry "rm -f ~/dotfiles"
+exec_or_dry "rm -f ~/.zshrc2"
 
 dotfiles=(
-    .zshrc
     .pythonrc.py
-    .tmux.conf
     .golangci.yml
     .aspell.conf
     .npmrc
@@ -52,7 +51,6 @@ exec_or_dry "rm -rf ${EMACSD}/site-lisp"
 message "Remove others"
 
 exec_or_dry "rm -f '${HOME}/Library/Application Support/.ruff.toml'"
-exec_or_dry "rm -f '${HOME}/.subversion/config'"
 
 message "Dotfiles removed!"
 if ${is_dry}

@@ -5,7 +5,6 @@ if [[ -x /opt/homebrew/bin/brew ]] ; then
     autoload -Uz compinit
     compinit
 fi
-alias reload='source ~/.zshrc'
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
 export PATH="~/.local/bin:$PATH"
 
@@ -51,6 +50,7 @@ load_ruby() {
 export PATH="$CARGO_HOME/bin:$PATH"
 # node
 source "$NVM_DIR/nvm.sh"
+export PATH="$PNPM_HOME:$PATH"
 load_node() {
     nvm use "$NODE_VERSION"
     node --version

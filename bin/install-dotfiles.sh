@@ -24,10 +24,10 @@ exec_query "Are you sure?" "Bye!"
 
 exec_or_dry "ln -snvf ${d} ~/dotfiles"
 
+exec_or_dry "ln -snvf ${d}/.zshrc ~/.zshrc2"
+
 dotfiles=(
-    .zshrc
     .pythonrc.py
-    .tmux.conf
     .golangci.yml
     .aspell.conf
     .npmrc
