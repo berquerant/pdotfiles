@@ -111,6 +111,7 @@ brew "stylua" # formatter
 
 # js, ts
 brew "deno"
+brew "pnpm"
 
 # java
 brew "openjdk"
