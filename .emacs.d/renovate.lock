@@ -63,7 +63,7 @@ straight=lua-mode depName=immerrr/lua-mode datasource=github-tags value=v2021080
 straight=marginalia depName=minad/marginalia datasource=github-tags value=2.2
 straight=markdown-mode depName=jrblevin/markdown-mode datasource=github-tags value=v2.7
 straight=migemo depName=emacs-jp/migemo datasource=github-tags value=1.9.2
-straight=modus-themes depName=protesilaos/modus-themes datasource=github-tags value=4.7.0
+straight=modus-themes depName=protesilaos/modus-themes datasource=github-tags value=5.1.0
 straight=multiple-cursors.el depName=magnars/multiple-cursors.el datasource=github-tags value=1.5.0
 straight=mwim.el depName=alezost/mwim.el datasource=github-tags value=v0.4
 straight=orderless depName=oantolin/orderless datasource=github-tags value=1.5
