@@ -8,7 +8,7 @@
 
 (use-package ellama
   :bind
-  ("M-s M-s M-s" . ellama)
+  ("M-r" . ellama)
   :config
   (ellama-context-header-line-global-mode +1)
   (ellama-session-header-line-global-mode +1)

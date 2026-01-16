@@ -59,6 +59,8 @@
            ("C-r" . isearch-backward)
            ("C-<tab>" . tab-next)
            ("C-S-<tab>" . tab-previous)
+           ("C-x <" . previous-buffer)
+           ("C-x >" . next-buffer)
            ;; TODO: find workaround. delete-frame crashes emacs. (delete-frame (selected-frame) nil) too
            ;; https://github.com/syl20bnr/spacemacs/issues/6301
            ;; ("C-x f 0" . delete-frame)
@@ -157,7 +159,7 @@
     (not my-sticky-buffer-mode))
   (my-misc-delete-window-predicates-add 'my-sticky-buffer-mode-delete-window-predicate)
   :bind
-  ("M-s M-t" . my-sticky-buffer-mode))
+  ("C-x M-r" . my-sticky-buffer-mode))
 
 (use-package my-buffer-change
   :demand t
