@@ -5,6 +5,6 @@ cargo-outdated@0.17.0
 evcxr_repl@0.21.1
 cargo-make@0.37.24
 cargo-audit@0.22.0
-cargo-deny@0.18.4
+cargo-deny@0.19.0
 cargo-generate@0.23.4
 twiggy@0.8.0

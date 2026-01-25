@@ -1,6 +1,6 @@
-bundler -v 4.0.2
-solargraph -v 0.57.0
-rubocop -v 1.82.0
+bundler -v 4.0.3
+solargraph -v 0.58.1
+rubocop -v 1.82.1
 steep -v 1.10.0
-rufo -v 0.18.1
+rufo -v 0.18.2
 github-markup -v 5.0.1

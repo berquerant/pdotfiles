@@ -2,7 +2,7 @@
 
 d=$(cd "$(dirname "$0")" || exit; pwd)
 bin="${d}/tmp/xc"
-ref=0.8.6
+ref=0.9.0
 
 exist_matched_binary() {
     [ -x "$bin" ] && [ "$("$bin" -V | cut -d ' ' -f 3)" = "$ref" ]

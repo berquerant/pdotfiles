@@ -55,8 +55,6 @@ For minimal setup, use [microdotfiles](https://github.com/berquerant/microdotfil
 
 Install tools using homebrew.
 
-interactive: true
-
 ``` shell
 git submodule update --init
 bin/install-brew.sh
@@ -75,7 +73,6 @@ bin/install-via-git-go.sh
 Deploy dotfiles configurations.
 
 Inputs: DRYRUN
-interactive: true
 
 ``` shell
 if ! grep -q 'EDITOR_EMACS' "${HOME}/.zprofile" ; then
@@ -90,7 +87,6 @@ bin/install-dotfiles.sh $DRYRUN
 Uninstall dotfiles configurations.
 
 Inputs: DRYRUN
-interactive: true
 
 ``` shell
 DRY=$DRYRUN make -C sh-minimal-init uninstall
@@ -101,8 +97,6 @@ bin/clean-dotfiles.sh $DRYRUN
 
 Generate .gitconfig.
 
-interactive: true
-
 ``` shell
 make -C sh-minimal-init gitconfig
 ```
@@ -111,21 +105,17 @@ make -C sh-minimal-init gitconfig
 
 Install git configurations.
 
-interactive: true
 Requires: gitconfig, emacs-light
 
 ## emacs
 
 Install Emacs.
 
-interactive: true
 Requires: fonts, emacs-light, emacs-gui, emacs-cui
 
 ## fonts
 
 Install fonts.
-
-interactive: true
 
 ``` shell
 bin/install-fonts.sh
@@ -144,8 +134,6 @@ ln -snvf "${DOTFILES_ROOT}/bin/emacs-less.sh" /usr/local/bin/umacs
 
 Install GUI Emacs.
 
-interactive: true
-
 ``` shell
 ./bin/install-emacs.sh
 ./install emacs-gui
@@ -154,8 +142,6 @@ interactive: true
 ## emacs-cui
 
 Install CUI Emacs.
-
-interactive: true
 
 ``` shell
 EMACSD="$CMACSD" ./bin/install-emacs.sh
@@ -166,14 +152,11 @@ EMACSD="$CMACSD" ./bin/install-emacs.sh
 
 Update Emacs.
 
-interactive: true
 Requires: update-emacs-gui, update-emacs-cui
 
 ## update-emacs-gui
 
 Update GUI Emacs.
-
-interactive: true
 
 ``` shell
 ./install emacs-gui --update
@@ -183,8 +166,6 @@ interactive: true
 
 Update CUI Emacs.
 
-interactive: true
-
 ``` shell
 ./install emacs-cui --update
 ```
@@ -193,38 +174,31 @@ interactive: true
 
 Install tools except Emacs.
 
-interactive: true
 Requires: install-via-git, sub, util
 
 ## update
 
 Update tools except Emacs.
 
-interactive: true
 Requires: update-submodules, install-via-git, update-brew, update-sub, update-util
 
 ## retry
 
 Retry to install tools except Emacs.
 
-interactive: true
 Requires: install-via-git, retry-sub, retry-util
 
 ## cycle
 
-interactive: true
 Requires: git, install-via-git, update-brew, sub, util
 
 ## recycle
 
-interactive: true
 Requires: git, install-via-git, update-brew, retry-sub, retry-util
 
 ## requirements
 
 Install all [requirements](requirements).
-
-interactive: true
 
 ``` shell
 bin/install-requirements.sh all
@@ -234,8 +208,6 @@ bin/install-requirements.sh all
 
 Update git submodules.
 
-interactive: true
-
 ``` shell
 git submodule update --remote
 ```
@@ -244,7 +216,6 @@ git submodule update --remote
 
 Update brew and formulae.
 
-interactive: true
 Env: INSTALL_BREW_NO_INIT=1
 
 ``` shell
@@ -295,7 +266,6 @@ then, `straight-thaw-versions`.
 
 ## emacs-clean
 
-interactive: true
 Requires: emacs-clean-cache, emacs-clean-straight
 
 ## emacs-clean-cache
@@ -335,7 +305,6 @@ rustup self uninstall -y
 
 Install sub dependencies.
 
-interactive: true
 Requires: rust
 
 ``` shell
@@ -346,7 +315,6 @@ bin/install-target-bulk.sh < targets/sub
 
 Install sub dependencies.
 
-interactive: true
 Requires: rust, ivg-lock
 
 ``` shell
@@ -358,7 +326,6 @@ bin/install-target-bulk.sh --retry < targets/sub
 
 Install sub dependencies.
 
-interactive: true
 Requires: rust
 
 ``` shell
@@ -369,7 +336,6 @@ bin/install-target-bulk.sh --retry < targets/sub
 
 Install util dependencies.
 
-interactive: true
 Requires: util-tools
 
 ``` shell
@@ -380,7 +346,6 @@ bin/install-via-git-bulk.sh < targets/util
 
 Install util dependencies.
 
-interactive: true
 Requires: util-tools, ivg-lock
 
 ``` shell
@@ -392,7 +357,6 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 Install util dependencies.
 
-interactive: true
 Requires: util-tools
 
 ``` shell
@@ -480,8 +444,6 @@ ln -snvf "${DOTFILES_ROOT}/bin/awkfmt.sh" /usr/local/bin/awkfmt
 
 Install other dependencies.
 
-interactive: true
-
 ``` shell
 bin/install-via-git-bulk.sh < targets/other
 ```
@@ -489,8 +451,6 @@ bin/install-via-git-bulk.sh < targets/other
 ## update-other
 
 Install other dependencies.
-
-interactive: true
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/other
@@ -500,8 +460,6 @@ bin/install-via-git-bulk.sh --update < targets/other
 
 Install other dependencies.
 
-interactive: true
-
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/other
 ```
@@ -510,7 +468,6 @@ bin/install-via-git-bulk.sh --retry < targets/other
 
 Install additional dependencies.
 
-interactive: true
 Requires: additional-tools
 
 ``` shell
@@ -521,7 +478,6 @@ bin/install-via-git-bulk.sh < targets/additional
 
 Install additional dependencies.
 
-interactive: true
 Requires: additional-tools
 
 ``` shell
@@ -532,7 +488,6 @@ bin/install-via-git-bulk.sh --update < targets/additional
 
 Install additional dependencies.
 
-interactive: true
 Requires: additional-tools
 
 ``` shell
