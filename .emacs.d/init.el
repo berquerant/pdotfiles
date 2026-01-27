@@ -641,7 +641,7 @@ regarding the asynchronous search and the arguments."
 (use-package git-complete
   :straight (git-complete :host github :repo "zk-phi/git-complete")
   :bind
-  ("M-c" . git-complete)
+  ("C-q" . git-complete)
   :custom
   (git-complete-enable-autopair t)
   (git-complete-ignore-case t))
