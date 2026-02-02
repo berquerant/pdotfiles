@@ -2,8 +2,6 @@
 
 ;;; Code:
 
-(require 'idle-timer)
-
 (defcustom my-show-indentation-margin-width 3
   "Width of the margin.")
 

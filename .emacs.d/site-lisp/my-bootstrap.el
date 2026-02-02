@@ -214,6 +214,10 @@
   (bind-key "M-g 0" 'my-open-link-region-or-at-point)
   (bind-key "M-g M-0" 'my-google-this-region-or-at-point))
 
+(use-package my-gron
+  :demand t
+  :straight (my-gron :type built-in))
+
 (use-package scroll-util
   :straight (emacs-scroll-util :host github :repo "berquerant/emacs-scroll-util")
   :bind

@@ -14,7 +14,8 @@
 (defun my-proc-call-process--insert-buffer (msg)
   (with-current-buffer (get-buffer-create my-proc-call-process-buffer)
     (goto-char (point-max))
-    (insert msg)))
+    (insert msg)
+    (insert "\n------------------------------\n\n")))
 
 (defun my-proc-call-process (program &optional dry &rest args)
   "Call PROGRAM synchronously in separate process."
