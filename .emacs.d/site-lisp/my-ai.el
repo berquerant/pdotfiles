@@ -4,6 +4,7 @@
 
 (use-package llm
   :config
+  (require 'llm-gemini)
   (require 'llm-ollama))
 
 (use-package ellama
@@ -170,6 +171,9 @@ Topic:
   ;; end templates
   ;;
   (ellama-provider
+   (make-llm-gemini
+    :key (my-getenv "GEMINI_API_KEY")
+    :chat-model "gemini-2.5-flash")
    (make-llm-ollama
     :chat-model "gemma3:4b"
     :embedding-model "nomic-embed-text"
