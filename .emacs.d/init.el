@@ -666,6 +666,13 @@ regarding the asynchronous search and the arguments."
 
 (use-package multiple-cursors
   :config
+  (defvar my-multiple-cursors-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd ">") 'mc/mark-next-like-this)
+      (define-key map (kbd "<") 'mc/mark-previous-like-this)
+      map))
+  (put 'mc/mark-next-like-this 'repeat-map 'my-multiple-cursors-repeat-map)
+  (put 'mc/mark-previous-like-this 'repeat-map 'my-multiple-cursors-repeat-map)
   (unbind-key "M-^")
   (bind-key "M-^ ." 'mc/edit-lines)
   (bind-key "M-^ >" 'mc/mark-next-like-this)
