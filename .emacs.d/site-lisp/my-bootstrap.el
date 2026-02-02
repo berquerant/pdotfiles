@@ -150,9 +150,10 @@
   :straight (my-show-indentation :type built-in)
   :bind
   ("M-s M-i" . my-show-indentation-toggle)
-  ("M-s i" . my-show-indentation-global-toggle)
-  :config
-  (my-show-indentation-global-toggle))
+  ;("M-s i" . my-show-indentation-global-toggle)
+  ;:config
+  ;(my-show-indentation-global-toggle)
+  )
 
 (use-package my-misc
   :straight (my-misc :type built-in)
