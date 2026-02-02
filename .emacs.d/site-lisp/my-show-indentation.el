@@ -36,9 +36,43 @@
 
 ;;;###autoload
 (defun my-show-indentation-toggle ()
+  "If `my-show-indentation--show' is not in `post-command-hook', add it, else remove it."
   (interactive)
   (if (member 'my-show-indentation--show post-command-hook) (my-show-indentation--disable)
     (my-show-indentation--enable)))
+
+;;;###autoload
+(defun my-show-indentation-enable ()
+  "Add `my-show-indentation--show' to `post-command-hook'."
+  (interactive)
+  (my-show-indentation--enable))
+
+;;;###autoload
+(defun my-show-indentation-disable ()
+  "Remove `my-show-indentation--show' from `post-command-hook'."
+  (interactive)
+  (my-show-indentation--disable))
+
+;;;###autoload
+(defun my-show-indentation-global-toggle ()
+  "If `my-show-indentation--enable' is not in `buffer-list-update-hook', add it, else remove it."
+  (interactive)
+  (if (member 'my-show-indentation--enable buffer-list-update-hook) (my-show-indentation-global--disable)
+    (my-show-indentation-global--enable)))
+
+(defun my-show-indentation-global--clear-hook ()
+  (remove-hook 'buffer-list-update-hook 'my-show-indentation--enable)
+  (remove-hook 'buffer-list-update-hook 'my-show-indentation--disable))
+
+(defun my-show-indentation-global--disable ()
+  (my-show-indentation-global--clear-hook)
+  (add-hook 'buffer-list-update-hook 'my-show-indentation--disable)
+  (my-show-indentation--disable))
+
+(defun my-show-indentation-global--enable ()
+  (my-show-indentation-global--clear-hook)
+  (add-hook 'buffer-list-update-hook 'my-show-indentation--enable)
+  (my-show-indentation--enable))
 
 (provide 'my-show-indentation)
 ;;; my-show-indentation.el ends here
