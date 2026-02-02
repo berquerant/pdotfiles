@@ -11,6 +11,14 @@
   "My miscellaneous utilities."
   :prefix "my-misc-")
 
+(defun my-misc--current-indentation ()
+  (current-indentation))
+
+;;;###autoload
+(defun my-misc-display-indentation ()
+  (interactive)
+  (popup-tip (format "indentation=%d" (my-misc--current-indentation))))
+
 (defun my-misc--matches-only-spaces (s)
   "Is S the empty string or contain spaces only?"
   (or (s-equals? s "") (s-matches? "^\s *$" s)))

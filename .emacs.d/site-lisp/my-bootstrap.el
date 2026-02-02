@@ -140,6 +140,7 @@
   :commands (my-misc-delete-window-predicates-add
              my-misc-other-window-predicates-add)
   :bind
+  ("M-s i" . my-misc-display-indentation)
   ("M-s M-s 0" . delete-frame)
   ("M-s M-s 1" . my-misc-delete-other-frames)
   ("M-s M-s 2" . clone-frame)
