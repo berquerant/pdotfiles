@@ -10,6 +10,22 @@
 (require 's)
 (require 'my-time)
 
+(defmacro my-macro-setup-repeat-commands (key-configs)
+  "Setup `repeat-mode' for KEY-CONFIGS.
+e.g. (my-setup-repeat-commands ((\">\" mc/mark-next-like-this) (\"<\" mc/mark-previous-like-this)))"
+  (let* ((prefix (symbol-name (gensym "my-setup-repeat-commands-")))
+         (map-name (intern (format "%s-map" prefix))))
+    `(progn
+       (defvar ,map-name
+         (let ((map (make-sparse-keymap)))
+           ,@(mapcar (lambda (config)
+                       `(define-key map (kbd ,(car config)) ',(cadr config)))
+                     key-configs)
+           map))
+       ,@(mapcar (lambda (config)
+                   `(put ',(cadr config) 'repeat-map ',map-name))
+                 key-configs))))
+
 (defmacro my-macro-advice-add-const (f &optional ret)
   "Disable F calls and return const RET."
   (let* ((fname (symbol-name f))

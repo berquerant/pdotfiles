@@ -583,8 +583,10 @@ regarding the asynchronous search and the arguments."
   :demand t
   :after projectile
   :config
-  (bind-key "M-," 'goto-last-change)
-  (bind-key "M-." 'goto-last-change-reverse))
+  (my-macro-setup-repeat-commands (("." goto-last-change)
+                                   ("," goto-last-change-reverse)))
+  (bind-key "C-x ." 'goto-last-change)
+  (bind-key "C-x ," 'goto-last-change-reverse))
 
 ;; completions
 (use-package company
@@ -666,13 +668,8 @@ regarding the asynchronous search and the arguments."
 
 (use-package multiple-cursors
   :config
-  (defvar my-multiple-cursors-repeat-map
-    (let ((map (make-sparse-keymap)))
-      (define-key map (kbd ">") 'mc/mark-next-like-this)
-      (define-key map (kbd "<") 'mc/mark-previous-like-this)
-      map))
-  (put 'mc/mark-next-like-this 'repeat-map 'my-multiple-cursors-repeat-map)
-  (put 'mc/mark-previous-like-this 'repeat-map 'my-multiple-cursors-repeat-map)
+  (my-macro-setup-repeat-commands ((">" mc/mark-next-like-this)
+                                   ("<" mc/mark-previous-like-this)))
   (unbind-key "M-^")
   (bind-key "M-^ ." 'mc/edit-lines)
   (bind-key "M-^ >" 'mc/mark-next-like-this)

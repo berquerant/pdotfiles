@@ -99,7 +99,17 @@
   (bind-key "M-s 8" 'switch-to-buffer-scratch)
   (bind-key "M-s 7" 'switch-to-buffer-other-tab-scratch)
   (bind-key "M-s 6" 'switch-to-buffer-other-window-scratch)
-  (bind-key "M-s 5" 'switch-to-buffer-other-frame-scratch))
+  (bind-key "M-s 5" 'switch-to-buffer-other-frame-scratch)
+  (bind-key "C-x w h" 'shrink-window-horizontally)
+  (bind-key "C-x w j" 'shrink-window)
+  (bind-key "C-x w k" 'enlarge-window)
+  (bind-key "C-x w l" 'enlarge-window-horizontally)
+  (my-macro-setup-repeat-commands (("h" shrink-window-horizontally)
+                                   ("j" shurink-window)
+                                   ("k" enlarge-window)
+                                   ("l" enlarge-window-horizontally)))
+  (my-macro-setup-repeat-commands ((">" next-buffer)
+                                   ("<" previous-buffer))))
 
 ;; important utilities
 
@@ -135,12 +145,17 @@
   ("M-s p" . my-rpath-call)
   ("M-s C-p" . my-rpath-mode-toggle))
 
+(use-package my-show-indentation
+  :demand t
+  :straight (my-show-indentation :type built-in)
+  :bind
+  ("M-s M-i" . my-show-indentation-toggle))
+
 (use-package my-misc
   :straight (my-misc :type built-in)
   :commands (my-misc-delete-window-predicates-add
              my-misc-other-window-predicates-add)
   :bind
-  ("M-s i" . my-misc-display-indentation)
   ("M-s M-s 0" . delete-frame)
   ("M-s M-s 1" . my-misc-delete-other-frames)
   ("M-s M-s 2" . clone-frame)
@@ -211,11 +226,6 @@
 
 (use-package my-time
   :straight (my-time :type built-in))
-
-(bind-key "C-x w h" 'shrink-window-horizontally)
-(bind-key "C-x w j" 'shrink-window)
-(bind-key "C-x w k" 'enlarge-window)
-(bind-key "C-x w l" 'enlarge-window-horizontally)
 
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.
