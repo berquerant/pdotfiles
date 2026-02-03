@@ -27,18 +27,27 @@
 
 (defun my-show-indentation--disable ()
   (remove-hook 'post-command-hook 'my-show-indentation--show t)
+  (my-show-indentation--disable-cleanup))
+
+(defun my-show-indentation--disable-cleanup ()
   (set-window-margins (selected-window) 0)
   (remove-overlays (point-min) (point-max) 'type 'margin-indent))
 
 (defun my-show-indentation--enable ()
   (add-hook 'post-command-hook 'my-show-indentation--show nil t)
+  (my-show-indentation--enable-setup))
+
+(defun my-show-indentation--enable-setup ()
   (my-show-indentation--show))
+
+(defun my-show-indentation--enabled? ()
+  (member 'my-show-indentation--show post-command-hook))
 
 ;;;###autoload
 (defun my-show-indentation-toggle ()
   "If `my-show-indentation--show' is not in `post-command-hook', add it, else remove it."
   (interactive)
-  (if (member 'my-show-indentation--show post-command-hook) (my-show-indentation--disable)
+  (if (my-show-indentation--enabled?) (my-show-indentation--disable)
     (my-show-indentation--enable)))
 
 ;;;###autoload
@@ -53,26 +62,24 @@
   (interactive)
   (my-show-indentation--disable))
 
+(defun my-show-indentation-global--enabled? ()
+  ;; check global post-command-hook
+  (member 'my-show-indentation--show (default-value 'post-command-hook)))
+
 ;;;###autoload
 (defun my-show-indentation-global-toggle ()
-  "If `my-show-indentation--enable' is not in `buffer-list-update-hook', add it, else remove it."
+  "If `my-show-indentation--show' is not in `post-command-hook', add it, else remove it."
   (interactive)
-  (if (member 'my-show-indentation--enable buffer-list-update-hook) (my-show-indentation-global--disable)
+  (if (my-show-indentation-global--enabled?) (my-show-indentation-global--disable)
     (my-show-indentation-global--enable)))
 
-(defun my-show-indentation-global--clear-hook ()
-  (remove-hook 'buffer-list-update-hook 'my-show-indentation--enable)
-  (remove-hook 'buffer-list-update-hook 'my-show-indentation--disable))
-
 (defun my-show-indentation-global--disable ()
-  (my-show-indentation-global--clear-hook)
-  (add-hook 'buffer-list-update-hook 'my-show-indentation--disable)
-  (my-show-indentation--disable))
+  (remove-hook 'post-command-hook 'my-show-indentation--show)
+  (my-show-indentation--disable-cleanup))
 
 (defun my-show-indentation-global--enable ()
-  (my-show-indentation-global--clear-hook)
-  (add-hook 'buffer-list-update-hook 'my-show-indentation--enable)
-  (my-show-indentation--enable))
+  (add-hook 'post-command-hook 'my-show-indentation--show)
+  (my-show-indentation--enable-setup))
 
 (provide 'my-show-indentation)
 ;;; my-show-indentation.el ends here
