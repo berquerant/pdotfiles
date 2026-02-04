@@ -30,6 +30,7 @@ straight=emacs-minimal-init depName=berquerant/emacs-minimal-init datasource=git
 straight=emacs-pet depName=wyuenho/emacs-pet datasource=github-tags value=v4.0.0
 straight=emacs-scala-mode depName=hvesalai/emacs-scala-mode datasource=github-tags value=v1.1.0
 straight=emacs-scroll-util depName=berquerant/emacs-scroll-util datasource=github-tags value=v0.1.0
+straight=emacs-show-indentation depName=berquerant/emacs-show-indentation datasource=github-tags value=0.1.0
 straight=emacs-thread-buffer depName=berquerant/emacs-thread-buffer datasource=github-tags value=0.1.0
 straight=emacs-thread-buffer-chat depName=berquerant/emacs-thread-buffer-chat datasource=github-tags value=0.3.0
 straight=emacs-which-key depName=justbur/emacs-which-key datasource=github-tags value=v3.6.0

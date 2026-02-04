@@ -39,6 +39,7 @@
  ("emacs-reformatter" . "c52e91d5438b9bf16b77b4384822e254f10a6b0a")
  ("emacs-scala-mode" . "46bb948345f165ebffe6ff3116e36a3b8a3f219d")
  ("emacs-scroll-util" . "337ae328ea1d7b8f2a0a9e86d8adf8940e8c9f55")
+ ("emacs-show-indentation" . "e53a51120494496bba984f332d1b07bec21a8598")
  ("emacs-thread-buffer" . "e8082dff8fa802d4c0294b63e2a8f1fc44568e97")
  ("emacs-thread-buffer-chat" . "7cea68d8037c41adacfc87072e6db8636495392f")
  ("emacs-which-key" . "1217db8c6356659e67b35dedd9f5f260c06f6e99")
