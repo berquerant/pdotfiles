@@ -149,10 +149,11 @@
   :demand t
   :straight (show-indentation :host github :repo "berquerant/emacs-show-indentation")
   :bind
-  ("M-s M-i" . show-indentation-toggle)
-  ("M-s i" . show-indentation-global-toggle)
+  ("C-x C-i" . show-indentation-show)
+  ("C-x i" . show-indentation-cleanup)
   :config
-  (show-indentation-global-toggle))
+  (if (display-graphic-p) (show-indentation-global-toggle)
+    (global-show-indentation-show-idle-timer-mode 1)))
 
 (use-package my-misc
   :straight (my-misc :type built-in)
@@ -180,9 +181,9 @@
   :bind
   ("C-x M-r" . my-sticky-buffer-mode))
 
-(use-package my-buffer-change
+(use-package buffer-change
   :demand t
-  :straight (my-buffer-change :type built-in)
+  :straight (buffer-change :host github :repo "berquerant/emacs-buffer-change")
   :config
   (defun my-kick-out-fundamental-mode-hook ()
     "Disable `fundamental-mode' at all times and enable `text-mode' instead."
@@ -193,8 +194,8 @@
     (setq window-size-fixed nil))
   (dolist (f '(my-switch-buffer-functions--flexible-window-size-hook
                my-kick-out-fundamental-mode-hook))
-    (add-to-list 'my-buffer-change-hook f))
-  (my-buffer-change-setup))
+    (add-hook 'buffer-change-hook f))
+  (buffer-change-setup))
 
 (use-package little-async
   :demand t

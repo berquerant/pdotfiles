@@ -23,6 +23,7 @@ straight=dockerfile-mode depName=spotify/dockerfile-mode datasource=github-tags 
 straight=dumb-jump depName=jacktasia/dumb-jump datasource=github-tags value=v0.5.4
 straight=el-get depName=dimitri/el-get datasource=github-tags value=5.1
 straight=ellama depName=s-kostyaev/ellama datasource=github-tags value=1.10.0
+straight=emacs-buffer-change depName=berquerant/emacs-buffer-change datasource=github-tags value=0.1.1
 straight=emacs-idle-timer depName=berquerant/emacs-idle-timer datasource=github-tags value=v0.1.0
 straight=emacs-little-async depName=berquerant/emacs-little-async datasource=github-tags value=v0.2.0
 straight=emacs-message-routing depName=berquerant/emacs-message-routing datasource=github-tags value=0.2.3
@@ -30,7 +31,7 @@ straight=emacs-minimal-init depName=berquerant/emacs-minimal-init datasource=git
 straight=emacs-pet depName=wyuenho/emacs-pet datasource=github-tags value=v4.0.0
 straight=emacs-scala-mode depName=hvesalai/emacs-scala-mode datasource=github-tags value=v1.1.0
 straight=emacs-scroll-util depName=berquerant/emacs-scroll-util datasource=github-tags value=v0.1.0
-straight=emacs-show-indentation depName=berquerant/emacs-show-indentation datasource=github-tags value=0.1.0
+straight=emacs-show-indentation depName=berquerant/emacs-show-indentation datasource=github-tags value=0.3.0
 straight=emacs-thread-buffer depName=berquerant/emacs-thread-buffer datasource=github-tags value=0.1.0
 straight=emacs-thread-buffer-chat depName=berquerant/emacs-thread-buffer-chat datasource=github-tags value=0.3.0
 straight=emacs-which-key depName=justbur/emacs-which-key datasource=github-tags value=v3.6.0

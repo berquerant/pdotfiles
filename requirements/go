@@ -18,4 +18,4 @@ github.com/berquerant/cron2date/cmd/cron2date@v0.3.0
 github.com/berquerant/cron2date/cmd/date2cron@v0.3.0
 github.com/berquerant/cmdcomp/cmd/cmdcomp@v0.0.8
 github.com/google/go-licenses/v2@v2.0.1
-github.com/berquerant/ndql/cmd/ndql@v0.0.5
+github.com/berquerant/ndql/cmd/ndql@v0.0.6

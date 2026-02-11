@@ -746,9 +746,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 ;; spell check
 (use-package flyspell
   :diminish (flyspell-mode . "Fs")
+  :commands (my-flyspell-hook)
   :hook
   ((prog-mode . flyspell-prog-mode)
    ((text-mode markdown-mode gfm-mode) . flyspell-mode))
+  :custom
+  (flyspell-issue-message-flag nil)
+  (flyspell-issue-welcome-flag nil)
+  (flyspell-delay 60)
   :config
   ; for backward-forward
   (unbind-key "C-," flyspell-mode-map)
@@ -1035,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-idle-change-delay 5)
   (flycheck-display-errors-delay 1)
   (flycheck-highlighting-mode 'symbols)
-  (flycheck-check-syntax-automatically (quote (save idle-change mode-enabled)))
+  (flycheck-check-syntax-automatically (quote (save)))
   :config
   (defun my-flycheck-mode-thyristor-switch ()
     "Call `flycheck-mode-thyristor-toggle' and enable/disable `flycheck-mode'."
