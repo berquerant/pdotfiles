@@ -68,6 +68,7 @@ alias mln='${DOTFILES_ROOT}/bin/mln.sh'
 alias drun='${DOTFILES_ROOT}/bin/docker.sh'
 alias rrg='rg --hidden'
 alias dc='${DOTFILES_ROOT}/bin/devcontainer.sh'
+alias grong='${DOTFILES_ROOT}/bin/gron.sh'
 
 if which ndql >/dev/null 2>&1 ; then
     alias nq='ndql query'
