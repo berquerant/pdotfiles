@@ -1,7 +1,6 @@
 #!/bin/zsh
 
 alias kapi='${DOTFILES_ROOT}/bin/k8s-api.sh'
-alias kskeleton='${DOTFILES_ROOT}/bin/k8s-skeleton.sh'
 
 kgetevent() {
     # kgetevent [MINUTE] [KUBECTL_OPT...]
