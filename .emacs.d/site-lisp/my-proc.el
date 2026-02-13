@@ -14,14 +14,13 @@
 (defun my-proc-call-process--insert-buffer (msg)
   (with-current-buffer (get-buffer-create my-proc-call-process-buffer)
     (goto-char (point-max))
-    (insert msg)
-    (insert "\n------------------------------\n\n")))
+    (insert (format "%s\n------------------------------\n\n" msg))))
 
 (defun my-proc-call-process (program &optional dry &rest args)
   "Call PROGRAM synchronously in separate process."
   (my-proc-call-process--insert-buffer
    (if dry (format "my-proc-call-process:dry:%s %s\n" program (s-join " " args))
-     (format "my-proc-call-process:%s %s=> %d\n"
+     (format "\nmy-proc-call-process:%s %s=> %d\n"
              program
              (s-join " " args)
              (apply 'call-process program nil my-proc-call-process-buffer nil args))))

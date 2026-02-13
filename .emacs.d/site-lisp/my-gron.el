@@ -11,9 +11,9 @@
   "Call `my-gron-command' with current buffer."
   (my-proc-call-process my-gron-command
                         nil
-                        (buffer-file-name)
                         ext
-                        pattern)
+                        pattern
+                        (buffer-file-name))
   (display-buffer (get-buffer-create my-proc-call-process-buffer)))
 
 (defmacro my-gron--defun (ext)
