@@ -235,5 +235,8 @@
 (use-package my-time
   :straight (my-time :type built-in))
 
+(use-package my-treesit
+  :straight (my-treesit :type built-in))
+
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

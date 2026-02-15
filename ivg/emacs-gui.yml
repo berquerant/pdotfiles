@@ -10,24 +10,20 @@ shell:
 env:
   _IVG_APP: /Applications/Emacs-GUI.app
   _IVG_BACKUP: "${_IVG_APP}.bk"
-  CFLAGS: >-
-    -I/opt/homebrew/opt/llvm/lib/clang/21/include
-    -I/opt/homebew/include
+  BREW: /opt/homebrew/bin/brew
+  CC: /usr/bin/clang
+  MAC_CFLAGS: >-
     -O2
-    -DFD_SETSIZE=10000
-    -DDARWIN_UNLIMITED_SELECT
-    -I/opt/homebrew/opt/sqlite/include
     -I/opt/homebrew/opt/libgccjit/include
-    -I/opt/homebrew/opt/ncurses/include
-  LDFLAGS: >-
-    -L/opt/homebrew/opt/llvm/lib/clang/21/lib/darwin
-    -L/opt/homebrew/lib
-    -L/opt/homebrew/opt/sqlite/lib
-    -I/opt/homebrew/opt/libgccjit/include
-    -L/opt/homebrew/opt/ncurses/lib
-  CC: >-
-    /opt/homebrew/opt/llvm/bin/clang
-    -std=c23
+    -I/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15/include
+    -I/opt/homebrew/opt/tree-sitter@0.25/include/tree_sitter
+  MAC_LIBS: >-
+    -L/opt/homebrew/opt/libgccjit/lib/gcc/current
+    -L/opt/homebrew/opt/tree-sitter@0.25/lib
+  LIBRARY_PATH: >-
+    /opt/homebrew/lib:/opt/homebrew/opt/libgccjit/lib/gcc/current:/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15:/opt/homebrew/opt/tree-sitter@0.25/lib
+  PKG_CONFIG_PATH: >-
+    /opt/homebrew/opt/tree-sitter@0.25/lib/pkgconfig
 setup:
   - |
     if [ -d "$_IVG_APP" ]; then
@@ -58,7 +54,16 @@ setup:
     gmp
     zlib
     gtk+
+    tree-sitter@0.25
 install:
+  - >-
+    ls -1 |
+    sort -u |
+    while read -r p ; do
+      echo "$p"
+      rm -rf "$p"
+      git checkout -- "$p" | true
+    done
   - ./autogen.sh
   - >-
     ./configure
@@ -67,6 +72,7 @@ install:
     --with-x
     --without-xwidgets
     --with-ns
+    --with-json
     --with-xft
     --with-pgtk
     --with-native-compilation=aot

@@ -7,6 +7,9 @@ export EMACS_GUI="/Applications/Emacs-GUI.app"
 export EMACS_MINIMAL_INIT="${EMACSD}/straight/repos/emacs-minimal-init"
 # for my-open-file.el, emacs-open.sh
 export EMACS_OPEN_FILE_TARGET="${TMPD}/.emacs-open-file-target"
+# for native compile driver
+# for tree-sitter
+export LIBRARY_PATH="${LIBRARY_PATH}:/opt/homebrew/lib:/opt/homebrew/opt/libgccjit/lib/gcc/current:/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15:/opt/homebrew/opt/tree-sitter@0.25/lib"
 
 emacs_gui() {
     if [[ -z "$1" ]] ; then

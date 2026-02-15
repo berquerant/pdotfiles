@@ -1155,6 +1155,8 @@ when (eglot)."
      svelte-mode
      ;; rust-mode
      css-mode
+     json-mode
+     yaml-mode
      terraform-mode
      html-mode) . lsp-deferred)
    (lsp-mode . lsp-lens-mode))
