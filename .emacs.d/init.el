@@ -614,7 +614,7 @@ regarding the asynchronous search and the arguments."
   :custom
   (company-tooltip-maximum-width 50)
   (company-minimum-prefix-length 2)
-  (company-idle-delay 0.7)
+  (company-idle-delay 0.5)
   (company-require-match nil)
   (company-transformers '(company-sort-by-backend-importance))
   (company-selection-wrap-around t)
