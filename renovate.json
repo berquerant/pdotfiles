@@ -114,6 +114,16 @@
       "matchFileNames": [
         "ivg/renovate.lock"
       ]
+    },
+    {
+      "groupName": "emacs-treesit",
+      "addLabels": [
+        "emacs",
+        "treesit"
+      ],
+      "matchFileNames": [
+        ".emacs.d/treesit-language-source-alist.el"
+      ]
     }
   ],
   "customManagers": [
@@ -366,6 +376,17 @@
         "depName=(?<depName>.+) datasource=(?<datasource>[a-z-]+) value=(?<currentValue>.+)"
       ],
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Manage treesit version",
+      "fileMatch": [
+        "^.emacs.d/treesit-language-source-alist.el$"
+      ],
+      "datasourceTemplate": "github-releases",
+      "matchStrings": [
+        "https://github.com/(?<depName>[^\"]+)\" \"(?<currentValue>[^\"]+)\""
+      ]
     }
   ]
 }
