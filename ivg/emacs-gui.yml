@@ -76,7 +76,7 @@ install:
     --with-xft
     --with-pgtk
     --with-native-compilation=aot
-    --without-tree-sitter
+    --with-tree-sitter
     --with-gnutls
     --without-compress-install
     --without-jpeg
