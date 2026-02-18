@@ -63,6 +63,7 @@ brew "crane"
 # kubernetes
 brew "kind"
 brew "helm"
+tap "derailed/k9s"
 brew "derailed/k9s/k9s"
 brew "stern"
 
