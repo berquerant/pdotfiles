@@ -286,9 +286,9 @@ Install rust.
 
 ``` shell
 if which rustup > /dev/null ; then
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-else
   rustup self update
+else
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 ./install r rust
 ```

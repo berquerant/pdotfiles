@@ -64,6 +64,9 @@ install:
       rm -rf "$p"
       git checkout -- "$p" | true
     done
+  - |
+    sudo mkdir -p /usr/local/share
+    sudo chown $(whoami) /usr/local/share
   - ./autogen.sh
   - >-
     ./configure
