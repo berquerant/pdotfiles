@@ -8,6 +8,7 @@ shell:
   - "--arm64e"
   - "/bin/bash"
 env:
+  MAKE_JOBS: 3
   BREW: /opt/homebrew/bin/brew
   CC: /usr/bin/clang
   MAC_CFLAGS: >-
@@ -84,7 +85,7 @@ install:
     --without-cairo
     --without-imagemagick
     --disable-silent-rules
-  - gmake V=1 -j3 bootstrap
-  - gmake V=1 -j3
-  - gmake V=1 -j3 install
+  - gmake V=1 -j${MAKE_JOBS} bootstrap
+  - gmake V=1 -j${MAKE_JOBS}
+  - gmake V=1 -j${MAKE_JOBS} install
   - /usr/local/bin/emacs --version
