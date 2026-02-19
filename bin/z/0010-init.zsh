@@ -10,7 +10,7 @@ alias_shortest() {
 alias -s sh=sh
 if type eza >/dev/null 2>&1 ; then
     alias ls='eza'
-    export EXA_COLORS="da=01:37" # date, white
+    export EZA_COLORS="da=37;1" # date, white, bold
 fi
 if type hexyl >/dev/null 2>&1 ; then
     alias od='hexyl'
