@@ -420,7 +420,7 @@ curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 Verify [golangci-lint](https://github.com/golangci/golangci-lint).
 
 ``` shell
-golangci-lint config verify -v
+# golangci-lint config verify -v
 ln -snvf "${DOTFILES_ROOT}/bin/flycheck-golangci-lint.sh" /usr/local/bin/flycheck-golangci-lint.sh
 ```
 
