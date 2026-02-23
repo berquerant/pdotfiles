@@ -1,0 +1,9 @@
+base:
+  - template:TEMPLATE
+cpus: 2
+memory: 2GiB
+disk: 30GiB
+mounts: []
+containerd:
+  system: true
+  user: false

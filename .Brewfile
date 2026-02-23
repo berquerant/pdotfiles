@@ -60,6 +60,9 @@ brew "lazydocker"
 brew "dive"
 brew "crane"
 
+# container
+brew "lima"
+
 # kubernetes
 brew "kind"
 brew "helm"

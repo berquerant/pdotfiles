@@ -1,4 +1,4 @@
-eslint@9.39.2
+eslint@10.0.0
 csslint@1.0.5
 typescript@5.9.3
 typescript-eslint@8.54.0
@@ -12,4 +12,4 @@ textlint-rule-common-misspellings@1.0.1
 textlint-rule-write-good@2.0.0
 textlint-rule-en-capitalization@2.0.3
 yaml-language-server@1.19.2
-@devcontainers/cli@0.82.0
+@devcontainers/cli@0.83.0

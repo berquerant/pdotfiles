@@ -73,3 +73,6 @@ alias grong='${DOTFILES_ROOT}/bin/gron.sh'
 if which ndql >/dev/null 2>&1 ; then
     alias nq='ndql query'
 fi
+if which limactl >/dev/null 2>&1 ; then
+    alias limad='${DOTFILES_ROOT}/lima.sh'
+fi

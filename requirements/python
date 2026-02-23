@@ -1,4 +1,4 @@
-pylsp-mypy==0.7.0
+pylsp-mypy==0.7.1
 python-lsp-black==2.0.0
 pylsp-rope==0.1.17
 pycodestyle==2.14.0
