@@ -25,6 +25,7 @@ clean_go() {
         __run goenv uninstall -f "$version"
     done
     find "$GOPATH" -type d -maxdepth 1 -depth 1 | grep -v -E "${GO_VERSION}$" | sort | while read -r x ; do
+        du -sh "$x"
         cecho yellow "DELETE ${x}"
         __run sudo rm -rf "$x"
     done
@@ -37,6 +38,7 @@ clean_python() {
     done
     local -r venvs="${HOME}/.local/share/virtualenvs"
     find "$venvs" -depth 1 -delete | while read -r x ; do
+        du -sh "$x"
         __run rm -rf "$x"
     done
     __run uv cache prune
@@ -60,6 +62,7 @@ clean_node() {
 }
 
 clean_etc() {
+    du -sh "$TMPD"
     __run rm -rf "$TMPD"
 }
 
@@ -79,7 +82,7 @@ run() {
 main() {
     if [ -z "$1" ] ; then
         cecho green "${0##*/} TARGET [TARGET...]"
-        cecho green "TARGET: go|python|ruby|node|brew|docker|etc"
+        cecho green "TARGET: go|python|ruby|node|brew|docker|etc|all"
         cecho green "dryrun if envvar DEBUG is not empty"
         return 1
     fi
