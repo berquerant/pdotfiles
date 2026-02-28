@@ -10,7 +10,6 @@ shell:
 env:
   _IVG_APP: /Applications/Emacs-GUI.app
   _IVG_BACKUP: "${_IVG_APP}.bk"
-  MAKE_JOBS: 3
   BREW: /opt/homebrew/bin/brew
   CC: /usr/bin/clang
   MAC_CFLAGS: >-
@@ -101,6 +100,7 @@ install:
     --without-lcms2
     --without-cairo
     --disable-silent-rules
+  - export MAKE_JOBS=$(($(sysctl -n hw.logicalcpu)/2))
   - gmake V=1 -j${MAKE_JOBS} bootstrap
   - gmake V=1 -j${MAKE_JOBS}
   - gmake V=1 -j${MAKE_JOBS} install
