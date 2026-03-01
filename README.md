@@ -246,24 +246,6 @@ Apply [renovate.lock](ivg/renovate.lock).
 bin/renovate-ivg.sh lock
 ```
 
-## emacs-renovate-gen
-
-After `straight-freeze-versions`, generate [renovate.lock](.emacs.d/renovate.lock).
-
-``` shell
-bin/emacs-renovate.sh gen
-```
-
-## emacs-straight-lock
-
-Apply [renovate.lock](.emacs.d/renovate.lock) to [straight-default.el](.emacs.d/straight-default.el).
-
-``` shell
-bin/emacs-renovate.sh lock -c
-```
-
-then, `straight-thaw-versions`.
-
 ## emacs-clean
 
 Requires: emacs-clean-cache, emacs-clean-straight
@@ -365,7 +347,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, ip2bin, semv, emacs-straight-renovate, rnv, json2dot
+Requires: awkfmt, textlinter, golangci-lint, uv, ip2bin, semv, rnv, json2dot
 
 ## json2dot
 
@@ -381,14 +363,6 @@ Install [rnv](https://github.com/berquerant/rnv).
 
 ``` shell
 cargo install --git https://github.com/berquerant/rnv --tag ${RNV_VERSION}
-```
-
-## emacs-straight-renovate
-
-Install [emacs-straight-renovate](https://github.com/berquerant/emacs-straight-renovate).
-
-``` shell
-pip install git+https://github.com/berquerant/emacs-straight-renovate.git@${EMACS_STRAIGHT_RENOVATE_VERSION}
 ```
 
 ## semv

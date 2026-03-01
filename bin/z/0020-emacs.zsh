@@ -55,10 +55,6 @@ emacs_batch() {
     etoggle "${DOTFILES_ROOT}/bin/emacs-batch.sh" "$@"
 }
 
-emacs_package() {
-    etoggle "${DOTFILES_ROOT}/bin/emacs-package.sh" "$@"
-}
-
 # vterm https://github.com/akermu/emacs-libvterm
 vterm_printf() {
     if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ]); then

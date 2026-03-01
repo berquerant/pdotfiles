@@ -1063,6 +1063,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     (flycheck-popup-tip-mode)))
 
 (use-package eglot
+  :straight (eglot :type built-in)
   :hook
   (((python-mode
      ruby-mode
@@ -1361,7 +1362,6 @@ when (eglot)."
                             ("^DEBUG" . "*routed-debug-log*")
                             ("^my-popup-tip" . "*my-tips*")
                             ("^my-pos-tip" . "*my-tips*")
-                            ("^my-straight" . "*my-straight*")
                             ("^my-rpath" . "*my-rpath*")
                             ("^my-macro-advice-add-debug" . "*my-macro-advice-add-debug*")))
   :config
@@ -1375,21 +1375,12 @@ when (eglot)."
   (advice-add 'pos-tip-show :around 'my-pos-tip-show-message-advice)
   (message-routing-setup))
 
-(use-package my-straight
-  :straight (my-straight :type built-in)
-  :custom
-  (my-straight-profile-path my-straight-profile)
-  (my-straight-dir-path my-straight-directory))
-
 (use-package my-open-file
   :straight (my-open-file :type built-in)
   :bind
   ("M-g f" . my-open-file-find)
   :custom
   (my-open-file-target (my-getenv "EMACS_OPEN_FILE_TARGET")))
-
-(use-package my-external
-  :straight (my-external :type built-in))
 
 (message "init.el loaded.")
 ;;; init.el ends here

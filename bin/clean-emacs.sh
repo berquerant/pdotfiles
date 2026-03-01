@@ -10,18 +10,11 @@ delete_cache() {
 delete_straight_package() {
     local -r _d="$EMACSD"
     local -r _pkg="$1"
-
-    local -r _sd="${_d}/straight"
-    local -r _sdbackup="${_sd}.bk"
+    stride prune repo "$_pkg" --debug
     if [ -z "$_pkg" ] ; then
-        set -x
-        rm -rf "$_sdbackup"
-        mv "$_sd" "$_sdbackup"
-        set +x
+        stride prune repo --all
     else
-        set -x
-        rm -rf "${_sd}/build/${_pkg}" "${_sd}/modified/${_pkg}" "${_sd}/repos/${_pkg}"
-        set +x
+        stride prune repo "$_pkg" --debug
     fi
 }
 
