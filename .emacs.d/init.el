@@ -699,11 +699,9 @@ regarding the asynchronous search and the arguments."
   :diminish (smartparens-mode . "")
   :demand t
   :config
+  (require 'smartparens-config)
   (ad-disable-advice 'delete-backward-char 'before 'sp-delete-pair-advice)
   (ad-activate 'delete-backward-char)
-  (sp-local-pair '(emacs-lisp-mode) "'" "'" :actions nil) ; disable right ' completion
-  (sp-local-pair '(emacs-lisp-mode) "`" "`" :actions nil) ; disable right ` completion
-  (sp-local-pair '(plantuml-mode) "'" "'" :actions nil) ; disable right ' completion
   (smartparens-global-mode t)
   (show-smartparens-global-mode t))
 
