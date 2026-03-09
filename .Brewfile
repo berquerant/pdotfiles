@@ -53,6 +53,7 @@ brew "gh"
 brew "pinact"
 brew "actionlint"
 brew "ghalint"
+brew "zizmor"
 
 # docker
 brew "hadolint"
