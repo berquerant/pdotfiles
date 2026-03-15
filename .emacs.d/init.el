@@ -1186,7 +1186,7 @@ when (eglot)."
   (lsp-enable-xref t)
   (lsp-enable-indentation nil)
   (lsp-enable-completion-at-point t)
-  (lsp-enable-on-type-formatting t)
+  (lsp-enable-on-type-formatting nil)
   (lsp-enable-text-document-color t)
   (lsp-enable-file-watchers t)
   (lsp-inlay-hint-enable t)
@@ -1287,49 +1287,6 @@ when (eglot)."
   :config
   (diff-hl-mode)
   (diff-hl-flydiff-mode))
-
-(use-package backward-forward
-  :demand t
-  :after (consult deadgrep with-editor)
-  :bind
-  ("C-," . backward-forward-previous-location)
-  ("C-." . backward-forward-next-location)
-  :config
-  (defun my-backward-forward-clear-mark-ring ()
-    (interactive)
-    (setq backward-forward-mark-ring nil))
-  (defun my-backward-forward-push-mark (orig-func &rest args)
-    (let* ((before-buffer-name (buffer-name))
-           (before-point (point))
-           (result (apply orig-func args))
-           (after-buffer-name (buffer-name))
-           (after-point (point)))
-      (message "DEBUG [my-backward-forward-push-mark] %s %d -> %s %d"
-               before-buffer-name before-point
-               after-buffer-name after-point)
-      result))
-  (cl-loop for x in '(deadgrep
-                      find-file
-                      project-find-file
-                      project-find-regexp
-                      consult-project-buffer
-                      consult-buffer
-                      consult-imenu
-                      consult-goto-line
-                      consult-ghq-find
-                      consult-ghq-grep
-                      consult-line
-                      consult-line-multi
-                      consult-git-grep
-                      beginning-of-buffer
-                      end-of-buffer
-                      isearch-forward
-                      isearch-backward
-                      xref-go-back
-                      xref-find-references
-                      xref-find-definitions)
-           do (advice-add x :around 'my-backward-forward-push-mark))
-  (backward-forward-mode t))
 
 (use-package indent-guide
   :custom
