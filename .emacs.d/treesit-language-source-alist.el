@@ -6,7 +6,7 @@
  (go . ("https://github.com/tree-sitter/tree-sitter-go" "v0.25.0"))
  (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.25.0"))
  (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.24.8"))
- (markdown . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown" "v0.5.2" "tree-sitter-markdown/src"))
+ (markdown . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown" "v0.5.3" "tree-sitter-markdown/src"))
  (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.24.2" "php/src"))
  (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.25.0"))
  (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby" "v0.23.1"))
