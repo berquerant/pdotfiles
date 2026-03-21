@@ -164,7 +164,6 @@
   ("M-s M-s 1" . my-misc-delete-other-frames)
   ("M-s M-s 2" . clone-frame)
   ("C-t" . my-misc-other-window)
-  ("C-T" . my-misc-other-window-reverse)
   ("C-x 1" . my-misc-delete-other-windows)
   ("M-s C-e" . my-misc-pp-macroexpand-1-last-sexp)
   ("M-s C-M-e" . my-misc-pp-macroexpand-all-last-sexp)

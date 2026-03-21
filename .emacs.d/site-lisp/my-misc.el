@@ -40,10 +40,9 @@
   (interactive)
   (pp (macroexpand-all (elisp--preceding-sexp))))
 
-(defcustom my-misc-other-window-prediates nil
+(defvar my-misc-other-window-prediates nil
   "List of functions: window to bool.
-Return t means that the window is selectable by `other-window'."
-  :type '(repeat function))
+Return t means that the window is selectable by `other-window'.")
 
 (defun my-misc--other-window-selectable (window)
   (select-window window)

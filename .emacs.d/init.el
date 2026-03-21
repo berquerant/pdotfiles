@@ -235,14 +235,13 @@
 
   (defun my-treemacs-delete-other-window-predicate (window)
     "Prevent WINDOW from `delete-other-windows'."
-    (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
+    (not (s-contains? "Treemacs" (buffer-name (window-buffer window)))))
   (my-misc-delete-window-predicates-add 'my-treemacs-delete-other-window-predicate)
 
   (defun my-treemacs-other-window-predicate (window)
     "Prevent WINDOW from `other-window'."
-    (not (string-match-p "Treemacs-Scoped-Buffer" (buffer-name (window-buffer window)))))
+    (not (s-contains? "Treemacs" (buffer-name (window-buffer window)))))
   (my-misc-other-window-predicates-add 'my-treemacs-other-window-predicate)
-
   (treemacs-git-commit-diff-mode 1)
   (treemacs-follow-mode -1)
   (treemacs-tag-follow-mode -1)
