@@ -22,3 +22,4 @@ github.com/berquerant/ndql/cmd/ndql@v0.0.9
 github.com/berquerant/emacs-straight-stride/cmd/stride@v0.0.6
 github.com/loov/goda@v0.9.3
 github.com/Zxilly/go-size-analyzer/cmd/gsa@v1.11.0
+github.com/hashicorp/hcl/v2/cmd/hclfmt@v2.24.0

@@ -33,6 +33,7 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
 
 (defconst my-reformatter-formatter-major-mode2lang
   '((php-mode "php")
+    (hcl-mode "hcl")
     (typescript-mode "typescript")
     (typescript-tsx-mode "typescript")
     (tsx-ts-mode "tsx")
@@ -59,6 +60,7 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
 
 (defconst my-reformatter-formatter-lang2names
   '(("php" "php")
+    ("hcl" "hcl")
     ("typescript" "ts")
     ("javascript" "js")
     ("tsx" "ts")
@@ -222,6 +224,13 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
   :program "taplo"
   :args `("format" "--colors" "never" "-")
   :lighter " RFtoml")
+
+;; hcl
+;; https://github.com/hashicorp/hcl/tree/main/cmd/hclfmt
+(reformatter-define my-reformatter-hcl-format
+  :program "hclfmt"
+  :args `(,input-file)
+  :lighter " RFhcl")
 
 (provide 'my-reformatter)
 ;;; my-reformatter.el ends here
