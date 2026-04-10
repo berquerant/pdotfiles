@@ -22,6 +22,7 @@ source "${DOTFILES_ROOT}/bin/common.sh"
 source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 
 # go
+export GOENV_PATH_ORDER=front
 eval "$(goenv init -)"
 export PATH="$PATH:$GOENV_ROOT/bin"
 export PATH="$PATH:$GOPATH/bin"
