@@ -10,7 +10,7 @@
  (php . ("https://github.com/tree-sitter/tree-sitter-php" "v0.24.2" "php/src"))
  (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.25.0"))
  (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby" "v0.23.1"))
- (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.24.0"))
+ (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.24.2"))
  (scala . ("https://github.com/tree-sitter/tree-sitter-scala" "v0.25.0"))
  ; (sql . ("https://github.com/DerekStride/tree-sitter-sql" "v0.3.11" "src"))
  (toml . ("https://github.com/tree-sitter-grammars/tree-sitter-toml" "v0.7.0"))

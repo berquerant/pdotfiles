@@ -11,12 +11,14 @@ __run() {
 }
 
 clean_docker() {
-    __run docker system prune --force --filter 'until=168h'
-    __run docker volume prune --force
+    __run docker system prune -a --force --filter 'until=120h'
+    __run docker builder prune -a --force --filter 'until=120h'
+    __run docker volume prune -a --force
+    __run docker system df -v
 }
 
 clean_brew() {
-    __run brew cleanup --prune 7
+    __run brew cleanup --prune 5
 }
 
 clean_go() {
@@ -29,6 +31,8 @@ clean_go() {
         cecho yellow "DELETE ${x}"
         __run sudo rm -rf "$x"
     done
+    du -sh "$(go env GOCACHE)"
+    go clean -cache -testcache
 }
 
 clean_python() {
@@ -64,6 +68,7 @@ clean_node() {
 clean_etc() {
     du -sh "$TMPD"
     __run rm -rf "$TMPD"
+    mkdir -p "$TMPD"
 }
 
 run() {

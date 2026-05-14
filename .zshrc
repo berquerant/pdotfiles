@@ -52,6 +52,7 @@ export PATH="$CARGO_HOME/bin:$PATH"
 # node
 source "$NVM_DIR/nvm.sh"
 export PATH="$PNPM_HOME:$PATH"
+export PATH="$PNPM_HOME/bin:$PATH"
 load_node() {
     nvm use "$NODE_VERSION"
     node --version

@@ -47,6 +47,9 @@
   (my--revert-buffer))
 
 (defalias 'binary-mode 'hexl-mode)
+(add-hook 'sh-mode-hook
+          (lambda ()
+            (setq sh-basic-offset 2)))
 
 (bind-keys :map global-map
            ([?\¥] . [?\\])
@@ -134,7 +137,7 @@
 (use-package my-git-browse
   :straight (my-git-browse :type built-in)
   :bind
-  ("M-g G" . my-git-browse-git-browse))
+  ("M-g 9" . my-git-browse-git-browse))
 
 (use-package idle-timer
   :demand t
