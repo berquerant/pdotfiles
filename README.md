@@ -216,8 +216,6 @@ git submodule update --remote
 
 Update brew and formulae.
 
-Env: INSTALL_BREW_NO_INIT=1
-
 ``` shell
 bin/install-brew.sh
 ```
@@ -470,20 +468,6 @@ bin/install-via-git-bulk.sh --retry < targets/additional
 
 ## additional-tools
 
-Requires: metafind, local-jukebox
-
-## metafind
-
-Install [metafind](https://github.com/berquerant/metafind).
-
 ``` shell
-go install "github.com/berquerant/metafind/cmd/mf@${METAFIND_VERSION}"
-```
-
-## local-jukebox
-
-Install [local-jukebox](https://github.com/berquerant/local-jukebox).
-
-``` shell
-go install "github.com/berquerant/local-jukebox/cmd/jukebox@${LOCAL_JUKEBOX_VERSION}"
+echo noop
 ```

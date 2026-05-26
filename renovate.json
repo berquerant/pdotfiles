@@ -153,30 +153,6 @@
     },
     {
       "customType": "regex",
-      "description": "Manage local-jukebox version",
-      "fileMatch": [
-        "^.env$"
-      ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "berquerant/local-jukebox",
-      "matchStrings": [
-        "LOCAL_JUKEBOX_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-      ]
-    },
-    {
-      "customType": "regex",
-      "description": "Manage metafind version",
-      "fileMatch": [
-        "^.env$"
-      ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "berquerant/metafind",
-      "matchStrings": [
-        "METAFIND_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-      ]
-    },
-    {
-      "customType": "regex",
       "description": "Manage semv version",
       "fileMatch": [
         "^.env$"

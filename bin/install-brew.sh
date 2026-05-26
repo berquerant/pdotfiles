@@ -38,9 +38,6 @@ brew update
 brew upgrade
 
 message "Install tools"
-if [ -z "$INSTALL_BREW_NO_INIT" ] ; then
-    brew bundle --file "${d}/.Brewfile.init"
-fi
 
 export HOMEBREW_BUNDLE_FILE_GLOBAL="${d}/.Brewfile"
 brew bundle --global
