@@ -7,4 +7,3 @@ cargo-make@0.37.24
 cargo-audit@0.22.0
 cargo-deny@0.19.0
 cargo-generate@0.23.4
-twiggy@0.8.0

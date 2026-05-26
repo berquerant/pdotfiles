@@ -142,11 +142,6 @@
 (use-package idle-timer
   :demand t
   :straight (idle-timer :host github :repo "berquerant/emacs-idle-timer"))
-(use-package my-rpath
-  :straight (my-rpath :type built-in)
-  :bind
-  ("M-s p" . my-rpath-call)
-  ("M-s C-p" . my-rpath-mode-toggle))
 
 (use-package show-indentation
   :demand t

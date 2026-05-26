@@ -1316,7 +1316,6 @@ when (eglot)."
                             ("^DEBUG" . "*routed-debug-log*")
                             ("^my-popup-tip" . "*my-tips*")
                             ("^my-pos-tip" . "*my-tips*")
-                            ("^my-rpath" . "*my-rpath*")
                             ("^my-macro-advice-add-debug" . "*my-macro-advice-add-debug*")))
   :config
   (defun my-popup-tip-message-advice (orig-func &rest args)
