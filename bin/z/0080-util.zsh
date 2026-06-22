@@ -55,8 +55,6 @@ alias ysort='yq --prettyPrint "sort_keys(..)"'
 alias edot='${DOTFILES_ROOT}/bin/dot.sh'
 alias unzip_via_ditto='ditto -V -x -k --sequesterRsrc'
 
-source "${DOTFILES_ROOT}/bin/cache.sh"
-
 reload_tmpd() {
     rm -rf "$TMPD"
     mkdir -p "$TMPD"

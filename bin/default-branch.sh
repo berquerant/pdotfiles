@@ -1,14 +1,11 @@
 #!/bin/bash
 
-d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
-. "${d}/bin/cache.sh"
-
 __default_branch() {
     git default-branch
 }
 
 default_branch() {
-    cache_function __default_branch "$PWD" 86400
+    __default_branch "$PWD" 86400
 }
 
 switch_branch() {

@@ -175,14 +175,6 @@ customManagers:
     datasourceTemplate: "github-tags"
     depNameTemplate: "nodejs/node"
   - customType: "regex"
-    description: "Manage go version"
-    fileMatch: *envFiles
-    matchStrings:
-      - "export GO_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-    datasourceTemplate: "github-tags"
-    depNameTemplate: "golang/go"
-    extractVersionTemplate: "^go(?<version>\\d+\\.\\d+\\.\\d+)$" # remove prefix `go` from datasource
-  - customType: "regex"
     description: "Manage ruby version"
     fileMatch: *envFiles
     matchStrings:

@@ -33,9 +33,6 @@ install_python() {
 }
 
 install_go() {
-    set +e
-    brew uninstall go
-    set -e
     __install_from_lines "$1" go install
 }
 

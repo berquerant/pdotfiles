@@ -283,19 +283,6 @@
     },
     {
       "customType": "regex",
-      "description": "Manage go version",
-      "fileMatch": [
-        "^.env$"
-      ],
-      "matchStrings": [
-        "export GO_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "golang/go",
-      "extractVersionTemplate": "^go(?<version>\\d+\\.\\d+\\.\\d+)$"
-    },
-    {
-      "customType": "regex",
       "description": "Manage ruby version",
       "fileMatch": [
         "^.env$"
