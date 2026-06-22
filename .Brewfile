@@ -132,6 +132,3 @@ brew "fx"
 brew "gron"
 brew "taplo" # formatter
 brew "dasel"
-
-# ai
-brew "gemini-cli"
