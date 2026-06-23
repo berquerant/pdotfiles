@@ -4,7 +4,6 @@ zload() {
     source "${DOTFILES_ROOT}/.env"
     export CMACSD="${HOME}/.cmacs.d"
     export TMPD="${HOME}/tmp"
-    export GOENV_ROOT="${HOME}/.goenv"
     export GOPATH="${HOME}/go"
     export PYENV_ROOT="${HOME}/.pyenv"
     export RBENV_ROOT="${HOME}/.rbenv"

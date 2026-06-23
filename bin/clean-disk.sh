@@ -22,15 +22,6 @@ clean_brew() {
 }
 
 clean_go() {
-    goenv versions | grep -vE "${GO_VERSION}|system" | while read -r version ; do
-        cecho yellow "UNINSTALL go ${version}"
-        __run goenv uninstall -f "$version"
-    done
-    find "$GOPATH" -type d -maxdepth 1 -depth 1 | grep -v -E "${GO_VERSION}$" | sort | while read -r x ; do
-        du -sh "$x"
-        cecho yellow "DELETE ${x}"
-        __run sudo rm -rf "$x"
-    done
     du -sh "$(go env GOCACHE)"
     go clean -cache -testcache
 }

@@ -22,7 +22,6 @@ source "${DOTFILES_ROOT}/bin/common.sh"
 source "${DOTFILES_ROOT}/bin/zload.zsh" && zload
 
 # go
-export GOENV_PATH_ORDER=front
 export PATH="$PATH:$GOPATH/bin"
 load_go() {
     go version

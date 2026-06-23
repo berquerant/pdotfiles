@@ -281,11 +281,19 @@ Uninstall rust.
 rustup self uninstall -y
 ```
 
+## go
+
+Install go.
+
+``` shell
+./install r go
+```
+
 ## sub
 
 Install sub dependencies.
 
-Requires: rust
+Requires: rust, go, ivg-lock
 
 ``` shell
 bin/install-target-bulk.sh < targets/sub
@@ -295,7 +303,7 @@ bin/install-target-bulk.sh < targets/sub
 
 Install sub dependencies.
 
-Requires: rust, ivg-lock
+Requires: rust, go, ivg-lock
 
 ``` shell
 # bin/install-target-bulk.sh --update < targets/sub
@@ -306,7 +314,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 
 Install sub dependencies.
 
-Requires: rust
+Requires: rust, go ivg-lock
 
 ``` shell
 bin/install-target-bulk.sh --retry < targets/sub

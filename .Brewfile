@@ -64,6 +64,7 @@ brew "crane"
 
 # container
 brew "lima"
+brew "colima"
 
 # kubernetes
 brew "kind"
