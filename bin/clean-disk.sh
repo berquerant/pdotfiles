@@ -40,10 +40,7 @@ clean_python() {
 }
 
 clean_ruby() {
-    rbenv versions | grep -vE "${RB_VERSION}|system" | while read -r version ; do
-        cecho yellow "UNINSTALL ruby ${version}"
-        __run rbenv uninstall -f "$version"
-    done
+    echo >&2 "clean_ruby: noop"
 }
 
 clean_node() {

@@ -232,6 +232,8 @@ yq -o json renovate.yml > renovate.json
 
 Generate [renovate.lock](ivg/renovate.lock).
 
+Requires: rnv
+
 ``` shell
 bin/renovate-ivg.sh gen
 ```
@@ -239,6 +241,8 @@ bin/renovate-ivg.sh gen
 ## ivg-lock
 
 Apply [renovate.lock](ivg/renovate.lock).
+
+Requires: rnv
 
 ``` shell
 bin/renovate-ivg.sh lock
@@ -289,11 +293,19 @@ Install go.
 ./install r go
 ```
 
+## ruby
+
+Install ruby.
+
+``` shell
+./install r ruby
+```
+
 ## sub
 
 Install sub dependencies.
 
-Requires: rust, go, ivg-lock
+Requires: rust, go, ruby, ivg-lock
 
 ``` shell
 bin/install-target-bulk.sh < targets/sub
@@ -303,7 +315,7 @@ bin/install-target-bulk.sh < targets/sub
 
 Install sub dependencies.
 
-Requires: rust, go, ivg-lock
+Requires: rust, go, ruby, ivg-lock
 
 ``` shell
 # bin/install-target-bulk.sh --update < targets/sub
@@ -314,7 +326,7 @@ bin/install-target-bulk.sh --retry < targets/sub
 
 Install sub dependencies.
 
-Requires: rust, go ivg-lock
+Requires: rust, go, ruby, ivg-lock
 
 ``` shell
 bin/install-target-bulk.sh --retry < targets/sub
@@ -353,7 +365,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, ip2bin, semv, rnv, json2dot
+Requires: awkfmt, textlinter, golangci-lint, uv, ip2bin, semv, json2dot
 
 ## json2dot
 

@@ -6,7 +6,6 @@ zload() {
     export TMPD="${HOME}/tmp"
     export GOPATH="${HOME}/go"
     export PYENV_ROOT="${HOME}/.pyenv"
-    export RBENV_ROOT="${HOME}/.rbenv"
     export NVM_DIR="${HOME}/.nvm"
     export NPM_ROOT="${HOME}/.npm"
     export PNPM_HOME="${HOME}/.pnpm"

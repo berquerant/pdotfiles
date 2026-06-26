@@ -14,8 +14,14 @@ generate() {
 }
 
 apply() {
+    local __rdir
     cut -d " " -f 1 "$lock_file" | cut -d "=" -f 2 | while read -r id ; do
-        rnv "${repos}/${id}" lock < "$lock_file" > "${locks}/${id}.lock"
+        __rdir="${repos}/${id}"
+        if [[ ! -d "$rdir" ]] ; then
+          echo >&2 "Skip ${rdir}, ${rdir} is not found"
+          continue
+        fi
+        rnv "$rdir" lock < "$lock_file" > "${locks}/${id}.lock"
     done
 }
 

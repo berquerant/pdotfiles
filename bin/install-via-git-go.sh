@@ -3,7 +3,7 @@
 set -xe
 
 readonly goos="darwin"
-readonly goarch="amd64"
+readonly goarch="arm64"
 readonly location="/usr/local/bin/install-via-git"
 readonly ref="0.19.3"
 readonly url="https://github.com/berquerant/install-via-git-go/releases/download/v${ref}/install-via-git_${ref}_${goos}_${goarch}"

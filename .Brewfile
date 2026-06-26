@@ -1,4 +1,5 @@
 brew "go"
+brew "ruby"
 brew "direnv" # .envrc
 brew "gettext"
 brew "nkf"

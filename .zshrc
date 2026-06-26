@@ -37,9 +37,7 @@ load_python() {
 # ruby
 export PATH="$RBENV_ROOT/bin:$PATH"
 export PATH="$(gem environment gemdir)/bin:$PATH"
-eval "$(rbenv init - zsh)"
 load_ruby() {
-    rbenv shell "$RB_VERSION"
     ruby -v
 }
 # rust
