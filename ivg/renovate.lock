@@ -7,3 +7,4 @@ straight=open-webui-settings depName=berquerant/open-webui-settings datasource=g
 straight=emacs-cui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.2
 straight=emacs-gui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.2
 straight=docker-debian-emacs depName=berquerant/docker-debian-emacs datasource=github-tags value=v0.3.0
+straight=jarvis depName=open-jarvis/OpenJarvis datasource=github-releases value=v1.0.0

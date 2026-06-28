@@ -171,25 +171,15 @@ Topic:
   ;; end templates
   ;;
   (ellama-provider
-   (make-llm-gemini
-    :key (my-getenv "GEMINI_API_KEY")
-    :chat-model "gemini-2.5-flash")
    (make-llm-ollama
-    :chat-model "gemma3:4b"
+    :chat-model "gemma4:12b"
     :embedding-model "nomic-embed-text"
-    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 128)))))
+    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 256)))))
   (ellama-coding-provider
    (make-llm-ollama
-    :chat-model "qwen2.5-coder:3b"
+    :chat-model "qwen3.5:9b"
     :embedding-model "nomic-embed-text"
-    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 32)))))
-  (ellama-translation-provider
-   (make-llm-ollama
-    :chat-model "aya:8b"
-    :embedding-model "nomic-embed-text"
-    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 8)))))
-  (ellama-providers '(("gpt-4o-mini" . (make-llm-ollama :chat-model "gpt-4o-mini"
-                                                        :embedding-model "nomic-embed-text")))))
+    :default-chat-non-standard-params `(("num_ctx" . ,(* (expt 2 10) 256))))))
 
 (provide 'my-ai)
 ;;; my-ai.el ends here

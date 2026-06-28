@@ -17,11 +17,11 @@ apply() {
     local __rdir
     cut -d " " -f 1 "$lock_file" | cut -d "=" -f 2 | while read -r id ; do
         __rdir="${repos}/${id}"
-        if [[ ! -d "$rdir" ]] ; then
-          echo >&2 "Skip ${rdir}, ${rdir} is not found"
+        if [[ ! -d "$__rdir" ]] ; then
+          echo >&2 "Skip ${__rdir}, ${__rdir} is not found"
           continue
         fi
-        rnv "$rdir" lock < "$lock_file" > "${locks}/${id}.lock"
+        rnv "$__rdir" lock < "$lock_file" > "${locks}/${id}.lock"
     done
 }
 

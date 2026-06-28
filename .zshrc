@@ -6,7 +6,7 @@ if [[ -x /opt/homebrew/bin/brew ]] ; then
     compinit
 fi
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
-export PATH="~/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 export ZPLUG_HOME=$(brew --prefix zplug)
 source $ZPLUG_HOME/init.zsh
