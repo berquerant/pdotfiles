@@ -8,3 +8,4 @@ straight=emacs-cui depName=emacs-mirror/emacs datasource=github-tags value=emacs
 straight=emacs-gui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.2
 straight=docker-debian-emacs depName=berquerant/docker-debian-emacs datasource=github-tags value=v0.3.0
 straight=jarvis depName=open-jarvis/OpenJarvis datasource=github-releases value=v1.0.0
+straight=meta-agent depName=berquerant/meta_agent datasource=github-tags value=0.1.0

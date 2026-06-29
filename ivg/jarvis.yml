@@ -24,12 +24,5 @@ install:
     /usr/local/bin/jarvis-run jarvis "\$@"
     EOS
   - chmod +x /usr/local/bin/jarvis
-  - |
-    cat <<EOS > /usr/local/bin/jarvis-meta
-    #!/bin/bash
-    set -e
-    /usr/local/bin/jarvis-run python "${IVG_WORKD}/jarvis-meta.py" "\$@"
-    EOS
-  - chmod +x /usr/local/bin/jarvis-meta
 uninstall:
-  - rm -f /usr/local/bin/jarvis-run /usr/local/bin/jarvis-meta /usr/local/bin/jarvis
+  - rm -f /usr/local/bin/jarvis-run /usr/local/bin/jarvis

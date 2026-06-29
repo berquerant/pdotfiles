@@ -1,0 +1,16 @@
+uri: https://github.com/berquerant/meta_agent
+branch: main
+locald: repos/meta_agent
+lock: locks/meta_agent.lock
+install:
+  - uv sync
+  - |
+    cat <<EOS > /usr/local/bin/meta_agent
+    #!/bin/bash
+    set -e
+    cd "${IVG_WORKD}/${IVG_LOCALD}"
+    uv run python -m meta_agent.cli "\$@"
+    EOS
+  - chmod +x /usr/local/bin/meta_agent
+uninstall:
+  - rm -f /usr/local/bin/meta_agent
