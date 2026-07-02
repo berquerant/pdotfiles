@@ -134,12 +134,6 @@
   ("M-s M-s x" . my-path-current-path)
   ("M-s M-s M-x" . my-path-git-relative-path))
 
-(use-package my-git-browse
-  :demand t
-  :straight (my-git-browse :type built-in)
-  :bind
-  ("M-g 9" . my-git-browse-git-browse))
-
 (use-package idle-timer
   :demand t
   :straight (idle-timer :host github :repo "berquerant/emacs-idle-timer"))
@@ -215,6 +209,12 @@
   (my-macro-region-or-at-point my-google-this "google> ")
   (bind-key "M-g 0" 'my-open-link-region-or-at-point)
   (bind-key "M-g M-0" 'my-google-this-region-or-at-point))
+
+(use-package my-git-browse
+  :demand t
+  :straight (my-git-browse :type built-in)
+  :bind
+  ("M-g 9" . my-git-browse-git-browse))
 
 (use-package my-gron
   :demand t
