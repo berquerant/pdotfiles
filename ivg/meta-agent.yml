@@ -12,5 +12,22 @@ install:
     uv run python -m meta_agent.cli "\$@"
     EOS
   - chmod +x /usr/local/bin/meta_agent
+  - |
+    cat <<EOS > "${HOME}/.openjarvis/config.toml"
+    [engine]
+    default = "ollama"
+
+    [engine.ollama]
+    host = "http://127.0.0.1:11434"
+
+    [intelligence]
+    default_model = "gemma4:12b"
+
+    [learning]
+    enabled = true
+
+    [traces]
+    enabled = true
+    EOS
 uninstall:
   - rm -f /usr/local/bin/meta_agent

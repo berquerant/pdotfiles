@@ -19,7 +19,6 @@ clone() {
     else
         git clone "$uri" "$dir"
     fi
-    echo "$dir"
 }
 
 ghq_select() {

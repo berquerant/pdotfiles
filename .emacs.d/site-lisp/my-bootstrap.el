@@ -135,6 +135,7 @@
   ("M-s M-s M-x" . my-path-git-relative-path))
 
 (use-package my-git-browse
+  :demand t
   :straight (my-git-browse :type built-in)
   :bind
   ("M-g 9" . my-git-browse-git-browse))
