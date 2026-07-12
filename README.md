@@ -365,7 +365,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, textlinter, golangci-lint, uv, ip2bin, semv, json2dot
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, json2dot
 
 ## json2dot
 
@@ -414,14 +414,6 @@ Verify [golangci-lint](https://github.com/golangci/golangci-lint).
 ``` shell
 # golangci-lint config verify -v
 ln -snvf "${DOTFILES_ROOT}/bin/flycheck-golangci-lint.sh" /usr/local/bin/flycheck-golangci-lint.sh
-```
-
-## textlinter
-
-Install [textlint.sh](bin/textlint.sh).
-
-``` shell
-ln -snvf "${DOTFILES_ROOT}/bin/textlint.sh" /usr/local/bin/textlinter
 ```
 
 ## awkfmt

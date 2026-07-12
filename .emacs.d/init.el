@@ -1044,16 +1044,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     (interactive)
     (flycheck-mode-thyristor-toggle)
     (flycheck-mode (if flycheck-mode-thyristor-flag 1 0)))
-  (flycheck-define-checker textlint
-    "Linter for text."
-    :modes (text-mode markdown-mode gfm-mode)
-    :command ("textlinter" source) ; $DOTFILES_ROOT/bin/textlint.sh
-    :error-patterns
-    ((warning line-start (file-name) ":" line ":" column ":["
-              (id (one-or-more (not (any "]")))) "]"
-              (message (one-or-more not-newline)
-                       (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-              line-end)))
   (my-macro-thyristor flycheck-mode)
   (if (display-graphic-p)
       (flycheck-pos-tip-mode)
