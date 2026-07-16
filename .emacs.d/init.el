@@ -1039,6 +1039,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (flycheck-highlighting-mode 'symbols)
   (flycheck-check-syntax-automatically (quote (save)))
   :config
+  (setq flycheck-checkers (delq 'textlint flycheck-checkers))
   (defun my-flycheck-mode-thyristor-switch ()
     "Call `flycheck-mode-thyristor-toggle' and enable/disable `flycheck-mode'."
     (interactive)
