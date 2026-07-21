@@ -4,6 +4,7 @@ export GHQ_ROOT=$HOME/src
 export GIT_USER="$(git config user.name)"
 alias gdefault='${DOTFILES_ROOT}/bin/default-branch.sh'
 alias gdpull='${DOTFILES_ROOT}/bin/default-branch.sh pull true false'
+alias gclean='${DOTFILES_ROOT}/bin/default-branch.sh cleanup true'
 alias gpullback='${DOTFILES_ROOT}/bin/default-branch.sh pull false true'
 alias gfbranch='${DOTFILES_ROOT}/bin/default-branch.sh branch'
 alias gworktree='${DOTFILES_ROOT}/bin/git-worktree.sh'

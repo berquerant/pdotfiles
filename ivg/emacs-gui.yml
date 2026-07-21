@@ -15,13 +15,12 @@ env:
   MAC_CFLAGS: >-
     -O2
     -I/opt/homebrew/opt/libgccjit/include
-    -I/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15/include
     -I/opt/homebrew/opt/tree-sitter@0.25/include/tree_sitter
   MAC_LIBS: >-
     -L/opt/homebrew/opt/libgccjit/lib/gcc/current
     -L/opt/homebrew/opt/tree-sitter@0.25/lib
   LIBRARY_PATH: >-
-    /opt/homebrew/lib:/opt/homebrew/opt/libgccjit/lib/gcc/current:/opt/homebrew/opt/gcc/lib/gcc/current/gcc/aarch64-apple-darwin25/15:/opt/homebrew/opt/tree-sitter@0.25/lib
+    /opt/homebrew/lib:/opt/homebrew/opt/libgccjit/lib/gcc/current:/opt/homebrew/opt/tree-sitter@0.25/lib
   PKG_CONFIG_PATH: >-
     /opt/homebrew/opt/tree-sitter@0.25/lib/pkgconfig
 setup:

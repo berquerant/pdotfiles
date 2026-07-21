@@ -14,3 +14,10 @@ kgetevent() {
            -c \
            '[.items[] | (.lastTimestamp // (.eventTime | sub("\\.[^Z]+"; ""))) as $t | . + {"t": ($t | fromdate), "tt": $t} | select(.t > ($threshold | tonumber))] | sort_by(.t) | .[]'
 }
+
+kind_destroy() {
+  kind get clusters | while read -r cluster ; do
+    echo "Delete kind cluster: ${cluster}"
+    kind delete cluster --name "$cluster"
+  done
+}
