@@ -33,7 +33,7 @@
  ("emacs-libvterm" . "99c1f5e76ac927825775c887c93e46036fac7327")
  ("emacs-little-async" . "29b08b17ff9a5813685bcb51d637e42fc07e3987")
  ("emacs-message-routing" . "9fc29db9565f763041a00380dfca4849fab255f3")
- ("emacs-minimal-init" . "c9819f7a58093fb8357182fba26a6c5a4590f06e")
+ ("emacs-minimal-init" . "67d875deb02415e451ced8245133112d6e2e10a0")
  ("emacs-pet" . "6b62cf5f7e968c8137d8818b58638b2f0e64d02b")
  ("emacs-reformatter" . "c52e91d5438b9bf16b77b4384822e254f10a6b0a")
  ("emacs-scala-mode" . "50bcafa181baec7054e27f4bca55d5f9277c6350")
