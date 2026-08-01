@@ -48,6 +48,8 @@ message "Install others"
 
 exec_or_dry "ln -snvf $d/.ruff.toml '${HOME}/Library/Application Support/.ruff.toml'"
 exec_or_dry "ln -snvf $d/.subversion '${HOME}/.subversion/config'"
+exec_or_dry "mkdir -p ${HOME}/.config/leaf"
+exec_or_dry "ln -snvf $d/.leaf.toml '${HOME}/.config/leaf/config.toml'"
 
 message "Dotfiles installed!"
 message "Please make gitconfig to install .gitconfig"

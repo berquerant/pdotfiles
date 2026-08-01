@@ -1290,8 +1290,11 @@ when (eglot)."
 (use-package thread-buffer-chat
   :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
 
-(use-package my-ai
-  :straight (my-ai :type built-in))
+(defun my-ai-setup ()
+  "Setup `my-ai.el'."
+  (interactive)
+  (use-package my-ai
+    :straight (my-ai :type built-in)))
 
 (use-package my-man
   :straight (my-man :type built-in)

@@ -49,6 +49,7 @@ brew "pstree"
 brew "osv-scanner"
 brew "duckdb"
 brew "ollama"
+brew "leaf-markdown-viewer"
 
 # github
 brew "gh"

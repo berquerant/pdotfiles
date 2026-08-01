@@ -1,0 +1,7 @@
+# https://github.com/RivoLink/leaf
+theme = "solarized-dark"
+editor = "lmacs +{$line}"
+watch = true
+extras = []
+code-line-numbers = true
+tab-title-length = -1
