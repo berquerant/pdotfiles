@@ -1,7 +1,7 @@
-eslint@10.5.0
+eslint@10.7.0
 csslint@1.0.5
-typescript@6.0.3
-typescript-eslint@8.61.1
+typescript@7.0.2
+typescript-eslint@8.64.0
 typescript-language-server@5.3.0
 ts-node@10.9.2
 @devcontainers/cli@0.87.0

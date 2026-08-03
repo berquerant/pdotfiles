@@ -1,4 +1,4 @@
-bundler -v 4.0.13
-solargraph -v 0.59.2
-rubocop -v 1.87.0
+bundler -v 4.0.16
+solargraph -v 0.60.2
+rubocop -v 1.88.2
 rufo -v 0.18.2
