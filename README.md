@@ -56,7 +56,7 @@ For minimal setup, use [microdotfiles](https://github.com/berquerant/microdotfil
 Install tools using homebrew.
 
 ``` shell
-git submodule update --init
+git submodule update --init --recursive
 bin/install-brew.sh
 ```
 
@@ -209,7 +209,7 @@ bin/install-requirements.sh all
 Update git submodules.
 
 ``` shell
-git submodule update --remote
+git submodule update --remote --recursive
 ```
 
 ## update-brew
