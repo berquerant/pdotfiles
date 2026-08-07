@@ -8,7 +8,7 @@ github.com/berquerant/grinfo/cmd/grinfo@v0.7.1
 github.com/berquerant/gbrowse/cmd/gbrowse@v0.13.0
 github.com/berquerant/cron2date/cmd/cron2date@v0.4.0
 github.com/berquerant/cron2date/cmd/date2cron@v0.4.0
-github.com/berquerant/cmdcomp/cmd/cmdcomp@v0.5.0
+github.com/berquerant/cmdcomp/cmd/cmdcomp@v0.5.1
 github.com/berquerant/ndql/cmd/ndql@v0.0.10
 github.com/berquerant/emacs-straight-stride/cmd/stride@v0.0.6
 github.com/hashicorp/hcl/v2/cmd/hclfmt@v2.24.0
