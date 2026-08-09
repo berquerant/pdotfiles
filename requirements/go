@@ -13,3 +13,4 @@ github.com/berquerant/ndql/cmd/ndql@v0.0.10
 github.com/berquerant/emacs-straight-stride/cmd/stride@v0.0.6
 github.com/hashicorp/hcl/v2/cmd/hclfmt@v2.24.0
 github.com/berquerant/yasp/cmd/yasp@v0.0.3
+github.com/dadav/helm-schema/cmd/helm-schema@0.23.4
