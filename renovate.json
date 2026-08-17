@@ -165,6 +165,18 @@
     },
     {
       "customType": "regex",
+      "description": "Manage mise version",
+      "fileMatch": [
+        "^.env$"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "jdx/mise",
+      "matchStrings": [
+        "MISE_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
+    },
+    {
+      "customType": "regex",
       "description": "Manage ip2bin version",
       "fileMatch": [
         "^.env$"

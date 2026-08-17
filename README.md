@@ -365,7 +365,15 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, golangci-lint, uv, ip2bin, semv, json2dot
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, json2dot, mise
+
+## mise
+
+Install [mise](https://github.com/jdx/mise).
+
+``` shell
+cargo binstall -y mise@${MISE_VERSION}
+```
 
 ## json2dot
 
