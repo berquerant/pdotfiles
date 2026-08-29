@@ -1,0 +1,10 @@
+uri: https://github.com/berquerant/ndql
+branch: main
+locald: repos/ndql
+lock: locks/ndql.lock
+install:
+  - mise run build
+  - ./bin/ndql version
+  - cp -f ./bin/ndql /usr/local/bin/ndql
+uninstall:
+  - rm -f /usr/local/bin/ndql

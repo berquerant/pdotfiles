@@ -97,6 +97,7 @@ brew "readline" # .pythonrc
 
 # rust
 brew "rust-analyzer"
+brew "cargo-binstall"
 
 # clang
 brew "llvm"
