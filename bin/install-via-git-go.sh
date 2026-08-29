@@ -5,7 +5,7 @@ set -xe
 readonly goos="darwin"
 readonly goarch="arm64"
 readonly location="/usr/local/bin/install-via-git"
-readonly ref="0.19.3"
+readonly ref="0.19.4"
 readonly url="https://github.com/berquerant/install-via-git-go/releases/download/v${ref}/install-via-git_${ref}_${goos}_${goarch}"
 
 if [[ -x "$location" && "$("$location" version | grep Version)" == "Version: v${ref}" ]] ; then
