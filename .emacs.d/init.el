@@ -838,10 +838,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (go-playground-basedir (f-join (my-getenv "GHQ_ROOT") "github.com" (my-getenv "GIT_USER") "go-playground"))
   (go-playground-init-command (format "%s init" my-go-playground-sh)))
 
-(use-package tern
-  :custom
-  (tern-command '("tern" "--no-port-file"))) ; no .tern-port
-
 (use-package js2-mode
   :hook
   (js-mode . (lambda ()
@@ -910,9 +906,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (php-enable-default-coding-style)
   (subword-mode 1))
 
-(use-package flycheck-phpstan
-  :after (php-mode flycheck))
-
 (use-package scala-mode
   :mode "^\w+\\.s\\(cala\\|bt\\)$")
 
@@ -956,18 +949,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (rust-rustfmt-switches '("--config" "edition=2024"))
   (rust-format-on-save t))
 
-(use-package flycheck-rust
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-
 (use-package rust-playground
   :custom
   (rust-playground-basedir (f-join (my-getenv "GHQ_ROOT") "github.com" (my-getenv "GIT_USER") "rust-playground")))
-
-(use-package flycheck-haskell
-  :after (haskell-mode flycheck)
-  :hook
-  (haskell-mode . flycheck-haskell-setup))
 
 (use-package haskell-mode
   :mode
@@ -1278,23 +1262,11 @@ when (eglot)."
   (diff-hl-mode)
   (diff-hl-flydiff-mode))
 
-(use-package indent-guide
-  :custom
-  (indent-guide-delay 0.4)
-  :config
-  (indent-guide-global-mode))
-
 (use-package thread-buffer
   :straight (thread-buffer :host github :repo "berquerant/emacs-thread-buffer"))
 
 (use-package thread-buffer-chat
   :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
-
-(defun my-ai-setup ()
-  "Setup `my-ai.el'."
-  (interactive)
-  (use-package my-ai
-    :straight (my-ai :type built-in)))
 
 (use-package my-man
   :straight (my-man :type built-in)
