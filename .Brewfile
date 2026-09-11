@@ -50,6 +50,7 @@ brew "osv-scanner"
 brew "duckdb"
 brew "ollama"
 brew "leaf-markdown-viewer"
+brew "scc"
 
 # github
 brew "gh"
