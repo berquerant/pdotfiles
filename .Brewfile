@@ -97,7 +97,6 @@ brew "gnupg"
 brew "readline" # .pythonrc
 
 # rust
-brew "rust-analyzer"
 brew "cargo-binstall"
 
 # clang
@@ -105,9 +104,7 @@ brew "llvm"
 brew "clang-format" # formatter
 
 # terraform
-tap "hashicorp/tap"
 brew "tfenv"
-brew "hashicorp/tap/terraform-ls"
 brew "terraform-lsp"
 
 # php

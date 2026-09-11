@@ -49,6 +49,7 @@ else
     message "Already gettext linked"
 fi
 
+brew autoremove
 brew cleanup -s
 
 if [ ! -L /Library/Java/JavaVirtualMachines/openjdk.jdk ] ; then

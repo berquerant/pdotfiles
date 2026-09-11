@@ -3,5 +3,3 @@ rustfmt
 clippy
 llvm-tools-preview
 rust-analyzer
-rust-analysis
-rust-docs
