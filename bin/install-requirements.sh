@@ -28,7 +28,6 @@ __install_from_lines() {
 }
 
 install_python() {
-    pip install --upgrade pip setuptools wheel
     __install_from_file "$1" pip install -r
 }
 

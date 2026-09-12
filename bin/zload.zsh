@@ -5,8 +5,6 @@ zload() {
     export CMACSD="${HOME}/.cmacs.d"
     export TMPD="${HOME}/tmp"
     export GOPATH="${HOME}/go"
-    export PYENV_ROOT="${HOME}/.pyenv"
-    export NVM_DIR="${HOME}/.nvm"
     export NPM_ROOT="${HOME}/.npm"
     export PNPM_HOME="${HOME}/.pnpm"
     export CARGO_HOME="${HOME}/.cargo"

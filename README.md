@@ -301,36 +301,34 @@ Install ruby.
 ./install r ruby
 ```
 
+## python
+
+Install python.
+
+Requires: uv
+
+``` shell
+pyenv install --skip-existing "$PY_VERSION"
+pyenv local "$PY_VERSION"
+```
+
 ## sub
 
 Install sub dependencies.
 
-Requires: rust, go, ruby, ivg-lock
-
-``` shell
-bin/install-target-bulk.sh < targets/sub
-```
+Requires: rust, go, ruby, python, ivg-lock
 
 ## update-sub
 
 Install sub dependencies.
 
-Requires: rust, go, ruby, ivg-lock
-
-``` shell
-# bin/install-target-bulk.sh --update < targets/sub
-bin/install-target-bulk.sh --retry < targets/sub
-```
+Requires: rust, go, ruby, python, ivg-lock
 
 ## retry-sub
 
 Install sub dependencies.
 
-Requires: rust, go, ruby, ivg-lock
-
-``` shell
-bin/install-target-bulk.sh --retry < targets/sub
-```
+Requires: rust, go, ruby, python, ivg-lock
 
 ## util
 

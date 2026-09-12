@@ -94,6 +94,8 @@ brew "gnupg"
 # cask
 
 # python
+brew "pyenv"
+brew "python-tk"
 brew "readline" # .pythonrc
 
 # rust

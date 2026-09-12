@@ -26,7 +26,6 @@ load_go() {
     go version
 }
 # python
-export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/pyenv/bin:$PATH"
 export PYTHONSTARTUP="$HOME/.pythonrc.py"
 eval "$(pyenv init -)"
 load_python() {
