@@ -44,11 +44,6 @@ clean_ruby() {
 }
 
 clean_node() {
-    . "${NVM_DIR}/nvm.sh"
-    nvm ls --no-colors | grep -vE "${NODE_VERSION}|default|N/A" | awk '{print $1}' | while read -r version ; do
-        cecho yellow "UNINSTALL node ${version}"
-        __run nvm uninstall "$version"
-    done
     # clean $NPM_ROOT/_cacache
     npm cache verify
 }

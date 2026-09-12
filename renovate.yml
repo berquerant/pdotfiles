@@ -175,23 +175,9 @@ customManagers:
     datasourceTemplate: "rubygems"
     versioningTemplate: "semver"
   - customType: "regex"
-    description: "Manage node version"
+    description: "Manage python version"
     fileMatch: &envFiles
       - "^.env$"
-    matchStrings:
-      - "export NODE_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-    datasourceTemplate: "github-tags"
-    depNameTemplate: "nodejs/node"
-  - customType: "regex"
-    description: "Manage ruby version"
-    fileMatch: *envFiles
-    matchStrings:
-      - "export RB_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-    datasourceTemplate: "github-releases"
-    depNameTemplate: "ruby/ruby"
-  - customType: "regex"
-    description: "Manage python version"
-    fileMatch: *envFiles
     matchStrings:
       - "export PY_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
     datasourceTemplate: "github-tags"

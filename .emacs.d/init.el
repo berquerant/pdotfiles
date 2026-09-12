@@ -883,10 +883,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (flymake-ruff :type git :host github :repo "erickgnavar/flymake-ruff")
   :hook (python-mode . flymake-ruff-load))
 
-(use-package pet
-  :config
-  (add-hook 'python-base-mode-hook 'pet-mode -10))
-
 (use-package ruby-mode
   :mode ("\\.rb\\'" . ruby-mode)
   :interpreter ("ruby" . ruby-mode)

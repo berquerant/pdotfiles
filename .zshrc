@@ -2,7 +2,6 @@
 if [[ -x /opt/homebrew/bin/brew ]] ; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-    autoload -Uz compinit
     compinit
 fi
 export DOTFILES_ROOT=$(readlink $HOME/dotfiles)
@@ -43,12 +42,11 @@ load_ruby() {
 # rust
 export PATH="$CARGO_HOME/bin:$PATH"
 # node
-source "$NVM_DIR/nvm.sh"
+export PATH="$(brew --prefix node@24)/bin:$PATH"
 export PATH="$PNPM_HOME:$PATH"
 export PATH="$PNPM_HOME/bin:$PATH"
 load_node() {
-    nvm use "$NODE_VERSION"
-    node --version
+  echo "node $(node --version)"
 }
 
 load_env() {

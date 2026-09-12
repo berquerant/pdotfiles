@@ -118,6 +118,7 @@ brew "lua-language-server"
 brew "stylua" # formatter
 
 # js, ts
+brew "node@24"
 brew "deno"
 brew "pnpm"
 

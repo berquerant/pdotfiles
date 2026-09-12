@@ -74,5 +74,5 @@ if which ndql >/dev/null 2>&1 ; then
     alias nq='ndql query'
 fi
 if which limactl >/dev/null 2>&1 ; then
-    alias limad='${DOTFILES_ROOT}/lima.sh'
+    alias limad='${DOTFILES_ROOT}/bin/lima.sh'
 fi
