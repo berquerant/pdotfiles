@@ -102,7 +102,6 @@ brew "readline" # .pythonrc
 brew "cargo-binstall"
 
 # clang
-brew "llvm"
 brew "clang-format" # formatter
 
 # terraform

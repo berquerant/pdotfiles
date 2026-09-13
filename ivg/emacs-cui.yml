@@ -27,7 +27,6 @@ setup:
   - brew install --build-from-source libgccjit
   - >-
     brew install
-    llvm
     ncurses
     make
     autoconf
