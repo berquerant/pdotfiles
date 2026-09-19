@@ -72,14 +72,6 @@ packageRules:
       - ".emacs.d/treesit-language-source-alist.el"
 customManagers:
   - customType: "regex"
-    description: "Manage json2dot version"
-    fileMatch:
-      - "^.env$"
-    datasourceTemplate: "github-tags"
-    depNameTemplate: "berquerant/json2dot"
-    matchStrings:
-      - "JSON2DOT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-  - customType: "regex"
     description: "Manage rnv version"
     fileMatch:
       - "^.env$"

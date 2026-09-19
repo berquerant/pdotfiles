@@ -1264,12 +1264,6 @@ when (eglot)."
 (use-package thread-buffer-chat
   :straight (thread-buffer-chat :host github :repo "berquerant/emacs-thread-buffer-chat"))
 
-(use-package my-man
-  :straight (my-man :type built-in)
-  :config
-  (my-macro-region-or-at-point my-man-hman "hamn> ")
-  (bind-key "M-s M-s h" 'my-man-hman-region-or-at-point))
-
 (use-package message-routing
   :demand t
   :straight (message-routing :host github :repo "berquerant/emacs-message-routing")

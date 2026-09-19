@@ -363,7 +363,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, golangci-lint, uv, ip2bin, semv, json2dot, mise
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise
 
 ## mise
 
@@ -371,14 +371,6 @@ Install [mise](https://github.com/jdx/mise).
 
 ``` shell
 cargo binstall -y mise@${MISE_VERSION}
-```
-
-## json2dot
-
-Install [json2dot](https://github.com/berquerant/json2dot).
-
-``` shell
-pip install git+https://github.com/berquerant/json2dot.git@${JSON2DOT_VERSION}
 ```
 
 ## rnv

@@ -15,10 +15,11 @@ clone() {
     local dir
     dir="$(ghq root)/$(uri2dir "$uri")"
     if echo "$uri" | grep -q 'github.com' ; then
-        ghq get "$uri"
+        ghq get "$uri" >&2
     else
-        git clone "$uri" "$dir"
+        git clone "$uri" "$dir" >&2
     fi
+    echo "$dir"
 }
 
 ghq_select() {

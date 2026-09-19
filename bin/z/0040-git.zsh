@@ -18,6 +18,7 @@ alias glis-e='glis lmacs'
 alias glis-u='glis-t | umacs'
 alias r='repo'
 alias glint='${DOTFILES_ROOT}/bin/ghalint.sh'
+alias clint='${DOTFILES_ROOT}/bin/codelint.sh'
 
 repo() {
     location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
