@@ -912,9 +912,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 (use-package json-mode
   :mode ("\\.json\\'" . json-mode)
-  :bind
-  (:map json-mode-map
-        ("M-s M-p" . my-gron-run-json))
   :config
   (unbind-key "C-c :" json-mode-map)
   (unbind-key "C-c C-r" json-mode-map))
@@ -923,10 +920,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :mode
   (("\\.yaml\\'" . yaml-mode)
    ("\\.yml\\'" . yaml-mode)
-   ("\\.dig\\'" . yaml-mode))
-  :bind
-  (:map yaml-mode-map
-        ("M-s M-p" . my-gron-run-yaml)))
+   ("\\.dig\\'" . yaml-mode)))
 
 (use-package dockerfile-mode
   :mode

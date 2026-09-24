@@ -216,10 +216,6 @@
   :bind
   ("M-g 9" . my-git-browse-git-browse))
 
-(use-package my-gron
-  :demand t
-  :straight (my-gron :type built-in))
-
 (use-package scroll-util
   :straight (emacs-scroll-util :host github :repo "berquerant/emacs-scroll-util")
   :bind

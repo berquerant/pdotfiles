@@ -25,16 +25,6 @@ mkcd() {
     mkdir -p "$1" && cd "$1"
 }
 
-pcre() {
-    if [[ -z "$1" ]] ; then
-        echo "pcre REGEX"
-        echo "grep STDIN by REGEX"
-        return 1
-    fi
-
-    perl -e "while(<>){if(/${1}/){print}}"
-}
-
 clean_tmpd() {
     rm -rf "$TMPD" && mkdir -p "$TMPD"
 }
@@ -59,7 +49,6 @@ alias mln='${DOTFILES_ROOT}/bin/mln.sh'
 alias drun='${DOTFILES_ROOT}/bin/docker.sh'
 alias rrg='rg --hidden'
 alias dc='${DOTFILES_ROOT}/bin/devcontainer.sh'
-alias grong='${DOTFILES_ROOT}/bin/gron.sh'
 alias fm='leaf'
 alias fmi='leaf --inline'
 
