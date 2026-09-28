@@ -23,6 +23,10 @@ clean_tmpd() {
   rm -rf "$TMPD" && mkdir -p "$TMPD"
 }
 
+run_tmpd() {
+  gen_tmpd && "$@"
+}
+
 # e.g. rg -i "$(csg get input json)"
 csg() {
   seed=' |->|>|.|:|/|_|\-'
