@@ -1,26 +1,26 @@
 #!/bin/bash
 
 delete_cache() {
-    local -r _d="$EMACSD"
-    rm -rf "${_d}/eln-cache" "${_d}/.cache" "${_d}/elpa"
-    find "$_d" -name "*.elc" -delete
-    find "$_d" -name "*.eln" -delete
+  local -r _d="$EMACSD"
+  rm -rf "${_d}/eln-cache" "${_d}/.cache" "${_d}/elpa"
+  find "$_d" -name "*.elc" -delete
+  find "$_d" -name "*.eln" -delete
 }
 
 delete_straight_package() {
-    local -r _d="$EMACSD"
-    local -r _pkg="$1"
+  local -r _d="$EMACSD"
+  local -r _pkg="$1"
+  stride prune repo "$_pkg" --debug
+  if [ -z "$_pkg" ]; then
+    stride prune repo --all
+  else
     stride prune repo "$_pkg" --debug
-    if [ -z "$_pkg" ] ; then
-        stride prune repo --all
-    else
-        stride prune repo "$_pkg" --debug
-    fi
+  fi
 }
 
 usage() {
-    local -r name="${0##*/}"
-    cat - <<EOS >&2
+  local -r name="${0##*/}"
+  cat - <<EOS >&2
 ${name} c
 Delete emacs caches.
 
@@ -33,17 +33,17 @@ EOS
 set -e
 cmd="$1"
 case "$cmd" in
-    "c" | "cache") cmd="delete_cache" ;;
-    "s" | "straight" | "p" | "pkg" | "package") cmd="delete_straight_package" ;;
-    "" | "-h" | "--help")
-        usage
-        exit
-        ;;
-    *)
-        echo "unknown command: ${cmd}" >&2
-        usage
-        exit 1
-        ;;
+"c" | "cache") cmd="delete_cache" ;;
+"s" | "straight" | "p" | "pkg" | "package") cmd="delete_straight_package" ;;
+"" | "-h" | "--help")
+  usage
+  exit
+  ;;
+*)
+  echo "unknown command: ${cmd}" >&2
+  usage
+  exit 1
+  ;;
 esac
 shift
 "$cmd" "$@"

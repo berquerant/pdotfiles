@@ -1,17 +1,13 @@
 #!/bin/bash
 
-__default_branch() {
-  git default-branch
-}
-
 default_branch() {
-  __default_branch "$PWD" 86400
+  git default-branch
 }
 
 switch_branch() {
   local __db
   __db="$(default_branch)"
-  if [ "$__db" = "$(git current-branch)" ] ; then
+  if [ "$__db" = "$(git current-branch)" ]; then
     return
   fi
   git switch "$__db" "$@"
@@ -25,11 +21,11 @@ switch_pull_branch() {
   switch_branch -q
   local __db
   __db="$(default_branch)"
-  if [[ "$cleanup" == "true" && "$__db" != "$current" ]] ; then
+  if [[ "$cleanup" == "true" && "$__db" != "$current" ]]; then
     git branch -D "$current"
   fi
   git pull
-  if [[ "$switch_back" == "true" && "$__db" != "$current" ]] ; then
+  if [[ "$switch_back" == "true" && "$__db" != "$current" ]]; then
     git switch -
   fi
 }
@@ -42,11 +38,11 @@ remove_merged_branches() {
   git pull
   local __db
   __db="$(default_branch)"
-  git branch --merged | grep -vF "$__db" | while read -r x ; do
+  git branch --merged | grep -vF "$__db" | while read -r x; do
     echo "Delete branch: ${x}"
     git branch -d "$x"
   done
-  if [[ "$switch_back" == "true" && "$__db" != "$current" ]] ; then
+  if [[ "$switch_back" == "true" && "$__db" != "$current" ]]; then
     git switch - || true
   fi
 }
@@ -57,7 +53,7 @@ force_branch() {
   local -r branch="${1:-$current}"
   local __db
   __db="$(default_branch)"
-  if [[ "$branch" == "$__db" ]] ; then
+  if [[ "$branch" == "$__db" ]]; then
     return 1
   fi
   git switch "$__db"
@@ -65,6 +61,12 @@ force_branch() {
   git fetch
   git pull
   git switch "$branch" || git checkout -b "$branch"
+}
+
+pull_if_default() {
+  if [[ "$(git current-branch)" == "$(default_branch)" ]]; then
+    git pull
+  fi
 }
 
 usage() {
@@ -78,6 +80,9 @@ Usage
 
   ${name} s|switch
     Switch to default branch
+
+  ${name} pd
+    Pull if current branch is default branch
 
   ${name} d|diff
     Git diff with default branch
@@ -99,11 +104,24 @@ EOS
 
 set -e
 case "$1" in
-  "s" | "switch") switch_branch ;;
-  "d" | "diff") git diff "$(default_branch)" ;;
-  "p" | "pull") shift ; switch_pull_branch "$@" ;;
-  "c" | "cleanup") shift ; remove_merged_branches "$@" ;;
-  "b" | "branch") shift ; force_branch "$@" ;;
-  "-h" | "--help") usage ; exit 1 ;;
-  *) default_branch ;;
+"s" | "switch") switch_branch ;;
+"d" | "diff") git diff "$(default_branch)" ;;
+"p" | "pull")
+  shift
+  switch_pull_branch "$@"
+  ;;
+"pd") pull_if_default ;;
+"c" | "cleanup")
+  shift
+  remove_merged_branches "$@"
+  ;;
+"b" | "branch")
+  shift
+  force_branch "$@"
+  ;;
+"-h" | "--help")
+  usage
+  exit 1
+  ;;
+*) default_branch ;;
 esac

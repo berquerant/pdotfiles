@@ -1,71 +1,74 @@
 #!/bin/bash
 
-d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
+d="$(
+  cd "$(dirname "$0")"/.. || exit
+  pwd
+)"
 target="$1"
 
 req() {
-    echo "${d}/requirements/${1}"
+  echo "${d}/requirements/${1}"
 }
 
 __ignore_comment() {
-    grep -v -E '^#'
+  grep -v -E '^#'
 }
 
 __install_from_file() {
-    local target_file="$1"
-    shift
-    local t
-    t="$(mktemp)"
-    __ignore_comment  < "$target_file" > "$t"
-    "$@" "$t"
+  local target_file="$1"
+  shift
+  local t
+  t="$(mktemp)"
+  __ignore_comment <"$target_file" >"$t"
+  "$@" "$t"
 }
 
 __install_from_lines() {
-    local target_file="$1"
-    shift
-    # shellcheck disable=SC2086
-    __ignore_comment < "$target_file" | while read -r x ; do "$@" $x ; done
+  local target_file="$1"
+  shift
+  # shellcheck disable=SC2086
+  __ignore_comment <"$target_file" | while read -r x; do "$@" $x; done
 }
 
 install_python() {
-    __install_from_file "$1" pip install -r
+  __install_from_file "$1" pip install -r
 }
 
 install_go() {
-    __install_from_lines "$1" go install
+  __install_from_lines "$1" go install
 }
 
 install_gem() {
-    __install_from_lines "$1" gem install
+  __install_from_lines "$1" gem install
 }
 
 __install_node() {
-    local -r _version="$(echo "$1" | cut -d "@" -f 2)"
-    pnpm add -g "$1"
+  local -r _version="$(echo "$1" | cut -d "@" -f 2)"
+  pnpm add -g "$1"
 }
 
 __get_node_pkg_version() {
-    npm ls -g --depth=0 --json "$1" | jq -r ".dependencies[\"$(echo "$1" | cut -d "@" -f 1)\"].version // empty"
+  npm ls -g --depth=0 --json "$1" | jq -r ".dependencies[\"$(echo "$1" | cut -d "@" -f 1)\"].version // empty"
 }
 
 install_node() {
-    set +e
-    npm install -g npm@latest
-    set -e
-    __install_from_lines "$1" __install_node
+  set +e
+  npm install -g npm@latest
+  set -e
+  __install_from_lines "$1" __install_node
 }
 
 install_cargo() {
-    __install_from_lines "$1" cargo install
+  __install_from_lines "$1" cargo install
 }
 
 install_rustup() {
-    rustup self update
-    rustup install stable
-    rustup override set stable
-    rustup update nightly
-    rustup toolchain add nightly
-    __install_from_lines "$1" rustup component add
+  rustup self update
+  rustup install stable
+  rustup override set stable
+  rustup update nightly
+  rustup toolchain add nightly
+  __install_from_lines "$1" rustup component add
 }
 
 set -ex
@@ -73,42 +76,42 @@ set -ex
 req_file="$(req "$target")"
 
 case "${target}" in
-    "cargo")
-        install_cargo "$req_file"
-        ;;
-    "rustup")
-        install_rustup "$req_file"
-        ;;
-    "rust")
-        install_rustup "$(req rustup)"
-        install_cargo "$(req cargo)"
-        ;;
-    "python")
-        install_python "$req_file"
-        ;;
-    "go")
-        install_go "$req_file"
-        ;;
-    "gem")
-        install_gem "$req_file"
-        ;;
-    "ruby")
-        install_gem "$(req gem)"
-        ;;
-    "node")
-        install_node "$req_file"
-        ;;
-    "all")
-        install_python "$(req python)"
-        install_go "$(req go)"
-        install_node "$(req node)"
-        install_gem "$(req gem)"
-        install_cargo "$(req cargo)"
-        install_rustup "$(req rustup)"
-        ;;
-    *)
-        echo "Unknown target ${target}" >&2
-        cat <<EOS >&2
+"cargo")
+  install_cargo "$req_file"
+  ;;
+"rustup")
+  install_rustup "$req_file"
+  ;;
+"rust")
+  install_rustup "$(req rustup)"
+  install_cargo "$(req cargo)"
+  ;;
+"python")
+  install_python "$req_file"
+  ;;
+"go")
+  install_go "$req_file"
+  ;;
+"gem")
+  install_gem "$req_file"
+  ;;
+"ruby")
+  install_gem "$(req gem)"
+  ;;
+"node")
+  install_node "$req_file"
+  ;;
+"all")
+  install_python "$(req python)"
+  install_go "$(req go)"
+  install_node "$(req node)"
+  install_gem "$(req gem)"
+  install_cargo "$(req cargo)"
+  install_rustup "$(req rustup)"
+  ;;
+*)
+  echo "Unknown target ${target}" >&2
+  cat <<EOS >&2
 $0 CATEGORY
 
 install requirements, available categories:
@@ -126,6 +129,6 @@ install requirements, available categories:
 requirements files are in ${d}/requirements,
 lines with # at the beginning are comments
 EOS
-        exit 1
-        ;;
+  exit 1
+  ;;
 esac

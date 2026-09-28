@@ -21,13 +21,15 @@ alias glint='${DOTFILES_ROOT}/bin/ghalint.sh'
 alias clint='${DOTFILES_ROOT}/bin/codelint.sh'
 
 repo() {
-    location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
-    if [ -z "$location" ] ; then
-        return 1
-    fi
-    cd "$location"
+  location="$($DOTFILES_ROOT/bin/git-get.sh $@)"
+  if [ -z "$location" ]; then
+    return 1
+  fi
+  cd "$location"
 }
 
+export GIT_ITER_REPOS_ROOT="$GHQ_ROOT"
+
 gi() {
-    GIT_ITER_MAX_PROCS="${GI_PROCS:-1}" GREP='rg' git-iter "$@"
+  git-iter "$@"
 }

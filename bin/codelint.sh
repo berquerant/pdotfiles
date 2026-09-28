@@ -9,14 +9,14 @@ log() {
 result=0
 run() {
   log "RUN: $*"
-  if ! "$@" ; then
+  if ! "$@"; then
     result=1
   fi
   log "EXIT WITH ${result} ($*)"
 }
 
 exclude_dirs=".git .hg .svn"
-if [[ -n "$*" ]] ; then
+if [[ -n "$*" ]]; then
   exclude_dirs="${exclude_dirs} $*"
 fi
 

@@ -1,21 +1,23 @@
 #!/bin/bash
 
-d="$(cd "$(dirname "$0")"/.. || exit; pwd)"
+d="$(
+  cd "$(dirname "$0")"/.. || exit
+  pwd
+)"
 . "${d}/bin/common.sh"
 
 message() {
-    cecho green "$1"
+  cecho green "$1"
 }
 
 is_dry=false
-if [ -n "$1" ]
-then
-    is_dry=true
-    message "Do dry run"
+if [ -n "$1" ]; then
+  is_dry=true
+  message "Do dry run"
 fi
 
 exec_or_dry() {
-    run_or_dry "$1" ${is_dry}
+  run_or_dry "$1" ${is_dry}
 }
 
 message "Install emacs configurations"

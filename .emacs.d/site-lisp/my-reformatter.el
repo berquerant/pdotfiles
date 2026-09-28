@@ -127,7 +127,7 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
 
 ;; sh
 ;; https://github.com/mvdan/sh/tree/master
-(reformatter-define my-reformetter-sh-format
+(reformatter-define my-reformatter-sh-format
   :program "shfmt"
   :args `("--simplify" "--indent" "2")
   :lighter " RFsh")

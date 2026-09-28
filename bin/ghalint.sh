@@ -9,7 +9,7 @@ log() {
 result=0
 run() {
   log "RUN: $*"
-  if ! "$@" ; then
+  if ! "$@"; then
     result=1
   fi
   log "EXIT WITH ${result} ($*)"

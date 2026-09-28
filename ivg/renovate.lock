@@ -1,5 +1,4 @@
 straight=gomodbrowse-sh depName=berquerant/gomodbrowse-sh datasource=github-tags value=v0.1.0
-straight=git-iter-sh depName=berquerant/git-iter-sh datasource=github-tags value=v0.1.0
 straight=mpv-settings depName=berquerant/mpv-settings datasource=github-tags value=v0.3.0
 straight=emacs-cui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.2
 straight=emacs-gui depName=emacs-mirror/emacs datasource=github-tags value=emacs-30.2

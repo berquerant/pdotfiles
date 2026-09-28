@@ -1,43 +1,43 @@
 #!/bin/bash
 
 uri2dir() {
-    echo "$1" |\
-        tr ":" "/" |\
-        sed -E 's|git@|https///|' |\
-        sed -E 's|git///|https///|' |\
-        sed -E 's|\.git||' |\
-        sed -E 's|https///|https://|' |\
-        sed -E 's|https://||'
+  echo "$1" |
+    tr ":" "/" |
+    sed -E 's|git@|https///|' |
+    sed -E 's|git///|https///|' |
+    sed -E 's|\.git||' |
+    sed -E 's|https///|https://|' |
+    sed -E 's|https://||'
 }
 
 clone() {
-    local uri="$1"
-    local dir
-    dir="$(ghq root)/$(uri2dir "$uri")"
-    if echo "$uri" | grep -q 'github.com' ; then
-        ghq get "$uri" >&2
-    else
-        git clone "$uri" "$dir" >&2
-    fi
-    echo "$dir"
+  local uri="$1"
+  local dir
+  dir="$(ghq root)/$(uri2dir "$uri")"
+  if echo "$uri" | grep -q 'github.com'; then
+    ghq get "$uri" >&2
+  else
+    git clone "$uri" "$dir" >&2
+  fi
+  echo "$dir"
 }
 
 ghq_select() {
-    ghq list -p | "${DOTFILES_ROOT}/bin/fzf.sh"
+  ghq list -p | "${DOTFILES_ROOT}/bin/fzf.sh"
 }
 
 select_clone() {
-    local uri="$1"
-    if [ -z "$uri" ] ; then
-        ghq_select
-    else
-        clone "$uri"
-    fi
+  local uri="$1"
+  if [ -z "$uri" ]; then
+    ghq_select
+  else
+    clone "$uri"
+  fi
 }
 
 usage() {
-    local name="${0##*/}"
-    cat - <<EOS >&2
+  local name="${0##*/}"
+  cat - <<EOS >&2
 ${name} -- clone and change directory
 
 Usage
@@ -49,9 +49,9 @@ Usage
 EOS
 }
 
-if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
-    usage
-    exit 1
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+  usage
+  exit 1
 fi
 
 select_clone "$@"

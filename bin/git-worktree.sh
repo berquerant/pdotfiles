@@ -4,38 +4,38 @@ default_root="${GHT_ROOT}/git-worktree"
 root="${GIT_WORKTREE_ROOT:-$default_root}"
 
 repopath() {
-    git config --get remote.origin.url |\
-        tr ":" "/" |\
-        sed -E 's|git@|https///|' |\
-        sed -E 's|git///|https///|' |\
-        sed -E 's|\.git||' |\
-        sed -E 's|https///|https://|' |\
-        sed -E 's|https://||'
+  git config --get remote.origin.url |
+    tr ":" "/" |
+    sed -E 's|git@|https///|' |
+    sed -E 's|git///|https///|' |
+    sed -E 's|\.git||' |
+    sed -E 's|https///|https://|' |
+    sed -E 's|https://||'
 }
 
 add() {
-    local branch="$1"
-    if [ -z "$branch" ] ; then
-        return 1
-    fi
+  local branch="$1"
+  if [ -z "$branch" ]; then
+    return 1
+  fi
 
-    worktree_prefix="${GIT_WORKTREE_ROOT}/$(repopath)"
-    worktree_path="${worktree_prefix}/${branch}"
-    echo "${worktree_path}"
-    git worktree add "${worktree_path}" "$@"
+  worktree_prefix="${GIT_WORKTREE_ROOT}/$(repopath)"
+  worktree_path="${worktree_prefix}/${branch}"
+  echo "${worktree_path}"
+  git worktree add "${worktree_path}" "$@"
 }
 
 remove() {
-    git worktree remove "$@"
+  git worktree remove "$@"
 }
 
 list() {
-    git worktree list "$@"
+  git worktree list "$@"
 }
 
 usage() {
-    local name="${0##*/}"
-    cat - <<EOS >&2
+  local name="${0##*/}"
+  cat - <<EOS >&2
 ${name} -- git worktree wrapper
 
 Usage
@@ -57,21 +57,20 @@ Environment variables
 EOS
 }
 
-
 cmd="$1"
 shift
 case "$cmd" in
-    "a" | "add")
-        add "$@"
-        ;;
-    "r" | "remove")
-        remove "$@"
-        ;;
-    "l" | "ls" | "list")
-        list "$@"
-        ;;
-    *)
-        usage
-        exit 1
-        ;;
+"a" | "add")
+  add "$@"
+  ;;
+"r" | "remove")
+  remove "$@"
+  ;;
+"l" | "ls" | "list")
+  list "$@"
+  ;;
+*)
+  usage
+  exit 1
+  ;;
 esac
