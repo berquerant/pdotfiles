@@ -15,16 +15,20 @@ if ! type rg >/dev/null 2>&1; then
   alias rg='grep'
 fi
 
-gen_tmpd() {
+tmpd_gen() {
   cd "$(mktemp -d "${TMPD}/gentmpd.XXXXXXXXXX")"
 }
 
-clean_tmpd() {
+tmpd_clean() {
+  if [[ -z "$TMPD" ]] ; then
+    echo >&2 "TMPD is undefined!"
+    return 1
+  fi
   rm -rf "$TMPD" && mkdir -p "$TMPD"
 }
 
-run_tmpd() {
-  gen_tmpd && "$@"
+tmpd_run() {
+  tmpd_gen && "$@"
 }
 
 # e.g. rg -i "$(csg get input json)"

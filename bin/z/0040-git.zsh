@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 export GHQ_ROOT=$HOME/src
+export GIT_WORKTREE_ROOT="${GHQ_ROOT}/git-worktree"
 export GIT_USER="$(git config user.name)"
 alias gdefault='${DOTFILES_ROOT}/bin/default-branch.sh'
 alias gdpull='${DOTFILES_ROOT}/bin/default-branch.sh pull true false'
