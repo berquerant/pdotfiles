@@ -51,6 +51,14 @@ For minimal setup, use [microdotfiles](https://github.com/berquerant/microdotfil
 
 # Tasks
 
+## doctor
+
+Run comprehensive dotfiles integrity diagnostics.
+
+``` shell
+bash .agents/skills/dotfiles-doctor/scripts/doctor.sh --all
+```
+
 ## init
 
 Install tools using homebrew.

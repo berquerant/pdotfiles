@@ -1,5 +1,4 @@
 rust-src
 rustfmt
 clippy
-llvm-tools-preview
 rust-analyzer
