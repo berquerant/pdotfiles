@@ -232,5 +232,10 @@
 (use-package my-treesit
   :straight (my-treesit :type built-in))
 
+(use-package keyfreq
+  :custom
+  (keyfreq-file (my-getenv-join "EMACSD" ".keyfreq"))
+  (keyfreq-file-lock (my-getenv-join "EMACSD" ".keyfreq.lock")))
+
 (provide 'my-bootstrap)
 ;;; my-bootstrap.el ends here.

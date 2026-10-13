@@ -132,6 +132,7 @@ Specialized workflows are codified as reusable skills under [.agents/skills/](fi
 | **`ivg-workflow`** | [.agents/skills/ivg-workflow/](file:///.agents/skills/ivg-workflow) | Manage tools built from git repositories, update `ivg/locks/`, synchronize `ivg/renovate.lock`, retry failed builds.<br>Command: `bash .agents/skills/ivg-workflow/scripts/ivg-doctor.sh` |
 | **`renovate-ops`** | [.agents/skills/renovate-ops/](file:///.agents/skills/renovate-ops) | Compile and validate `renovate.yml`, dynamically verify `customManagers` regex patterns with target files, run dry-runs.<br>Command: `bash .agents/skills/renovate-ops/scripts/renovate-sync.sh` |
 | **`emacs-healthcheck`** | [.agents/skills/emacs-healthcheck/](file:///.agents/skills/emacs-healthcheck) | Check Emacs headless batch startup, detect keymap collisions, verify external formatters, prune caches.<br>Command: `bash .agents/skills/emacs-healthcheck/scripts/emacs-doctor.sh` |
+| **`emacs-keybind-audit`** | [.agents/skills/emacs-keybind-audit/](file:///.agents/skills/emacs-keybind-audit) | Audit and analyze Emacs keybindings, detect collisions, search bindings by sequence or command using `bin/emacs-keybind-dump.sh`.<br>Command: `bash .agents/skills/emacs-keybind-audit/scripts/audit.sh top 10` |
 
 ---
 

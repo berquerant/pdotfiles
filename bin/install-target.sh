@@ -1,7 +1,7 @@
 #!/bin/bash
 
 d="$(
-  cd "$(dirname "$0")"/.. || exit
+  cd "$(dirname "$0")"/.. || exit 1
   pwd
 )"
 ivg_sh="${d}/bin/install-via-git.sh"

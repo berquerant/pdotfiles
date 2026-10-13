@@ -64,7 +64,7 @@ bash .agents/skills/dotfiles-doctor/scripts/doctor.sh --all
 Install tools using homebrew.
 
 ``` shell
-git submodule update --init --recursive
+git submodule update --init
 bin/install-brew.sh
 ```
 
@@ -217,7 +217,7 @@ bin/install-requirements.sh all
 Update git submodules.
 
 ``` shell
-git submodule update --remote --recursive
+git submodule update --remote
 ```
 
 ## update-brew
@@ -371,7 +371,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump
 
 ## mise
 
@@ -379,6 +379,14 @@ Install [mise](https://github.com/jdx/mise).
 
 ``` shell
 cargo binstall -y mise@${MISE_VERSION}
+```
+
+## emacs-keybind-dump
+
+Install [emacs-keybind-dump](https://github.com/berquerant/emacs-keybind-dump).
+
+``` shell
+pip install "git+https://github.com/berquerant/emacs-keybind-dump.git@${EMACS_KEYBIND_DUMP_VERSION}"
 ```
 
 ## rnv

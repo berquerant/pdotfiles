@@ -47,18 +47,15 @@ if command -v emacs >/dev/null 2>&1; then
   fi
 fi
 
-# 3. Keybinding Conflicts
-log_section "3. Keybinding Conflicts"
-if [[ -f bin/emacs-key-conflict.sh ]]; then
-  conflicts="$(bash bin/emacs-key-conflict.sh r 2>/dev/null || true)"
-  if [[ -z "$conflicts" ]]; then
-    log_pass "No duplicate keybindings found"
-  else
-    conflict_count="$(echo "$conflicts" | grep -c -v '^[[:space:]]*$')"
-    log_warn "Found ${conflict_count} conflicting key sequences (run: bin/emacs-key-conflict.sh r)"
-  fi
+# 3. Keybinding Conflicts & Audit
+log_section "3. Keybinding Conflicts & Keymaps"
+audit_script="${SCRIPT_DIR}/../../emacs-keybind-audit/scripts/audit.sh"
+if [[ -f "$audit_script" ]]; then
+  log_pass "Keybinding audit available via emacs-keybind-audit (run: bash ${audit_script} top 10)"
+elif [[ -f bin/emacs-keybind-dump.sh ]]; then
+  log_pass "Keybinding dump pipeline available at bin/emacs-keybind-dump.sh"
 else
-  log_warn "bin/emacs-key-conflict.sh not found"
+  log_warn "Neither emacs-keybind-audit nor bin/emacs-keybind-dump.sh found"
 fi
 
 # 4. Reformatter Tools in PATH

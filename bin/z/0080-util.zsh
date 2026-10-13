@@ -1,11 +1,7 @@
 #!/bin/zsh
 
-# find files or directories >= 5GB
-# $1: path (default: /)
-# $2: depth (default: 5)
-diskcheck() {
-  sudo du -m -x -d "${2:-5}" "${1:-/}" 2>/dev/null | awk '$1 >= 5000 {print $1, length($2), $2}' | sort -n | awk '{print $1, $3}'
-}
+alias diskcheck='${DOTFILES_ROOT}/bin/diskcheck.sh'
+alias fdcheck='diskcheck fd'
 
 if type gsed >/dev/null 2>&1; then
   alias sed='gsed'

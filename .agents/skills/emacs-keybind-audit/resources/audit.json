@@ -1,0 +1,91 @@
+{
+  "description": "Configuration for Emacs Keybind Audit & Advisor",
+  "domains": [
+    {
+      "name": "LSP & Code Intelligence",
+      "pattern": "^(lsp|eglot|consult-eglot|xref)",
+      "description": "Language Server Protocols (LSP), Eglot, cross-references, and code navigation"
+    },
+    {
+      "name": "Syntax & Diagnostics",
+      "pattern": "^(flycheck|flymake)",
+      "description": "On-the-fly syntax checking, linters, and diagnostics"
+    },
+    {
+      "name": "Completion & Minibuffer",
+      "pattern": "^(company|vertico|orderless|marginalia|embark|affe|prescient)",
+      "description": "In-buffer auto-completion (Company) and minibuffer completion framework"
+    },
+    {
+      "name": "Search & Grep",
+      "pattern": "^(isearch|consult|deadgrep|grep|occur|swiper|helm|affe)",
+      "description": "Text searching, ripgrep/deadgrep, occur, and project searching"
+    },
+    {
+      "name": "Navigation & Jump",
+      "pattern": "^(avy|dumb-jump|goto-|bm|scroll-util|beginning-of-|end-of-|forward-|backward-|next-line|previous-line|left-char|right-char)",
+      "description": "Cursor jumping, Avy-migemo, bookmarks, Dumb-jump, and line/char navigation"
+    },
+    {
+      "name": "Selection & Structural Edit",
+      "pattern": "^(multiple-cursors|mc/|expand-region|smartparens|sp-|selected|mwim)",
+      "description": "Multiple cursors, expand-region, smartparens, and selection-based actions"
+    },
+    {
+      "name": "Editing, Formatting & Replace",
+      "pattern": "^(reformatter|my-reformatter|comment-|ez-query-replace|query-replace|anzu|whitespace|delete-trailing-whitespace|self-insert|delete-|kill-|yank|indent|capitalize|downcase|upcase)",
+      "description": "Text editing, formatting, replace operations, and comments"
+    },
+    {
+      "name": "Buffer, Window & Frame",
+      "pattern": "^(switch-to-buffer|kill-buffer|delete-window|other-window|split-window|delete-frame|clone-frame|enlarge-window|shrink-window|popwin|buffer-change|my-sticky-buffer)",
+      "description": "Window splitting, buffer switching, frame management, and popwin"
+    },
+    {
+      "name": "Project & Workspace",
+      "pattern": "^(projectile|consult-ghq|treemacs|lsp-treemacs)",
+      "description": "Project management (Projectile, ghq) and file/project tree explorer (Treemacs)"
+    },
+    {
+      "name": "Files & Dired",
+      "pattern": "^(dired|find-file|write-file|save-buffer|revert-buffer|my-open-file|my-path|goto-addr|browse-url)",
+      "description": "File system navigation, Dired, file opening, and path utilities"
+    },
+    {
+      "name": "Version Control & Git",
+      "pattern": "^(vc-|git-|magit-|diff-hl|diff-|ediff|dsvn|my-git-browse)",
+      "description": "Git operations, Diff-HL, Ediff, SVN, and Git browsing helpers"
+    },
+    {
+      "name": "Language Modes & Playgrounds",
+      "pattern": "^(go-|rust-|python-|ruby-|php-|js2-|typescript-|markdown-|gfm-|yaml-|json-|dockerfile-|terraform-|plantuml-|haskell-|lua-|scala-|cc-|c\\+\\+|nxml-|web-|ascii-|go-playground|rust-playground)",
+      "description": "Specific programming language mode commands and playground scratchpads"
+    },
+    {
+      "name": "Terminal & Shell",
+      "pattern": "^(vterm|shell-command|eshell|term|tramp)",
+      "description": "Embedded terminal emulator (vterm), remote TRAMP, and shell command execution"
+    },
+    {
+      "name": "Restclient & Chat/AI",
+      "pattern": "^(restclient|thread-buffer|message-routing|ellama)",
+      "description": "HTTP REST client and chat/message buffer integrations"
+    },
+    {
+      "name": "Themes & Visual UI",
+      "pattern": "^(modus-themes|solarized|rainbow-|which-key|posframe|diminish|show-indentation|my-theme)",
+      "description": "Themes, syntax delimiters, modeline diminish, and keybinding guide (which-key)"
+    }
+  ],
+  "thresholds": {
+    "promote_min_freq": 10,
+    "promote_min_depth": 3,
+    "description": "Criteria to consider a command frequently used and candidates for shortening"
+  },
+  "patterns": {
+    "user_prefixes": "^(M-s|C-c|C-x a)",
+    "danger_keywords": "\\b(kill|delete|abort|quit|shutdown)\\b",
+    "safe_tier_prefixes": "^(M-s\\s+M-s|C-c\\s+C-c)",
+    "description": "Prefix and safety patterns for sequence classification"
+  }
+}

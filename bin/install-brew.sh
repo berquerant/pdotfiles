@@ -3,7 +3,7 @@
 set -e
 
 d="$(
-  cd "$(dirname "$0")"/.. || exit
+  cd "$(dirname "$0")"/.. || exit 1
   pwd
 )"
 . "${d}/bin/common.sh"

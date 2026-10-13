@@ -25,7 +25,7 @@ This skill provides diagnostic procedures and maintenance workflows for the modu
   * Minimal: `bin/emacs-light.sh` (`lmacs`), `bin/emacs-less.sh` (`umacs`)
 * **Maintenance Scripts**:
   * `bin/emacs-batch.sh`: Headless batch invocation.
-  * `bin/emacs-key-conflict.sh`: Scans for duplicate keybindings.
+  * `bin/emacs-keybind-dump.sh`: Dumps mode keybindings (used by `emacs-keybind-audit`).
   * `bin/clean-emacs.sh`: Prunes native-comp / straight caches.
 
 ---
@@ -42,20 +42,24 @@ bash .agents/skills/emacs-healthcheck/scripts/emacs-doctor.sh
 
 The script verifies:
 1. **Batch Startup**: Evaluates `.emacs.d/init.el` in headless batch mode for syntax or macro-expansion errors.
-2. **Keybinding Conflict Detection**: Runs `bin/emacs-key-conflict.sh r` to check for overlapping hotkeys.
+2. **Keybinding Audit Capability**: Confirms readiness of `emacs-keybind-audit`.
 3. **Reformatter Executables**: Checks that formatters declared in `my-reformatter.el` exist in PATH.
 4. **External Dependencies & Paths**: Confirms availability of `migemo` dictionary, `libvterm`, and `tree-sitter`.
 
-### 2. Investigating Keybinding Conflicts
+### 2. Investigating Keybinding Conflicts & Usage
 
-To locate and resolve key binding collisions:
+For deep inspection, collision detection, and command usage frequency analysis, switch to the dedicated skill:
+* **Dedicated Skill**: `emacs-keybind-audit` ([.agents/skills/emacs-keybind-audit](.agents/skills/emacs-keybind-audit))
 
 ```bash
-# Print raw conflicting key sequences
-bin/emacs-key-conflict.sh r
+# Show top conflicting key sequences
+bash .agents/skills/emacs-keybind-audit/scripts/audit.sh top 10
 
-# Search where a specific key sequence is defined
-bin/emacs-key-conflict.sh seq "C-c p"
+# Search key combinations bound to a specific command
+bash .agents/skills/emacs-keybind-audit/scripts/audit.sh find-cmd "consult"
+
+# Get optimization and promotion advice
+bash .agents/skills/emacs-keybind-audit/scripts/audit.sh advise
 ```
 
 Common resolution strategies:
@@ -85,5 +89,5 @@ bin/clean-emacs.sh straight [optional_package_name]
 
 After editing Emacs Lisp files:
 - [ ] Run `bash .agents/skills/emacs-healthcheck/scripts/emacs-doctor.sh` to ensure clean batch initialization.
-- [ ] Verify no unexpected key conflict was introduced via `bin/emacs-key-conflict.sh r`.
+- [ ] If changing keybindings, verify conflicts via `bash .agents/skills/emacs-keybind-audit/scripts/audit.sh top 10`.
 - [ ] Verify formatting with `my-reformatter-format` if modifying reformatter definitions.

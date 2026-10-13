@@ -1,6 +1,6 @@
 #!/bin/bash
 
-d=$(cd "$(dirname "$0")" || exit; pwd)
+d=$(cd "$(dirname "$0")" || exit 1; pwd)
 bin="${d}/tmp/xc"
 ref=0.9.0
 
