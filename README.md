@@ -371,7 +371,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## util-tools
 
-Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump, cache-mcp
 
 ## mise
 
@@ -379,6 +379,14 @@ Install [mise](https://github.com/jdx/mise).
 
 ``` shell
 cargo binstall -y mise@${MISE_VERSION}
+```
+
+## cache-mcp
+
+Install [cache-mcp](https://github.com/berquerant/cache-mcp).
+
+``` shell
+pip install "git+https://github.com/berquerant/cache-mcp.git@${CACHE_MCP_VERSION}"
 ```
 
 ## emacs-keybind-dump

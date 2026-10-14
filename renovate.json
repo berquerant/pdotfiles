@@ -201,6 +201,18 @@
     },
     {
       "customType": "regex",
+      "description": "Manage cache-mcp version",
+      "fileMatch": [
+        "^.env$"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "berquerant/cache-mcp",
+      "matchStrings": [
+        "CACHE_MCP_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ]
+    },
+    {
+      "customType": "regex",
       "description": "Manage xc version",
       "fileMatch": "^xc$",
       "matchStrings": [
