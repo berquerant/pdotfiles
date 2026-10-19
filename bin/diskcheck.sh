@@ -25,7 +25,7 @@ fdcheck() {
   __tmp=$(mktemp)
   trap 'rm -f "$__tmp"' EXIT
 
-  if ! sudo lsof -n -P 2>/dev/null > "$__tmp"; then
+  if ! sudo lsof -n -P 2>/dev/null | sudo tee "$__tmp"; then
     cecho red "failed to execute lsof" >&2
     exit 1
   fi
@@ -51,8 +51,8 @@ EOS
 main() {
   case "$1" in
     "-h" | "--help") usage ;;
-    "") diskcheck ;;
-    "disk") shift ; diskcheck ;;
+    "") diskcheck "$@" ;;
+    "disk") shift ; diskcheck "$@" ;;
     "fd") fdcheck ;;
     *) usage ; exit 1 ;;
   esac

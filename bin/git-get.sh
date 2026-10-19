@@ -1,37 +1,11 @@
 #!/bin/bash
 
-uri2dir() {
-  echo "$1" |
-    tr ":" "/" |
-    sed -E 's|git@|https///|' |
-    sed -E 's|git///|https///|' |
-    sed -E 's|\.git||' |
-    sed -E 's|https///|https://|' |
-    sed -E 's|https://||'
-}
-
-clone() {
-  local uri="$1"
-  local dir
-  dir="$(ghq root)/$(uri2dir "$uri")"
-  if echo "$uri" | grep -q 'github.com'; then
-    ghq get "$uri" >&2
-  else
-    git clone "$uri" "$dir" >&2
-  fi
-  echo "$dir"
-}
-
-ghq_select() {
-  ghq list -p | "${DOTFILES_ROOT}/bin/fzf.sh"
-}
-
 select_clone() {
   local uri="$1"
   if [ -z "$uri" ]; then
-    ghq_select
+    git-iter get | "${DOTFILES_ROOT}/bin/fzf.sh"
   else
-    clone "$uri"
+    git-iter get "$uri"
   fi
 }
 
@@ -42,7 +16,7 @@ ${name} -- clone and change directory
 
 Usage
   ${name}
-    Select local repo by ghq and goto the repo directory
+    Select local repo by git-iter and goto the repo directory
 
   ${name} URI
     Clone URI and goto the repo directory

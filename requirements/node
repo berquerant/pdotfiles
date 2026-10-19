@@ -1,3 +1,4 @@
 eslint@10.11.0
 typescript-language-server@6.0.0
 @devcontainers/cli@0.89.0
+prettier@3.9.10

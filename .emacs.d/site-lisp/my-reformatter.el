@@ -96,33 +96,24 @@ Formatter functions are: my-reformatter-LANG-(region|buffer)."
   :lighter " RFphp")
 
 ;; typescript
-;; https://github.com/denoland/deno
+;; https://prettier.io
 (reformatter-define my-reformatter-ts-format
-  :program "deno"
-  :args `("fmt" "--ext" "tsx" "--quiet" ,input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file)
+  :program "prettier"
+  :args `("--stdin-filepath" ,(or buffer-file-name "file.tsx"))
   :lighter " RFts")
 
 ;; js
-;; https://github.com/denoland/deno
+;; https://prettier.io
 (reformatter-define my-reformatter-js-format
-  :program "deno"
-  :args `("fmt" "--ext" "jsx" "--quiet" ,input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file)
+  :program "prettier"
+  :args `("--stdin-filepath" ,(or buffer-file-name "file.jsx"))
   :lighter " RFjs")
 
 ;; markdown
-;; https://github.com/denoland/deno
+;; https://prettier.io
 (reformatter-define my-reformatter-md-format
-  :program "deno"
-  :args `("fmt" "--ext" "md" "--quiet" ,input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file)
+  :program "prettier"
+  :args `("--stdin-filepath" ,(or buffer-file-name "file.md"))
   :lighter " RFmd")
 
 ;; sh

@@ -40,7 +40,7 @@ graph TD
 
     subgraph Runtimes ["Runtimes & Installed Binaries"]
         BREW --> RUN_GO["Go / gopls"]
-        BREW --> RUN_NODE["Node.js / pnpm / deno"]
+        BREW --> RUN_NODE["Node.js / pnpm"]
         BREW --> RUN_RUBY["Ruby"]
         BREW --> RUN_RUST["Rust / cargo-binstall"]
         BREW --> RUN_PY["pyenv / uv"]
@@ -49,7 +49,7 @@ graph TD
         ENV --> ROOT_TOOLS["CLI (rnv, semv, mise, ip2bin, uv)"]
         
         RUN_GO --> REQ_GO["requirements/go (goimports, golangci-lint, gbrowse, etc.)"]
-        RUN_NODE --> REQ_NODE["requirements/node (@devcontainers/cli, eslint, ts-ls)"]
+        RUN_NODE --> REQ_NODE["requirements/node (@devcontainers/cli, eslint, prettier, ts-ls)"]
         RUN_RUBY --> REQ_GEM["requirements/gem (solargraph, rubocop, rufo)"]
         RUN_RUST --> REQ_RUST["requirements/cargo & rustup (rustfmt, clippy, rust-analyzer)"]
         RUN_PY --> REQ_PY["requirements/python (ruff, lizard, pyyaml, sqlfluff)"]

@@ -35,7 +35,7 @@ Install languages and libraries.
 
 The names listed in the files in [targets](targets) can be specified as [./install](install) argument.
 
-The file names in [requirements](targets) can be specified as [./install r](install) argument.
+The file names in [requirements](requirements) can be specified as [./install r](install) argument.
 
 Lines in target and requirements files can be commented out with leading '#'.
 
@@ -70,7 +70,7 @@ bin/install-brew.sh
 
 ## install-via-git
 
-Install tools to install by docker.
+Install install-via-git (ivg) CLI.
 
 ``` shell
 bin/install-via-git-go.sh
@@ -198,9 +198,13 @@ Requires: install-via-git, retry-sub, retry-util
 
 ## cycle
 
+Install all configurations and tools.
+
 Requires: git, install-via-git, update-brew, sub, util
 
 ## recycle
+
+Retry installing all configurations and tools.
 
 Requires: git, install-via-git, update-brew, retry-sub, retry-util
 
@@ -258,15 +262,21 @@ bin/renovate-ivg.sh lock
 
 ## emacs-clean
 
+Clean Emacs cache and straight packages.
+
 Requires: emacs-clean-cache, emacs-clean-straight
 
 ## emacs-clean-cache
+
+Clean Emacs cache directory.
 
 ``` shell
 bin/clean-emacs.sh cache
 ```
 
 ## emacs-clean-straight
+
+Clean Emacs straight packages directory.
 
 ``` shell
 bin/clean-emacs.sh straight
@@ -328,13 +338,13 @@ Requires: rust, go, ruby, python, ivg-lock
 
 ## update-sub
 
-Install sub dependencies.
+Update sub dependencies.
 
 Requires: rust, go, ruby, python, ivg-lock
 
 ## retry-sub
 
-Install sub dependencies.
+Retry installing sub dependencies.
 
 Requires: rust, go, ruby, python, ivg-lock
 
@@ -350,7 +360,7 @@ bin/install-via-git-bulk.sh < targets/util
 
 ## update-util
 
-Install util dependencies.
+Update util dependencies.
 
 Requires: util-tools, ivg-lock
 
@@ -361,7 +371,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 ## retry-util
 
-Install util dependencies.
+Retry installing util dependencies.
 
 Requires: util-tools
 
@@ -370,6 +380,8 @@ bin/install-via-git-bulk.sh --retry < targets/util
 ```
 
 ## util-tools
+
+Install prerequisite CLI tools for util targets.
 
 Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump, cache-mcp
 
@@ -431,7 +443,7 @@ curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | sh
 
 ## golangci-lint
 
-Verify [golangci-lint](https://github.com/golangci/golangci-lint).
+Install flycheck wrapper for [golangci-lint](https://github.com/golangci/golangci-lint).
 
 ``` shell
 # golangci-lint config verify -v
@@ -456,7 +468,7 @@ bin/install-via-git-bulk.sh < targets/other
 
 ## update-other
 
-Install other dependencies.
+Update other dependencies.
 
 ``` shell
 bin/install-via-git-bulk.sh --update < targets/other
@@ -464,7 +476,7 @@ bin/install-via-git-bulk.sh --update < targets/other
 
 ## retry-other
 
-Install other dependencies.
+Retry installing other dependencies.
 
 ``` shell
 bin/install-via-git-bulk.sh --retry < targets/other
@@ -482,7 +494,7 @@ bin/install-via-git-bulk.sh < targets/additional
 
 ## update-additional
 
-Install additional dependencies.
+Update additional dependencies.
 
 Requires: additional-tools
 
@@ -492,7 +504,7 @@ bin/install-via-git-bulk.sh --update < targets/additional
 
 ## retry-additional
 
-Install additional dependencies.
+Retry installing additional dependencies.
 
 Requires: additional-tools
 
@@ -501,6 +513,8 @@ bin/install-via-git-bulk.sh --retry < targets/additional
 ```
 
 ## additional-tools
+
+Install prerequisite tools for additional targets (noop).
 
 ``` shell
 echo noop
