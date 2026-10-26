@@ -328,6 +328,7 @@ Requires: uv
 ``` shell
 pyenv install --skip-existing "$PY_VERSION"
 pyenv local "$PY_VERSION"
+pip install --upgrade pip
 ```
 
 ## sub
