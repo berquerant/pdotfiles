@@ -104,6 +104,15 @@ customManagers:
     matchStrings:
       - "IP2BIN_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
   - customType: "regex"
+    description: "Manage scptdisplay version"
+    fileMatch:
+      - "^.env$"
+    datasourceTemplate: "github-tags"
+    depNameTemplate: "berquerant/scptdisplay"
+    extractVersionTemplate: "^v(?<version>.*)$" # remove prefix `v` from datasource
+    matchStrings:
+      - "SCPTDISPLAY_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+  - customType: "regex"
     description: "Manage uv version"
     fileMatch:
       - "^.env$"

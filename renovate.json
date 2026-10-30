@@ -177,6 +177,19 @@
     },
     {
       "customType": "regex",
+      "description": "Manage scptdisplay version",
+      "fileMatch": [
+        "^.env$"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "berquerant/scptdisplay",
+      "extractVersionTemplate": "^v(?<version>.*)$",
+      "matchStrings": [
+        "SCPTDISPLAY_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
+    },
+    {
+      "customType": "regex",
       "description": "Manage uv version",
       "fileMatch": [
         "^.env$"

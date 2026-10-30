@@ -384,7 +384,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 Install prerequisite CLI tools for util targets.
 
-Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump, cache-mcp
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump, cache-mcp, scptdisplay
 
 ## mise
 
@@ -432,6 +432,14 @@ Install [ip2bin](https://github.com/berquerant/ip2bin-rust).
 
 ``` shell
 cargo install --git https://github.com/berquerant/ip2bin-rust --tag ${IP2BIN_VERSION}
+```
+
+## scptdisplay
+
+Install [scptdisplay](https://github.com/berquerant/scptdisplay).
+
+``` shell
+cargo install --git https://github.com/berquerant/scptdisplay --tag v${SCPTDISPLAY_VERSION}
 ```
 
 ## uv

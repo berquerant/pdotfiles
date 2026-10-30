@@ -10,7 +10,7 @@ This document provides operational context, coding standards, safety principles,
   * [README.md](file:///README.md) defines runnable tasks. Use [`./xc <task>`](file:///xc) as the primary interface for repository workflows (e.g., `./xc doctor`, `./xc renovate.json`, `./xc init`).
 * **Dependency Domains**:
   * **System / CLI**: [.Brewfile](file:///.Brewfile) managed by Homebrew.
-  * **Root Tooling Versions**: [.env](file:///.env) (`RNV_VERSION`, `SEMV_VERSION`, `MISE_VERSION`, `IP2BIN_VERSION`, `UV_VERSION`, `PY_VERSION`).
+  * **Root Tooling Versions**: [.env](file:///.env) (`RNV_VERSION`, `SEMV_VERSION`, `MISE_VERSION`, `IP2BIN_VERSION`, `UV_VERSION`, `PY_VERSION`, `SCPTDISPLAY_VERSION`).
   * **Language Runtimes**: [requirements/](file:///requirements) (`cargo`, `gem`, `go`, `node`, `python`, `rustup`) installed via `bin/install-requirements.sh`.
   * **Git-built Binaries (`ivg`)**: [ivg/](file:///ivg) target definitions (`ivg/*.yml`), tracked by [targets/util](file:///targets/util), [targets/other](file:///targets/other), and [targets/additional](file:///targets/additional).
 * **Emacs Environment**:
@@ -46,7 +46,7 @@ graph TD
         BREW --> RUN_PY["pyenv / uv"]
         BREW --> CLI_UTILS["CLI Tools (ripgrep, fzf, jq, yq, etc.)"]
 
-        ENV --> ROOT_TOOLS["CLI (rnv, semv, mise, ip2bin, uv)"]
+        ENV --> ROOT_TOOLS["CLI (rnv, semv, mise, ip2bin, uv, scptdisplay)"]
         
         RUN_GO --> REQ_GO["requirements/go (goimports, golangci-lint, gbrowse, etc.)"]
         RUN_NODE --> REQ_NODE["requirements/node (@devcontainers/cli, eslint, prettier, ts-ls)"]
