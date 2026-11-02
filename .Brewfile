@@ -119,7 +119,7 @@ brew "lua-language-server"
 brew "stylua" # formatter
 
 # js, ts
-brew "node@24"
+brew "node"
 brew "pnpm"
 
 # java

@@ -1,6 +1,6 @@
 python-lsp-black==2.0.0
 python-lsp-server==1.15.0
 python-lsp-ruff==2.3.4
-sqlfluff==4.3.0
+sqlfluff==4.4.0
 pyyaml==6.0.3
-lizard==1.24.0
+lizard==1.24.1

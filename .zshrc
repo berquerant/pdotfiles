@@ -41,7 +41,7 @@ load_ruby() {
 # rust
 export PATH="$CARGO_HOME/bin:$PATH"
 # node
-export PATH="$(brew --prefix node@24)/bin:$PATH"
+export PATH="$(brew --prefix node)/bin:$PATH"
 export PATH="$PNPM_HOME:$PATH"
 export PATH="$PNPM_HOME/bin:$PATH"
 load_node() {
