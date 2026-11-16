@@ -34,11 +34,6 @@
   (dictionary-default-strategy "prefix")
   (dictionary-server "dict.org"))
 
-(defun other-window-back ()
-  "Reverse `other-window'."
-  (interactive)
-  (other-window -1))
-
 (defun my--revert-buffer ()
   (revert-buffer t t))
 
@@ -107,26 +102,23 @@
   (bind-key "C-x w j" 'shrink-window)
   (bind-key "C-x w k" 'enlarge-window)
   (bind-key "C-x w l" 'enlarge-window-horizontally)
-  (my-macro-setup-repeat-commands (("h" shrink-window-horizontally)
-                                   ("j" shurink-window)
-                                   ("k" enlarge-window)
-                                   ("l" enlarge-window-horizontally)))
-  (my-macro-setup-repeat-commands ((">" next-buffer)
-                                   ("<" previous-buffer))))
+  (defvar-keymap my-window-resize-repeat-map
+    :doc "Keymap to repeat window resizing."
+    :repeat t
+    "h" #'shrink-window-horizontally
+    "j" #'shrink-window
+    "k" #'enlarge-window
+    "l" #'enlarge-window-horizontally)
+  (defvar-keymap my-buffer-navigation-repeat-map
+    :doc "Keymap to repeat buffer navigation."
+    :repeat t
+    ">" #'next-buffer
+    "<" #'previous-buffer))
 
 ;; important utilities
 
-;; popup window manager
-(use-package popwin
-  :demand t
-  :config
-  (popwin-mode t)
-  (setq special-display-function 'popwin:special-display-popup-window)
-  (setq display-buffer-function 'popwin:display-buffer))
-
 (use-package my-proc
-  :straight (my-proc :type built-in)
-  :commands (my-proc-call-process))
+  :straight (my-proc :type built-in))
 
 (use-package my-path
   :straight (my-path :type built-in)

@@ -19,10 +19,11 @@ This skill provides diagnostic procedures and maintenance workflows for the modu
   * [site-lisp/](file:///.emacs.d/site-lisp): Modular custom extensions (`my-reformatter.el`, `my-flycheck-golangci-lint.el`, `my-git-browse.el`, etc.).
   * [straight-default.el](file:///.emacs.d/straight-default.el): Pinned package lock commit hashes.
   * [treesit-language-source-alist.el](file:///.emacs.d/treesit-language-source-alist.el): Tree-sitter grammar upstream repositories.
-* **Execution Binaries**:
-  * GUI: `/Applications/Emacs-GUI.app` (aliased as `emacs`, `gmacs`)
-  * CUI: `/usr/local/bin/emacs` (aliased as `cmacs`)
+* **Execution Binaries & Directories**:
+  * GUI (`EMACSD=~/.emacs.d`): `/Applications/Emacs-GUI.app` (aliased as `emacs`, `gmacs`)
+  * CUI (`CMACSD=~/.cmacs.d`): `/usr/local/bin/emacs --init-directory="$CMACSD"` (aliased as `cmacs`)
   * Minimal: `bin/emacs-light.sh` (`lmacs`), `bin/emacs-less.sh` (`umacs`)
+  * **Important**: `emacs` in `PATH` (e.g. `/opt/homebrew/bin/emacs`) may differ in Emacs version or build options (such as built-in `sqlite3`) from `/usr/local/bin/emacs` (`cmacs`). Always match `EMACSD` and the target binary when diagnosing CUI vs GUI issues.
 * **Maintenance Scripts**:
   * `bin/emacs-batch.sh`: Headless batch invocation.
   * `bin/emacs-keybind-dump.sh`: Dumps mode keybindings (used by `emacs-keybind-audit`).
@@ -66,21 +67,30 @@ Common resolution strategies:
 * Prefix mode-specific bindings under distinct prefix keys (e.g., `C-c ...` or `M-s M-s ...`).
 * Unbind conflicting global keys before binding mode maps using `(unbind-key "..." ...)`.
 
-### 3. Cleaning Caches & Straight Packages
+### 3. Cleaning Caches & Troubleshooting Straight Packages
 
-When packages fail to compile, native compilation behaves erratically, or cache drift occurs:
+When packages fail to compile, native compilation behaves erratically, or stale dependencies (e.g., `compat`, `transient`) cause macro/version mismatch errors (`void-function: static-when`, `cl-generic-ensure-function`, `Magit requires 'transient' >= ...`):
 
 ```bash
+# Target CUI (~/.cmacs.d) by setting EMACSD="$CMACSD" (omit for GUI ~/.emacs.d)
 # Delete byte-compiled files (.elc), native comp cache (.eln), and ELPA cache
-bin/clean-emacs.sh cache
+EMACSD="$CMACSD" bin/clean-emacs.sh cache
 
-# Prune unneeded or corrupted straight.el repositories using stride
-bin/clean-emacs.sh straight [optional_package_name]
+# Delete and reset stale or corrupted straight.el packages using stride
+EMACSD="$CMACSD" bin/clean-emacs.sh straight <package_name>
+```
+
+After cleaning/updating stale dependencies (such as `compat` and `transient`), rebuild and verify **actual command execution** in the target environment rather than only checking `init.el` load:
+
+```bash
+EMACSD="$CMACSD" /usr/local/bin/emacs --init-directory="$CMACSD" \
+  --batch --quick --load "$CMACSD/early-init.el" --load "$CMACSD/init.el" \
+  --eval '(progn (find-file "README.md") (magit-status) (magit-dispatch))'
 ```
 
 ### 4. Updating Package Locks & Treesit
 
-* **Straight Lock**: Tracked in `.emacs.d/straight-default.el`.
+* **Straight Lock**: Tracked in `.emacs.d/straight-default.el`. Run `(straight-freeze-versions)` in batch mode against the target directory (e.g. `EMACSD="$CMACSD"`) after adding or upgrading packages.
 * **Tree-sitter Grammars**: Version pinned in `.emacs.d/treesit-language-source-alist.el` (managed and updated via Renovate).
 
 ---
@@ -89,5 +99,6 @@ bin/clean-emacs.sh straight [optional_package_name]
 
 After editing Emacs Lisp files:
 - [ ] Run `bash .agents/skills/emacs-healthcheck/scripts/emacs-doctor.sh` to ensure clean batch initialization.
+- [ ] For CUI changes, verify against `EMACSD="$CMACSD"` and `/usr/local/bin/emacs --init-directory="$CMACSD"`, including executing the newly added commands (not just loading `init.el`).
 - [ ] If changing keybindings, verify conflicts via `bash .agents/skills/emacs-keybind-audit/scripts/audit.sh top 10`.
 - [ ] Verify formatting with `my-reformatter-format` if modifying reformatter definitions.

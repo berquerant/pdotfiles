@@ -4,16 +4,11 @@
 
 ;;; Code:
 
-(require 's)
 (require 'cl-lib)
 
 (defgroup my-misc nil
   "My miscellaneous utilities."
   :prefix "my-misc-")
-
-(defun my-misc--matches-only-spaces (s)
-  "Is S the empty string or contain spaces only?"
-  (or (s-equals? s "") (s-matches? "^\s *$" s)))
 
 ;;;###autoload
 (defun my-misc-eval-last-sexp-and-insert ()
@@ -74,12 +69,6 @@ Return t means that the window is selectable by `other-window'.")
   (interactive)
   (my-misc--other-window 1 (or window (get-buffer-window))))
 
-;;;###autoload
-(defun my-misc-other-window-reverse (&optional window)
-  "Reversed `other-window' except WINDOW and windows `my-misc-other-window-prediates' return nil."
-  (interactive)
-  (my-misc--other-window -1 (or window (get-buffer-window))))
-
 (defcustom my-misc-delete-window-predicates nil
   "List of functions: window to bool.
 Return t means that the window is deletable.
@@ -122,57 +111,6 @@ When a predicate is called, selected window will be the window of the argument."
   "`delete-frame' except FRAME."
   (interactive)
   (my-misc--delete-other-frames (or frame (selected-frame))))
-
-(defun my-misc-approx-collect-symbols (buffer-or-name)
-  "Experimental: Collect symbols in the BUFFER-OR-NAME."
-  (let (symbols)
-    (with-current-buffer (get-buffer-create buffer-or-name)
-      (save-excursion
-        (goto-char (point-min))
-        (while (not (eq (point) (point-max)))
-          (when (not (or (looking-at-p "[[:space:]\n]+$")
-                         (and (bolp) (eolp))))
-            (let ((symbol (intern (current-word))))
-              (add-to-list 'symbols symbol)))
-          (forward-word))))
-    symbols))
-
-(defun my-misc-describe-symbol (symbol)
-  "Return result of `describe-symbol SYMBOL' as string."
-  (describe-symbol symbol)
-  (with-current-buffer (help-buffer)
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun my-misc-symbol-introduced-version (symbol)
-  "Experimental: Get Emacs version when SYMBOL was introduced."
-  (describe-symbol symbol)
-  (let ((doc (my-misc-describe-symbol symbol)))
-    (and (string-match (format "^%s is" (symbol-name symbol)) doc) ; SYMBOL is...
-         (string-match "Probably introduced at or before Emacs version \\(.*\\).$" doc)
-         (match-string 1 doc))))
-
-(defun my-misc-approx-collect-symbols-introduced-version (buffer-or-name)
-  "Experimental: Get the symbols in the BUFFER-OR-NAME and Emacs version in which they were introduced.
-Maybe more useful to search from https://www.gnu.org/software/emacs/news/"
-  (let ((result nil))
-    (cl-loop for symbol in (my-misc-approx-collect-symbols buffer-or-name)
-             when (not (assoc symbol result))
-             do (let ((version (my-misc-symbol-introduced-version symbol)))
-                  (when version
-                    (add-to-list 'result `(,symbol . ,version)))))
-    result))
-
-(defun my-misc-last-kill ()
-  "Return last killed string."
-  (current-kill 0 t))
-
-(defun my-misc-read-lines (filepath)
-  "Read FILEPATH and split lines."
-  (if (file-exists-p filepath)
-      (with-temp-buffer
-        (insert-file-contents filepath)
-        (s-split "\n" (buffer-string) t))
-    (error "File %s is not found" path)))
 
 (provide 'my-misc)
 ;;; my-misc.el ends here

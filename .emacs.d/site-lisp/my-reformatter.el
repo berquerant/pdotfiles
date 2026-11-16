@@ -12,216 +12,139 @@
   "My reformatter definitions."
   :prefix "my-reformatter-")
 
-(defun my-reformatter-format ()
-  "Format buffer or region.
+(defconst my-reformatter-mode-alist
+  '((php-mode . php)
+    (hcl-mode . hcl)
+    (typescript-mode . ts)
+    (typescript-tsx-mode . ts)
+    (typescript-ts-mode . ts)
+    (tsx-ts-mode . ts)
+    (js2-mode . js)
+    (js-jsx-mode . js)
+    (markdown-mode . md)
+    (gfm-mode . md)
+    (sh-mode . sh)
+    (bash-ts-mode . sh)
+    (awk-mode . awk)
+    (ruby-mode . ruby)
+    (ruby-ts-mode . ruby)
+    (python-mode . python)
+    (python-ts-mode . python)
+    (lua-mode . lua)
+    (lua-ts-mode . lua)
+    (cc-mode . clang)
+    (c++-mode . clang)
+    (c-mode . clang)
+    (c-ts-mode . clang)
+    (c++-ts-mode . clang)
+    (rust-mode . rust)
+    (rust-ts-mode . rust)
+    (java-mode . java)
+    (java-ts-mode . java)
+    (go-mode . go)
+    (go-ts-mode . go)
+    (sql-mode . sql)
+    (yaml-mode . yaml)
+    (yaml-ts-mode . yaml)
+    (json-mode . json)
+    (json-ts-mode . json)
+    (conf-toml-mode . toml)
+    (toml-ts-mode . toml)
+    (terraform-mode . terraform))
+  "Alist mapping major mode to reformatter name.")
 
-`major-mode' determines formatter,
-see `my-reformatter-formatter-major-mode2lang'.
-Formatter functions are: my-reformatter-LANG-(region|buffer)."
+(defun my-reformatter-get-formatter-func (mode for-region)
+  "Get interactive function to format region or buffer for MODE."
+  (if-let* ((name (alist-get mode my-reformatter-mode-alist))
+            (fname (format "my-reformatter-%s-format-%s" name (if for-region "region" "buffer")))
+            (fsym (intern fname)))
+      (if (fboundp fsym) fsym
+        (error "Function %s is not defined" fname))
+    (error "No reformatter configured for %s" mode)))
+
+(defun my-reformatter-format ()
+  "Format buffer or region based on `major-mode'."
   (interactive)
   (call-interactively
    (my-reformatter-get-formatter-func major-mode (use-region-p))))
 
-(defun my-reformatter-get-formatter-func (major-mode-sym for-region)
-  "Get interactive function to format region or buffer."
-  (let* ((lang (cadr (assoc major-mode-sym my-reformatter-formatter-major-mode2lang)))
-         (name (cadr (assoc lang my-reformatter-formatter-lang2names)))
-         (fname (format "my-reformatter-%s-format-%s" name (if for-region "region" "buffer")))
-         (fsym (intern fname)))
-    (if (fboundp fsym) fsym
-      (error "Function %s is not defined" fname))))
-
-(defconst my-reformatter-formatter-major-mode2lang
-  '((php-mode "php")
-    (hcl-mode "hcl")
-    (typescript-mode "typescript")
-    (typescript-tsx-mode "typescript")
-    (tsx-ts-mode "tsx")
-    (js2-mode "javascript")
-    (js-jsx-mode "jsx")
-    (markdown-mode "markdown")
-    (gfm-mode "markdown")
-    (sh-mode "shell")
-    (ruby-mode "ruby")
-    (python-mode "python")
-    (lua-mode "lua")
-    (cc-mode "clang")
-    (c++-mode "clang")
-    (c-mode "clang")
-    (rust-mode "rust")
-    (java-mode "java")
-    (go-mode "go")
-    (sql-mode "sql")
-    (yaml-mode "yaml")
-    (json-mode "json")
-    (conf-toml-mode "toml")
-    (terraform-mode "terraform"))
-  "Major mode to language name.")
-
-(defconst my-reformatter-formatter-lang2names
-  '(("php" "php")
-    ("hcl" "hcl")
-    ("typescript" "ts")
-    ("javascript" "js")
-    ("tsx" "ts")
-    ("jsx" "js")
-    ("markdown" "md")
-    ("shell" "sh")
-    ("awk" "awk")
-    ("ruby" "ruby")
-    ("python" "python")
-    ("lua" "lua")
-    ("clang" "clang")
-    ("rust" "rust")
-    ("java" "java")
-    ("go" "go")
-    ("sql" "sql")
-    ("yaml" "yaml")
-    ("json" "json")
-    ("toml" "toml")
-    ("terraform" "terraform"))
-  "Language name to part of formatter name.")
-
-;; reformatter definitions sholuld have a name of the form
-;;   my-reformatter-NAME-format
-
-;; php
-;; https://github.com/PHP-CS-Fixer/PHP-CS-Fixer
+;; Reformatter definitions (my-reformatter-NAME-format)
 (reformatter-define my-reformatter-php-format
   :program "php-cs-fixer"
   :args `("fix" "--quiet" ,input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file)
-  :lighter " RFphp")
+  :stdin nil :stdout nil :input-file (reformatter-temp-file))
 
-;; typescript
-;; https://prettier.io
 (reformatter-define my-reformatter-ts-format
   :program "prettier"
-  :args `("--stdin-filepath" ,(or buffer-file-name "file.tsx"))
-  :lighter " RFts")
+  :args `("--stdin-filepath" ,(or buffer-file-name "file.tsx")))
 
-;; js
-;; https://prettier.io
 (reformatter-define my-reformatter-js-format
   :program "prettier"
-  :args `("--stdin-filepath" ,(or buffer-file-name "file.jsx"))
-  :lighter " RFjs")
+  :args `("--stdin-filepath" ,(or buffer-file-name "file.jsx")))
 
-;; markdown
-;; https://prettier.io
 (reformatter-define my-reformatter-md-format
   :program "prettier"
-  :args `("--stdin-filepath" ,(or buffer-file-name "file.md"))
-  :lighter " RFmd")
+  :args `("--stdin-filepath" ,(or buffer-file-name "file.md")))
 
-;; sh
-;; https://github.com/mvdan/sh/tree/master
 (reformatter-define my-reformatter-sh-format
   :program "shfmt"
-  :args `("--simplify" "--indent" "2")
-  :lighter " RFsh")
+  :args '("--simplify" "--indent" "2"))
 
-;; awk
 (reformatter-define my-reformatter-awk-format
-  :program "awkfmt"
-  :lighter " RFawk")
+  :program "awkfmt")
 
-;; terraform
-;; https://github.com/hashicorp/terraform
 (reformatter-define my-reformatter-terraform-format
   :program "terraform"
-  :args `("fmt" "-no-color" "-"))
+  :args '("fmt" "-no-color" "-"))
 
-;; ruby
-;; https://github.com/ruby-formatter/rufo
 (reformatter-define my-reformatter-ruby-format
   :program "rufo"
-  :args `("--simple-exit" "--loglevel=silent")
-  :lighter " RFrb")
+  :args '("--simple-exit" "--loglevel=silent"))
 
-;; python
-;; https://github.com/astral-sh/ruff
 (reformatter-define my-reformatter-python-format
   :program "ruff"
   :args `("format" "--silent" ,input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file)
-  :lighter " RFpy")
+  :stdin nil :stdout nil :input-file (reformatter-temp-file))
 
-;; lua
-;; https://github.com/JohnnyMorganz/StyLua
 (reformatter-define my-reformatter-lua-format
   :program "stylua"
   :args `(,input-file)
-  :stdin nil
-  :stdout nil
-  :input-file (reformatter-temp-file)
-  :lighter " RFlua")
+  :stdin nil :stdout nil :input-file (reformatter-temp-file))
 
-;; clang
-;; https://clang.llvm.org/docs/ClangFormat.html#git-integration
 (reformatter-define my-reformatter-clang-format
   :program "clang-format"
-  :args `("--style" "Google")
-  :lighter " RFclang")
+  :args '("--style" "Google"))
 
-;; rust
-;; https://github.com/rust-lang/rustfmt
 (reformatter-define my-reformatter-rust-format
   :program "rustfmt"
-  :args `("--color" "never" "--quiet")
-  :lighter " RFrs")
+  :args '("--color" "never" "--quiet"))
 
-;; java
-;; https://clang.llvm.org/docs/ClangFormat.html#git-integration
 (reformatter-define my-reformatter-java-format
   :program "clang-format"
-  :args `("--style" "Google")
-  :lighter " RFjava")
+  :args '("--style" "Google"))
 
-;; go
-;; https://github.com/golang/tools/tree/master/cmd/goimports
-(reformatter-define my-reformtter-go-format
-  :program "goimports"
-  :lighter " RFgo")
+(reformatter-define my-reformatter-go-format
+  :program "goimports")
 
-;; sql
-;; https://github.com/sqlfluff/sqlfluff
 (reformatter-define my-reformatter-sql-format
   :program "sqlfluff"
-  :args `("format" "--dialect" "mysql" "-")
-  :lighter " RFsql")
+  :args '("format" "--dialect" "mysql" "-"))
 
-;; yaml
-;; https://github.com/mikefarah/yq
 (reformatter-define my-reformatter-yaml-format
   :program "yq"
-  :args `("--prettyPrint" "'sort_keys(..)'")
-  :lighter " RFyaml")
+  :args '("--prettyPrint" "'sort_keys(..)'"))
 
-;; json
-;; https://github.com/jqlang/jq
 (reformatter-define my-reformatter-json-format
   :program "jq"
-  :args `("--sort-keys")
-  :lighter " RFjson")
+  :args '("--sort-keys"))
 
-;; toml
-;; https://github.com/tamasfe/taplo
 (reformatter-define my-reformatter-toml-format
   :program "taplo"
-  :args `("format" "--colors" "never" "-")
-  :lighter " RFtoml")
+  :args '("format" "--colors" "never" "-"))
 
-;; hcl
-;; https://github.com/hashicorp/hcl/tree/main/cmd/hclfmt
 (reformatter-define my-reformatter-hcl-format
   :program "hclfmt"
-  :args `(,input-file)
-  :lighter " RFhcl")
+  :args `(,input-file))
 
 (provide 'my-reformatter)
 ;;; my-reformatter.el ends here

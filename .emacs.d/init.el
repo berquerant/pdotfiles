@@ -67,7 +67,8 @@
                           ("gnu" . 80)
                           ("gnu-devel" . 70)
                           ("nongnu" . 60)))
-(straight-use-package 'use-package) ; use-package integration
+(straight-use-package '(use-package :type built-in)) ; use-package integration
+(straight-use-package '(project :type built-in))     ; built-in project
 
 (defconst my-straight-profile (concat user-emacs-directory "straight-default.el"))
 (defconst my-straight-directory (concat straight-base-dir "straight"))
@@ -80,7 +81,8 @@
       byte-compile-warnings '(cl-functions)  ; ignore package cl is deprecated
       warning-suppress-types '((comp)))      ; do not display comp warnings immediately
 
-(use-package bind-key) ; easy key bindings
+(use-package bind-key
+  :straight (:type built-in)) ; easy key bindings
 (use-package diminish) ; diminished mode-line
 (use-package cl-lib)
 (use-package s)
@@ -175,6 +177,7 @@
   (comment-dwim-2-inline-comment-behavior 'reindent-comment))
 
 (use-package which-key
+  :straight (:type built-in)
   :demand t
   :diminish (which-key-mode . "")
   :custom
@@ -581,11 +584,12 @@ regarding the asynchronous search and the arguments."
 (use-package goto-chg
   :demand t
   :after projectile
-  :config
-  (my-macro-setup-repeat-commands (("." goto-last-change)
-                                   ("," goto-last-change-reverse)))
-  (bind-key "C-x ." 'goto-last-change)
-  (bind-key "C-x ," 'goto-last-change-reverse))
+  :bind
+  ("C-x ." . goto-last-change)
+  ("C-x ," . goto-last-change-reverse)
+  (:repeat-map goto-chg-repeat-map
+   ("." . goto-last-change)
+   ("," . goto-last-change-reverse)))
 
 ;; completions
 (use-package company
@@ -666,22 +670,15 @@ regarding the asynchronous search and the arguments."
   (transient-mark-mode t))
 
 (use-package multiple-cursors
-  :config
-  (my-macro-setup-repeat-commands ((">" mc/mark-next-like-this)
-                                   ("<" mc/mark-previous-like-this)))
-  (unbind-key "M-^")
-  (bind-key "M-^ ." 'mc/edit-lines)
-  (bind-key "M-^ >" 'mc/mark-next-like-this)
-  (bind-key "M-^ <" 'mc/mark-previous-like-this))
-
-;; search assist
-(use-package anzu
-  :custom
-  (anzu-deactivate-region t)
-  (anzu-mode-lighter "")
-  (anzu-search-threshold 100)
-  :config
-  (global-anzu-mode +1))
+  :bind
+  (("M-^ ." . mc/edit-lines)
+   ("M-^ >" . mc/mark-next-like-this)
+   ("M-^ <" . mc/mark-previous-like-this)
+   (:repeat-map mc-repeat-map
+    (">" . mc/mark-next-like-this)
+    ("<" . mc/mark-previous-like-this)))
+  :init
+  (unbind-key "M-^"))
 
 (use-package ez-query-replace
   :bind
@@ -693,16 +690,6 @@ regarding the asynchronous search and the arguments."
   ("M-] ]" . my-paren-surround-region)
   ("M-] ." . my-paren-remove-parens)
   ("M-] k" . my-paren-kill-sexp))
-
-(use-package smartparens
-  :diminish (smartparens-mode . "")
-  :demand t
-  :config
-  (require 'smartparens-config)
-  (ad-disable-advice 'delete-backward-char 'before 'sp-delete-pair-advice)
-  (ad-activate 'delete-backward-char)
-  (smartparens-global-mode t)
-  (show-smartparens-global-mode t))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode)
@@ -755,6 +742,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
   ; for backward-forward
   (unbind-key "C-," flyspell-mode-map)
   (unbind-key "C-." flyspell-mode-map))
+
+;; Note on Tree-sitter major modes (*-ts-mode) for general-purpose programming languages:
+;; While config languages (json-ts-mode, yaml-ts-mode, dockerfile-ts-mode) are safe to adopt directly,
+;; full migration of general-purpose language modes (e.g. go-ts-mode, rust-ts-mode, python-ts-mode,
+;; bash-ts-mode, c-ts-mode) is intentionally deferred due to:
+;; 1. Ecosystem gaps: *-ts-mode derives directly from prog-mode (not the legacy <lang>-mode),
+;;    breaking tool hooks and predicates expecting (derived-mode-p '<lang>-mode) in flycheck/linters.
+;; 2. Feature parity: 3rd-party modes provide specialized tooling (e.g. rust-format-on-save,
+;;    specialized test runners) not present in minimal built-in ts-modes.
+;; 3. Parser ABI stability: Language grammar updates can occasionally conflict with Emacs C ABI
+;;    (e.g. tree-sitter-c / tree-sitter-sql commented out in treesit-language-source-alist.el).
+;; Future adoption should prefer incremental opt-in via `major-mode-remap-alist` per language.
 
 (use-package cc-mode
   :mode
@@ -821,22 +820,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :straight (my-flycheck-golangci-lint :type built-in)
   :after (go-mode flycheck)
   :hook (go-mode . my-flycheck-golangci-lint-setup))
-
-(use-package go-playground
-  :init
-  (defconst my-go-playground-sh
-    (my-getenv-join "DOTFILES_ROOT" "bin" "go-playground.sh"))
-  :bind
-  (:map go-playground-mode-map
-        ("C-c C-c" . my-go-playground-run))
-  :config
-  (defun my-go-playground-run ()
-    "Run snippet.go."
-    (interactive)
-    (compile (format "%s run" my-go-playground-sh)))
-  :custom
-  (go-playground-basedir (f-join (my-getenv "GHQ_ROOT") "github.com" (my-getenv "GIT_USER") "go-playground"))
-  (go-playground-init-command (format "%s init" my-go-playground-sh)))
 
 (use-package js2-mode
   :hook
@@ -910,42 +893,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
   (("M-s M-s M-a" . ascii-on)
    ("M-s M-s a" . ascii-off)))
 
-(use-package json-mode
-  :mode ("\\.json\\'" . json-mode)
-  :config
-  (unbind-key "C-c :" json-mode-map)
-  (unbind-key "C-c C-r" json-mode-map))
+(use-package json-ts-mode
+  :straight (:type built-in)
+  :mode ("\\.json\\'" . json-ts-mode))
 
-(use-package yaml-mode
+(use-package yaml-ts-mode
+  :straight (:type built-in)
   :mode
-  (("\\.yaml\\'" . yaml-mode)
-   ("\\.yml\\'" . yaml-mode)
-   ("\\.dig\\'" . yaml-mode)))
+  (("\\.ya?ml\\'" . yaml-ts-mode)
+   ("\\.dig\\'" . yaml-ts-mode)))
 
-(use-package dockerfile-mode
+(use-package dockerfile-ts-mode
+  :straight (:type built-in)
   :mode
-  ("Dockerfile" . dockerfile-mode)
+  (("[/\\]\\(?:Containerfile\\|Dockerfile\\)\\(?:\\.[^/\\]*\\)?\\'" . dockerfile-ts-mode)
+   ("\\.dockerfile\\'" . dockerfile-ts-mode))
   :config
-  (add-hook 'dockerfile-mode-hook
+  (add-hook 'dockerfile-ts-mode-hook
             (lambda () (electric-indent-local-mode -1))))
 
 (use-package rust-mode
   :hook
   (rust-mode . (lambda ()
                  (setq indent-tabs-mode nil)
-                 (smartparens-mode 1)
                  (global-display-line-numbers-mode 1)))
   :custom
   (rust-rustfmt-switches '("--config" "edition=2024"))
   (rust-format-on-save t))
-
-(use-package rust-playground
-  :custom
-  (rust-playground-basedir (f-join (my-getenv "GHQ_ROOT") "github.com" (my-getenv "GIT_USER") "rust-playground")))
-
-(use-package haskell-mode
-  :mode
-  ("\\.hs$" . haskell-mode))
 
 (defalias 'perl-mode 'cperl-mode)
 
@@ -1000,9 +974,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     markdown-mode
     gfm-mode
     emacs-lisp-mode
-    dockerfile-mode
+    dockerfile-ts-mode
     protobuf-mode
-    haskell-mode
     php-mode
     js2-mode) . flycheck-mode-thyristor-2n)
   :bind
@@ -1044,20 +1017,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
    ("C-x p a" . eglot-code-actions)
    ("C-x p r" . eglot-rename)
    ("M-s M-s M-e" . eglot-shutdown))
-  :init
-  (defun my-eglot-require-with-check-around-advice (orig-func &rest args)
-    "If the 3rd argument is not specified, specify t.
-Workaround for:
-internal-macroexpand-for-load: Eager macro-expansion failure: (error \"Feature provided by other file: project\")
-when (eglot)."
-    (message "DEBUG my-eglot-require-with-check-around-advice: %S" args)
-    (let* ((arg-len (length args))
-           (new-args (cond
-                      ((eq arg-len 1) (append args (list nil t)))
-                      ((eq arg-len 2) (append args (list t)))
-                      (t args))))
-      (apply orig-func new-args)))
-  (advice-add 'require-with-check :around #'my-eglot-require-with-check-around-advice)
   :config
   (my-macro-ring-hook "my-eglot" '(my-eglot-imports-and-format
                                    my-eglot-noop
@@ -1118,8 +1077,8 @@ when (eglot)."
      svelte-mode
      ;; rust-mode
      css-mode
-     json-mode
-     yaml-mode
+     json-ts-mode
+     yaml-ts-mode
      terraform-mode
      html-mode) . lsp-deferred)
    (lsp-mode . lsp-lens-mode))
@@ -1244,8 +1203,34 @@ when (eglot)."
 
 (use-package restclient)
 
+(use-package magit
+  :bind
+  ("M-s g" . magit-status)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  (magit-save-repository-buffers 'dontask)
+  (magit-diff-refine-hunk 'all))
+
+(use-package sqlite3
+  :unless (sqlite-available-p))
+
+;; Forge authentication & host setup:
+;; - Initial Setup: https://docs.magit.vc/forge/Initial-Setup.html
+;; - GitHub.com: https://docs.magit.vc/forge/Setup-for-Githubcom.html
+;; - Another GitHub Instance: https://docs.magit.vc/forge/Setup-for-Another-Github-Instance.html
+;; - GitLab.com: https://docs.magit.vc/forge/Setup-for-Gitlabcom.html
+;; - Another GitLab Instance: https://docs.magit.vc/forge/Setup-for-Another-Gitlab-Instance.html
+(use-package forge
+  :after magit
+  :config
+  (when-let* ((git-user (my-getenv "GIT_USER")))
+    (setq forge-owned-accounts `((,git-user)))))
+
 (use-package diff-hl
   :diminish
+  :hook
+  ((magit-pre-refresh . diff-hl-magit-pre-refresh)
+   (magit-post-refresh . diff-hl-magit-post-refresh))
   :init
   (global-diff-hl-mode)
   :config

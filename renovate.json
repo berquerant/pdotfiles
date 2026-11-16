@@ -214,14 +214,14 @@
     },
     {
       "customType": "regex",
-      "description": "Manage cache-mcp version",
+      "description": "Manage agent-skills version",
       "fileMatch": [
         "^.env$"
       ],
-      "datasourceTemplate": "github-tags",
-      "depNameTemplate": "berquerant/cache-mcp",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "berquerant/agent-skills",
       "matchStrings": [
-        "CACHE_MCP_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+        "AGENT_SKILLS_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
       ]
     },
     {

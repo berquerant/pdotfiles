@@ -35,6 +35,14 @@ else
   log_warn "shellcheck not installed, skipping shellcheck"
 fi
 
+if [[ -f .github/workflows/actions.lock ]] && command -v gh >/dev/null 2>&1; then
+  if gh actions-lock --verify-local >/dev/null 2>&1; then
+    log_pass "actions.lock coverage passed"
+  else
+    log_fail "actions.lock coverage failed (run: gh actions-lock)"
+  fi
+fi
+
 # 2. Renovate Sync Check
 log_section "2. Renovate Configuration Sync"
 if command -v yq >/dev/null 2>&1; then

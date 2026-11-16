@@ -384,7 +384,7 @@ bin/install-via-git-bulk.sh --retry < targets/util
 
 Install prerequisite CLI tools for util targets.
 
-Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump, cache-mcp, scptdisplay
+Requires: awkfmt, golangci-lint, uv, ip2bin, semv, mise, emacs-keybind-dump, scptdisplay
 
 ## mise
 
@@ -392,14 +392,6 @@ Install [mise](https://github.com/jdx/mise).
 
 ``` shell
 cargo binstall -y mise@${MISE_VERSION}
-```
-
-## cache-mcp
-
-Install [cache-mcp](https://github.com/berquerant/cache-mcp).
-
-``` shell
-pip install "git+https://github.com/berquerant/cache-mcp.git@${CACHE_MCP_VERSION}"
 ```
 
 ## emacs-keybind-dump
@@ -465,6 +457,25 @@ Install awkfmt.
 
 ``` shell
 ln -snvf "${DOTFILES_ROOT}/bin/awkfmt.sh" /usr/local/bin/awkfmt
+```
+
+## agent-skills
+
+Install skills from [agent-skills](https://github.com/berquerant/agent-skills).
+
+Requires: agent-skills-mcp
+
+``` shell
+gh skill install berquerant/agent-skills --all --pin "${AGENT_SKILLS_VERSION}" --scope user -f
+```
+
+## agent-skills-mcp
+
+Install MCP server from [agent-skills](https://github.com/berquerant/agent-skills).
+
+``` shell
+gh release download "${AGENT_SKILLS_VERSION}" --repo berquerant/agent-skills --pattern "agent-skills-mcp_*_darwin_arm64" --output /usr/local/bin/agent-skills-mcp --clobber
+chmod +x /usr/local/bin/agent-skills-mcp
 ```
 
 ## other

@@ -17,8 +17,11 @@
   (solarized-highlight-numbers t)
   (solarized-distinct-doc-face t))
 
+;; Emacs 30+ includes modus-themes in etc/themes/
+(add-to-list 'load-path (expand-file-name "themes" data-directory))
+
 (use-package modus-themes
-  :ensure t
+  :straight (:type built-in)
   :custom
   (modus-themes-bold-constructs t)
   (modus-themes-italic-constructs t)

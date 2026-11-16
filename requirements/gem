@@ -1,3 +1,4 @@
-solargraph -v 0.60.4
-rubocop -v 1.91.0
+jaro_winkler -v 1.7.0
+solargraph -v 0.62.0
+rubocop -v 1.92.2
 rufo -v 0.18.2
