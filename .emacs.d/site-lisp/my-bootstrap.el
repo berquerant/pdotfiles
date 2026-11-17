@@ -45,6 +45,9 @@
 (add-hook 'sh-mode-hook
           (lambda ()
             (setq sh-basic-offset 2)))
+(add-hook 'after-change-major-mode-hook
+          (lambda ()
+            (electric-pair-local-mode 1)))
 
 (bind-keys :map global-map
            ([?\¥] . [?\\])
