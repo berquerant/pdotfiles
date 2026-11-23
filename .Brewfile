@@ -54,7 +54,6 @@ brew "scc"
 
 # github
 brew "gh"
-brew "pinact"
 brew "actionlint"
 brew "ghalint"
 brew "zizmor"

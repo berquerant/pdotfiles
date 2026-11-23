@@ -36,3 +36,8 @@ jobs:
         run: |
           .github/bin/shellcheck.sh
           echo "::remove-matcher owner=shellcheck-matcher::"
+
+  actions-lock-verify:
+    permissions:
+      contents: read
+    uses: berquerant/reusable-workflows/.github/workflows/actions-lock-verify.yml@v0.1.0

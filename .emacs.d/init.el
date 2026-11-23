@@ -1209,7 +1209,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
   (magit-save-repository-buffers 'dontask)
-  (magit-diff-refine-hunk 'all))
+  (magit-diff-refine-hunk 'all)
+  :config
+  (add-hook 'magit-status-sections-hook #'magit-insert-worktrees t)
+  (add-hook 'magit-status-sections-hook #'magit-insert-modules t))
 
 (use-package sqlite3
   :unless (sqlite-available-p))

@@ -15,7 +15,6 @@ run() {
   log "EXIT WITH ${result} ($*)"
 }
 
-run pinact run
 run ghalint run
 run actionlint
 run zizmor --persona=auditor ./

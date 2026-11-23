@@ -461,9 +461,13 @@ ln -snvf "${DOTFILES_ROOT}/bin/awkfmt.sh" /usr/local/bin/awkfmt
 
 ## agent-skills
 
-Install skills from [agent-skills](https://github.com/berquerant/agent-skills).
+Install skills and MCP server from [agent-skills](https://github.com/berquerant/agent-skills).
 
-Requires: agent-skills-mcp
+Requires: agent-skills-install, agent-skills-mcp
+
+## agent-skills-install
+
+Install skills from [agent-skills](https://github.com/berquerant/agent-skills).
 
 ``` shell
 gh skill install berquerant/agent-skills --all --pin "${AGENT_SKILLS_VERSION}" --scope user -f
@@ -474,8 +478,11 @@ gh skill install berquerant/agent-skills --all --pin "${AGENT_SKILLS_VERSION}" -
 Install MCP server from [agent-skills](https://github.com/berquerant/agent-skills).
 
 ``` shell
-gh release download "${AGENT_SKILLS_VERSION}" --repo berquerant/agent-skills --pattern "agent-skills-mcp_*_darwin_arm64" --output /usr/local/bin/agent-skills-mcp --clobber
-chmod +x /usr/local/bin/agent-skills-mcp
+tmp="$(mktemp /usr/local/bin/agent-skills-mcp.XXXXXX)"
+trap 'rm -f "${tmp}"' EXIT
+gh release download "${AGENT_SKILLS_VERSION}" --repo berquerant/agent-skills --pattern "agent-skills-mcp_*_darwin_arm64" --output "${tmp}" --clobber
+chmod +x "${tmp}"
+mv -f "${tmp}" /usr/local/bin/agent-skills-mcp
 ```
 
 ## other
